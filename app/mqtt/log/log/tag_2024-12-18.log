@@ -1,0 +1,12 @@
+[2024-12-18 06:36:00]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"639FAAE2","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-12-18 06:36:00]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Ana Meilia Solichah--Berhasil Presensi","nokartu":"639FAAE2"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-12-18 06:38:07]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"53E0ECE4","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-12-18 06:38:07]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Shifa Azzahra--Berhasil Presensi","nokartu":"53E0ECE4"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+

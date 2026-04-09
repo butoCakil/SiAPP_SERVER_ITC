@@ -1,0 +1,30 @@
+[2023-12-08 07:06:19]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"048A57C29A5380","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-08 07:06:19]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"048A57C29A5380"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-08 07:06:32]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"B3D77105","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-08 07:06:32]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Muchammad Azka Alkaesa--Berhasil Presensi","nokartu":"B3D77105"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-08 07:39:42]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"6C8FED22","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-08 07:39:42]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Raafiyanto Adri Mahardika--Berhasil Presensi","nokartu":"6C8FED22"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-08 08:03:52]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"ED68DF6A","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-08 08:03:52]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"BMPM","info":"Aprillia Palupi, S.P--Berhasil Presensi","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-08 11:48:55]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"C2E2B920","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-08 11:48:55]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"TBPS","info":"Ellin Agesti Milana Al Faida--Tidak bisa melakukan presensi sekarang.","nokartu":"C2E2B920"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+

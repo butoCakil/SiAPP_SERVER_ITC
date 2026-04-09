@@ -1,0 +1,72 @@
+[2026-04-04 09:45:15]
+Menerima pesan dari: dariMCU/2309IZ003 - Pesan: {"nokartu":"C9587CB1","idchip":"7737844","nodevice":"2309IZ003","key":"1234567890987654321","ipa":"10.10.1.209"}
+[2026-04-04 09:45:15]
+Berhasil merespon "dariMCU/2309IZ003" : {"respon":[{"id":"7737844","nodevice":"2309IZ003","message":"TBPS","info":"FREDA GAUTAMA--Tidak bisa melakukan presensi sekarang.","nokartu":"C9587CB1"}]}
+Berhasil kirim balasan ke "responServer/2309IZ003" (attempt 1)
+
+[2026-04-04 13:38:53]
+Menerima pesan dari: dariMCU/2309MAS003 - Pesan: {"nokartu":"F9116BB1","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.1.23"}
+[2026-04-04 13:38:53]
+Berhasil merespon "dariMCU/2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"MAHARDIKA PUTRA SADEWA--Berhasil Presensi -Mulai-","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS003" (attempt 1)
+
+[2026-04-04 13:38:57]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:38:57]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:38:57]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:38:57]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:39:00]
+Menerima pesan dari: dariMCU/2309MAS002 - Pesan: {"nokartu":"F9116BB1","idchip":"1165251","nodevice":"2309MAS002","key":"1234567890987654321","ipa":"10.10.25.51"}
+[2026-04-04 13:39:00]
+Berhasil merespon "dariMCU/2309MAS002" : {"respon":[{"id":"1165251","nodevice":"2309MAS002","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS002" (attempt 1)
+
+[2026-04-04 13:39:01]
+Menerima pesan dari: dariMCU/2309MAS003 - Pesan: {"nokartu":"C9587CB1","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.1.23"}
+[2026-04-04 13:39:01]
+Berhasil merespon "dariMCU/2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"FREDA GAUTAMA--Berhasil Presensi -Mulai-","nokartu":"C9587CB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS003" (attempt 1)
+
+[2026-04-04 13:39:03]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:39:03]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:39:06]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:39:06]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:39:08]
+Menerima pesan dari: dariMCU/2309MAS002 - Pesan: {"nokartu":"C9587CB1","idchip":"1165251","nodevice":"2309MAS002","key":"1234567890987654321","ipa":"10.10.25.51"}
+[2026-04-04 13:39:08]
+Berhasil merespon "dariMCU/2309MAS002" : {"respon":[{"id":"1165251","nodevice":"2309MAS002","message":"SMPM","info":"FREDA GAUTAMA--Anda Sudah melakukan Presensi","nokartu":"C9587CB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS002" (attempt 1)
+
+[2026-04-04 13:39:11]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:39:11]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:39:14]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"F9116BB1","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-04-04 13:39:14]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"MAHARDIKA PUTRA SADEWA--Anda Sudah melakukan Presensi","nokartu":"F9116BB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001" (attempt 1)
+
+[2026-04-04 13:39:15]
+Menerima pesan dari: dariMCU/2309MAS002 - Pesan: {"nokartu":"C9587CB1","idchip":"1165251","nodevice":"2309MAS002","key":"1234567890987654321","ipa":"10.10.25.51"}
+[2026-04-04 13:39:15]
+Berhasil merespon "dariMCU/2309MAS002" : {"respon":[{"id":"1165251","nodevice":"2309MAS002","message":"SMPM","info":"FREDA GAUTAMA--Anda Sudah melakukan Presensi","nokartu":"C9587CB1"}]}
+Berhasil kirim balasan ke "responServer/2309MAS002" (attempt 1)
+

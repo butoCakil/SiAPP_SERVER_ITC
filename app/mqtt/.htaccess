@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Redirect ke halaman utama jika ada yang mencoba mengakses /app/mqtt/
+RewriteCond %{REQUEST_URI} ^/app/mqtt/$ [NC]
+RewriteRule ^ / [R=301,L]
+
+# Aturan berikut mengijinkan akses ke file yang ada di /app/mqtt/
+RewriteCond %{REQUEST_URI} ^/app/mqtt/ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Aturan berikut mengijinkan akses ke file yang ada di /app/mqtt/ jika memiliki ekstensi .php
+RewriteCond %{REQUEST_URI} ^/app/mqtt/ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_FILENAME} \.php$ [NC]
+RewriteRule ^ - [L]

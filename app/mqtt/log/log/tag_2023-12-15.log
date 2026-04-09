@@ -1,0 +1,12 @@
+[2023-12-15 07:46:15]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"93284105","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-15 07:46:15]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Dika Setiyani--Berhasil Presensi","nokartu":"93284105"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-15 07:46:43]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"137C14FF","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-15 07:46:43]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Restika--Berhasil Presensi","nokartu":"137C14FF"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+

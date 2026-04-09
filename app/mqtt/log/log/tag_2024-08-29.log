@@ -1,0 +1,1350 @@
+[2024-08-29 06:36:36]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"34748451","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 06:36:36]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"BMPM","info":"Allam Musyary Rosyiq--Berhasil Presensi","nokartu":"34748451"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 06:36:40]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"34748451","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 06:36:40]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SMPM","info":"Allam Musyary Rosyiq--Anda Sudah melakukan Presensi","nokartu":"34748451"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 06:37:39]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"54598651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:37:39]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Airin Widyastuti--Berhasil Presensi","nokartu":"54598651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:39:39]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14769051","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:39:39]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Najla Aisya--Berhasil Presensi","nokartu":"14769051"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:42:03]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4FA6B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:42:03]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Syafa Mukminati--Berhasil Presensi","nokartu":"F4FA6B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:42:04]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4FA6B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:42:04]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Syafa Mukminati--Anda Sudah melakukan Presensi","nokartu":"F4FA6B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:43:12]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4099551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:43:12]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nathaniela Ajeng Kafina--Berhasil Presensi","nokartu":"C4099551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:44:05]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B42C5C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:44:05]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nellisa Indah Pramesti--Berhasil Presensi","nokartu":"B42C5C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:45:36]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C45F8C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:45:36]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Novita Aristiani--Berhasil Presensi","nokartu":"C45F8C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:45:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4BA9451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:45:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Qoiril Alvasanah--Berhasil Presensi","nokartu":"C4BA9451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:45:57]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C45F8C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:45:57]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Novita Aristiani--Anda Sudah melakukan Presensi","nokartu":"C45F8C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:45:58]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C45F8C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:45:58]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Novita Aristiani--Anda Sudah melakukan Presensi","nokartu":"C45F8C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:46:34]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14FD9651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:46:34]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Arma Diyana--Berhasil Presensi","nokartu":"14FD9651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:46:38]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14FD9651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:46:38]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Arma Diyana--Anda Sudah melakukan Presensi","nokartu":"14FD9651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:46:41]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"842C9351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:46:41]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nia Tri Aisyah--Berhasil Presensi","nokartu":"842C9351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:46:59]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"34CC6351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:46:59]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Yofi Agustin--Berhasil Presensi","nokartu":"34CC6351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:47:00]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"34CC6351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:47:00]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Yofi Agustin--Anda Sudah melakukan Presensi","nokartu":"34CC6351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:47:53]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"E4089251","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 06:47:53]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Uun Musticharoh--Berhasil Presensi","nokartu":"E4089251"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 06:48:20]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4148F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:48:20]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Salsa Dwi Pertiwi--Berhasil Presensi","nokartu":"C4148F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:48:25]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4148F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:48:25]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Salsa Dwi Pertiwi--Anda Sudah melakukan Presensi","nokartu":"C4148F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:48:27]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4148F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:48:27]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Salsa Dwi Pertiwi--Anda Sudah melakukan Presensi","nokartu":"C4148F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:48:31]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"A4069051","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:48:31]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Fauziah Jadwa Nur Ngaini--Berhasil Presensi","nokartu":"A4069051"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:48:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44D68E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:48:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Serlin Khafita--Berhasil Presensi","nokartu":"44D68E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:49:00]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"541F7451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:49:00]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Anita Setyaningsih--Berhasil Presensi","nokartu":"541F7451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:49:04]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"84689751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:49:04]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Jeni Sinta Aprilia--Berhasil Presensi","nokartu":"84689751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:49:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C47E6E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:49:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Naesah Aliska--Berhasil Presensi","nokartu":"C47E6E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:11]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"A48E9851","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 06:50:11]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Imel Nur Rosasmita--Berhasil Presensi","nokartu":"A48E9851"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 06:50:12]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"04B68A51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:12]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Eka Setya Sari--Berhasil Presensi","nokartu":"04B68A51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:14]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"A48E9851","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 06:50:14]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Imel Nur Rosasmita--Anda Sudah melakukan Presensi","nokartu":"A48E9851"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 06:50:16]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"04B68A51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:16]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Eka Setya Sari--Anda Sudah melakukan Presensi","nokartu":"04B68A51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:26]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4068151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:26]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Fatma Surya--Berhasil Presensi","nokartu":"C4068151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:26]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4068151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:26]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Fatma Surya--Anda Sudah melakukan Presensi","nokartu":"C4068151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:27]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4068151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:27]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Fatma Surya--Anda Sudah melakukan Presensi","nokartu":"C4068151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:30]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64468751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:30]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Reni Yulianti--Berhasil Presensi","nokartu":"64468751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:50:33]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"343F7B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:50:33]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Listi Sugiarti--Berhasil Presensi","nokartu":"343F7B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:13]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44335D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:13]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Saskya Gita Rahmadani--Berhasil Presensi","nokartu":"44335D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:16]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44335D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:16]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Saskya Gita Rahmadani--Anda Sudah melakukan Presensi","nokartu":"44335D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:19]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44335D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:19]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Saskya Gita Rahmadani--Anda Sudah melakukan Presensi","nokartu":"44335D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:20]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44335D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:20]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Saskya Gita Rahmadani--Anda Sudah melakukan Presensi","nokartu":"44335D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:27]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4C28D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:27]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Tunasih--Berhasil Presensi","nokartu":"C4C28D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:43]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:43]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Lisa Dwi Pricylia--Berhasil Presensi","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:51:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:51:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Lisa Dwi Pricylia--Anda Sudah melakukan Presensi","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:52:53]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"04CE8751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:52:53]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Ananda Helma Ristian--Berhasil Presensi","nokartu":"04CE8751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:52:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4B79251","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:52:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Adik Indri Dwi Cahyani--Berhasil Presensi","nokartu":"B4B79251"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:53:27]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"645F8551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:53:27]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Arinda Ariyani--Berhasil Presensi","nokartu":"645F8551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:54:28]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4CF7351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:54:28]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Fieandra Cahya Agustin--Berhasil Presensi","nokartu":"D4CF7351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:02]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"944E8651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:02]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Selvi Rahmawati--Berhasil Presensi","nokartu":"944E8651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:41]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C49D8551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:41]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Disca Ayu Ramandita--Berhasil Presensi","nokartu":"C49D8551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:47]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C49D8551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:47]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Disca Ayu Ramandita--Anda Sudah melakukan Presensi","nokartu":"C49D8551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:49]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C49D8551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:49]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Disca Ayu Ramandita--Anda Sudah melakukan Presensi","nokartu":"C49D8551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:52]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"847D8951","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:52]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nadea Pratiwi--Berhasil Presensi","nokartu":"847D8951"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:56:57]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"84309051","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:56:57]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Agustin Fifiyana--Berhasil Presensi","nokartu":"84309051"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:57:04]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"949F8B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:57:04]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Risna Septy Anggraeni--Berhasil Presensi","nokartu":"949F8B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:57:07]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F48B7F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:57:07]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Septiana Cahayani--Berhasil Presensi","nokartu":"F48B7F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:57:44]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"54A08951","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:57:44]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Lailatus Sarifa Rahmadhani--Berhasil Presensi","nokartu":"54A08951"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:57:47]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"54A08951","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:57:47]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Lailatus Sarifa Rahmadhani--Anda Sudah melakukan Presensi","nokartu":"54A08951"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:57:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44DF8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:57:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Najwa Divani Putri--Berhasil Presensi","nokartu":"44DF8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:58:57]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C47F5A51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:58:57]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Winda Setyawati--Berhasil Presensi","nokartu":"C47F5A51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:33]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"84EB8D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:33]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Latifatul Azizah--Berhasil Presensi","nokartu":"84EB8D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:41]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4E36A51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:41]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Zunita Vera--Berhasil Presensi","nokartu":"E4E36A51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:45]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"94C89151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:45]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Riyanti--Berhasil Presensi","nokartu":"94C89151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:49]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"24275C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:49]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Muhammad A lam Maulana--Berhasil Presensi","nokartu":"24275C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:52]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74D48751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:52]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Fisah Duwi Novitasari--Berhasil Presensi","nokartu":"74D48751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 06:59:55]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44C06D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 06:59:55]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Adis Setia Wardani--Berhasil Presensi","nokartu":"44C06D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:00:04]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4A89451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:00:04]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Monera Julian Fahmida--Berhasil Presensi","nokartu":"E4A89451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:00:21]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"D4305C51","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:00:21]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Fawas Lintang Hayyan--Berhasil Presensi","nokartu":"D4305C51"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:00:24]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14E58B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:00:24]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Najwa Intan Ayuningtyas--Berhasil Presensi","nokartu":"14E58B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:00:25]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"D4305C51","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:00:25]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Fawas Lintang Hayyan--Anda Sudah melakukan Presensi","nokartu":"D4305C51"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:00:38]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"647D8F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:00:38]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Farin Isnaeni--Berhasil Presensi","nokartu":"647D8F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:00:39]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"647D8F51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:00:39]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Farin Isnaeni--Anda Sudah melakukan Presensi","nokartu":"647D8F51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:00:41]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4BF9851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:00:41]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Alesa Naura Medina--Berhasil Presensi","nokartu":"C4BF9851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:01:09]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F36B1210","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:01:09]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Yunita Maela Rahma--Berhasil Presensi","nokartu":"F36B1210"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:01:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4F08551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:01:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Kiara Nanda--Berhasil Presensi","nokartu":"E4F08551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:01:18]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F36B1210","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:01:18]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Yunita Maela Rahma--Anda Sudah melakukan Presensi","nokartu":"F36B1210"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:01:34]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4F08551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:01:34]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Kiara Nanda--Anda Sudah melakukan Presensi","nokartu":"E4F08551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:01:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4F08551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:01:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Kiara Nanda--Anda Sudah melakukan Presensi","nokartu":"E4F08551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:05]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44A68451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:02:05]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Putri Najwa Aqila--Berhasil Presensi","nokartu":"44A68451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:05]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44A68451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:02:05]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Putri Najwa Aqila--Anda Sudah melakukan Presensi","nokartu":"44A68451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:10]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"A4BA6051","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:02:10]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nella Yulita--Berhasil Presensi","nokartu":"A4BA6051"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"A4BA6051","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:02:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Nella Yulita--Anda Sudah melakukan Presensi","nokartu":"A4BA6051"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:15]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"A4849151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:02:15]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Vera Azzahra--Berhasil Presensi","nokartu":"A4849151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:02:53]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"D4469151","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:02:53]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"BMPM","info":"Febra Arthur Calista--Berhasil Presensi","nokartu":"D4469151"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:03:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"249D6551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:03:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Adhine Auditya Santoso--Berhasil Presensi","nokartu":"249D6551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:03:32]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4518451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:03:32]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Risma Febriyanti--Berhasil Presensi","nokartu":"E4518451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:02]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64EB8351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:02]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Cindy Seftia Ningrum--Berhasil Presensi","nokartu":"64EB8351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:02]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64EB8351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:02]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Cindy Seftia Ningrum--Anda Sudah melakukan Presensi","nokartu":"64EB8351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:09]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74E88851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:09]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Surya Putra Ramandhito--Berhasil Presensi","nokartu":"74E88851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74E88851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Surya Putra Ramandhito--Anda Sudah melakukan Presensi","nokartu":"74E88851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:20]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4DC7951","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:20]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Muhammad Adjie Kurniawan--Berhasil Presensi","nokartu":"D4DC7951"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:23]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4DC7951","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:23]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Muhammad Adjie Kurniawan--Anda Sudah melakukan Presensi","nokartu":"D4DC7951"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:30]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4E08751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:30]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Fatimah Latipah--Berhasil Presensi","nokartu":"D4E08751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:33]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4E08751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:33]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Fatimah Latipah--Anda Sudah melakukan Presensi","nokartu":"D4E08751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:46]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74709551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:46]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Liska Rofiyatun--Berhasil Presensi","nokartu":"74709551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:46]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74709551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:04:46]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Liska Rofiyatun--Anda Sudah melakukan Presensi","nokartu":"74709551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:04:54]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"94B79651","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:04:54]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Ajeng Ardhia Pramesti--Berhasil Presensi","nokartu":"94B79651"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:05:02]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64279451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:02]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Zuyun Na ilufar--Berhasil Presensi","nokartu":"64279451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:03]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64279451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:03]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Zuyun Na ilufar--Anda Sudah melakukan Presensi","nokartu":"64279451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:07]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4199451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:07]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Elsa Agustina Dwi Saputri--Berhasil Presensi","nokartu":"D4199451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64279451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Zuyun Na ilufar--Anda Sudah melakukan Presensi","nokartu":"64279451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:13]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4EA6D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:13]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Karunia Rika Difa--Berhasil Presensi","nokartu":"D4EA6D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:14]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4EA6D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:14]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Karunia Rika Difa--Anda Sudah melakukan Presensi","nokartu":"D4EA6D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:19]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"64488551","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:19]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"BMPM","info":"Widya Anggraeni Setianingsih--Berhasil Presensi","nokartu":"64488551"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:05:23]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"64488551","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:23]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SMPM","info":"Widya Anggraeni Setianingsih--Anda Sudah melakukan Presensi","nokartu":"64488551"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:05:24]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"34708A51","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:24]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"BMPM","info":"Wahyu Widayat--Berhasil Presensi","nokartu":"34708A51"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:05:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"34228451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Arum Ning Tyas--Berhasil Presensi","nokartu":"34228451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:49]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"34228451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:49]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Arum Ning Tyas--Anda Sudah melakukan Presensi","nokartu":"34228451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:52]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:52]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"BMPM","info":"Wahyu Rahmadani--Berhasil Presensi","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:05:54]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"24108D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:54]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Afifatus Solichah--Berhasil Presensi","nokartu":"24108D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:55]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:55]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SMPM","info":"Wahyu Rahmadani--Anda Sudah melakukan Presensi","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:05:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"24108D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:05:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Afifatus Solichah--Anda Sudah melakukan Presensi","nokartu":"24108D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:05:57]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 07:05:57]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SMPM","info":"Wahyu Rahmadani--Anda Sudah melakukan Presensi","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 07:06:01]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4BF9151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:01]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Dwi Septiana--Berhasil Presensi","nokartu":"D4BF9151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:02]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4BF9151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:02]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Dwi Septiana--Anda Sudah melakukan Presensi","nokartu":"D4BF9151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:10]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44098551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:10]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Nurul Alifian--Berhasil Presensi","nokartu":"44098551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:10]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44098551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:10]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Nurul Alifian--Anda Sudah melakukan Presensi","nokartu":"44098551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:14]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4589851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:14]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Kirana Dinda Tiara--Berhasil Presensi","nokartu":"B4589851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:15]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4589851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:15]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Kirana Dinda Tiara--Anda Sudah melakukan Presensi","nokartu":"B4589851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:33]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4AA8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:33]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Luluk Dian Etika--Berhasil Presensi","nokartu":"F4AA8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:33]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4AA8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:33]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Luluk Dian Etika--Anda Sudah melakukan Presensi","nokartu":"F4AA8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:34]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4AA8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:34]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Luluk Dian Etika--Anda Sudah melakukan Presensi","nokartu":"F4AA8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:36]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64209851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:36]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Anggun Bilbina Zahra--Berhasil Presensi","nokartu":"64209851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:37]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64209851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:37]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Anggun Bilbina Zahra--Anda Sudah melakukan Presensi","nokartu":"64209851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:40]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"94C86651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:40]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Ambar Rini Septiani--Berhasil Presensi","nokartu":"94C86651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:43]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64B89651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:43]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Eliya Kusumawati--Berhasil Presensi","nokartu":"64B89651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:06:46]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4AA8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:06:46]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Luluk Dian Etika--Anda Sudah melakukan Presensi","nokartu":"F4AA8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:13:49]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"140F8751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:13:49]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Ise Rezeki Agestia--Berhasil Presensi","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:13:55]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4A48C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:13:55]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Dewi Selvi Wulandari--Berhasil Presensi","nokartu":"B4A48C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:13:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4A48C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:13:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SMPM","info":"Dewi Selvi Wulandari--Anda Sudah melakukan Presensi","nokartu":"B4A48C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:34:32]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4B68C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:34:32]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Dina Fitriana--Berhasil Presensi","nokartu":"D4B68C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:34:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14DC9251","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:34:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Asyifaturizqi Fadhila Nurendri--Berhasil Presensi","nokartu":"14DC9251"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:36:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4CE8D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 07:36:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"BMPM","info":"Pingkan Rahelita--Berhasil Presensi","nokartu":"C4CE8D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 07:41:33]
+Menerima pesan dari: dariMCU_2309IZ003 - Pesan: {"nokartu":"54178751","idchip":"7737844","nodevice":"2309IZ003","key":"1234567890987654321","ipa":"10.10.14.241"}
+[2024-08-29 07:41:33]
+Berhasil merespon "dariMCU_2309IZ003" : {"respon":[{"id":"7737844","nodevice":"2309IZ003","message":"BMIJ","info":"Erni Aryati--Ijin Berhasil","nokartu":"54178751"}]}
+Berhasil kirim balasan ke "responServer_2309IZ003"
+
+[2024-08-29 07:44:14]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"B4E99651","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:44:14]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Amelia Marsha Izanti--Berhasil Presensi","nokartu":"B4E99651"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:44:27]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"B4E99651","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:44:27]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Amelia Marsha Izanti--Anda Sudah melakukan Presensi","nokartu":"B4E99651"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:02]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"84986351","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:02]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Riki Aditya--Berhasil Presensi","nokartu":"84986351"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:13]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"D45A9551","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:13]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Andi Prasetyo--Berhasil Presensi","nokartu":"D45A9551"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:14]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"D45A9551","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:14]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Andi Prasetyo--Anda Sudah melakukan Presensi","nokartu":"D45A9551"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:26]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"F4B48751","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:26]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Safrindha Wahyu Nugroho--Berhasil Presensi","nokartu":"F4B48751"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:38]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"F4B48751","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:38]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Safrindha Wahyu Nugroho--Anda Sudah melakukan Presensi","nokartu":"F4B48751"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 07:47:41]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"B4FE8751","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.15.124"}
+[2024-08-29 07:47:41]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Ryo Dafi Nugroho--Berhasil Presensi","nokartu":"B4FE8751"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-08-29 12:22:51]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"84A48851","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:22:51]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Yuliana Naimah--Berhasil Presensi -Mulai-","nokartu":"84A48851"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:29:06]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"D4469151","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:29:06]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Febra Arthur Calista--Berhasil Presensi -Mulai-","nokartu":"D4469151"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:29:12]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"047C9451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:29:12]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Fatchur Rozak--Berhasil Presensi -Mulai-","nokartu":"047C9451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:29:16]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"047C9451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:29:16]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Fatchur Rozak--TERCATAT! 4 dtk lalu","nokartu":"047C9451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:31:18]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"54189051","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:31:18]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Adi Prasetio--Berhasil Presensi -Mulai-","nokartu":"54189051"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:31:19]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"188235D32C979C","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:31:19]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"188235D32C979C"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:31:22]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"54189051","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:31:22]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Adi Prasetio--TERCATAT! 4 dtk lalu","nokartu":"54189051"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:34:17]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"84F39451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:34:17]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Afif Nur Fadhli--Berhasil Presensi -Mulai-","nokartu":"84F39451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:34:20]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"84F39451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:34:20]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Afif Nur Fadhli--TERCATAT! 3 dtk lalu","nokartu":"84F39451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:34:21]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C4897C51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:34:21]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Andhika Surya Saputra--Berhasil Presensi -Mulai-","nokartu":"C4897C51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:34:49]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"345E8A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:34:49]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Galang Dwi Yuliyanto--Berhasil Presensi -Mulai-","nokartu":"345E8A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:34:52]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"345E8A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:34:52]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Galang Dwi Yuliyanto--TERCATAT! 3 dtk lalu","nokartu":"345E8A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:35:15]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E43D7751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:35:15]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Satria Dimas Adi Putra--Berhasil Presensi -Mulai-","nokartu":"E43D7751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:39:15]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"34708A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:39:15]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Wahyu Widayat--Berhasil Presensi -Mulai-","nokartu":"34708A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:39:19]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"34708A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:39:19]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Wahyu Widayat--TERCATAT! 4 dtk lalu","nokartu":"34708A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:39:58]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"345E8A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:39:58]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BPSE","info":"Galang Dwi Yuliyanto--Berhasil Presensi -Selesai-","nokartu":"345E8A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:40:01]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"345E8A51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:40:01]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Galang Dwi Yuliyanto--TERCATAT! 3 dtk lalu","nokartu":"345E8A51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:41:52]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"14E58B51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:41:52]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Najwa Intan Ayuningtyas--Berhasil Presensi -Mulai-","nokartu":"14E58B51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:41:55]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"14E58B51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:41:55]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Najwa Intan Ayuningtyas--TERCATAT! 3 dtk lalu","nokartu":"14E58B51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:41:56]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"14E58B51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:41:56]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Najwa Intan Ayuningtyas--TERCATAT! 4 dtk lalu","nokartu":"14E58B51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:42:01]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4A89451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:42:01]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Monera Julian Fahmida--Berhasil Presensi -Mulai-","nokartu":"E4A89451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:42:05]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4A89451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:42:05]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Monera Julian Fahmida--TERCATAT! 4 dtk lalu","nokartu":"E4A89451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:42:06]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4A89451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:42:06]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Monera Julian Fahmida--TERCATAT! 5 dtk lalu","nokartu":"E4A89451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:42:10]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4489751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:42:10]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Ratu Irly Salsa--Berhasil Presensi -Mulai-","nokartu":"E4489751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:42:13]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4489751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:42:13]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Ratu Irly Salsa--TERCATAT! 3 dtk lalu","nokartu":"E4489751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:46:50]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4716451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:46:50]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Aninda Adzalea Anggraeni--Berhasil Presensi -Mulai-","nokartu":"E4716451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:46:53]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4716451","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:46:53]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Aninda Adzalea Anggraeni--TERCATAT! 3 dtk lalu","nokartu":"E4716451"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:46:57]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"64468751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:46:57]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Reni Yulianti--Berhasil Presensi -Mulai-","nokartu":"64468751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:47:01]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C4068151","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:47:01]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Fatma Surya--Berhasil Presensi -Mulai-","nokartu":"C4068151"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:47:05]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"140F8751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:47:05]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Ise Rezeki Agestia--Berhasil Presensi -Mulai-","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:47:09]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"140F8751","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:47:09]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Ise Rezeki Agestia--TERCATAT! 4 dtk lalu","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:50:58]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"F4FA6B51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:50:58]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Syafa Mukminati--Berhasil Presensi -Mulai-","nokartu":"F4FA6B51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:52:55]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"14BD8851","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:52:55]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Wulandari--Berhasil Presensi -Mulai-","nokartu":"14BD8851"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:52:59]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"14BD8851","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:52:59]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Wulandari--TERCATAT! 4 dtk lalu","nokartu":"14BD8851"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 12:53:00]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"44098551","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 12:53:00]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Nurul Alifian--Berhasil Presensi -Mulai-","nokartu":"44098551"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 13:00:13]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C4CE8D51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 13:00:13]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Pingkan Rahelita--Berhasil Presensi -Mulai-","nokartu":"C4CE8D51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 13:00:17]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C4CE8D51","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 13:00:17]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Pingkan Rahelita--TERCATAT! 4 dtk lalu","nokartu":"C4CE8D51"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 13:13:46]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"249D6551","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 13:13:46]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Adhine Auditya Santoso--Berhasil Presensi -Mulai-","nokartu":"249D6551"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 13:13:50]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"249D6551","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-08-29 13:13:50]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Adhine Auditya Santoso--TERCATAT! 4 dtk lalu","nokartu":"249D6551"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-08-29 13:31:34]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44DF8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:31:34]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Najwa Divani Putri--Sudah melakukan presensi pulang","nokartu":"44DF8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:31:37]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44DF8E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:31:37]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Najwa Divani Putri--Sudah melakukan presensi pulang","nokartu":"44DF8E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:31:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"84EB8D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:31:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Latifatul Azizah--Sudah melakukan presensi pulang","nokartu":"84EB8D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:31:58]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4E08751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:31:58]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Fatimah Latipah--Sudah melakukan presensi pulang","nokartu":"D4E08751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:32:30]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4099551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:32:30]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Nathaniela Ajeng Kafina--Sudah melakukan presensi pulang","nokartu":"C4099551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:32:58]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4F08551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:32:58]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Kiara Nanda--Sudah melakukan presensi pulang","nokartu":"E4F08551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:33:00]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4F08551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:33:00]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Kiara Nanda--Sudah melakukan presensi pulang","nokartu":"E4F08551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:33:22]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64EB8351","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:33:22]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Cindy Seftia Ningrum--Sudah melakukan presensi pulang","nokartu":"64EB8351"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:33:42]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"74D48751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:33:42]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Fisah Duwi Novitasari--Sudah melakukan presensi pulang","nokartu":"74D48751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:33:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"944E8651","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:33:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Selvi Rahmawati--Sudah melakukan presensi pulang","nokartu":"944E8651"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:34:36]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64468751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:34:36]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Reni Yulianti--Sudah melakukan presensi pulang","nokartu":"64468751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:34:42]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4518451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:34:42]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Risma Febriyanti--Sudah melakukan presensi pulang","nokartu":"E4518451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:34:44]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"E4716451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:34:44]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"PPBH","info":"Aninda Adzalea Anggraeni--Berhasil Presensi Pulang","nokartu":"E4716451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:34:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"343F7B51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:34:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Listi Sugiarti--Sudah melakukan presensi pulang","nokartu":"343F7B51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:34:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C4068151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:34:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Fatma Surya--Sudah melakukan presensi pulang","nokartu":"C4068151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:35:04]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"140F8751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:35:04]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Ise Rezeki Agestia--Sudah melakukan presensi pulang","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:35:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"140F8751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:35:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Ise Rezeki Agestia--Sudah melakukan presensi pulang","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:35:11]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"140F8751","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:35:11]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Ise Rezeki Agestia--Sudah melakukan presensi pulang","nokartu":"140F8751"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:35:25]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44C06D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:35:25]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Adis Setia Wardani--Sudah melakukan presensi pulang","nokartu":"44C06D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:36:45]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"14BD8851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:36:45]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"PPBH","info":"Wulandari--Berhasil Presensi Pulang","nokartu":"14BD8851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:37:36]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4B68C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:37:36]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Dina Fitriana--Sudah melakukan presensi pulang","nokartu":"D4B68C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 13:37:37]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4B68C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 13:37:37]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Dina Fitriana--Sudah melakukan presensi pulang","nokartu":"D4B68C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:42]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"64488551","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:42]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Widya Anggraeni Setianingsih--Sudah melakukan presensi pulang","nokartu":"64488551"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:46]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"64488551","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:46]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Widya Anggraeni Setianingsih--Sudah melakukan presensi pulang","nokartu":"64488551"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:47]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:47]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:48]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:48]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Lisa Dwi Pricylia--Sudah melakukan presensi pulang","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:48]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:48]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:49]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:49]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Lisa Dwi Pricylia--Sudah melakukan presensi pulang","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:50]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:50]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Lisa Dwi Pricylia--Sudah melakukan presensi pulang","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:51]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:51]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:51]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64968E51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:51]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Lisa Dwi Pricylia--Sudah melakukan presensi pulang","nokartu":"64968E51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:54]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:54]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:55]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:55]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:56]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B42C5C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:56]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Nellisa Indah Pramesti--Sudah melakukan presensi pulang","nokartu":"B42C5C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:01:56]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:01:56]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:01:59]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B42C5C51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:01:59]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Nellisa Indah Pramesti--Sudah melakukan presensi pulang","nokartu":"B42C5C51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:02:00]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"04928751","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-08-29 14:02:00]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"SAPP","info":"Wahyu Rahmadani--Sudah melakukan presensi pulang","nokartu":"04928751"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-08-29 14:04:00]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"94C89151","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:04:00]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Riyanti--Sudah melakukan presensi pulang","nokartu":"94C89151"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:14:53]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C49D8551","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:14:53]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Disca Ayu Ramandita--Sudah melakukan presensi pulang","nokartu":"C49D8551"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:14:55]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"B4589851","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:14:55]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Kirana Dinda Tiara--Sudah melakukan presensi pulang","nokartu":"B4589851"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:14:59]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F4219251","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:14:59]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"PPBH","info":"Kania Radhia Mecha--Berhasil Presensi Pulang","nokartu":"F4219251"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:15:01]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"F36B1210","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:15:01]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Yunita Maela Rahma--Sudah melakukan presensi pulang","nokartu":"F36B1210"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:15:37]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4EA6D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:15:37]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Karunia Rika Difa--Sudah melakukan presensi pulang","nokartu":"D4EA6D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:15:44]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"64279451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:15:44]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Zuyun Na ilufar--Sudah melakukan presensi pulang","nokartu":"64279451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:15:55]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4199451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:15:55]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Elsa Agustina Dwi Saputri--Sudah melakukan presensi pulang","nokartu":"D4199451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2024-08-29 14:15:58]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"D4199451","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-08-29 14:15:58]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"SAPP","info":"Elsa Agustina Dwi Saputri--Sudah melakukan presensi pulang","nokartu":"D4199451"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+

@@ -1,0 +1,30 @@
+[2025-05-23 07:04:41]
+Menerima pesan dari: dariMCU_2309G002 - Pesan: {"nokartu":"636D7305","idchip":"7976318","nodevice":"2309G002","key":"1234567890987654321","ipa":"10.10.2.72"}
+[2025-05-23 07:04:41]
+Berhasil merespon "dariMCU_2309G002" : {"respon":[{"id":"7976318","nodevice":"2309G002","message":"BMPM","info":"Sasetyo--Berhasil Presensi","nokartu":"636D7305"}]}
+Berhasil kirim balasan ke "responServer_2309G002"
+
+[2025-05-23 07:04:45]
+Menerima pesan dari: dariMCU_2309G002 - Pesan: {"nokartu":"636D7305","idchip":"7976318","nodevice":"2309G002","key":"1234567890987654321","ipa":"10.10.2.72"}
+[2025-05-23 07:04:45]
+Berhasil merespon "dariMCU_2309G002" : {"respon":[{"id":"7976318","nodevice":"2309G002","message":"SMPM","info":"Sasetyo--Anda Sudah melakukan Presensi","nokartu":"636D7305"}]}
+Berhasil kirim balasan ke "responServer_2309G002"
+
+[2025-05-23 07:05:23]
+Menerima pesan dari: dariMCU_2309G002 - Pesan: {"nokartu":"D1A4BB50","idchip":"7976318","nodevice":"2309G002","key":"1234567890987654321","ipa":"10.10.2.72"}
+[2025-05-23 07:05:23]
+Berhasil merespon "dariMCU_2309G002" : {"respon":[{"id":"7976318","nodevice":"2309G002","message":"BMPM","info":"Rasyad Aryo Wibowo--Berhasil Presensi","nokartu":"D1A4BB50"}]}
+Berhasil kirim balasan ke "responServer_2309G002"
+
+[2025-05-23 07:05:23]
+Menerima pesan dari: dariMCU_2309G002 - Pesan: {"nokartu":"D1A4BB50","idchip":"7976318","nodevice":"2309G002","key":"1234567890987654321","ipa":"10.10.2.72"}
+[2025-05-23 07:05:23]
+Berhasil merespon "dariMCU_2309G002" : {"respon":[{"id":"7976318","nodevice":"2309G002","message":"SMPM","info":"Rasyad Aryo Wibowo--Anda Sudah melakukan Presensi","nokartu":"D1A4BB50"}]}
+Berhasil kirim balasan ke "responServer_2309G002"
+
+[2025-05-23 07:05:54]
+Menerima pesan dari: dariMCU_2309G002 - Pesan: {"nokartu":"D1A4BB50","idchip":"7976318","nodevice":"2309G002","key":"1234567890987654321","ipa":"10.10.2.72"}
+[2025-05-23 07:05:54]
+Berhasil merespon "dariMCU_2309G002" : {"respon":[{"id":"7976318","nodevice":"2309G002","message":"SMPM","info":"Rasyad Aryo Wibowo--Anda Sudah melakukan Presensi","nokartu":"D1A4BB50"}]}
+Berhasil kirim balasan ke "responServer_2309G002"
+

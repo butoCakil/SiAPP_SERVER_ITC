@@ -1,0 +1,12 @@
+<Files *>
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+        RewriteCond %{REMOTE_ADDR} !^::1$
+        RewriteRule ^ / [R=301,L]
+    </IfModule>
+    Order Deny,Allow
+    Deny from all
+    Allow from 127.0.0.1
+    Allow from ::1
+</Files>

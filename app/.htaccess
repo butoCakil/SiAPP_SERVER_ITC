@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Redirect ke halaman utama jika ada yang mencoba mengakses /app/
+RewriteCond %{REQUEST_URI} ^/app/$ [NC]
+RewriteRule ^ / [R=301,L]
+
+# Aturan berikut mengijinkan akses ke file yang ada di /app/
+RewriteCond %{REQUEST_URI} ^/app/ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Aturan berikut mengijinkan akses ke file yang ada di /app/ jika memiliki ekstensi .php
+RewriteCond %{REQUEST_URI} ^/app/ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_FILENAME} \.php$ [NC]
+RewriteRule ^ - [L]

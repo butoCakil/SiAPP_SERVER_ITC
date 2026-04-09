@@ -1,0 +1,6 @@
+[2024-09-22 12:48:11]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"B37F7A05","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.8.233"}
+[2024-09-22 12:48:11]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Putra Fajar Noviyanto--Berhasil Presensi -Mulai-","nokartu":"B37F7A05"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+

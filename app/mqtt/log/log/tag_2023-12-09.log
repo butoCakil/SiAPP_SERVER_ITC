@@ -1,0 +1,66 @@
+[2023-12-09 05:47:08]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"ED68DF6A","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 05:47:08]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"HLTM","info":"Aprillia Palupi, S.P--Hari ini Libur","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 12:17:47]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"93F67406","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 12:17:47]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 12:21:49]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"94ED9551","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 12:21:49]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"94ED9551"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 12:21:57]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"ED68DF6A","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 12:21:57]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"HLTM","info":"Aprillia Palupi, S.P--Hari ini Libur","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 12:42:27]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"94ED9551","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 12:42:27]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"94ED9551"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 12:42:35]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"ED68DF6A","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 12:42:35]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"HLTM","info":"Aprillia Palupi, S.P--Hari ini Libur","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 13:06:44]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"93F67406","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 13:06:44]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 13:07:08]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"94ED9551","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 13:07:08]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"94ED9551"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 13:07:19]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"93F67406","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 13:07:19]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 14:14:40]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"13197D05","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 14:14:40]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"13197D05"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-09 14:15:34]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"13197D05","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-09 14:15:34]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"13197D05"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+

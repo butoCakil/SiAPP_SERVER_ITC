@@ -1,0 +1,30 @@
+[2023-12-19 10:03:23]
+Menerima pesan dari: dariMCU_2310NA010 - Pesan: {"nokartu":"C407B889","idchip":"C00FC908B764","nodevice":"2310NA010","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-19 10:03:23]
+Berhasil merespon "dariMCU_2310NA010" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"C407B889"}]}
+Berhasil kirim balasan ke "responServer_2310NA010"
+
+[2023-12-19 10:05:37]
+Menerima pesan dari: dariMCU_2310NA010 - Pesan: {"nokartu":"0573D476","idchip":"C00FC908B764","nodevice":"2310NA010","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-19 10:05:37]
+Berhasil merespon "dariMCU_2310NA010" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"0573D476"}]}
+Berhasil kirim balasan ke "responServer_2310NA010"
+
+[2023-12-19 10:07:16]
+Menerima pesan dari: dariMCU_2310NA010 - Pesan: {"nokartu":"C407B889","idchip":"C00FC908B764","nodevice":"2310NA010","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-19 10:07:16]
+Berhasil merespon "dariMCU_2310NA010" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"C407B889"}]}
+Berhasil kirim balasan ke "responServer_2310NA010"
+
+[2023-12-19 10:22:29]
+Menerima pesan dari: dariMCU_2310NA010 - Pesan: {"nokartu":"C407B889","idchip":"C00FC908B764","nodevice":"2310NA010","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-19 10:22:29]
+Berhasil merespon "dariMCU_2310NA010" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"C407B889"}]}
+Berhasil kirim balasan ke "responServer_2310NA010"
+
+[2023-12-19 15:12:00]
+Menerima pesan dari: dariMCU_2310NA010 - Pesan: {"nokartu":"0ACB456A","idchip":"C00FC908B764","nodevice":"2310NA010","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-19 15:12:00]
+Berhasil merespon "dariMCU_2310NA010" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"0ACB456A"}]}
+Berhasil kirim balasan ke "responServer_2310NA010"
+

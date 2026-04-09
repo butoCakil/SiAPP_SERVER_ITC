@@ -1,0 +1,18 @@
+[2024-04-06 15:33:25]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C207F620","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.6.19"}
+[2024-04-06 15:33:25]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Muhammad Faiz Arjun--Berhasil Presensi -Mulai-","nokartu":"C207F620"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-04-06 15:33:27]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C207F620","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.6.19"}
+[2024-04-06 15:33:27]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Muhammad Faiz Arjun--TERCATAT! 2 dtk lalu","nokartu":"C207F620"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-04-06 15:33:30]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"C207F620","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.6.19"}
+[2024-04-06 15:33:30]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Muhammad Faiz Arjun--TERCATAT! 5 dtk lalu","nokartu":"C207F620"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+

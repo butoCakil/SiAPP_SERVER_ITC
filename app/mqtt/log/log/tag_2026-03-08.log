@@ -1,0 +1,12 @@
+[2026-03-08 13:16:02]
+Menerima pesan dari: dariMCU/2309MAS003 - Pesan: {"nokartu":"150920BF","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.1.23"}
+[2026-03-08 13:16:02]
+Berhasil merespon "dariMCU/2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"YAMELIA CHINTYA PUTRI--Berhasil Presensi -Mulai-","nokartu":"150920BF"}]}
+Berhasil kirim balasan ke "responServer/2309MAS003"
+
+[2026-03-08 13:16:14]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"150920BF","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-03-08 13:16:14]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"SMPM","info":"YAMELIA CHINTYA PUTRI--Anda Sudah melakukan Presensi","nokartu":"150920BF"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001"
+

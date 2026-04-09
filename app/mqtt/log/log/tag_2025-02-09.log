@@ -1,0 +1,6 @@
+[2025-02-09 12:09:55]
+Menerima pesan dari: dariMCU_2409TL002 - Pesan: {"nokartu":"44E79451","idchip":"3703180","nodevice":"2409TL002","key":"1234567890987654321","ipa":"10.10.9.140"}
+[2025-02-09 12:09:55]
+Berhasil merespon "dariMCU_2409TL002" : {"respon":[{"id":"3703180","nodevice":"2409TL002","message":"HLTM","info":"Rahmat Aji Santoso--Hari ini Libur","nokartu":"44E79451"}]}
+Berhasil kirim balasan ke "responServer_2409TL002"
+

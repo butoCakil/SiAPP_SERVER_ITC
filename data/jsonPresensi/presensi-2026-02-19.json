@@ -1,0 +1,50 @@
+{
+    "recent": [
+        {
+            "chipID": "F44C26077000",
+            "macAddress": [
+                "00:70:07:26:4C:F4"
+            ],
+            "nodevice": [
+                "G0007"
+            ],
+            "ipAddress": [
+                "10.31.6.97"
+            ],
+            "timestamp": [
+                "2026-02-19 07:45:00"
+            ],
+            "last_update": "2026-02-19 07:45:00"
+        },
+        {
+            "chipID": "885E26077000",
+            "macAddress": [
+                "00:70:07:26:5E:88"
+            ],
+            "nodevice": [
+                "G0006"
+            ],
+            "ipAddress": [
+                "10.31.6.98"
+            ],
+            "timestamp": [
+                "2026-02-19 08:00:00"
+            ],
+            "last_update": "2026-02-19 08:00:20"
+        }
+    ],
+    "data": [
+        {
+            "nokartu": "61840298",
+            "nomorinduk": "3796",
+            "nama": "ADMIN",
+            "info": "XI TE 2",
+            "kode": "XTE2",
+            "tanggal": "2026-02-19",
+            "wmasuk": "07:30:26",
+            "wpulang": "0",
+            "status": "T"
+        }
+    ],
+    "errors": []
+}

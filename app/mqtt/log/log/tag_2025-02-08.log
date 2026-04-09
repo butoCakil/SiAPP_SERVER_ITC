@@ -1,0 +1,18 @@
+[2025-02-08 07:55:47]
+Menerima pesan dari: dariMCU_2409TL003 - Pesan: {"nokartu":"33FF17FE","idchip":"3709126","nodevice":"2409TL003","key":"1234567890987654321","ipa":"10.10.4.12"}
+[2025-02-08 07:55:47]
+Berhasil merespon "dariMCU_2409TL003" : {"respon":[{"id":"3709126","nodevice":"2409TL003","message":"HLTM","info":"Nova Dwi Sulistyowati--Hari ini Libur","nokartu":"33FF17FE"}]}
+Berhasil kirim balasan ke "responServer_2409TL003"
+
+[2025-02-08 07:55:52]
+Menerima pesan dari: dariMCU_2409TL003 - Pesan: {"nokartu":"33FF17FE","idchip":"3709126","nodevice":"2409TL003","key":"1234567890987654321","ipa":"10.10.4.12"}
+[2025-02-08 07:55:52]
+Berhasil merespon "dariMCU_2409TL003" : {"respon":[{"id":"3709126","nodevice":"2409TL003","message":"HLTM","info":"Nova Dwi Sulistyowati--Hari ini Libur","nokartu":"33FF17FE"}]}
+Berhasil kirim balasan ke "responServer_2409TL003"
+
+[2025-02-08 11:21:03]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"C1732D50","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.0.4"}
+[2025-02-08 11:21:03]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"HLTM","info":"Ahmad Priyanto--Hari ini Libur","nokartu":"C1732D50"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+

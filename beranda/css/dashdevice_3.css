@@ -1,0 +1,449 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f5f7;
+    margin: 0;
+    padding: 20px;
+}
+
+.device-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.device-card {
+    background: #fff;
+    border: 4px solid #5d5b5bff;
+    /* bingkai hitam tebal */
+    border-radius: 15px;
+    box-shadow:
+        inset 0 2px 6px rgba(0, 0, 0, 0.25),
+        /* bayangan ke dalam */
+        0 4px 12px rgba(0, 0, 0, 0.25);
+    /* bayangan luar halus */
+    padding: 15px 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.device-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        inset 0 2px 6px rgba(0, 0, 0, 0.25),
+        0 10px 25px rgba(0, 0, 0, 0.35);
+    /* bayangan luar lebih kuat saat hover */
+}
+
+.device-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.device-id {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.spaninfo {
+    background-color: #00d0ffff;
+    border-radius: 10px;
+    /* padding: 1px 5px; */
+    text-align: center;
+    font-size: 12px;
+    box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+.device-row {
+    display: flex;
+    align-items: center;
+    /* ✅ buat elemen di dalamnya sejajar vertikal */
+    gap: 6px;
+    /* jarak kecil antara teks dan span */
+}
+
+.spanwarning {
+    background-color: #ffd500;
+    border-radius: 10px;
+    padding: 2px 8px;
+    text-align: center;
+    font-size: 10px;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+    /* biar teks di tengah dalam span */
+}
+
+.offline_since {
+    font-size: 10px;
+    background-color: #ee3030ff;
+    color: whitesmoke;
+    padding: 1px 10px;
+    border-radius: 10px;
+}
+
+.online_since {
+    font-size: 10px;
+    background-color: #51f561ff;
+    color: black;
+    padding: 1px 10px;
+    border-radius: 10px;
+}
+
+.tittle-device {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.timeoffline {
+    text-align: center;
+}
+
+.status-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.online {
+    background-color: #06de72ff;
+    box-shadow:
+        0 0 15px #00d26a;
+}
+
+.offline {
+    background-color: #ff3b3b;
+    box-shadow: 0 0 15px #ff3b3b;
+    /* box-shadow: inset -2px -5px 10px rgba(0, 0, 0, 0.5); */
+}
+
+.rssi-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 10px;
+    background: #eee;
+    overflow: hidden;
+    position: relative;
+}
+
+.rssi-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.6s ease, background-color 0.6s ease;
+}
+
+.ram-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(to right,
+            #00aaff 0%,
+            /* biru */
+            #00ff66 50%,
+            /* hijau */
+            #ffee00 70%,
+            /* kuning */
+            #ff8800 85%,
+            /* oranye */
+            #ff0000 100%
+            /* merah */
+        );
+    position: relative;
+}
+
+.ram-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: calc(100% - var(--ram-percent, 0%));
+    background: #eee;
+    /* warna latar belakang untuk area yang belum terpakai */
+    transition: width 0.6s ease;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 0.8em;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail {
+    font-size: 0.75em;
+    color: #555;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    padding: 1px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+
+.btn {
+    flex: 1;
+    text-align: center;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 15px;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+    transition: all 0.25s ease;
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-sm {
+    flex: 1;
+    text-align: center;
+    padding: 1px 1px;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+    transition: all 0.25s ease;
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-sm:hover {
+    opacity: 0.7;
+    transform: scale(1.2);
+    transition: all 0.2s ease;
+}
+
+/* Warna tombol dengan nuansa segar */
+.btn-setting {
+    background: linear-gradient(135deg, #00aaff, #007bff);
+}
+
+
+.btn-reboot {
+    background: linear-gradient(135deg, #ff4b2b, #ff0000);
+}
+
+
+.btn-sync {
+    background: linear-gradient(135deg, #b200ff, #7b1fa2);
+}
+
+
+.btn-upload {
+    background: linear-gradient(135deg, #00c853, #00964b);
+}
+
+.btn-serial-on {
+    color: black !important;
+    background: linear-gradient(135deg, #eaff00ff, #c4d600ff) !important;
+}
+
+.btn-serial-off {
+    color: white !important;
+    background: linear-gradient(135deg, #000000ff, #333333ff) !important;
+}
+
+/* Efek hover: lebih terang dan naik sedikit */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 6px 12px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+}
+
+
+/* Efek klik: sedikit turun */
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    filter: brightness(0.95);
+}
+
+.btn-setting:disabled,
+.btn-reboot:disabled,
+.btn-sync:disabled,
+.btn-upload:disabled,
+.btn-serial:disabled {
+    background: #b0b0b0;
+    color: #ffffff;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+    transform: none;
+}
+
+.ram-label {
+    margin-top: 5px;
+    margin-bottom: auto;
+    font-size: 0.8em;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.viewlog a {
+    text-decoration: none;
+    font-size: 12px;
+    color: #444;
+}
+
+/*  */
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+    margin-left: 6px;
+    transition: transform 0.3s;
+}
+
+.toggle-btn:hover {
+    color: #0056b3;
+}
+
+.detail-wrapper {
+    display: none;
+    /* disembunyikan default */
+    transition: all 0.3s ease;
+}
+
+.detail-wrapper.show {
+    display: block;
+}
+
+.showThis {
+    display: block !important;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.hide {
+    display: none;
+}
+
+#btnSetAll,
+#btnSyncAll {
+    padding: 5px 15px;
+    /* lebih tebal dari default */
+    font-size: 0.95em;
+    /* sedikit lebih besar */
+    border-radius: 20px;
+    /* lembut di tepi */
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.2),
+        0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+    max-width: 150px;
+    margin: auto 5px;
+}
+
+#btnSetAll:hover,
+#btnSyncAll:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.2);
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.font-8 {
+    font-size: 0.8em;
+}
+
+.font-6 {
+    font-size: 0.6em;
+}
+
+/* .refresh-info {
+    position: sticky;
+    top: 50px;
+    background: #fff;
+    z-index: 999;
+    text-align: right;
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 10px auto;
+    padding: 6px 12px;
+    border-bottom: 1px solid #ddd;
+    max-width: max-content;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+} */
+
+.refresh-info {
+    position: fixed;
+    top: 50px;
+    /* di bawah navbar */
+    right: 20px;
+    /* di kanan layar */
+    background: #fff;
+    z-index: 999;
+    text-align: right;
+    font-size: 13px;
+    color: #666;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay semi-transparan */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+/* Spinner animasi */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* Animasi putar */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

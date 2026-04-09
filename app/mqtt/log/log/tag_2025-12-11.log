@@ -1,0 +1,6 @@
+[2025-12-11 11:33:58]
+Menerima pesan dari: dariMCU/2309IZ003 - Pesan: {"nokartu":"19A053A6","idchip":"7737844","nodevice":"2309IZ003","key":"1234567890987654321","ipa":"10.10.25.71"}
+[2025-12-11 11:33:58]
+Berhasil merespon "dariMCU/2309IZ003" : {"respon":[{"id":"7737844","nodevice":"2309IZ003","message":"TBPS","info":"HAFIDZ FUADI AL-GHIFARI--Tidak bisa melakukan presensi sekarang.","nokartu":"19A053A6"}]}
+Berhasil kirim balasan ke "responServer/2309IZ003"
+

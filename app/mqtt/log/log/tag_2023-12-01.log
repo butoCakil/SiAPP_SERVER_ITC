@@ -1,0 +1,12 @@
+[2023-12-01 06:00:38]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"C2E2B920","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-01 06:00:38]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"BMPM","info":"Ellin Agesti Milana Al Faida--Berhasil Presensi","nokartu":"C2E2B920"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2023-12-01 06:00:43]
+Menerima pesan dari: dariMCU_2310IZ003 - Pesan: {"nokartu":"C2E2B920","idchip":"C00FC908B764","nodevice":"2310IZ003","key":"1234567890987654321","ipa":"10.16.0.161"}
+[2023-12-01 06:00:43]
+Berhasil merespon "dariMCU_2310IZ003" : {"respon":[{"id":"C00FC908B764","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"C2E2B920"}]}
+Berhasil kirim balasan ke "responServer_2310IZ003"
+

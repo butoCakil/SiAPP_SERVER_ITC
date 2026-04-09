@@ -1,0 +1,18 @@
+[2024-01-28 10:13:54]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"1AA0E07E","idchip":"14094467","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.31.2.101"}
+[2024-01-28 10:13:54]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"14094467","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"1AA0E07E"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2024-01-28 10:18:21]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"F064B089","idchip":"14094467","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.31.2.101"}
+[2024-01-28 10:18:21]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"14094467","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"F064B089"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+
+[2024-01-28 11:38:40]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"1AA0E07E","idchip":"14094467","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.31.2.101"}
+[2024-01-28 11:38:40]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"14094467","nodevice":"","message":"406","info":"ERROR!--CHIP TIDAK TERDAFTAR","nokartu":"1AA0E07E"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+

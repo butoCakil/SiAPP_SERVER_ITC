@@ -1,0 +1,12 @@
+[2024-02-17 16:55:43]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"D4469151","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-02-17 16:55:43]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"HLTM","info":"Febra Arthur Calista--Hari ini Libur","nokartu":"D4469151"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-02-17 16:55:46]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"047C9451","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-02-17 16:55:46]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"HLTM","info":"Fatchur Rozak--Hari ini Libur","nokartu":"047C9451"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+

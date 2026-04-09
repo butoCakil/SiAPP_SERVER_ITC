@@ -1,0 +1,24 @@
+[2024-07-28 20:50:27]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"0581E497B65300","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-07-28 20:50:27]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"0581E497B65300"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-07-28 20:53:43]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"0581E497B65300","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-07-28 20:53:43]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"0581E497B65300"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-07-28 21:00:08]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"0581E497B65300","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-07-28 21:00:08]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"0581E497B65300"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+
+[2024-07-28 21:19:12]
+Menerima pesan dari: dariMCU_2309G001 - Pesan: {"nokartu":"0581E497B65300","idchip":"4207734","nodevice":"2309G001","key":"1234567890987654321","ipa":"192.168.2.100"}
+[2024-07-28 21:19:12]
+Berhasil merespon "dariMCU_2309G001" : {"respon":[{"id":"4207734","nodevice":"2309G001","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"0581E497B65300"}]}
+Berhasil kirim balasan ke "responServer_2309G001"
+

@@ -1,0 +1,13 @@
+[25-Feb-2026 09:03:02 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[25-Feb-2026 09:03:02 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[25-Feb-2026 09:03:12 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[25-Feb-2026 09:03:12 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[25-Feb-2026 18:32:26 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[25-Feb-2026 18:32:26 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[26-Feb-2026 19:35:59 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[26-Feb-2026 19:35:59 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[28-Feb-2026 09:40:28 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[28-Feb-2026 09:40:28 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[16-Mar-2026 16:36:04 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[16-Mar-2026 16:36:04 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[2026-04-06 15:02:55] JSON tidak valid dari topic devices/2309MAS002/status

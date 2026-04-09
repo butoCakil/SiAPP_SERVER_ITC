@@ -1,0 +1,12 @@
+[2026-04-02 12:39:14]
+Menerima pesan dari: dariMCU/2309MAS003 - Pesan: {"nokartu":"131701E3","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.1.23"}
+[2026-04-02 12:39:14]
+Berhasil merespon "dariMCU/2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Afra Pramudya Haswan Yusufpranowo--Berhasil Presensi -Mulai-","nokartu":"131701E3"}]}
+Berhasil kirim balasan ke "responServer/2309MAS003" (attempt 1)
+
+[2026-04-02 12:41:52]
+Menerima pesan dari: dariMCU/2309MAS003 - Pesan: {"nokartu":"131701E3","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.1.23"}
+[2026-04-02 12:41:52]
+Berhasil merespon "dariMCU/2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"SMPM","info":"Afra Pramudya Haswan Yusufpranowo--Anda Sudah melakukan Presensi","nokartu":"131701E3"}]}
+Berhasil kirim balasan ke "responServer/2309MAS003" (attempt 1)
+

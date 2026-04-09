@@ -1,0 +1,108 @@
+[2023-11-14 16:44:10]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 16:44:10]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 16:48:10]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 16:48:10]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 17:01:38]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 17:01:38]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 17:02:44]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 17:02:44]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 17:06:29]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 17:06:29]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 17:24:38]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 17:24:38]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 17:54:40]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 17:54:40]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPEB","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Mulai - Baru]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 18:05:26]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 18:05:26]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPSE","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Selesai]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 18:12:53]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 18:12:53]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPEB","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Mulai - Baru]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 18:24:39]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 18:24:39]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPSE","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Selesai]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 18:29:25]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 18:29:25]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"510","info":"Aprillia Palupi, S.P: TELAH TERCATAT! 286 dtk lalu","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 19:23:47]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 19:23:47]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 19:34:11]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 19:34:11]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPEB","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Mulai - Baru]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 19:48:38]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 19:48:38]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPSE","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Selesai]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 20:05:20]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 20:05:20]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 20:54:07]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 20:54:07]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 20:54:34]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"ED68DF6A","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 20:54:34]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"BPEB","info":"Aprillia Palupi, S.P, Berhasil melakukan Presensi Kegiatan [Mulai - Baru]","nokartu":"ED68DF6A"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+
+[2023-11-14 21:00:23]
+Menerima pesan dari: dariMCU_2309MAS004 - Pesan: {"nokartu":"93F67406","idchip":"304582","nodevice":"2309MAS004","key":"1234567890987654321","ipa":"10.16.0.140"}
+[2023-11-14 21:00:23]
+Berhasil merespon "dariMCU_2309MAS004" : {"respon":[{"id":"304582","nodevice":"2309MAS004","message":"IDTT","info":"93F67406, Kartu ID ini belum terdaftar","nokartu":"93F67406"}]}
+Berhasil kirim balasan ke "responServer_2309MAS004"
+

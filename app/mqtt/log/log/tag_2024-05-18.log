@@ -1,0 +1,18 @@
+[2024-05-18 13:15:02]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4FD6151","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.9.225"}
+[2024-05-18 13:15:02]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"BMPE","info":"Satriya Argo Negoro--Berhasil Presensi -Mulai-","nokartu":"E4FD6151"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-05-18 13:15:03]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"188235CE81FFBE","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.9.225"}
+[2024-05-18 13:15:03]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"IDTT","info":"Kartu ID ini--belum terdaftar","nokartu":"188235CE81FFBE"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+
+[2024-05-18 13:15:05]
+Menerima pesan dari: dariMCU_2309MAS003 - Pesan: {"nokartu":"E4FD6151","idchip":"16581755","nodevice":"2309MAS003","key":"1234567890987654321","ipa":"10.10.9.225"}
+[2024-05-18 13:15:05]
+Berhasil merespon "dariMCU_2309MAS003" : {"respon":[{"id":"16581755","nodevice":"2309MAS003","message":"510","info":"Satriya Argo Negoro--TERCATAT! 3 dtk lalu","nokartu":"E4FD6151"}]}
+Berhasil kirim balasan ke "responServer_2309MAS003"
+

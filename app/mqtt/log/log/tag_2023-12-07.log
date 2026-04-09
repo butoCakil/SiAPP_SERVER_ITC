@@ -1,0 +1,18 @@
+[2023-12-07 08:15:11]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"F3877F05","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-07 08:15:11]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Khoirul Irfan--Berhasil Presensi","nokartu":"F3877F05"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-07 08:15:14]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"F3877F05","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-07 08:15:14]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Khoirul Irfan--Anda Sudah melakukan Presensi","nokartu":"F3877F05"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-07 19:17:36]
+Menerima pesan dari: dariMCU_2309G005 - Pesan: {"nokartu":"C2E2B920","idchip":"10687500","nodevice":"2309G005","key":"1234567890987654321","ipa":"10.16.0.232"}
+[2023-12-07 19:17:36]
+Berhasil merespon "dariMCU_2309G005" : {"respon":[{"id":"10687500","nodevice":"2309G005","message":"PPBH","info":"Ellin Agesti Milana Al Faida--Berhasil Presensi Pulang","nokartu":"C2E2B920"}]}
+Berhasil kirim balasan ke "responServer_2309G005"
+

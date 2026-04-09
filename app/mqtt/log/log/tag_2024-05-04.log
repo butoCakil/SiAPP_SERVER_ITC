@@ -1,0 +1,6 @@
+[2024-05-04 10:18:12]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"44C26D51","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.1.217"}
+[2024-05-04 10:18:12]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"HLTM","info":"Bela Safira--Hari ini Libur","nokartu":"44C26D51"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+

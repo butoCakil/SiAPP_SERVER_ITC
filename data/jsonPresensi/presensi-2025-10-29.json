@@ -1,0 +1,34 @@
+{
+    "recent": [
+        {
+            "chipID": "E8DA8B29E748",
+            "macAddress": [
+                "48:E7:29:8B:DA:E8"
+            ],
+            "nodevice": [
+                "G0001"
+            ],
+            "ipAddress": [
+                "10.31.0.238"
+            ],
+            "timestamp": [
+                "2025-10-29 07:30:00"
+            ],
+            "last_update": "2025-10-29 07:29:59"
+        }
+    ],
+    "data": [
+        {
+            "nokartu": "6A573469",
+            "nomorinduk": "1234",
+            "nama": "MR. X",
+            "info": "XII TE 1",
+            "kode": "XIIAT1",
+            "tanggal": "2025-10-29",
+            "wmasuk": "06:47:20",
+            "wpulang": "0",
+            "status": "M"
+        }
+    ],
+    "errors": []
+}

@@ -1,0 +1,96 @@
+[2025-02-10 11:25:30]
+Menerima pesan dari: dariMCU_2409TL001 - Pesan: {"nokartu":"732522FF","idchip":"16745871","nodevice":"2409TL001","key":"1234567890987654321","ipa":"10.10.2.187"}
+[2025-02-10 11:25:30]
+Berhasil merespon "dariMCU_2409TL001" : {"respon":[{"id":"16745871","nodevice":"2409TL001","message":"TBPS","info":"Khanifatu Zahra--Tidak bisa melakukan presensi sekarang.","nokartu":"732522FF"}]}
+Berhasil kirim balasan ke "responServer_2409TL001"
+
+[2025-02-10 11:34:13]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"53AAF7E4","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.0.4"}
+[2025-02-10 11:34:13]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"TBPS","info":"Agung Rakhmadi--Tidak bisa melakukan presensi sekarang.","nokartu":"53AAF7E4"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2025-02-10 11:34:18]
+Menerima pesan dari: dariMCU_2309G004 - Pesan: {"nokartu":"53AAF7E4","idchip":"14375838","nodevice":"2309G004","key":"1234567890987654321","ipa":"10.31.0.4"}
+[2025-02-10 11:34:18]
+Berhasil merespon "dariMCU_2309G004" : {"respon":[{"id":"14375838","nodevice":"2309G004","message":"TBPS","info":"Agung Rakhmadi--Tidak bisa melakukan presensi sekarang.","nokartu":"53AAF7E4"}]}
+Berhasil kirim balasan ke "responServer_2309G004"
+
+[2025-02-10 11:46:44]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"F3EFF4E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:46:44]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"BMPE","info":"Alin Jenny Putami--Berhasil Presensi -Mulai-","nokartu":"F3EFF4E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:46:46]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"F3EFF4E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:46:46]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Alin Jenny Putami--TERCATAT! 2 dtk lalu","nokartu":"F3EFF4E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:46:49]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"F3EFF4E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:46:49]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Alin Jenny Putami--TERCATAT! 5 dtk lalu","nokartu":"F3EFF4E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:47:57]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"039EE6E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:47:57]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"BMPE","info":"Rista Dwi Amelia--Berhasil Presensi -Mulai-","nokartu":"039EE6E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:47:59]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"039EE6E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:47:59]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Rista Dwi Amelia--TERCATAT! 2 dtk lalu","nokartu":"039EE6E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:02]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"039EE6E4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:02]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Rista Dwi Amelia--TERCATAT! 5 dtk lalu","nokartu":"039EE6E4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:18]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"A33FECE4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:18]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"BMPE","info":"Fitri Oktaviana--Berhasil Presensi -Mulai-","nokartu":"A33FECE4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:19]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"C300C4E2","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:19]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"BMPE","info":"Fisna Aretia Ferlani--Berhasil Presensi -Mulai-","nokartu":"C300C4E2"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:21]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"A33FECE4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:21]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Fitri Oktaviana--TERCATAT! 3 dtk lalu","nokartu":"A33FECE4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:22]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"C300C4E2","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:22]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Fisna Aretia Ferlani--TERCATAT! 3 dtk lalu","nokartu":"C300C4E2"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:26]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"A33FECE4","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:26]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Fitri Oktaviana--TERCATAT! 8 dtk lalu","nokartu":"A33FECE4"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:32]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"C300C4E2","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:32]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Fisna Aretia Ferlani--TERCATAT! 13 dtk lalu","nokartu":"C300C4E2"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+
+[2025-02-10 11:48:40]
+Menerima pesan dari: dariMCU_2309MAS001 - Pesan: {"nokartu":"C300C4E2","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.6.54"}
+[2025-02-10 11:48:40]
+Berhasil merespon "dariMCU_2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"510","info":"Fisna Aretia Ferlani--TERCATAT! 21 dtk lalu","nokartu":"C300C4E2"}]}
+Berhasil kirim balasan ke "responServer_2309MAS001"
+

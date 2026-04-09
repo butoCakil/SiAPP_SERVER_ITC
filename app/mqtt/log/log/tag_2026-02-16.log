@@ -1,0 +1,12 @@
+[2026-02-16 13:42:36]
+Menerima pesan dari: dariMCU/2309MAS001 - Pesan: {"nokartu":"E48F99CB","idchip":"4115046","nodevice":"2309MAS001","key":"1234567890987654321","ipa":"10.10.25.50"}
+[2026-02-16 13:42:36]
+Berhasil merespon "dariMCU/2309MAS001" : {"respon":[{"id":"4115046","nodevice":"2309MAS001","message":"BMPE","info":"ARDHIKA DUTA ARTHA--Berhasil Presensi -Mulai-","nokartu":"E48F99CB"}]}
+Berhasil kirim balasan ke "responServer/2309MAS001"
+
+[2026-02-16 13:42:39]
+Menerima pesan dari: dariMCU/2309MAS002 - Pesan: {"nokartu":"E48F99CB","idchip":"1165251","nodevice":"2309MAS002","key":"1234567890987654321","ipa":"10.10.25.51"}
+[2026-02-16 13:42:39]
+Berhasil merespon "dariMCU/2309MAS002" : {"respon":[{"id":"1165251","nodevice":"2309MAS002","message":"SMPM","info":"ARDHIKA DUTA ARTHA--Anda Sudah melakukan Presensi","nokartu":"E48F99CB"}]}
+Berhasil kirim balasan ke "responServer/2309MAS002"
+

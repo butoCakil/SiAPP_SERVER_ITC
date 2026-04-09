@@ -1,0 +1,18 @@
+[2024-01-10 07:01:07]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"83457005","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2024-01-10 07:01:07]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"BMPM","info":"Miftakhul Ghoiril--Berhasil Presensi","nokartu":"83457005"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-01-10 07:01:10]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"83457005","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2024-01-10 07:01:10]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Miftakhul Ghoiril--Anda Sudah melakukan Presensi","nokartu":"83457005"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2024-01-10 07:01:14]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"83457005","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2024-01-10 07:01:14]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"SMPM","info":"Miftakhul Ghoiril--Anda Sudah melakukan Presensi","nokartu":"83457005"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+

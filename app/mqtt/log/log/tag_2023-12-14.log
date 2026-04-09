@@ -1,0 +1,24 @@
+[2023-12-14 10:17:07]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"232A7605","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-14 10:17:07]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"TBPS","info":"Rozan Dimensi Farid--Tidak bisa melakukan presensi sekarang.","nokartu":"232A7605"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-14 10:17:15]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"232A7605","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-14 10:17:15]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"TBPS","info":"Rozan Dimensi Farid--Tidak bisa melakukan presensi sekarang.","nokartu":"232A7605"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-14 10:17:20]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"03807505","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-14 10:17:20]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"TBPS","info":"Muhammad Khairurasyid--Tidak bisa melakukan presensi sekarang.","nokartu":"03807505"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+
+[2023-12-14 10:17:26]
+Menerima pesan dari: dariMCU_2309G003 - Pesan: {"nokartu":"03807505","idchip":"8008873","nodevice":"2309G003","key":"1234567890987654321","ipa":"10.10.5.218"}
+[2023-12-14 10:17:26]
+Berhasil merespon "dariMCU_2309G003" : {"respon":[{"id":"8008873","nodevice":"2309G003","message":"TBPS","info":"Muhammad Khairurasyid--Tidak bisa melakukan presensi sekarang.","nokartu":"03807505"}]}
+Berhasil kirim balasan ke "responServer_2309G003"
+

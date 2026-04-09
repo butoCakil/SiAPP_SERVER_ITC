@@ -1,0 +1,34 @@
+{
+    "recent": [
+        {
+            "chipID": "AC12F332A7B0",
+            "macAddress": [
+                "B0:A7:32:F3:12:AC"
+            ],
+            "nodevice": [
+                "G0003"
+            ],
+            "ipAddress": [
+                "10.31.0.24"
+            ],
+            "timestamp": [
+                "2026-02-05 07:30:00"
+            ],
+            "last_update": "2026-02-05 07:29:59"
+        }
+    ],
+    "data": [
+        {
+            "nokartu": "61840298",
+            "nomorinduk": "3796",
+            "nama": "ADMIN",
+            "info": "XI TE 2",
+            "kode": "XTE2",
+            "tanggal": "2026-02-05",
+            "wmasuk": "06:57:06",
+            "wpulang": "0",
+            "status": "M"
+        }
+    ],
+    "errors": []
+}

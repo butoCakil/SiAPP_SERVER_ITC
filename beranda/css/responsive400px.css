@@ -1,0 +1,299 @@
+#judul_header {
+    font-family: Arial, Helvetica, sans-serif;
+}
+#info_user_001 {
+    margin-top: 0px;
+}
+
+#info_user_002 {
+    text-align: left; 
+    margin-top: -12px; 
+    margin-left: 72px; 
+    font-weight: 400; 
+    font-style: normal; 
+    font-size: 14px;
+}
+
+#pilihkelasrekapsemua .card-body {
+    display: flex; 
+    gap: 10px; 
+    margin: 0px auto;
+}
+
+#pilihkelasrekapsemua .btn {
+    border: none;
+}
+
+#formijin_001 .container-fluid {
+    margin-top: 10px;
+}
+
+/* #profil_kartu {
+    background-color: rgba(0, 255, 255, 0.359);
+} */
+
+#accordion_1 a {
+    text-decoration: none;
+    border: none;
+}
+
+#accordion_1 .collapse {
+    padding: 0;
+}
+
+#accordion_1 .collapse .card-body {
+    /* background-color: aqua; */
+    text-align: center;
+    margin-bottom: -20px;
+}
+
+#accordion_1 .border {
+    margin-top: -2px;
+}
+
+/* #form_edit_profil_01 {
+    background-color: darkgoldenrod;
+} */
+
+#sosmed_line {
+    background-color: #00b900;
+    color: white;
+    padding: 5px 5px 0px 5px;
+}
+
+#sosmed_line i {
+    font-size: 22px;
+    padding: 0;
+}
+
+#sosmed_WA {
+    /* background-color: #4fce5d; */
+    /* background-color: #25D366; */
+    /* background: linear-gradient(to bottom, #5FFC7B, #28D146); */
+    background: linear-gradient(to bottom, #55e36f, #1ea237);
+    color: white;
+}
+
+#sosmed_WA i {
+    /* font-weight: 600; */
+    font-size: 14px;
+    padding: 0px 0px 0px 0px;
+}
+
+#accordion #sosmed_icon i, #accordion .collapse i {
+    padding: 5px 0px 0px 0px;
+}
+
+#btn_setting_profil {
+    position: absolute; 
+    margin-left: 85%;
+}
+
+#inner_001 {
+    font-size: 20px; 
+    margin-top: 20px;
+}
+
+#inner_002 {
+    font-size: 12px;
+}
+
+#dashboard_header .button_dash_01 {
+    border: none;
+    border-radius: 50px; 
+    margin-left: -10px;
+}
+
+@media only screen and (max-width: 400px) {
+    #info_user_001 {
+        display: none;    
+    }
+
+    #info_user_002 {
+        margin-top: 0px;
+    }
+
+    #dashboard_001 {
+        display: none;
+    }
+
+    .button_dash_01 {
+        margin-left: -7px;
+    }
+
+    .inner h3 {
+        font-size: 2rem;
+    }
+
+    #footer_riwayat {
+        display: flex;
+    }
+
+    #daftarhadirgtk_001 h3 {
+        font-size: 0.8rem;
+    }
+
+    #daftarhadirgtk_001 .card-tools {
+        font-size: 0.8rem;
+    }
+
+    #header_rekap a {
+        font-size: 0.7rem;
+    }
+
+    #header_rekap h4 {
+        font-size: 1rem;
+    }
+    
+    #header_rekap h6 {
+        font-size: 0.8rem;
+    }
+
+    #header_rekap_pilih ul {
+        width: 300px;
+    }
+
+    #header_rekap_pilih ul li a {
+        padding: 4px;
+    }
+
+    #pilihkelasrekapsemua span {
+        display: none;
+    }
+
+    #pilihkelasrekapsemua .btn, #pilihkelasrekapsemua button {
+        font-size: 0.7rem;
+        height: fit-content;
+    }
+
+    #pilihkelasrekapsemua .card-body {
+        gap: 5px;
+    }
+
+    #formijin_001 b {
+        display: none;
+    }
+
+    #formijin_001 span {
+        font-size: 0.9rem;
+    }
+
+    #none02 {
+        display: none;
+    }
+
+    
+}
+
+@media only screen and (max-width: 600px) {
+    #footer_print {
+        display: flex;
+        justify-content: center;
+    } 
+
+     #footer_print button {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+}
+
+@media only screen and (max-width: 488px) {
+    #pilihkelasrekapsemua span {
+        display: none;
+    }
+
+    #btn_setting_profil {
+        margin-left: 82%;
+    }
+
+    #accordion {
+        display: flex; 
+        /* wrap */
+        flex-wrap: wrap;
+    }
+
+    #form_edit_profil_01 #none01 {
+        display: none;
+    }
+    
+}
+
+@media only screen and (max-width: 464px) {
+        #dashboard_header .card-body button {
+            font-size: 0.9rem;
+        }
+
+        #dashboard_header #dashboard_001 {
+            display: none;
+        }
+}
+
+@media only screen and (max-width: 448px) {
+    #pilihkelasrekapsemua span {
+        display: none;
+    }
+    
+    #pilihkelasrekapsemua .btn, #pilihkelasrekapsemua button {
+        font-size: 0.7rem;
+        height: fit-content;
+    }
+    
+    #header_rekap span {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 378px ) {
+
+    #btn_setting_profil {
+        margin-left: 80%;
+    }
+
+    #none03 {
+        display: none;
+    }
+
+    #kartu_profil .inner h3 {
+        font-size: 1.5rem;
+    }
+    
+    #inner_001 {
+        font-size: 1rem;
+    }
+
+    #inner_002 {
+        font-size: 0.8rem;
+    }
+
+    #footer_print span {
+        display: none;
+    }
+
+    #dashboard_header #button_dash_pjj {
+        margin-left: -10px;
+    }
+
+    #dashboard_header .float-right {
+        margin-right: -8px;
+    }
+}
+
+/*  */
+@media only screen and (max-width: 1551px) and (min-width: 1282px) {
+    #none01 {
+        display: none;
+    }
+    
+}
+
+@media only screen and (max-width: 1282px) and (min-width: 992px) {
+    #none01 {
+        display: none;
+    }
+    
+    #none02 {
+        display: none;
+    }   
+    
+}
+

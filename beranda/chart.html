@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+
+    <title>Chart Example</title>
+</head>
+
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+    <script src="node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> -->
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        // Manually register the chartjs datalabels plugin
+        Chart.register(ChartDataLabels);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Node.js', 'Angular', 'React',
+                    'Express', 'ASP.NET', 'jQuery'],
+                datasets: [
+                    {
+                        label: `Release Year (in 2000's)`,
+                        data: [9, 10, 13, 10, 2, 6],
+                        borderWidth: 1,
+                        // backgroundColor: 'lightblue',
+                        // borderColor: 'blue'
+                    },
+                    {
+                        label: `Release Year (in 2010's)`,
+                        data: [10, 7, 5, 12, 5, 8],
+                        borderWidth: 1,
+                        // backgroundColor: 'lightblue',
+                        // borderColor: 'blue'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Release Year of Web Frameworks',
+                        color: 'blue',
+                        font: {
+                            weight: 'bold',
+                            size: 20
+                        }
+                    },
+                    datalabels: {
+                        // Position of the labels 
+                        // (start, end, center, etc.)
+                        anchor: 'end',
+                        // Alignment of the labels 
+                        // (start, end, center, etc.)
+                        align: 'end',
+                        // Color of the labels
+                        // color: 'blue',
+                        font: {
+                            weight: 'bold',
+                        },
+                        formatter: function (value, context) {
+                            // Display the actual data value
+                            return value;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
