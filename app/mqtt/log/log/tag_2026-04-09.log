@@ -9082,3 +9082,9 @@ Menerima pesan dari: dariMCU/2309IZ003 - Pesan: {"nokartu":"B3C6F2E4","idchip":"
 Berhasil merespon "dariMCU/2309IZ003" : {"respon":[{"id":"7737844","nodevice":"2309IZ003","message":"BMPE","info":"Aira Putri--Berhasil Presensi -Mulai-","nokartu":"B3C6F2E4"}]}
 Berhasil kirim balasan ke "responServer/2309IZ003" (attempt 1)
 
+[2026-04-09 15:34:26]
+Menerima pesan dari: dariMCU/2309IZ003 - Pesan: {"nokartu":"B3C6F2E4","idchip":"7737844","nodevice":"2309IZ003","key":"1234567890987654321","ipa":"10.10.1.209"}
+[2026-04-09 15:34:26]
+Berhasil merespon "dariMCU/2309IZ003" : {"respon":[{"id":"7737844","nodevice":"2309IZ003","message":"SMPM","info":"Aira Putri--Anda Sudah melakukan Presensi","nokartu":"B3C6F2E4"}]}
+Berhasil kirim balasan ke "responServer/2309IZ003" (attempt 1)
+
