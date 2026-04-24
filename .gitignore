@@ -1,0 +1,6 @@
+app/mqtt/log/
+app/mqtt/check_offline.log
+app/mqtt/last_device_status.json
+data/jsonPresensi/
+siapp-v2/storage/
+siapp-v2/bootstrap/cache/
