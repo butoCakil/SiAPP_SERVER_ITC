@@ -12,7 +12,11 @@ class Setting extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'mode', 'wa', 'wta', 'wtp', 'wp',
-        'waktumasuk', 'waktupulang', 'info',
+        'mode', 'wa', 'wta', 'wtp', 'wtp_jumat', 'wp', 'wp_jumat',
+        'hari_kerja', 'tingkat_aktif', 'auto_mode', 'waktumasuk', 'waktupulang', 'info',
+    ];
+
+    protected $casts = [
+        'tingkat_aktif' => 'array',
     ];
 }

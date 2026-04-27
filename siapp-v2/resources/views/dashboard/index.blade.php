@@ -282,6 +282,129 @@
 
 </div>
 
+{{-- Rekap Sholat Per Kelas --}}
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-mosque mr-2"></i>Rekap Pembiasaan Sholat Per Kelas
+                    <span class="badge badge-primary ml-2">
+                        {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                    </span>
+                </h3>
+                <div class="card-tools" style="font-size:11px;">
+                    <span style="background:#00c853;color:#fff;padding:2px 8px;border-radius:4px;">■ D+A</span>
+                    <span style="background:#00b0ff;color:#fff;padding:2px 8px;border-radius:4px;margin-left:4px;">■ Dzuhur</span>
+                    <span style="background:#9c27b0;color:#fff;padding:2px 8px;border-radius:4px;margin-left:4px;">■ Ashar</span>
+                    <span style="background:#e91e8c;color:#fff;padding:2px 8px;border-radius:4px;margin-left:4px;">■ Izin Mens</span>
+                    <span style="background:#f44336;color:#fff;padding:2px 8px;border-radius:4px;margin-left:4px;">■ Alpa</span>
+                </div>
+            </div>
+            <div class="card-body p-2">
+                @foreach($rekapKelas as $r)
+                @php
+                    $keduanya  = min($r->dzuhur, $r->ashar);
+                    $hanyaD    = $r->dzuhur - $keduanya;
+                    $hanyaA    = $r->ashar  - $keduanya;
+                    $alpa      = max(0, $r->total - $r->dzuhur - $hanyaA - $r->izin);
+
+                    // Lebar bar (persen dari total)
+                    $wKeduanya = $r->total > 0 ? round($keduanya / $r->total * 100, 1) : 0;
+                    $wHanyaD   = $r->total > 0 ? round($hanyaD   / $r->total * 100, 1) : 0;
+                    $wHanyaA   = $r->total > 0 ? round($hanyaA   / $r->total * 100, 1) : 0;
+                    $wIzin     = $r->total > 0 ? round($r->izin  / $r->total * 100, 1) : 0;
+                    $wAlpa     = $r->total > 0 ? round($alpa     / $r->total * 100, 1) : 0;
+                @endphp
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+
+                    {{-- Label kelas --}}
+                    <div style="width:80px; font-size:11px; font-weight:700; flex-shrink:0; text-align:right; color:#333;">
+                        {{ $r->kelas }}
+                    </div>
+
+                    {{-- Horizontal stacked bar --}}
+                    <div style="flex:1; height:22px; border-radius:6px; overflow:hidden; background:#eee; display:flex; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+                        @if($wKeduanya > 0)
+                        <div style="width:{{ $wKeduanya }}%; background:linear-gradient(90deg,#00c853,#69f0ae);
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
+                            {{ $keduanya > 0 ? $keduanya : '' }}
+                        </div>
+                        @endif
+                        @if($wHanyaD > 0)
+                        <div style="width:{{ $wHanyaD }}%; background:linear-gradient(90deg,#00b0ff,#40c4ff);
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
+                            {{ $hanyaD > 0 ? $hanyaD : '' }}
+                        </div>
+                        @endif
+                        @if($wHanyaA > 0)
+                        <div style="width:{{ $wHanyaA }}%; background:linear-gradient(90deg,#9c27b0,#ce93d8);
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
+                            {{ $hanyaA > 0 ? $hanyaA : '' }}
+                        </div>
+                        @endif
+                        @if($wIzin > 0)
+                        <div style="width:{{ $wIzin }}%; background:linear-gradient(90deg,#e91e8c,#f48fb1);
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
+                            {{ $r->izin > 0 ? $r->izin : '' }}
+                        </div>
+                        @endif
+                        @if($wAlpa > 0)
+                        <div style="width:{{ $wAlpa }}%; background:linear-gradient(90deg,#f44336,#ef9a9a);
+                            display:flex; align-items:center; justify-content:center;
+                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
+                            {{ $alpa > 0 ? $alpa : '' }}
+                        </div>
+                        @endif
+                    </div>
+
+                    {{-- Badge ringkasan --}}
+                    <div style="display:flex; gap:3px; flex-shrink:0; font-size:10px;">
+                        <span style="background:#00c853;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Keduanya">{{ $keduanya }}</span>
+                        <span style="background:#00b0ff;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Dzuhur">{{ $r->dzuhur }}</span>
+                        <span style="background:#9c27b0;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Ashar">{{ $r->ashar }}</span>
+                        <span style="background:#e91e8c;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Izin Mens">{{ $r->izin }}</span>
+                        <span style="background:#f44336;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Alpa">{{ $alpa }}</span>
+                        <span style="background:#1565c0;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Total">{{ $r->total }}</span>
+                    </div>
+
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Chart Pembiasaan Sholat --}}
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card card-outline card-warning">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-bar mr-2"></i>Rekap Pembiasaan Sholat
+                    <small class="text-muted ml-2">14 hari terakhir</small>
+                </h3>
+                <div class="card-tools">
+                    <div class="btn-group btn-group-sm" id="chart-toggle">
+                        <button class="btn btn-warning active" onclick="setChartType('bar', this)">Bar</button>
+                        <button class="btn btn-outline-warning" onclick="setChartType('line', this)">Line</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="chartSholat" height="80"></canvas>
+            </div>
+            <div class="card-footer text-muted" style="font-size:11px;">
+                🕛 Dzuhur &nbsp;|&nbsp; 🕓 Ashar &nbsp;|&nbsp; 🌸 Izin Mens
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -300,5 +423,79 @@ updateJam();
 
 // ── Auto refresh halaman tiap 60 detik ──
 setTimeout(() => location.reload(), 60000);
+
+// ── Chart Pembiasaan Sholat ──
+const chartData = @json($chartSholat);
+const labels    = chartData.map(d => d.tanggal);
+const dzuhur    = chartData.map(d => parseInt(d.dzuhur));
+const ashar     = chartData.map(d => parseInt(d.ashar));
+const izin      = chartData.map(d => parseInt(d.izin));
+
+const ctx = document.getElementById('chartSholat').getContext('2d');
+let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Dzuhur',
+                data: dzuhur,
+                backgroundColor: 'rgba(255,136,0,0.75)',
+                borderColor: '#ff8800',
+                borderWidth: 2,
+                borderRadius: 4,
+            },
+            {
+                label: 'Ashar',
+                data: ashar,
+                backgroundColor: 'rgba(156,39,176,0.75)',
+                borderColor: '#9c27b0',
+                borderWidth: 2,
+                borderRadius: 4,
+            },
+            {
+                label: 'Izin Mens',
+                data: izin,
+                backgroundColor: 'rgba(233,30,140,0.6)',
+                borderColor: '#e91e8c',
+                borderWidth: 2,
+                borderRadius: 4,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+                callbacks: {
+                    title: ctx => '📅 ' + ctx[0].label,
+                    label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y + ' siswa'
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                ticks: { stepSize: 50 }
+            },
+            x: {
+                grid: { display: false }
+            }
+        }
+    }
+});
+
+function setChartType(type, btn) {
+    myChart.config.type = type;
+    myChart.update();
+    document.querySelectorAll('#chart-toggle button').forEach(b => {
+        b.classList.remove('active', 'btn-warning');
+        b.classList.add('btn-outline-warning');
+    });
+    btn.classList.add('active', 'btn-warning');
+    btn.classList.remove('btn-outline-warning');
+}
 </script>
 @endpush

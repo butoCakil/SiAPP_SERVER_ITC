@@ -89,12 +89,45 @@ class DashboardController extends Controller
             ->take(10)
             ->values();
 
+        // ── Chart data sholat 14 hari ──
+        // ── Rekap sholat per kelas hari ini ──
+        $tingkatAktif = json_decode($setting->tingkat_aktif ?? '["X","XI","XII"]', true);
+        $rekapKelas = DB::table('datasiswa as ds')
+            ->leftJoin('presensiEvent as pe', function($join) use ($tanggal) {
+                $join->on('pe.nis', '=', 'ds.nis')->where('pe.tanggal', $tanggal);
+            })
+            ->whereIn('ds.tingkat', $tingkatAktif)
+            ->selectRaw('ds.kelas,
+                COUNT(DISTINCT ds.id) as total,
+                COUNT(DISTINCT CASE WHEN pe.keterangan="DZUHUR" AND pe.ruang != "Izin Mens" THEN pe.nis END) as dzuhur,
+                COUNT(DISTINCT CASE WHEN pe.keterangan="ASHAR" AND pe.ruang != "Izin Mens" THEN pe.nis END) as ashar,
+                COUNT(DISTINCT CASE WHEN pe.ruang="Izin Mens" THEN pe.nis END) as izin')
+            ->groupBy('ds.kelas')
+            ->orderBy('ds.kelas')
+            ->get()
+            ->map(function($row) {
+                $hadir = $row->dzuhur + $row->ashar + $row->izin;
+                $row->keduanya = min($row->dzuhur, $row->ashar);
+                $row->alpa     = max(0, $row->total - $hadir);
+                return $row;
+            });
+
+        $chartSholat = DB::table('presensiEvent')
+            ->selectRaw('tanggal,
+                SUM(CASE WHEN keterangan="DZUHUR" THEN 1 ELSE 0 END) as dzuhur,
+                SUM(CASE WHEN keterangan="ASHAR" THEN 1 ELSE 0 END) as ashar,
+                SUM(CASE WHEN ruang="Izin Mens" THEN 1 ELSE 0 END) as izin')
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
+            ->get();
+
         return view('dashboard.index', compact(
             'totalHadir', 'totalTepat', 'totalTelat', 'totalPulang',
             'totalDevice', 'deviceOnline',
             'setting', 'statusMasuk', 'statusSholat',
             'totalDzuhur', 'totalAshar', 'totalIzin',
-            'recentAll', 'tanggal', 'jam'
+            'recentAll', 'tanggal', 'jam', 'chartSholat', 'rekapKelas'
         ));
     }
 }

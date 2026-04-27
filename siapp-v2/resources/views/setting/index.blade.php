@@ -157,6 +157,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-school mr-1"></i>Tingkat Aktif</label>
+                                <div class="d-flex gap-3" style="gap:16px;">
+                                    @foreach(['X','XI','XII'] as $t)
+                                    <div class="icheck-success">
+                                        <input type="checkbox" name="tingkat_aktif[]"
+                                            id="tingkat-{{ $t }}" value="{{ $t }}"
+                                            {{ in_array($t, json_decode($setting->tingkat_aktif ?? '["X","XI","XII"]', true)) ? 'checked' : '' }}>
+                                        <label for="tingkat-{{ $t }}">Tingkat {{ $t }}</label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <small class="text-muted">Tingkat yang tidak dicentang akan disembunyikan dari rekap</small>
+                            </div>
                         </div>
 
                         <div class="row">

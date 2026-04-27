@@ -15,6 +15,8 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
+        $tingkatAktif = json_encode($request->input('tingkat_aktif', ['X','XI','XII']));
+
         DB::table('statusnya')->update([
             'mode'        => (int) $request->mode,
             'wa'          => $request->wa,
@@ -28,6 +30,7 @@ class SettingController extends Controller
             'waktumasuk'  => $request->waktumasuk,
             'waktupulang' => $request->waktupulang,
             'info'        => $request->info,
+            'tingkat_aktif' => $tingkatAktif,
         ]);
 
         return back()->with('success', 'Setting berhasil disimpan.');
