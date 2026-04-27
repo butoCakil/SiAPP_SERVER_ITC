@@ -27,10 +27,24 @@ Route::middleware(['auth.admin'])->group(function () {
 
     // Presensi
     Route::get('/presensi', [PresensiViewController::class, 'index'])->name('presensi');
+    Route::get('/presensi/create', [PresensiViewController::class, 'create'])->name('presensi.create');
+    Route::post('/presensi', [PresensiViewController::class, 'store'])->name('presensi.store');
+    Route::get('/presensi/{id}/edit', [PresensiViewController::class, 'edit'])->name('presensi.edit');
+    Route::put('/presensi/{id}', [PresensiViewController::class, 'update'])->name('presensi.update');
+    Route::delete('/presensi/{id}', [PresensiViewController::class, 'destroy'])->name('presensi.destroy');
+    // Pembiasaan Sholat CRUD
+    Route::post('/presensi/event', [PresensiViewController::class, 'storeEvent'])->name('presensi.event.store');
+    Route::put('/presensi/event/{id}', [PresensiViewController::class, 'updateEvent'])->name('presensi.event.update');
+    Route::delete('/presensi/event/{id}', [PresensiViewController::class, 'destroyEvent'])->name('presensi.event.destroy');
     Route::get('/presensi/event', [PresensiViewController::class, 'event'])->name('presensi.event');
 
     // Siswa
     Route::get('/siswa', [SiswaViewController::class, 'index'])->name('siswa');
+    Route::get('/siswa/create', [SiswaViewController::class, 'create'])->name('siswa.create');
+    Route::post('/siswa', [SiswaViewController::class, 'store'])->name('siswa.store');
+    Route::get('/siswa/{id}/edit', [SiswaViewController::class, 'editSiswa'])->name('siswa.edit');
+    Route::put('/siswa/{id}', [SiswaViewController::class, 'updateSiswa'])->name('siswa.update');
+    Route::delete('/siswa/{id}', [SiswaViewController::class, 'destroySiswa'])->name('siswa.destroy');
     Route::post('/siswa/kartu', [SiswaViewController::class, 'updateKartu'])->name('siswa.kartu');
     Route::get('/siswa/tmprfid', [SiswaViewController::class, 'tmprfid'])->name('siswa.tmprfid');
 

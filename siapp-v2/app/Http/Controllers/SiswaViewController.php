@@ -9,11 +9,71 @@ class SiswaViewController extends Controller
 {
     public function index(Request $request)
     {
-        // Load semua siswa sekaligus — search via JS
         $siswa     = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama')->get();
         $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
-
         return view('siswa.index', compact('siswa', 'kelasList'));
+    }
+
+    public function create()
+    {
+        return view('siswa.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nis'    => 'required|unique:datasiswa,nis',
+            'nama'   => 'required',
+            'kelas'  => 'required',
+            'tingkat'=> 'required',
+        ]);
+
+        DB::table('datasiswa')->insert([
+            'nokartu'    => strtoupper($request->nokartu ?? ''),
+            'nis'        => $request->nis,
+            'nama'       => strtoupper($request->nama),
+            'nick'       => $request->nick ?? strtolower($request->nis),
+            'kelas'      => $request->kelas,
+            'tingkat'    => $request->tingkat,
+            'jur'        => $request->jur ?? '',
+            'kode'       => $request->kode ?? '',
+            'foto'       => 'default.jpg',
+            'kelompok'   => $request->kelompok ?? '1',
+            'keterangan' => $request->keterangan ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('siswa')->with('success', 'Siswa berhasil ditambahkan.');
+    }
+
+    public function editSiswa(int $id)
+    {
+        $siswa = DB::table('datasiswa')->where('id', $id)->first();
+        if (!$siswa) abort(404);
+        return view('siswa.edit', compact('siswa'));
+    }
+
+    public function updateSiswa(Request $request, int $id)
+    {
+        DB::table('datasiswa')->where('id', $id)->update([
+            'nokartu'    => strtoupper($request->nokartu ?? ''),
+            'nama'       => strtoupper($request->nama),
+            'kelas'      => $request->kelas,
+            'tingkat'    => $request->tingkat,
+            'jur'        => $request->jur ?? '',
+            'kode'       => $request->kode ?? '',
+            'keterangan' => $request->keterangan ?? null,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('siswa')->with('success', 'Data siswa berhasil diupdate.');
+    }
+
+    public function destroySiswa(int $id)
+    {
+        DB::table('datasiswa')->where('id', $id)->delete();
+        return redirect()->route('siswa')->with('success', 'Siswa berhasil dihapus.');
     }
 
     public function updateKartu(Request $request)

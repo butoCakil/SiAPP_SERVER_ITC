@@ -258,6 +258,9 @@
         @endforeach
     </select>
     <span class="count-badge" id="count-badge">{{ $siswa->count() }} siswa</span>
+    <a href="{{ route('siswa.create') }}" class="btn btn-sm btn-success">
+        <i class="fas fa-user-plus mr-1"></i>Tambah Siswa
+    </a>
 </div>
 
 {{-- Tabel --}}
@@ -273,6 +276,7 @@
                         <th style="width:140px">Kelas</th>
                         <th style="width:120px">No Kartu</th>
                         <th style="width:90px">Assign</th>
+                        <th style="width:80px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-siswa">
@@ -300,6 +304,22 @@
                                 onclick="assignKartu({{ $s->id }}, '{{ addslashes($s->nama) }}')">
                                 <i class="fas fa-id-card mr-1"></i>Assign
                             </button>
+                        </td>
+                    <td>
+                            <div class="d-flex" style="gap:3px;">
+                                <a href="{{ route('siswa.edit', $s->id) }}"
+                                    class="btn btn-xs btn-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('siswa.destroy', $s->id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Hapus siswa {{ addslashes($s->nama) }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-xs btn-danger" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

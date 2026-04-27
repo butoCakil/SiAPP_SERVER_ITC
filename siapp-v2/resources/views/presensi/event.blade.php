@@ -154,6 +154,11 @@
             <i class="fas fa-mosque mr-2"></i>Data Pembiasaan Sholat
             <span class="badge badge-warning ml-2" id="badge-count">{{ $siswaList->count() }} siswa</span>
         </h3>
+        <div class="card-tools no-print">
+                    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalTambahSholat">
+                        <i class="fas fa-plus mr-1"></i>Tambah Manual
+                    </button>
+                </div>
         <div class="card-tools">
             <input type="text" id="searchInput" class="form-control form-control-sm"
                 placeholder="🔍 Cari nama/NIS/kelas..." style="width:200px;">
@@ -171,6 +176,7 @@
                         <th>Dzuhur</th>
                         <th>Ashar</th>
                         <th>Status</th>
+                        <th class="no-print">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -228,6 +234,30 @@
                                 <span class="badge badge-absen">—</span>
                             @endif
                         </td>
+                    <td class="no-print">
+                            <div class="d-flex" style="gap:4px;">
+                                @if($s['dzuhur_id'])
+                                <form action="{{ route('presensi.event.destroy', $s['dzuhur_id']) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Hapus presensi Dzuhur {{ $s['nama'] }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-xs btn-danger" title="Hapus Dzuhur">
+                                        <i class="fas fa-trash"></i> Dzuhur
+                                    </button>
+                                </form>
+                                @endif
+                                @if($s['ashar_id'])
+                                <form action="{{ route('presensi.event.destroy', $s['ashar_id']) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Hapus presensi Ashar {{ $s['nama'] }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-xs btn-warning" title="Hapus Ashar">
+                                        <i class="fas fa-trash"></i> Ashar
+                                    </button>
+                                </form>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -245,6 +275,55 @@
         Dzuhur: {{ $totalDzuhur }} | Ashar: {{ $totalAshar }} |
         Keduanya: {{ $totalKeduanya }} | Izin Mens: {{ $totalIzin }} |
         Belum Lengkap: {{ $totalTidakKeduanya }}
+    </div>
+</div>
+
+{{-- Modal Tambah Sholat --}}
+<div class="modal fade" id="modalTambahSholat" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-mosque mr-2"></i>Tambah Presensi Sholat</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <form action="{{ route('presensi.event.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>NIS Siswa <span class="text-danger">*</span></label>
+                        <input type="text" name="nis" class="form-control"
+                            placeholder="Ketik NIS siswa..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal <span class="text-danger">*</span></label>
+                        <input type="date" name="tanggal" class="form-control"
+                            value="{{ $tanggal }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Waktu Sholat <span class="text-danger">*</span></label>
+                        <input type="time" name="jam" class="form-control" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Sholat <span class="text-danger">*</span></label>
+                        <select name="keterangan" class="form-control" required>
+                            <option value="DZUHUR">🕛 Dzuhur</option>
+                            <option value="ASHAR">🕓 Ashar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ruang</label>
+                        <input type="text" name="ruang" class="form-control"
+                            placeholder="Masjid 1 / Izin Mens / Manual..." value="Manual">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save mr-1"></i>Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

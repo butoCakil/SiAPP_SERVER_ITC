@@ -145,6 +145,11 @@
                 @endif
             </h3>
             <div class="card-tools">
+                    <a href="{{ route('presensi.create') }}" class="btn btn-sm btn-success no-print">
+                        <i class="fas fa-plus mr-1"></i>Tambah Manual
+                    </a>
+                </div>
+            <div class="card-tools">
                 <span class="text-muted" style="font-size:11px;">
                     📅 {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l, d F Y') }}
                 </span>
@@ -165,6 +170,7 @@
                             <th>Pulang</th>
                             <th>Ket</th>
                             <th class="no-print">Device</th>
+                            <th class="no-print">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -203,6 +209,22 @@
                                 @endif
                             </td>
                             <td class="no-print"><small class="text-muted">{{ $p->infodevice2 ?? '-' }}</small></td>
+                            <td class="no-print">
+                                <div class="d-flex" style="gap:4px;">
+                                    <a href="{{ route('presensi.edit', $p->id) }}"
+                                        class="btn btn-xs btn-warning" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('presensi.destroy', $p->id) }}"
+                                        method="POST" style="display:inline;"
+                                        onsubmit="return confirm('Hapus presensi {{ $p->nama }}?')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @empty
                         <tr>
