@@ -4,6 +4,12 @@
 @section('page_title', 'Rekap Pembiasaan Sholat')
 
 @push('styles')
+<style>@media print {
+    body * { visibility: hidden; }
+    #print-area-event, #print-area-event * { visibility: visible; }
+    #print-area-event { position: absolute; left: 0; top: 0; width: 100%; }
+    @page { size: landscape; margin: 10mm; }
+}</style>
 <style>
 .sholat-card {
     border-radius: 12px;
@@ -45,6 +51,7 @@
 .filter-tab.active, .filter-tab:hover { border-color: #007bff; color: #007bff; }
 .filter-tab.active { background: #007bff; color: #fff; }
 </style>
+</div>
 @endpush
 
 @section('content')
@@ -59,6 +66,12 @@
             </div>
             <input type="date" name="tanggal" class="form-control" value="{{ $tanggal }}">
         </div>
+        <select name="kelas" class="form-control" style="width:160px;" onchange="this.form.submit()">
+            <option value="">Semua Kelas</option>
+            @foreach($kelasList as $k)
+                <option value="{{ $k }}" {{ $filterKelas==$k ? 'selected' : '' }}>{{ $k }}</option>
+            @endforeach
+        </select>
         <button type="submit" class="btn btn-primary">
             <i class="fas fa-search mr-1"></i>Tampilkan
         </button>
@@ -122,6 +135,9 @@
 
 {{-- Filter Tabs --}}
 <div class="filter-tabs">
+    <button onclick="window.print()" class="btn btn-outline-dark btn-sm mr-2" style="border-radius:20px;">
+        <i class="fas fa-print mr-1"></i>Print PDF
+    </button>
     <button class="filter-tab active" onclick="filterTabel('semua', this)">🕌 Semua ({{ $siswaList->count() }})</button>
     <button class="filter-tab" onclick="filterTabel('dzuhur', this)">🕛 Dzuhur saja ({{ $totalDzuhur - $totalKeduanya }})</button>
     <button class="filter-tab" onclick="filterTabel('ashar', this)">🕓 Ashar saja ({{ $totalAshar - $totalKeduanya }})</button>
@@ -131,6 +147,7 @@
 </div>
 
 {{-- Tabel --}}
+<div id="print-area-event">
 <div class="card card-outline card-warning">
     <div class="card-header">
         <h3 class="card-title">
@@ -259,4 +276,5 @@ function applyFilter() {
 
 document.getElementById('searchInput').addEventListener('input', applyFilter);
 </script>
+</div>
 @endpush
