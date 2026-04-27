@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'device.key' => \App\Http\Middleware\CheckDeviceKey::class,
             'sim.token'  => \App\Http\Middleware\CheckSimToken::class,
             'log.req'    => \App\Http\Middleware\LogRequest::class,
+            'auth.admin' => \App\Http\Middleware\CheckAuth::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

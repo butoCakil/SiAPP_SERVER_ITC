@@ -68,7 +68,7 @@ class PresensiService
         $setting = DB::table('statusnya')->first();
 
         if (!$setting) {
-            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+            return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
         }
 
         $mode        = (int) $setting->mode;
@@ -189,7 +189,7 @@ class PresensiService
 
             return $this->buatResponNama('BMPM', $nama, $idchip, $nodevice, $nokartu);
         } catch (\Exception $e) {
-            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+            return $this->buatResponNama('505', $nama, '505', $idchip, $nodevice, $nokartu);
         }
     }
 
@@ -238,7 +238,7 @@ class PresensiService
 
             return $this->buatResponNama($pesan, $nama, $idchip, $nodevice, $nokartu);
         } catch (\Exception $e) {
-            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+            return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
         }
     }
 
@@ -289,7 +289,7 @@ class PresensiService
 
             return $this->buatResponNama('BMPE', $nama, $idchip, $nodevice, $nokartu);
         } catch (\Exception $e) {
-            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+            return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
         }
     }
 
@@ -317,7 +317,7 @@ class PresensiService
                 ]);
                 return $this->buatResponNama('BMPE', $nama, $idchip, $nodevice, $nokartu);
             } catch (\Exception $e) {
-                return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+                return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
             }
         }
 
@@ -328,7 +328,7 @@ class PresensiService
                     ->update(['selesai' => $jam]);
                 return $this->buatResponNama('BPSE', $nama, $idchip, $nodevice, $nokartu);
             } catch (\Exception $e) {
-                return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+                return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
             }
         }
 
@@ -345,7 +345,7 @@ class PresensiService
             ]);
             return $this->buatResponNama('BPEB', $nama, $idchip, $nodevice, $nokartu);
         } catch (\Exception $e) {
-            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
+            return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
         }
     }
 
