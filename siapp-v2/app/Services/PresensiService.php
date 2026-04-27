@@ -33,6 +33,7 @@ class PresensiService
         'BMIJ' => '--Ijin Berhasil',
     ];
 
+    /** @param array $input */
     public function prosesTag(array $input): array
     {
         $nokartu  = strtoupper(trim($input['nokartu']  ?? ''));
@@ -68,7 +69,8 @@ class PresensiService
         $setting = DB::table('statusnya')->first();
 
         if (!$setting) {
-            return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
+            // return $this->buatResponNama('505', $nama, $idchip, $nodevice, $nokartu);
+            return $this->buatRespon('505', $idchip, $nodevice, $nokartu);
         }
 
         $mode        = (int) $setting->mode;
