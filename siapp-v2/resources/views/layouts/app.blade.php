@@ -74,11 +74,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('device') }}"
-                                class="nav-link {{ request()->routeIs('device') ? 'active' : '' }}">
+                            <a href="{{ route('device') }}" class="nav-link {{ request()->routeIs('device*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-mobile-alt"></i>
-                                <p>Device <span class="badge badge-success badge-pill right" id="badge-online">-</span>
-                                </p>
+                                <p>Device <span class="badge badge-pill right" id="badge-online"
+                                    style="background:#00c853; color:#fff; min-width:20px;">-</span></p>
                             </a>
                         </li>
                         <li class="nav-item has-treeview {{ request()->routeIs('presensi*') ? 'menu-open' : '' }}">
@@ -179,6 +178,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+    <script>
+        function updateBadgeOnline() {
+            fetch('/api-internal/device-online')
+                .then(r => r.json())
+                .then(data => {
+                    const el = document.getElementById('badge-online');
+                    if (el) {
+                        el.textContent = data.online;
+                        el.style.background = data.online > 0 ? '#00c853' : '#f44336';
+                    }
+                })
+                .catch(() => {});
+        }
+        updateBadgeOnline();
+        setInterval(updateBadgeOnline, 30000);
+        </script>
     @stack('scripts')
 </body>
 

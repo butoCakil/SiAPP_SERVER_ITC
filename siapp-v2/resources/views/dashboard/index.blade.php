@@ -60,6 +60,31 @@
 
 @section('content')
 
+{{-- Filter Tanggal --}}
+<div class="d-flex align-items-center mb-3 no-print" style="gap:8px;">
+    <form action="{{ route('dashboard') }}" method="GET"
+        class="d-flex align-items-center" style="gap:8px;">
+        <div class="input-group" style="width:auto;">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+            </div>
+            <input type="date" name="tanggal" class="form-control"
+                value="{{ $tanggal }}" onchange="this.form.submit()">
+        </div>
+        @if(!$isToday)
+            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-calendar-day mr-1"></i>Hari Ini
+            </a>
+        @endif
+    </form>
+    @if(!$isToday)
+        <span class="badge badge-warning p-2" style="font-size:12px;">
+            <i class="fas fa-history mr-1"></i>
+            Menampilkan data: {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l, d F Y') }}
+        </span>
+    @endif
+</div>
+
 {{-- Row 1: Stat Cards Presensi --}}
 <div class="row">
     <div class="col-lg-3 col-6">
@@ -83,6 +108,7 @@
             <a href="{{ route('presensi') }}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+    @if($isToday)
     <div class="col-lg-3 col-6">
         <div class="small-box bg-danger">
             <div class="inner">
@@ -93,36 +119,55 @@
             <a href="{{ route('device') }}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+    @endif
 </div>
 
 {{-- Row 2: Sholat Cards --}}
 <div class="row">
     <div class="col-md-4 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
+            style="text-decoration:none;">
         <div class="stat-sholat sc-dzuhur">
             <div class="s-icon">🕛</div>
             <div>
                 <div class="s-val">{{ $totalDzuhur }}</div>
                 <div class="s-lbl">Sholat Dzuhur</div>
+                <div style="font-size:10px; opacity:0.8; margin-top:2px;">
+                    <i class="fas fa-arrow-right mr-1"></i>Lihat Rekap
+                </div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-md-4 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
+            style="text-decoration:none;">
         <div class="stat-sholat sc-ashar">
             <div class="s-icon">🕓</div>
             <div>
                 <div class="s-val">{{ $totalAshar }}</div>
                 <div class="s-lbl">Sholat Ashar</div>
+                <div style="font-size:10px; opacity:0.8; margin-top:2px;">
+                    <i class="fas fa-arrow-right mr-1"></i>Lihat Rekap
+                </div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-md-4 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
+            style="text-decoration:none;">
         <div class="stat-sholat sc-izin">
             <div class="s-icon">🌸</div>
             <div>
                 <div class="s-val">{{ $totalIzin }}</div>
                 <div class="s-lbl">Izin Mens</div>
+                <div style="font-size:10px; opacity:0.8; margin-top:2px;">
+                    <i class="fas fa-arrow-right mr-1"></i>Lihat Rekap
+                </div>
             </div>
         </div>
+        </a>
     </div>
 </div>
 
@@ -132,6 +177,7 @@
     {{-- Status & Jam --}}
     <div class="col-md-4">
 
+        @if($isToday)
         {{-- Jam --}}
         <div class="card card-outline card-secondary mb-3">
             <div class="card-body text-center py-3">
@@ -190,10 +236,12 @@
                 </a>
             </div>
         </div>
+        @endif
 
     </div>
 
     {{-- Recent Presensi --}}
+    @if($isToday)
     <div class="col-md-8">
         <div class="card card-outline card-primary">
             <div class="card-header">
@@ -279,6 +327,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 </div>
 

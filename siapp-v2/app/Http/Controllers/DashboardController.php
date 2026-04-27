@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tanggal = date('Y-m-d');
-        $jam     = date('H:i:s');
+        $tanggal  = $request->input('tanggal', date('Y-m-d'));
+        $jam      = date('H:i:s');
+        $isToday  = $tanggal === date('Y-m-d');
 
         // ── Presensi harian ──
         $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
@@ -117,7 +119,8 @@ class DashboardController extends Controller
                 SUM(CASE WHEN keterangan="DZUHUR" THEN 1 ELSE 0 END) as dzuhur,
                 SUM(CASE WHEN keterangan="ASHAR" THEN 1 ELSE 0 END) as ashar,
                 SUM(CASE WHEN ruang="Izin Mens" THEN 1 ELSE 0 END) as izin')
-            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days', strtotime($tanggal))))
+            ->where('tanggal', '<=', $tanggal)
             ->groupBy('tanggal')
             ->orderBy('tanggal')
             ->get();
@@ -127,7 +130,7 @@ class DashboardController extends Controller
             'totalDevice', 'deviceOnline',
             'setting', 'statusMasuk', 'statusSholat',
             'totalDzuhur', 'totalAshar', 'totalIzin',
-            'recentAll', 'tanggal', 'jam', 'chartSholat', 'rekapKelas'
+            'recentAll', 'tanggal', 'jam', 'isToday', 'chartSholat', 'rekapKelas'
         ));
     }
 }

@@ -24,6 +24,10 @@ Route::middleware(['auth.admin'])->group(function () {
 
     // Device
     Route::get('/device', [DeviceViewController::class, 'index'])->name('device');
+    Route::get('/device/registrasi', [DeviceViewController::class, 'registrasi'])->name('device.registrasi');
+    Route::post('/device/registrasi', [DeviceViewController::class, 'storeReg'])->name('device.registrasi.store');
+    Route::put('/device/registrasi/{id}', [DeviceViewController::class, 'updateReg'])->name('device.registrasi.update');
+    Route::delete('/device/registrasi/{id}', [DeviceViewController::class, 'destroyReg'])->name('device.registrasi.destroy');
 
     // Presensi
     Route::get('/presensi', [PresensiViewController::class, 'index'])->name('presensi');
@@ -55,3 +59,8 @@ Route::middleware(['auth.admin'])->group(function () {
 });
 // ESP Admin - tanpa auth
 Route::get('/tag', [App\Http\Controllers\SiswaViewController::class, 'tagKartu']);
+
+// Device online count (AJAX)
+Route::get('/api-internal/device-online', function() {
+    return response()->json(['online' => DB::table('devices')->where('online', 1)->count()]);
+})->middleware('auth.admin');

@@ -300,6 +300,9 @@
 
 {{-- Global Actions --}}
 <div class="global-actions">
+    <a href="{{ route('device.registrasi') }}" class="btn-global" style="background:linear-gradient(135deg,#607d8b,#37474f); color:#fff; text-decoration:none; padding:7px 18px; border-radius:20px; font-weight:600; font-size:13px;">
+        <i class="fas fa-list mr-1"></i>Kelola Registrasi
+    </a>
     <button class="btn-global g-set"    onclick="sendAll('setSetting')">⚙️ Set All</button>
     <button class="btn-global g-sync"   onclick="sendAll('sync')">🔄 Sync All</button>
     <button class="btn-global g-upload" onclick="sendAll('upload')">📤 Upload All</button>
