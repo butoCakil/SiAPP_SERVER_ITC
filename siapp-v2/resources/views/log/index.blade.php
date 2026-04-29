@@ -12,6 +12,9 @@
 .stat-log .val { font-size: 22px; font-weight: 700; }
 .stat-log .lbl { font-size: 11px; opacity: 0.6; }
 .danger-zone { border: 1px solid rgba(244,67,54,0.3); border-radius: 10px; padding: 14px; background: rgba(244,67,54,0.04); }
+
+.pagination { margin: 0; font-size: 12px; }
+.pagination .page-link { padding: 4px 10px; }
 </style>
 @endpush
 
@@ -152,6 +155,14 @@
                     </button>
                 </form>
                 <form action="{{ route('log.tempreq.clear') }}" method="POST"
+                    onsubmit="return confirm('Hapus semua request log sebelum hari ini?')">
+                    @csrf @method('DELETE')
+                    <input type="hidden" name="before_today" value="1">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-calendar-minus mr-1"></i>Hapus Sebelum Hari Ini
+                    </button>
+                </form>
+                <form action="{{ route('log.tempreq.clear') }}" method="POST"
                     onsubmit="return confirm('Hapus request log lebih dari 7 hari?')">
                     @csrf @method('DELETE')
                     <input type="hidden" name="keep_days" value="7">
@@ -283,6 +294,14 @@
                     <input type="hidden" name="tanggal" value="{{ $filterTanggal2 }}">
                     <button type="submit" class="btn btn-sm btn-outline-danger">
                         <i class="fas fa-calendar-day mr-1"></i>Hapus Tgl {{ $filterTanggal2 }}
+                    </button>
+                </form>
+                <form action="{{ route('log.device.clear') }}" method="POST"
+                    onsubmit="return confirm('Hapus semua device log sebelum hari ini?')">
+                    @csrf @method('DELETE')
+                    <input type="hidden" name="before_today" value="1">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-calendar-minus mr-1"></i>Hapus Sebelum Hari Ini
                     </button>
                 </form>
                 <form action="{{ route('log.device.clear') }}" method="POST"

@@ -62,6 +62,11 @@ class LogController extends Controller
             return back()->with('success', "Semua request log berhasil dihapus ({$deleted} records).");
         }
 
+        if ($request->input('before_today')) {
+            $deleted = DB::table('tempreq')->whereDate('timestamp', '<', date('Y-m-d'))->delete();
+            return back()->with('success', "Request log sebelum hari ini berhasil dihapus ({$deleted} records).");
+        }
+
         if ($keepDays) {
             $batas   = now()->subDays((int)$keepDays)->toDateString();
             $deleted = DB::table('tempreq')->whereDate('timestamp', '<', $batas)->delete();
@@ -86,6 +91,11 @@ class LogController extends Controller
         if ($all) {
             $deleted = DB::table('device_logs')->delete();
             return back()->with('success', "Semua device log berhasil dihapus ({$deleted} records).");
+        }
+
+        if ($request->input('before_today')) {
+            $deleted = DB::table('device_logs')->whereDate('received_at', '<', date('Y-m-d'))->delete();
+            return back()->with('success', "Device log sebelum hari ini berhasil dihapus ({$deleted} records).");
         }
 
         if ($keepDays) {
