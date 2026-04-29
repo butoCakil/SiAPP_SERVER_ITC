@@ -180,7 +180,7 @@
     /* ── STAT MINI ── */
     .stat-row {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
         margin-bottom: 24px;
     }
@@ -328,6 +328,24 @@
 
     .nama-text { font-weight: 600; }
     .kelas-text { font-size: 10px; color: var(--muted); }
+
+    .table-wrapper {
+        max-height: 480px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .table-wrapper::-webkit-scrollbar { width: 6px; }
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.15);
+        border-radius: 3px;
+    }
+    .data-card thead th {
+        position: sticky;
+        top: 0;
+        background: #1a2235;
+        z-index: 2;
+    }
     </style>
 </head>
 <body>
@@ -415,6 +433,10 @@
             <div class="val" style="color:#9c27b0;">{{ $totalAshar }}</div>
             <div class="lbl">Sholat Ashar</div>
         </div>
+        <div class="stat-mini">
+            <div class="val" style="color:#e91e8c;">{{ $totalIzin }}</div>
+            <div class="lbl">🌸 Izin Mens</div>
+        </div>
     </div>
 
     {{-- Toolbar --}}
@@ -447,124 +469,126 @@
 
     {{-- Data Table --}}
     <div class="data-card">
-        @if($tab === 'presensi')
-        <table id="main-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nama</th>
-                    <th>Kelas</th>
-                    <th>Masuk</th>
-                    <th>Ket</th>
-                    <th>Pulang</th>
-                    <th>Ket</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($recentPresensi as $i => $p)
-                <tr data-search="{{ strtolower($p->nama) }}">
-                    <td>{{ $i + 1 }}</td>
-                    <td>
-                        <div class="nama-text">{{ $p->nama }}</div>
-                        <div class="kelas-text">{{ $p->nomorinduk }}</div>
-                    </td>
-                    <td>{{ $p->info }}</td>
-                    <td>{{ $p->waktumasuk ?? '-' }}</td>
-                    <td>
-                        @if(in_array($p->ketmasuk, ['M','TW','MSK']))
-                            <span class="badge badge-tw">Tepat</span>
-                        @elseif(in_array($p->ketmasuk, ['T','TL','TLT']))
-                            <span class="badge badge-tl">Toleransi</span>
-                        @elseif($p->ketmasuk === 'TLT')
-                            <span class="badge badge-tlt">Terlambat</span>
-                        @else
-                            <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">{{ $p->ketmasuk ?? '-' }}</span>
-                        @endif
-                    </td>
-                    <td>{{ ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : '-' }}</td>
-                    <td>
-                        @if(in_array($p->ketpulang, ['P','PLG']))
-                            <span class="badge badge-plg">Normal</span>
-                        @elseif($p->ketpulang === 'PA')
-                            <span class="badge badge-tl">Awal</span>
-                        @else
-                            <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">{{ $p->ketpulang ?? '-' }}</span>
-                        @endif
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            Belum ada data presensi hari ini
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-        @else
-        <table id="main-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nama</th>
-                    <th>Kelas</th>
-                    <th>Dzuhur</th>
-                    <th>Ashar</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($sholatList as $i => $s)
-                <tr data-search="{{ strtolower($s['nama']) }}">
-                    <td>{{ $i + 1 }}</td>
-                    <td>
-                        <div class="nama-text">{{ $s['nama'] }}</div>
-                    </td>
-                    <td>{{ $s['kelas'] }}</td>
-                    <td>
-                        @if($s['dzuhur'])
-                            @if($s['izin_mens'])
-                                <span class="badge badge-i">🌸 {{ $s['dzuhur'] }}</span>
+        <div class="table-wrapper">
+            @if($tab === 'presensi')
+            <table id="main-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Kelas</th>
+                        <th>Masuk</th>
+                        <th>Ket</th>
+                        <th>Pulang</th>
+                        <th>Ket</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($recentPresensi as $i => $p)
+                    <tr data-search="{{ strtolower($p->nama) }}">
+                        <td>{{ $i + 1 }}</td>
+                        <td>
+                            <div class="nama-text">{{ $p->nama }}</div>
+                            <div class="kelas-text">{{ $p->nomorinduk }}</div>
+                        </td>
+                        <td>{{ $p->info }}</td>
+                        <td>{{ $p->waktumasuk ?? '-' }}</td>
+                        <td>
+                            @if(in_array($p->ketmasuk, ['M','TW','MSK']))
+                                <span class="badge badge-tw">Tepat</span>
+                            @elseif(in_array($p->ketmasuk, ['T','TL','TLT']))
+                                <span class="badge badge-tl">Toleransi</span>
+                            @elseif($p->ketmasuk === 'TLT')
+                                <span class="badge badge-tlt">Terlambat</span>
                             @else
-                                <span class="badge badge-d">🕛 {{ $s['dzuhur'] }}</span>
+                                <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">{{ $p->ketmasuk ?? '-' }}</span>
                             @endif
-                        @else
-                            <span style="color:var(--muted);">—</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($s['ashar'])
-                            <span class="badge badge-a">🕓 {{ $s['ashar'] }}</span>
-                        @else
-                            <span style="color:var(--muted);">—</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($s['izin_mens'])
-                            <span class="badge badge-i">🌸 Izin Mens</span>
-                        @elseif($s['dzuhur'] && $s['ashar'])
-                            <span class="badge badge-keduanya">✅ Lengkap</span>
-                        @elseif($s['dzuhur'] || $s['ashar'])
-                            <span class="badge badge-tl">⚠️ Sebagian</span>
-                        @endif
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6">
-                        <div class="empty-state">
-                            <i class="fas fa-mosque"></i>
-                            Belum ada data sholat hari ini
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-        @endif
+                        </td>
+                        <td>{{ ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : '-' }}</td>
+                        <td>
+                            @if(in_array($p->ketpulang, ['P','PLG']))
+                                <span class="badge badge-plg">Normal</span>
+                            @elseif($p->ketpulang === 'PA')
+                                <span class="badge badge-tl">Awal</span>
+                            @else
+                                <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">{{ $p->ketpulang ?? '-' }}</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                Belum ada data presensi hari ini
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+            @else
+            <table id="main-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Kelas</th>
+                        <th>Dzuhur</th>
+                        <th>Ashar</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($sholatList as $i => $s)
+                    <tr data-search="{{ strtolower($s['nama']) }}">
+                        <td>{{ $i + 1 }}</td>
+                        <td>
+                            <div class="nama-text">{{ $s['nama'] }}</div>
+                        </td>
+                        <td>{{ $s['kelas'] }}</td>
+                        <td>
+                            @if($s['dzuhur'])
+                                @if($s['izin_mens'])
+                                    <span class="badge badge-i">🌸 {{ $s['dzuhur'] }}</span>
+                                @else
+                                    <span class="badge badge-d">🕛 {{ $s['dzuhur'] }}</span>
+                                @endif
+                            @else
+                                <span style="color:var(--muted);">—</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($s['ashar'])
+                                <span class="badge badge-a">🕓 {{ $s['ashar'] }}</span>
+                            @else
+                                <span style="color:var(--muted);">—</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($s['izin_mens'])
+                                <span class="badge badge-i">🌸 Izin Mens</span>
+                            @elseif($s['dzuhur'] && $s['ashar'])
+                                <span class="badge badge-keduanya">✅ Lengkap</span>
+                            @elseif($s['dzuhur'] || $s['ashar'])
+                                <span class="badge badge-tl">⚠️ Sebagian</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <i class="fas fa-mosque"></i>
+                                Belum ada data sholat hari ini
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+            @endif
+        </div>
     </div>
 
 </main>

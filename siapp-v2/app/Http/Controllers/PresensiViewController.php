@@ -17,15 +17,21 @@ class PresensiViewController extends Controller
         $kelas     = $request->input('kelas', '');
         $filterKet = $request->input('ket', '');
 
-        $query = DB::table('datapresensi')
-            ->where('tanggal', $tanggal)
-            ->orderBy('waktumasuk');
+        $setting      = DB::table('statusnya')->first();
+        $tingkatAktif = json_decode($setting->tingkat_aktif ?? '["X","XI","XII"]', true);
 
-        if ($kelas) $query->where('info', $kelas);
+        $query = DB::table('datapresensi as dp')
+            ->leftJoin('datasiswa as ds', 'ds.nokartu', '=', 'dp.nokartu')
+            ->where('dp.tanggal', $tanggal)
+            ->whereIn('ds.tingkat', $tingkatAktif)
+            ->orderBy('dp.waktumasuk')
+            ->select('dp.*');
 
-        if ($filterKet === 'terlambat')   $query->whereIn('ketmasuk', ['TL', 'TLT', 'T']);
-        elseif ($filterKet === 'tepat')   $query->where('ketmasuk', 'TW');
-        elseif ($filterKet === 'pulang_awal') $query->where('ketpulang', 'PA');
+        if ($kelas) $query->where('dp.info', $kelas);
+
+        if ($filterKet === 'terlambat')       $query->whereIn('dp.ketmasuk', ['T','TL','TLT']);
+        elseif ($filterKet === 'tepat')       $query->whereIn('dp.ketmasuk', ['M','TW']);
+        elseif ($filterKet === 'pulang_awal') $query->where('dp.ketpulang', 'PA');
 
         $presensi    = $query->get();
         $total       = $presensi->count();

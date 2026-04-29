@@ -39,8 +39,9 @@ class HomeController extends Controller
 
         // ── Stat hari ini ──
         $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
-        $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->count();
-        $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->count();
+        $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
+        $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
+        $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
 
         // ── Daftar kelas ──
         $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
@@ -50,7 +51,7 @@ class HomeController extends Controller
             ->where('tanggal', $tanggal)
             ->when($filterKelas, fn($q) => $q->where('info', $filterKelas))
             ->orderBy('updated_at', 'desc')
-            ->limit(30)
+            // ->limit(30)
             ->get();
 
         // ── Recent sholat (pivot per siswa) ──
@@ -80,11 +81,12 @@ class HomeController extends Controller
             if ($e->keterangan === 'ASHAR')  $sholatMap[$nis]['ashar']  = $e->mulai;
             if ($e->ruang === 'Izin Mens')   $sholatMap[$nis]['izin_mens'] = true;
         }
-        $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->take(30)->values();
+        // $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->take(30)->values();
+        $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->values();
 
         return view('home', compact(
             'setting', 'statusMasuk', 'statusSholat',
-            'totalHadir', 'totalDzuhur', 'totalAshar',
+            'totalHadir', 'totalDzuhur', 'totalAshar', 'totalIzin',
             'kelasList', 'filterKelas', 'tab',
             'recentPresensi', 'sholatList', 'tanggal', 'jam'
         ));
