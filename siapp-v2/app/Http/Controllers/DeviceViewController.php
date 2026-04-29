@@ -77,7 +77,7 @@ class DeviceViewController extends Controller
 
     private function getData(): array
     {
-        $devices      = DB::table('devices')->orderByRaw('online DESC, last_seen DESC')->get();
+        $devices      = DB::table('devices')->orderByRaw('online DESC, device_id ASC')->get();
         $regDevices   = DB::table('reg_device')->get()->keyBy('no_device');
         $onlineCount  = $devices->where('online', 1)->count();
         $offlineCount = $devices->where('online', 0)->count();
