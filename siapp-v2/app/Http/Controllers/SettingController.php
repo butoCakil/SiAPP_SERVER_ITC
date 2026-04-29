@@ -31,6 +31,7 @@ class SettingController extends Controller
             'waktupulang' => $request->waktupulang,
             'info'        => $request->info,
             'tingkat_aktif' => $tingkatAktif,
+            'log_retention'  => (int) $request->input('log_retention', 30),
         ]);
 
         return back()->with('success', 'Setting berhasil disimpan.');

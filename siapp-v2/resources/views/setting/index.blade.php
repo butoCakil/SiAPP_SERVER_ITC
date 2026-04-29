@@ -247,48 +247,63 @@
                                 </div>
 
                                 {{-- Integrasi TIM IT --}}
-                        <div class="card card-outline card-info mb-3">
-                            <div class="card-header py-2">
-                                <h3 class="card-title" style="font-size:13px;">
-                                    <i class="fas fa-exchange-alt mr-1"></i>Integrasi TIM IT
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                @php
-                                    $urlPresensi = env('TIMID_PRESENSI_URL', '');
-                                    $urlSholat   = env('TIMID_SHOLAT_URL', '');
-                                    $sudahDiatur = $urlPresensi || $urlSholat;
-                                @endphp
-                                <div class="mb-3">
-                                    @if($sudahDiatur)
-                                        <span class="badge badge-success p-2">
-                                            <i class="fas fa-check-circle mr-1"></i>Terhubung ke TIM IT
-                                        </span>
-                                    @else
-                                        <span class="badge badge-warning p-2">
-                                            <i class="fas fa-exclamation-triangle mr-1"></i>Belum dikonfigurasi
-                                        </span>
-                                        <small class="text-muted ml-2">
-                                            Isi <code>TIMID_PRESENSI_URL</code> dan <code>TIMID_SHOLAT_URL</code> di file <code>.env</code>
-                                        </small>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label><i class="fas fa-sync mr-1"></i>Interval Push</label>
-                                    <div class="d-flex align-items-center" style="gap:8px;">
-                                        <select name="push_interval" class="form-control" style="width:120px;">
-                                            @foreach([5,10,15,30,60] as $interval)
-                                                <option value="{{ $interval }}"
-                                                    {{ (int)env('PUSH_INTERVAL', 5) === $interval ? 'selected' : '' }}>
-                                                    {{ $interval }} menit
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <small class="text-muted">Data presensi dikirim ke SIM setiap interval ini</small>
+                                <div class="card card-outline card-info mb-3">
+                                    <div class="card-header py-2">
+                                        <h3 class="card-title" style="font-size:13px;">
+                                            <i class="fas fa-exchange-alt mr-1"></i>Integrasi TIM IT
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        @php
+                                            $urlPresensi = env('TIMID_PRESENSI_URL', '');
+                                            $urlSholat   = env('TIMID_SHOLAT_URL', '');
+                                            $sudahDiatur = $urlPresensi || $urlSholat;
+                                        @endphp
+                                        <div class="mb-3">
+                                            @if($sudahDiatur)
+                                                <span class="badge badge-success p-2">
+                                                    <i class="fas fa-check-circle mr-1"></i>Terhubung ke TIM IT
+                                                </span>
+                                            @else
+                                                <span class="badge badge-warning p-2">
+                                                    <i class="fas fa-exclamation-triangle mr-1"></i>Belum dikonfigurasi
+                                                </span>
+                                                <small class="text-muted ml-2">
+                                                    Isi <code>TIMID_PRESENSI_URL</code> dan <code>TIMID_SHOLAT_URL</code> di file <code>.env</code>
+                                                </small>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label><i class="fas fa-sync mr-1"></i>Interval Push</label>
+                                            <div class="d-flex align-items-center" style="gap:8px;">
+                                                <select name="push_interval" class="form-control" style="width:120px;">
+                                                    @foreach([5,10,15,30,60] as $interval)
+                                                        <option value="{{ $interval }}"
+                                                            {{ (int)env('PUSH_INTERVAL', 5) === $interval ? 'selected' : '' }}>
+                                                            {{ $interval }} menit
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <small class="text-muted">Data presensi dikirim ke SIM setiap interval ini</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-0 mt-3">
+                                            <label><i class="fas fa-database mr-1"></i>Retensi Log</label>
+                                            <div class="d-flex align-items-center" style="gap:8px;">
+                                                <select name="log_retention" class="form-control" style="width:120px;">
+                                                    @foreach([7, 14, 30, 60, 90] as $days)
+                                                        <option value="{{ $days }}"
+                                                            {{ ($setting->log_retention ?? 30) == $days ? 'selected' : '' }}>
+                                                            {{ $days }} hari
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <small class="text-muted">Log lebih dari X hari akan dihapus otomatis setiap malam jam 02:00</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                             </div>
                         </div>
 

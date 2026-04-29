@@ -117,6 +117,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('log') }}" class="nav-link {{ request()->routeIs('log*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-file-alt"></i>
+                                <p>Log</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="nav-link btn btn-link text-left w-100">

@@ -11,6 +11,7 @@ use App\Http\Controllers\DeviceViewController;
 use App\Http\Controllers\PresensiViewController;
 use App\Http\Controllers\SiswaViewController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -164,6 +165,19 @@ Route::post('/siswa/kartu', [SiswaViewController::class, 'updateKartu'])
 Route::get('/siswa/tmprfid', [SiswaViewController::class, 'tmprfid'])
     ->middleware('auth.admin')
     ->name('siswa.tmprfid');
+
+// Log Management
+Route::get('/log', [LogController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('log');
+
+Route::delete('/log/tempreq', [LogController::class, 'clearTempreq'])
+    ->middleware('auth.admin')
+    ->name('log.tempreq.clear');
+
+Route::delete('/log/device', [LogController::class, 'clearDevice'])
+    ->middleware('auth.admin')
+    ->name('log.device.clear');
 
 /*
 |--------------------------------------------------------------------------
