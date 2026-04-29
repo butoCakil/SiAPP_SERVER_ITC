@@ -171,6 +171,21 @@
                                 </div>
                                 <small class="text-muted">Tingkat yang tidak dicentang akan disembunyikan dari rekap</small>
                             </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-sync mr-1"></i>Interval Push ke TIM IT</label>
+                                <div class="d-flex align-items-center" style="gap:8px;">
+                                    <select name="push_interval" class="form-control" style="width:120px;">
+                                        @foreach([5,10,15,30,60] as $interval)
+                                            <option value="{{ $interval }}"
+                                                {{ (int)env('PUSH_INTERVAL', 5) === $interval ? 'selected' : '' }}>
+                                                {{ $interval }} menit
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-muted">Data presensi dikirim ke SIM setiap interval ini</small>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">

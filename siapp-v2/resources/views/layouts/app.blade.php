@@ -167,7 +167,7 @@
         </div>
 
         <footer class="main-footer">
-            <strong>SiAPP</strong> &mdash; Sistem Informasi Absensi Presensi Pintar
+            <strong>SiAPP</strong> &mdash; Sistem Informasi Presensi dan Pembiasaan
             <div class="float-right d-none d-sm-inline-block">
                 <b>Laravel</b> 11
             </div>

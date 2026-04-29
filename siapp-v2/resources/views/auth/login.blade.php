@@ -27,7 +27,7 @@
         <div class="card-header">
             <div class="brand-icon"><i class="fas fa-wifi"></i></div>
             <div class="brand-title">SiAPP</div>
-            <div class="brand-sub">Sistem Informasi Absensi Presensi Pintar</div>
+            <div class="brand-sub">Sistem Informasi Presensi dan Pembiasaan</div>
         </div>
         <div class="card-body p-4">
             @if($errors->has('login'))
