@@ -123,6 +123,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('apikey') }}" class="nav-link {{ request()->routeIs('apikey*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-key"></i>
+                                <p>API Key</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="nav-link btn btn-link text-left w-100">

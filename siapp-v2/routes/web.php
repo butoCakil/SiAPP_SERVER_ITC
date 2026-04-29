@@ -12,6 +12,7 @@ use App\Http\Controllers\PresensiViewController;
 use App\Http\Controllers\SiswaViewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ApiKeyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -185,6 +186,23 @@ Route::delete('/log/device', [LogController::class, 'clearDevice'])
 |--------------------------------------------------------------------------
 */
 Route::get('/tag', [SiswaViewController::class, 'tagKartu']);
+
+// API Key Management
+Route::get('/apikey', [ApiKeyController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('apikey');
+
+Route::post('/apikey', [ApiKeyController::class, 'store'])
+    ->middleware('auth.admin')
+    ->name('apikey.store');
+
+Route::put('/apikey/{id}', [ApiKeyController::class, 'update'])
+    ->middleware('auth.admin')
+    ->name('apikey.update');
+
+Route::delete('/apikey/{id}', [ApiKeyController::class, 'destroy'])
+    ->middleware('auth.admin')
+    ->name('apikey.destroy');
 
 /*
 |--------------------------------------------------------------------------
