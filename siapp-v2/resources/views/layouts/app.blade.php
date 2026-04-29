@@ -129,6 +129,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('akun') }}" class="nav-link {{ request()->routeIs('akun*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Akun</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="nav-link btn btn-link text-left w-100">

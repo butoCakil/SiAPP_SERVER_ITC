@@ -13,6 +13,7 @@ use App\Http\Controllers\SiswaViewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ApiKeyController;
+use App\Http\Controllers\AkunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -204,6 +205,17 @@ Route::delete('/apikey/{id}', [ApiKeyController::class, 'destroy'])
     ->middleware('auth.admin')
     ->name('apikey.destroy');
 
+// Akun Management
+Route::get('/akun', [AkunController::class, 'index'])
+    ->middleware('auth.admin')->name('akun');
+Route::post('/akun', [AkunController::class, 'store'])
+    ->middleware('auth.admin')->name('akun.store');
+Route::put('/akun/{id}', [AkunController::class, 'update'])
+    ->middleware('auth.admin')->name('akun.update');
+Route::delete('/akun/{id}', [AkunController::class, 'destroy'])
+    ->middleware('auth.admin')->name('akun.destroy');
+Route::put('/akun/{id}/password', [AkunController::class, 'resetPassword'])
+    ->middleware('auth.admin')->name('akun.password');
 /*
 |--------------------------------------------------------------------------
 | INTERNAL API (AUTH)
