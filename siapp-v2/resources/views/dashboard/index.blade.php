@@ -287,9 +287,9 @@
                                 <td>{{ $r['waktu'] }}</td>
                                 <td>
                                     @if($r['tipe'] === 'masuk')
-                                        @if($r['ket'] === 'TW')
+                                        @if(in_array($r['ket'], ['M','TW']))
                                             <span class="badge badge-masuk">Tepat</span>
-                                        @elseif(in_array($r['ket'], ['TL','TLT']))
+                                        @elseif(in_array($r['ket'], ['T','TL','TLT']))
                                             <span class="badge badge-tl">Telat</span>
                                         @else
                                             <span class="badge badge-secondary">{{ $r['ket'] ?? '-' }}</span>

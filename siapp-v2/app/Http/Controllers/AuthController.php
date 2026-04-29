@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->session()->flush();
-        return redirect()->route('login');
+        Auth::logout();
+
+        // bersihkan session dengan benar
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

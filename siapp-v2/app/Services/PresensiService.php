@@ -162,13 +162,13 @@ class PresensiService
 
         // Tentukan keterlambatan
         if ($jam <= $wa) {
-            $ket = 'TW';
+            $ket = 'M';
             $selisih = '0';
         } elseif ($jam <= $wta) {
-            $ket = 'TL';
+            $ket = 'T';
             $selisih = $this->selisihWaktu($wa, $jam);
         } else {
-            $ket = 'TLT';
+            $ket = 'T';
             $selisih = $this->selisihWaktu($wa, $jam);
         }
 
@@ -221,7 +221,7 @@ class PresensiService
             $pesan   = 'PLAW';
             $selisih = $this->selisihWaktu($jam, $waktupulang);
         } else {
-            $ket     = 'PLG';
+            $ket     = 'P';
             $pesan   = 'PPBH';
             $selisih = $this->selisihWaktu($waktupulang, $jam);
         }

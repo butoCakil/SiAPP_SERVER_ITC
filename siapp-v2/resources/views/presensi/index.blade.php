@@ -182,9 +182,9 @@
                             <td>{{ $p->info }}</td>
                             <td>{{ $p->waktumasuk ?? '-' }}</td>
                             <td>
-                                @if($p->ketmasuk === 'TW')
+                                @if(in_array($p->ketmasuk, ['M','TW', 'MSK']))
                                     <span class="badge badge-tw">Tepat</span>
-                                @elseif(in_array($p->ketmasuk, ['TL','T']))
+                                @elseif(in_array($p->ketmasuk, ['T','TL','TLT']))
                                     <span class="badge badge-tl">Toleransi</span>
                                 @elseif($p->ketmasuk === 'TLT')
                                     <span class="badge badge-tlt">Terlambat</span>
@@ -200,7 +200,7 @@
                             </td>
                             <td>{{ ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : '-' }}</td>
                             <td>
-                                @if($p->ketpulang === 'PLG')
+                                @if(in_array($p->ketpulang, ['P','PLG']))
                                     <span class="badge badge-plg">Normal</span>
                                 @elseif($p->ketpulang === 'PA')
                                     <span class="badge badge-pa">Awal</span>

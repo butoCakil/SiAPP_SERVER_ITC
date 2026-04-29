@@ -1,66 +1,184 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DeviceViewController;
 use App\Http\Controllers\PresensiViewController;
 use App\Http\Controllers\SiswaViewController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
-// ── Auth ──
+/*
+|--------------------------------------------------------------------------
+| ROOT DECISION
+|--------------------------------------------------------------------------
+| Tidak ada logic lain di sini selain routing keputusan
+*/
+Route::get('/', function () {
+    return Auth::check()
+        ? redirect('/dashboard')
+        : redirect('/home');
+});
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC ROUTES (TANPA AUTH)
+|--------------------------------------------------------------------------
+*/
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| AUTH ROUTES
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// ── Protected Routes ──
-Route::middleware(['auth.admin'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+/*
+|--------------------------------------------------------------------------
+| PROTECTED ROUTES (PER ROUTE, BUKAN GROUP ROOT)
+|--------------------------------------------------------------------------
+*/
 
-    // Setting
-    Route::get('/setting', [SettingController::class, 'index'])->name('setting');
-    Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('dashboard');
 
-    // Device
-    Route::get('/device', [DeviceViewController::class, 'index'])->name('device');
-    Route::get('/device/registrasi', [DeviceViewController::class, 'registrasi'])->name('device.registrasi');
-    Route::post('/device/registrasi', [DeviceViewController::class, 'storeReg'])->name('device.registrasi.store');
-    Route::put('/device/registrasi/{id}', [DeviceViewController::class, 'updateReg'])->name('device.registrasi.update');
-    Route::delete('/device/registrasi/{id}', [DeviceViewController::class, 'destroyReg'])->name('device.registrasi.destroy');
+// Setting
+Route::get('/setting', [SettingController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('setting');
 
-    // Presensi
-    Route::get('/presensi', [PresensiViewController::class, 'index'])->name('presensi');
-    Route::get('/presensi/create', [PresensiViewController::class, 'create'])->name('presensi.create');
-    Route::post('/presensi', [PresensiViewController::class, 'store'])->name('presensi.store');
-    Route::get('/presensi/{id}/edit', [PresensiViewController::class, 'edit'])->name('presensi.edit');
-    Route::put('/presensi/{id}', [PresensiViewController::class, 'update'])->name('presensi.update');
-    Route::delete('/presensi/{id}', [PresensiViewController::class, 'destroy'])->name('presensi.destroy');
-    // Pembiasaan Sholat CRUD
-    Route::post('/presensi/event', [PresensiViewController::class, 'storeEvent'])->name('presensi.event.store');
-    Route::put('/presensi/event/{id}', [PresensiViewController::class, 'updateEvent'])->name('presensi.event.update');
-    Route::delete('/presensi/event/{id}', [PresensiViewController::class, 'destroyEvent'])->name('presensi.event.destroy');
-    Route::get('/presensi/event', [PresensiViewController::class, 'event'])->name('presensi.event');
+Route::post('/setting', [SettingController::class, 'update'])
+    ->middleware('auth.admin')
+    ->name('setting.update');
 
-    // Siswa
-    Route::get('/siswa', [SiswaViewController::class, 'index'])->name('siswa');
-    Route::get('/siswa/create', [SiswaViewController::class, 'create'])->name('siswa.create');
-    Route::post('/siswa', [SiswaViewController::class, 'store'])->name('siswa.store');
-    Route::get('/siswa/{id}/edit', [SiswaViewController::class, 'editSiswa'])->name('siswa.edit');
-    Route::put('/siswa/{id}', [SiswaViewController::class, 'updateSiswa'])->name('siswa.update');
-    Route::delete('/siswa/{id}', [SiswaViewController::class, 'destroySiswa'])->name('siswa.destroy');
-    Route::post('/siswa/kartu', [SiswaViewController::class, 'updateKartu'])->name('siswa.kartu');
-    Route::get('/siswa/tmprfid', [SiswaViewController::class, 'tmprfid'])->name('siswa.tmprfid');
+// Device
+Route::get('/device', [DeviceViewController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('device');
 
-    // Device AJAX
-    Route::get("/device/cards", [DeviceViewController::class, "cards"])->name("device.cards");
-    Route::delete("/device/{id}", [DeviceViewController::class, "destroy"])->name("device.destroy");
+Route::get('/device/registrasi', [DeviceViewController::class, 'registrasi'])
+    ->middleware('auth.admin')
+    ->name('device.registrasi');
 
-});
-// ESP Admin - tanpa auth
-Route::get('/tag', [App\Http\Controllers\SiswaViewController::class, 'tagKartu']);
+Route::post('/device/registrasi', [DeviceViewController::class, 'storeReg'])
+    ->middleware('auth.admin')
+    ->name('device.registrasi.store');
 
-// Device online count (AJAX)
-Route::get('/api-internal/device-online', function() {
-    return response()->json(['online' => DB::table('devices')->where('online', 1)->count()]);
+Route::put('/device/registrasi/{id}', [DeviceViewController::class, 'updateReg'])
+    ->middleware('auth.admin')
+    ->name('device.registrasi.update');
+
+Route::delete('/device/registrasi/{id}', [DeviceViewController::class, 'destroyReg'])
+    ->middleware('auth.admin')
+    ->name('device.registrasi.destroy');
+
+// Device AJAX
+Route::get('/device/cards', [DeviceViewController::class, 'cards'])
+    ->middleware('auth.admin')
+    ->name('device.cards');
+
+Route::delete('/device/{id}', [DeviceViewController::class, 'destroy'])
+    ->middleware('auth.admin')
+    ->name('device.destroy');
+
+// Presensi
+Route::get('/presensi', [PresensiViewController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('presensi');
+
+Route::get('/presensi/create', [PresensiViewController::class, 'create'])
+    ->middleware('auth.admin')
+    ->name('presensi.create');
+
+Route::post('/presensi', [PresensiViewController::class, 'store'])
+    ->middleware('auth.admin')
+    ->name('presensi.store');
+
+Route::get('/presensi/{id}/edit', [PresensiViewController::class, 'edit'])
+    ->middleware('auth.admin')
+    ->name('presensi.edit');
+
+Route::put('/presensi/{id}', [PresensiViewController::class, 'update'])
+    ->middleware('auth.admin')
+    ->name('presensi.update');
+
+Route::delete('/presensi/{id}', [PresensiViewController::class, 'destroy'])
+    ->middleware('auth.admin')
+    ->name('presensi.destroy');
+
+// Event Presensi
+Route::post('/presensi/event', [PresensiViewController::class, 'storeEvent'])
+    ->middleware('auth.admin')
+    ->name('presensi.event.store');
+
+Route::put('/presensi/event/{id}', [PresensiViewController::class, 'updateEvent'])
+    ->middleware('auth.admin')
+    ->name('presensi.event.update');
+
+Route::delete('/presensi/event/{id}', [PresensiViewController::class, 'destroyEvent'])
+    ->middleware('auth.admin')
+    ->name('presensi.event.destroy');
+
+Route::get('/presensi/event', [PresensiViewController::class, 'event'])
+    ->middleware('auth.admin')
+    ->name('presensi.event');
+
+// Siswa
+Route::get('/siswa', [SiswaViewController::class, 'index'])
+    ->middleware('auth.admin')
+    ->name('siswa');
+
+Route::get('/siswa/create', [SiswaViewController::class, 'create'])
+    ->middleware('auth.admin')
+    ->name('siswa.create');
+
+Route::post('/siswa', [SiswaViewController::class, 'store'])
+    ->middleware('auth.admin')
+    ->name('siswa.store');
+
+Route::get('/siswa/{id}/edit', [SiswaViewController::class, 'editSiswa'])
+    ->middleware('auth.admin')
+    ->name('siswa.edit');
+
+Route::put('/siswa/{id}', [SiswaViewController::class, 'updateSiswa'])
+    ->middleware('auth.admin')
+    ->name('siswa.update');
+
+Route::delete('/siswa/{id}', [SiswaViewController::class, 'destroySiswa'])
+    ->middleware('auth.admin')
+    ->name('siswa.destroy');
+
+Route::post('/siswa/kartu', [SiswaViewController::class, 'updateKartu'])
+    ->middleware('auth.admin')
+    ->name('siswa.kartu');
+
+Route::get('/siswa/tmprfid', [SiswaViewController::class, 'tmprfid'])
+    ->middleware('auth.admin')
+    ->name('siswa.tmprfid');
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC API / DEVICE
+|--------------------------------------------------------------------------
+*/
+Route::get('/tag', [SiswaViewController::class, 'tagKartu']);
+
+/*
+|--------------------------------------------------------------------------
+| INTERNAL API (AUTH)
+|--------------------------------------------------------------------------
+*/
+Route::get('/api-internal/device-online', function () {
+    return response()->json([
+        'online' => DB::table('devices')->where('online', 1)->count()
+    ]);
 })->middleware('auth.admin');

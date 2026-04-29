@@ -55,9 +55,8 @@
                     <div class="form-group">
                         <label>Ket Masuk</label>
                         <select name="ketmasuk" class="form-control">
-                            <option value="TW">Tepat Waktu</option>
-                            <option value="TL">Toleransi</option>
-                            <option value="TLT">Terlambat</option>
+                            <option value="M">Tepat Waktu</option>
+                            <option value="T">Terlambat</option>
                         </select>
                     </div>
                 </div>
@@ -75,7 +74,7 @@
                         <label>Ket Pulang</label>
                         <select name="ketpulang" class="form-control">
                             <option value="">— Belum Pulang —</option>
-                            <option value="PLG">Normal</option>
+                            <option value="P">Normal</option>
                             <option value="PA">Pulang Awal</option>
                         </select>
                     </div>

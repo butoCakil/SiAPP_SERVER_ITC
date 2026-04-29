@@ -35,10 +35,8 @@
                     <div class="form-group">
                         <label>Ket Masuk</label>
                         <select name="ketmasuk" class="form-control">
-                            <option value="TW"  {{ $presensi->ketmasuk==='TW'  ? 'selected':'' }}>Tepat Waktu</option>
-                            <option value="TL"  {{ $presensi->ketmasuk==='TL'  ? 'selected':'' }}>Toleransi</option>
-                            <option value="TLT" {{ $presensi->ketmasuk==='TLT' ? 'selected':'' }}>Terlambat</option>
-                            <option value="T"   {{ $presensi->ketmasuk==='T'   ? 'selected':'' }}>Telat</option>
+                            <option value="M"   {{ in_array($presensi->ketmasuk,['M','TW', 'MSK'])  ? 'selected':'' }}>Tepat Waktu</option>
+                            <option value="T"   {{ in_array($presensi->ketmasuk,['T','TL','TLT']) ? 'selected':'' }}>Terlambat</option>
                         </select>
                     </div>
                 </div>
@@ -57,7 +55,7 @@
                         <label>Ket Pulang</label>
                         <select name="ketpulang" class="form-control">
                             <option value="">— Belum Pulang —</option>
-                            <option value="PLG" {{ $presensi->ketpulang==='PLG' ? 'selected':'' }}>Normal</option>
+                            <option value="P"   {{ in_array($presensi->ketpulang,['P','PLG']) ? 'selected':'' }}>Normal</option>
                             <option value="PA"  {{ $presensi->ketpulang==='PA'  ? 'selected':'' }}>Pulang Awal</option>
                         </select>
                     </div>
