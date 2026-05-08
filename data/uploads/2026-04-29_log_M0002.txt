@@ -1,0 +1,81 @@
+[2026-04-29 09:35:57] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-04-29 09:48:24] Order dari server:
+[2026-04-29 09:48:24] devices/M0002/settings
+[2026-04-29 09:48:24] Pesan: {"device_id":"M0002","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"14:00:00","wtp_jumat":"11:00:00","wp":"18:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-04-29 09:48:39] Order dari server:
+[2026-04-29 09:48:39] devices/M0002/settings
+[2026-04-29 09:48:39] Pesan: {"device_id":"M0002","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"14:00:00","wtp_jumat":"11:00:00","wp":"18:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-04-29 09:48:48] Order dari server:
+[2026-04-29 09:48:48] devices/M0002/settings
+[2026-04-29 09:48:48] Pesan: {"device_id":"M0002","command":{"sync":true}}
+[2026-04-29 09:48:48] Perintah Server: Jalankan sinkronisasi
+[2026-04-29 09:48:54] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-04-29 09:48:54] Update DB Berhasil!
+[2026-04-29 09:50:34] Order dari server:
+[2026-04-29 09:50:34] devices/M0002/settings
+[2026-04-29 09:50:34] Pesan: {"device_id":"M0002","command":{"upload":true}}
+[2026-04-29 09:50:34] Perintah Server: Upload presensi
+[2026-04-29 09:50:38] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-04-29 09:50:38] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-04-29 09:50:56] Order dari server:
+[2026-04-29 09:50:56] devices/M0002/settings
+[2026-04-29 09:50:56] Pesan: {"device_id":"M0002","command":{"upload":true}}
+[2026-04-29 09:50:56] Perintah Server: Upload presensi
+[2026-04-29 09:50:56] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 14:00:00] Saatnya upload data #2!
+[2026-04-29 14:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 14:00:01] Upload #2 gagal, dijadwalkan ulang pada 14:15
+[2026-04-29 14:12:31] MQTT gagal, rc=-2
+[2026-04-29 14:12:41] MQTT gagal, rc=-2
+[2026-04-29 14:12:51] MQTT gagal, rc=-2
+[2026-04-29 14:15:00] Saatnya upload data #2!
+[2026-04-29 14:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 14:15:01] Upload #2 gagal, dijadwalkan ulang pada 14:30
+[2026-04-29 14:30:00] Saatnya upload data #2!
+[2026-04-29 14:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 14:30:01] Upload #2 gagal, dijadwalkan ulang pada 14:45
+[2026-04-29 14:45:00] Saatnya upload data #2!
+[2026-04-29 14:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 14:45:01] Upload #2 gagal, dijadwalkan ulang pada 15:0
+[2026-04-29 15:00:00] Saatnya upload data #2!
+[2026-04-29 15:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 15:00:01] Upload #2 gagal, dijadwalkan ulang pada 15:15
+[2026-04-29 15:15:00] Saatnya upload data #2!
+[2026-04-29 15:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 15:15:01] Upload #2 gagal, dijadwalkan ulang pada 15:30
+[2026-04-29 15:30:00] Saatnya upload data #2!
+[2026-04-29 15:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 15:30:01] Upload #2 gagal, dijadwalkan ulang pada 15:45
+[2026-04-29 15:45:00] Saatnya upload data #2!
+[2026-04-29 15:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 15:45:01] Upload #2 gagal, dijadwalkan ulang pada 16:0
+[2026-04-29 16:00:00] Saatnya upload data #2!
+[2026-04-29 16:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 16:00:01] Upload #2 gagal, dijadwalkan ulang pada 16:15
+[2026-04-29 16:15:00] Saatnya upload data #2!
+[2026-04-29 16:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 16:15:01] Upload #2 gagal, dijadwalkan ulang pada 16:30
+[2026-04-29 16:30:00] Saatnya upload data #2!
+[2026-04-29 16:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 16:30:01] Upload #2 gagal, dijadwalkan ulang pada 16:45
+[2026-04-29 16:45:00] Saatnya upload data #2!
+[2026-04-29 16:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 16:45:01] Upload #2 gagal, dijadwalkan ulang pada 17:0
+[2026-04-29 17:00:00] Saatnya upload data #2!
+[2026-04-29 17:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 17:00:01] Upload #2 gagal, dijadwalkan ulang pada 17:15
+[2026-04-29 17:15:00] Saatnya upload data #2!
+[2026-04-29 17:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 17:15:01] Upload #2 gagal, dijadwalkan ulang pada 17:30
+[2026-04-29 17:30:00] Saatnya upload data #2!
+[2026-04-29 17:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 17:30:01] Upload #2 gagal, dijadwalkan ulang pada 17:45
+[2026-04-29 17:45:00] Saatnya upload data #2!
+[2026-04-29 17:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 17:45:01] Upload #2 gagal, dijadwalkan ulang pada 18:0
+[2026-04-29 18:00:00] Saatnya upload data #2!
+[2026-04-29 18:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 18:00:01] Upload #2 gagal, dijadwalkan ulang pada 18:15
+[2026-04-29 18:00:01] Upload Data Presensi - Sebelum Restart
+[2026-04-29 18:00:01] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-04-29 18:00:02] Upload # gagal!

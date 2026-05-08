@@ -11,3 +11,47 @@
 [16-Mar-2026 16:36:04 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
 [16-Mar-2026 16:36:04 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
 [2026-04-06 15:02:55] JSON tidak valid dari topic devices/2309MAS002/status
+[05-May-2026 15:14:16 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:16] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:16 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:16] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:14:17 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/2002): No such file or directory in /opt/lampp/htdocs/app/mqtt/device.php on line 90
+[2026-05-05 15:14:17] Gagal konek DB: No such file or directory
+[05-May-2026 15:33:50 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[05-May-2026 15:33:50 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
