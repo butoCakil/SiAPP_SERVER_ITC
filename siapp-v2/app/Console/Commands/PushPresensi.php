@@ -9,74 +9,121 @@ use Illuminate\Support\Facades\Log;
 
 class PushPresensi extends Command
 {
-    protected $signature   = 'push:presensi {--tanggal= : Tanggal spesifik (Y-m-d), default hari ini}';
-    protected $description = 'Push data presensi ke ekosistem SIM TIM IT';
+    protected $signature   = 'push:presensi {--tanggal= : Tanggal spesifik Y-m-d, default hari ini} {--force : Kirim ulang semua data meski sudah pernah dikirim}';
+    protected $description = 'Push data presensi ke 4 endpoint TIM IT';
+
+    private string $tanggal;
+    private bool   $force;
 
     public function handle(): void
     {
-        $tanggal     = $this->option('tanggal') ?? date('Y-m-d');
-        $urlPresensi = config('timid.presensi_url');
-        $urlSholat   = config('timid.sholat_url');
+        $this->tanggal = $this->option('tanggal') ?? date('Y-m-d');
+        $this->force   = (bool) $this->option('force');
 
-        if (!$urlPresensi && !$urlSholat) {
+        $timid       = DB::table('statusnya')->first();
+        $urlPresensi = $timid->timid_presensi_url ?? '';
+        $urlSholat   = $timid->timid_sholat_url ?? '';
+        $urlIzinMens = $timid->timid_izin_mens_url ?? '';
+        $urlIjin     = $timid->timid_ijin_url ?? '';
+
+        $adaUrl = $urlPresensi || $urlSholat || $urlIzinMens || $urlIjin;
+        if (!$adaUrl) {
             $this->warn('[' . now() . '] URL TIM IT belum dikonfigurasi. Skip.');
             return;
         }
 
-        $this->info('[' . now() . '] Mulai push data tanggal: ' . $tanggal);
+        $this->info('[' . now() . '] Push tanggal: ' . $this->tanggal . ($this->force ? ' (FORCE)' : ''));
 
-        if ($urlPresensi) {
-            $this->pushPresensiHarian($tanggal, $urlPresensi);
+        $totalKirim = 0;
+        if ($urlPresensi)  $totalKirim += $this->pushPresensiHarian($urlPresensi);
+        if ($urlSholat)    $totalKirim += $this->pushSholat($urlSholat);
+        if ($urlIzinMens)  $totalKirim += $this->pushIzinMens($urlIzinMens);
+        if ($urlIjin)      $totalKirim += $this->pushIjin($urlIjin);
+
+        if ($totalKirim === 0) {
+            $this->line('[' . now() . '] Tidak ada data baru. Skip.');
+        } else {
+            $this->info('[' . now() . '] Selesai. Total dikirim: ' . $totalKirim . ' endpoint.');
         }
-
-        if ($urlSholat) {
-            $this->pushSholat($tanggal, $urlSholat);
-        }
-
-        $this->info('[' . now() . '] Selesai.');
     }
 
-    private function pushPresensiHarian(string $tanggal, string $url): void
+    // ── 1. Presensi Harian ──
+    private function pushPresensiHarian(string $url): int
     {
-        $data = DB::table('datapresensi as dp')
+        $query = DB::table('datapresensi as dp')
             ->leftJoin('datasiswa as ds', 'ds.nokartu', '=', 'dp.nokartu')
-            ->where('dp.tanggal', $tanggal)
-            ->select(
-                'ds.nis', 'dp.nama', 'dp.info as kelas',
-                'dp.waktumasuk', 'dp.ketmasuk',
-                'dp.waktupulang', 'dp.ketpulang'
-            )
-            ->orderBy('dp.waktumasuk')
-            ->get()
-            ->map(fn($p) => [
-                'nis'          => $p->nis ?? '-',
+            ->where('dp.tanggal', $this->tanggal)
+            ->whereNull('dp.pushed_at');
+
+        if (!$this->force) {
+            $query->whereNull('dp.pushed_at');
+        }
+
+        $data = $query->select(
+            'dp.id',
+            'dp.nomorinduk as nis',
+            'dp.nama',
+            'dp.info as kelas',
+            'dp.waktumasuk',
+            'dp.ketmasuk',
+            'dp.waktupulang',
+            'dp.ketpulang',
+            'dp.infodevice2 as device'
+        )
+            ->get();
+
+        if ($data->isEmpty()) return 0;
+
+        $payload = [
+            'type'      => 'presensi_harian',
+            'timestamp' => now()->toIso8601String(),
+            'tanggal'   => $this->tanggal,
+            'total'     => $data->count(),
+            'data'      => $data->map(fn($p) => [
+                'nis'          => $p->nis,
                 'nama'         => $p->nama,
                 'kelas'        => $p->kelas,
                 'waktu_masuk'  => $p->waktumasuk,
                 'ket_masuk'    => $p->ketmasuk,
                 'waktu_pulang' => ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : null,
                 'ket_pulang'   => $p->ketpulang ?: null,
-            ]);
-
-        $payload = [
-            'type'      => 'presensi_harian',
-            'timestamp' => now()->toIso8601String(),
-            'tanggal'   => $tanggal,
-            'total'     => $data->count(),
-            'data'      => $data->values(),
+                'device'       => $p->device,
+            ])->values(),
         ];
 
-        $this->kirim($url, $payload, 'Presensi Harian');
+        $ok = $this->kirim($url, $payload, 'Presensi Harian');
+
+        if ($ok) {
+            $ids = $data->pluck('id');
+            DB::table('datapresensi')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        }
+
+        return $ok ? 1 : 0;
     }
 
-    private function pushSholat(string $tanggal, string $url): void
+    // ── 2. Sholat ──
+    private function pushSholat(string $url): int
     {
-        $events = DB::table('presensiEvent as pe')
+        $query = DB::table('presensiEvent as pe')
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
-            ->where('pe.tanggal', $tanggal)
-            ->select('pe.nis', 'ds.nama', 'ds.kelas', 'pe.keterangan', 'pe.ruang', 'pe.mulai')
-            ->orderBy('pe.nis')
-            ->get();
+            ->where('pe.tanggal', $this->tanggal)
+            ->where('pe.ruang', '!=', 'Izin Mens');
+
+        if (!$this->force) {
+            $query->whereNull('pe.pushed_at');
+        }
+
+        $events = $query->select(
+            'pe.id',
+            'pe.nis',
+            'ds.nama',
+            'ds.kelas',
+            'pe.keterangan',
+            'pe.ruang',
+            'pe.mulai'
+        )->get();
+
+        if ($events->isEmpty()) return 0;
 
         // Pivot per siswa
         $siswaMap = [];
@@ -84,52 +131,215 @@ class PushPresensi extends Command
             $nis = $e->nis;
             if (!isset($siswaMap[$nis])) {
                 $siswaMap[$nis] = [
-                    'nis'       => $nis,
-                    'nama'      => $e->nama ?? '-',
-                    'kelas'     => $e->kelas ?? '-',
-                    'dzuhur'    => null,
-                    'ashar'     => null,
-                    'izin_mens' => false,
+                    'ids'          => [],
+                    'nis'          => $nis,
+                    'nama'         => $e->nama ?? '-',
+                    'kelas'        => $e->kelas ?? '-',
+                    'dzuhur'       => null,
+                    'ashar'        => null,
+                    'device_dzuhur' => null,
+                    'device_ashar' => null,
                 ];
             }
+            $siswaMap[$nis]['ids'][] = $e->id;
             if ($e->keterangan === 'DZUHUR') {
-                $siswaMap[$nis]['dzuhur'] = $e->mulai;
+                $siswaMap[$nis]['dzuhur']        = $e->mulai;
+                $siswaMap[$nis]['device_dzuhur'] = $e->ruang;
             } elseif ($e->keterangan === 'ASHAR') {
-                $siswaMap[$nis]['ashar'] = $e->mulai;
-            }
-            if ($e->ruang === 'Izin Mens') {
-                $siswaMap[$nis]['izin_mens'] = true;
+                $siswaMap[$nis]['ashar']        = $e->mulai;
+                $siswaMap[$nis]['device_ashar'] = $e->ruang;
             }
         }
 
+        $dataList = collect(array_values($siswaMap));
         $payload = [
             'type'      => 'presensi_sholat',
             'timestamp' => now()->toIso8601String(),
-            'tanggal'   => $tanggal,
-            'total'     => count($siswaMap),
-            'data'      => array_values($siswaMap),
+            'tanggal'   => $this->tanggal,
+            'total'     => $dataList->count(),
+            'data'      => $dataList->map(fn($s) => [
+                'nis'          => $s['nis'],
+                'nama'         => $s['nama'],
+                'kelas'        => $s['kelas'],
+                'dzuhur'       => $s['dzuhur'],
+                'ashar'        => $s['ashar'],
+                'device_dzuhur' => $s['device_dzuhur'],
+                'device_ashar' => $s['device_ashar'],
+            ])->values(),
         ];
 
-        $this->kirim($url, $payload, 'Pembiasaan Sholat');
+        $ok = $this->kirim($url, $payload, 'Presensi Sholat');
+
+        if ($ok) {
+            $ids = $events->pluck('id');
+            DB::table('presensiEvent')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        }
+
+        return $ok ? 1 : 0;
     }
 
-    private function kirim(string $url, array $payload, string $label): void
+    // ── 3. Izin Menstruasi ──
+    private function pushIzinMens(string $url): int
+    {
+        $query = DB::table('presensiEvent as pe')
+            ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
+            ->where('pe.tanggal', $this->tanggal)
+            ->where('pe.ruang', 'Izin Mens');
+
+        if (!$this->force) {
+            $query->whereNull('pe.pushed_at');
+        }
+
+        $data = $query->select(
+            'pe.id',
+            'pe.nis',
+            'ds.nama',
+            'ds.kelas',
+            'pe.mulai as waktu'
+        )->get();
+
+        if ($data->isEmpty()) return 0;
+
+        $payload = [
+            'type'      => 'izin_mens',
+            'timestamp' => now()->toIso8601String(),
+            'tanggal'   => $this->tanggal,
+            'total'     => $data->count(),
+            'data'      => $data->map(fn($p) => [
+                'nis'   => $p->nis,
+                'nama'  => $p->nama,
+                'kelas' => $p->kelas,
+                'waktu' => $p->waktu,
+            ])->values(),
+        ];
+
+        $ok = $this->kirim($url, $payload, 'Izin Menstruasi');
+
+        if ($ok) {
+            $ids = $data->pluck('id');
+            DB::table('presensiEvent')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        }
+
+        return $ok ? 1 : 0;
+    }
+
+    // ── 4. Izin Keluar/Pulang ──
+    private function pushIjin(string $url): int
+    {
+        // Data baru (belum pernah dikirim)
+        $queryBaru = DB::table('daftarijin as di')
+            ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'di.nis')
+            ->where('di.tanggalijin', $this->tanggal)
+            ->whereNull('di.pushed_at')
+            ->select(
+                'di.id',
+                'di.nis',
+                'di.nama',
+                'ds.kelas',
+                'di.jam_keluar',
+                'di.jam_kembali',
+                'di.info'
+            )->get();
+
+        // Data yang sudah kembali tapi belum dikonfirmasi kembalinya
+        $queryKembali = DB::table('daftarijin as di')
+            ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'di.nis')
+            ->where('di.tanggalijin', $this->tanggal)
+            ->whereNotNull('di.jam_kembali')
+            ->whereNull('di.kembali_pushed_at')
+            ->select(
+                'di.id',
+                'di.nis',
+                'di.nama',
+                'ds.kelas',
+                'di.jam_keluar',
+                'di.jam_kembali',
+                'di.info'
+            )->get();
+
+        $gabungan = $queryBaru->concat($queryKembali)->unique('id');
+
+        if (!$this->force && $gabungan->isEmpty()) return 0;
+
+        if ($this->force) {
+            $gabungan = DB::table('daftarijin as di')
+                ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'di.nis')
+                ->where('di.tanggalijin', $this->tanggal)
+                ->select(
+                    'di.id',
+                    'di.nis',
+                    'di.nama',
+                    'ds.kelas',
+                    'di.jam_keluar',
+                    'di.jam_kembali',
+                    'di.info'
+                )
+                ->get();
+        }
+
+        if ($gabungan->isEmpty()) return 0;
+
+        $payload = [
+            'type'      => 'izin_keluar',
+            'timestamp' => now()->toIso8601String(),
+            'tanggal'   => $this->tanggal,
+            'total'     => $gabungan->count(),
+            'data'      => $gabungan->map(fn($p) => [
+                'nis'         => $p->nis,
+                'nama'        => $p->nama,
+                'kelas'       => $p->kelas ?? '-',
+                'jam_keluar'  => $p->jam_keluar,
+                'jam_kembali' => $p->jam_kembali,
+                'keterangan'  => $p->info,
+                'status'      => $p->jam_kembali ? 'kembali' : 'belum_kembali',
+            ])->values(),
+        ];
+
+        $ok = $this->kirim($url, $payload, 'Izin Keluar/Pulang');
+
+        if ($ok) {
+            // Update pushed_at untuk yang baru
+            $idsBaru = $queryBaru->pluck('id');
+            if ($idsBaru->isNotEmpty()) {
+                DB::table('daftarijin')->whereIn('id', $idsBaru)->update(['pushed_at' => now()]);
+            }
+            // Update kembali_pushed_at untuk yang sudah kembali
+            $idsKembali = $queryKembali->pluck('id');
+            if ($idsKembali->isNotEmpty()) {
+                DB::table('daftarijin')->whereIn('id', $idsKembali)->update(['kembali_pushed_at' => now()]);
+            }
+        }
+
+        return $ok ? 1 : 0;
+    }
+
+    // ── Helper: kirim HTTP POST ──
+    private function kirim(string $url, array $payload, string $label): bool
     {
         try {
-            $response = Http::timeout(10)
-                ->withHeaders(['X-Api-Key' => config('timid.api_key')])
+            $response = Http::timeout(15)
+                ->withHeaders(['X-Api-Key' => DB::table('statusnya')->value('timid_api_key') ?? ''])
                 ->post($url, $payload);
 
             if ($response->successful()) {
-                $this->info('[' . now() . '] ✅ ' . $label . ' terkirim. Response: ' . $response->status());
-                Log::info('push:presensi ' . $label . ' OK', ['status' => $response->status()]);
+                $this->info('[' . now() . '] ✅ ' . $label . ' terkirim (' . $payload['total'] . ' records)');
+                Log::info('push:presensi ' . $label . ' OK', [
+                    'total'  => $payload['total'],
+                    'status' => $response->status(),
+                ]);
+                return true;
             } else {
                 $this->error('[' . now() . '] ❌ ' . $label . ' gagal. Status: ' . $response->status());
-                Log::error('push:presensi ' . $label . ' GAGAL', ['status' => $response->status(), 'body' => $response->body()]);
+                Log::error('push:presensi ' . $label . ' GAGAL', [
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
+                ]);
+                return false;
             }
         } catch (\Exception $e) {
-            $this->error('[' . now() . '] ❌ Error: ' . $e->getMessage());
-            Log::error('push:presensi exception', ['message' => $e->getMessage()]);
+            $this->error('[' . now() . '] ❌ ' . $label . ' error: ' . $e->getMessage());
+            Log::error('push:presensi exception', ['label' => $label, 'message' => $e->getMessage()]);
+            return false;
         }
     }
 }

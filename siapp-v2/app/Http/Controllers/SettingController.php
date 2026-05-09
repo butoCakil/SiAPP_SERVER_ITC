@@ -15,7 +15,7 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        $tingkatAktif = json_encode($request->input('tingkat_aktif', ['X','XI','XII']));
+        $tingkatAktif = json_encode($request->input('tingkat_aktif', ['X', 'XI', 'XII']));
 
         DB::table('statusnya')->update([
             'mode'        => (int) $request->mode,
@@ -31,7 +31,13 @@ class SettingController extends Controller
             'waktupulang' => $request->waktupulang,
             'info'        => $request->info,
             'tingkat_aktif' => $tingkatAktif,
-            'log_retention'  => (int) $request->input('log_retention', 30),
+            'log_retention'      => (int) $request->input('log_retention', 30),
+            'timid_presensi_url' => $request->input('timid_presensi_url', ''),
+            'timid_sholat_url'   => $request->input('timid_sholat_url', ''),
+            'timid_izin_mens_url' => $request->input('timid_izin_mens_url', ''),
+            'timid_ijin_url'     => $request->input('timid_ijin_url', ''),
+            'timid_api_key'      => $request->input('timid_api_key', ''),
+            'push_interval'      => (int) $request->input('push_interval', 5),
         ]);
 
         return back()->with('success', 'Setting berhasil disimpan.');
