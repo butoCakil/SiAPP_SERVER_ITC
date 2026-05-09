@@ -24,3 +24,11 @@ use App\Http\Controllers\Api\DeviceController;
 Route::middleware(["device.key"])->group(function () {
     Route::post("/device/perintah", [DeviceController::class, "kirimPerintah"]);
 });
+
+// ── REST API untuk TIM IT (pull data) ──
+Route::middleware('sim.token')->prefix('sim')->group(function () {
+    Route::get('/presensi',   [App\Http\Controllers\Api\SimController::class, 'presensi']);
+    Route::get('/sholat',     [App\Http\Controllers\Api\SimController::class, 'sholat']);
+    Route::get('/izin-mens',  [App\Http\Controllers\Api\SimController::class, 'izinMens']);
+    Route::get('/ijin',       [App\Http\Controllers\Api\SimController::class, 'ijin']);
+});
