@@ -100,6 +100,13 @@
                                         <p>Pembiasaan</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('presensi.ijin') }}"
+                                        class="nav-link {{ request()->routeIs('presensi.ijin*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Izin Keluar</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">

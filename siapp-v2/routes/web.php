@@ -21,6 +21,7 @@ use App\Http\Controllers\AkunController;
 |--------------------------------------------------------------------------
 | Tidak ada logic lain di sini selain routing keputusan
 */
+
 Route::get('/', function () {
     return Auth::check()
         ? redirect('/dashboard')
@@ -134,6 +135,16 @@ Route::delete('/presensi/event/{id}', [PresensiViewController::class, 'destroyEv
 Route::get('/presensi/event', [PresensiViewController::class, 'event'])
     ->middleware('auth.admin')
     ->name('presensi.event');
+
+// Izin Keluar
+Route::get('/presensi/ijin', [PresensiViewController::class, 'ijin'])
+    ->middleware('auth.admin')->name('presensi.ijin');
+Route::post('/presensi/ijin', [PresensiViewController::class, 'storeIjin'])
+    ->middleware('auth.admin')->name('presensi.ijin.store');
+Route::put('/presensi/ijin/{id}', [PresensiViewController::class, 'updateIjin'])
+    ->middleware('auth.admin')->name('presensi.ijin.update');
+Route::delete('/presensi/ijin/{id}', [PresensiViewController::class, 'destroyIjin'])
+    ->middleware('auth.admin')->name('presensi.ijin.destroy');
 
 // Siswa
 Route::get('/siswa', [SiswaViewController::class, 'index'])

@@ -29,8 +29,8 @@ class PresensiViewController extends Controller
 
         if ($kelas) $query->where('dp.info', $kelas);
 
-        if ($filterKet === 'terlambat')       $query->whereIn('dp.ketmasuk', ['T','TL','TLT']);
-        elseif ($filterKet === 'tepat')       $query->whereIn('dp.ketmasuk', ['M','TW']);
+        if ($filterKet === 'terlambat')       $query->whereIn('dp.ketmasuk', ['T', 'TL', 'TLT']);
+        elseif ($filterKet === 'tepat')       $query->whereIn('dp.ketmasuk', ['M', 'TW']);
         elseif ($filterKet === 'pulang_awal') $query->where('dp.ketpulang', 'PA');
 
         $presensi    = $query->get();
@@ -44,8 +44,15 @@ class PresensiViewController extends Controller
             ->distinct()->orderBy('info')->pluck('info');
 
         return view('presensi.index', compact(
-            'presensi', 'tanggal', 'total', 'tepat', 'telat', 'sudahPulang',
-            'kelasList', 'kelas', 'filterKet'
+            'presensi',
+            'tanggal',
+            'total',
+            'tepat',
+            'telat',
+            'sudahPulang',
+            'kelasList',
+            'kelas',
+            'filterKet'
         ));
     }
 
@@ -83,10 +90,10 @@ class PresensiViewController extends Controller
             'tanggal'    => $request->tanggal,
             'waktumasuk' => $request->waktumasuk,
             'ketmasuk'   => $request->ketmasuk ?? 'TW',
-            'waktupulang'=> $request->waktupulang ?? null,
+            'waktupulang' => $request->waktupulang ?? null,
             'ketpulang'  => $request->ketpulang ?? null,
             'keterangan' => $request->keterangan ?? null,
-            'infodevice2'=> 'Manual',
+            'infodevice2' => 'Manual',
             'updated_at' => now(),
         ]);
 
@@ -140,9 +147,15 @@ class PresensiViewController extends Controller
         if ($filterKelas) $query->where('ds.kelas', $filterKelas);
 
         $events = $query->select(
-                'pe.id', 'pe.nis', 'ds.nama', 'ds.kelas',
-                'pe.keterangan', 'pe.ruang', 'pe.mulai', 'pe.jam',
-            )
+            'pe.id',
+            'pe.nis',
+            'ds.nama',
+            'ds.kelas',
+            'pe.keterangan',
+            'pe.ruang',
+            'pe.mulai',
+            'pe.jam',
+        )
             ->orderBy('pe.nis')->orderBy('pe.jam')->get();
 
         $siswaMap = [];
@@ -153,8 +166,10 @@ class PresensiViewController extends Controller
                     'nis'         => $nis,
                     'nama'        => $e->nama ?? '-',
                     'kelas'       => $e->kelas ?? '-',
-                    'dzuhur'      => null, 'dzuhur_id' => null,
-                    'ashar'       => null, 'ashar_id'  => null,
+                    'dzuhur'      => null,
+                    'dzuhur_id' => null,
+                    'ashar'       => null,
+                    'ashar_id'  => null,
                     'dzuhur_izin' => false,
                     'ashar_izin'  => false,
                 ];
@@ -179,9 +194,15 @@ class PresensiViewController extends Controller
         $kelasList          = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
 
         return view('presensi.event', compact(
-            'siswaList', 'tanggal', 'filterKelas', 'kelasList',
-            'totalDzuhur', 'totalAshar', 'totalIzin',
-            'totalKeduanya', 'totalTidakKeduanya'
+            'siswaList',
+            'tanggal',
+            'filterKelas',
+            'kelasList',
+            'totalDzuhur',
+            'totalAshar',
+            'totalIzin',
+            'totalKeduanya',
+            'totalTidakKeduanya'
         ));
     }
 
@@ -238,5 +259,88 @@ class PresensiViewController extends Controller
         DB::table('presensiEvent')->where('id', $id)->delete();
         return redirect()->route('presensi.event', ['tanggal' => $e->tanggal ?? date('Y-m-d')])
             ->with('success', 'Data sholat berhasil dihapus.');
+    }
+
+    // ══════════════════════════════════════════
+    // IZIN KELUAR
+    // ══════════════════════════════════════════
+
+    public function ijin(Request $request)
+    {
+        $tanggal     = $request->input('tanggal', date('Y-m-d'));
+        $filterKelas = $request->input('kelas', '');
+        $filterStatus = $request->input('status', '');
+
+        $query = DB::table('daftarijin as di')
+            ->leftJoin('datasiswa as ds', DB::raw('ds.nis COLLATE utf8_general_ci'), '=', DB::raw('di.nis COLLATE utf8_general_ci'))
+            ->where('di.tanggalijin', $tanggal)
+            ->select('di.*', 'ds.kelas')
+            ->orderBy('di.timestamp', 'desc');
+
+        if ($filterKelas) $query->where('ds.kelas', $filterKelas);
+        if ($filterStatus === 'belum') $query->whereNull('di.jam_kembali');
+        if ($filterStatus === 'sudah') $query->whereNotNull('di.jam_kembali');
+
+        $ijinList  = $query->get();
+        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $totalBelumKembali = DB::table('daftarijin')->where('tanggalijin', $tanggal)->whereNull('jam_kembali')->count();
+        $totalSudahKembali = DB::table('daftarijin')->where('tanggalijin', $tanggal)->whereNotNull('jam_kembali')->count();
+
+        return view('presensi.ijin', compact(
+            'ijinList',
+            'tanggal',
+            'kelasList',
+            'filterKelas',
+            'filterStatus',
+            'totalBelumKembali',
+            'totalSudahKembali'
+        ));
+    }
+
+    public function storeIjin(Request $request)
+    {
+        $request->validate([
+            'nis'        => 'required',
+            'tanggal'    => 'required|date',
+            'jam_keluar' => 'required',
+        ]);
+
+        $siswa = DB::table('datasiswa')->where('nis', $request->nis)->first();
+        if (!$siswa) return back()->with('error', 'Siswa tidak ditemukan.');
+
+        DB::table('daftarijin')->insert([
+            'nokartu'    => $siswa->nokartu,
+            'nis'        => $request->nis,
+            'nama'       => $siswa->nama,
+            'info'       => $request->info ?? 'Manual',
+            'jam_keluar' => $request->jam_keluar,
+            'jam_kembali' => $request->jam_kembali ?: null,
+            'tanggalijin' => $request->tanggal,
+            'kode'       => 'IJIN',
+            'timestamp'  => now(),
+        ]);
+
+        return redirect()->route('presensi.ijin', ['tanggal' => $request->tanggal])
+            ->with('success', 'Data izin berhasil ditambahkan.');
+    }
+
+    public function updateIjin(Request $request, int $id)
+    {
+        DB::table('daftarijin')->where('id', $id)->update([
+            'jam_keluar'  => $request->jam_keluar,
+            'jam_kembali' => $request->jam_kembali ?: null,
+            'info'        => $request->info,
+        ]);
+
+        return redirect()->route('presensi.ijin', ['tanggal' => $request->tanggal])
+            ->with('success', 'Data izin berhasil diupdate.');
+    }
+
+    public function destroyIjin(int $id)
+    {
+        $ijin = DB::table('daftarijin')->where('id', $id)->first();
+        DB::table('daftarijin')->where('id', $id)->delete();
+        return redirect()->route('presensi.ijin', ['tanggal' => $ijin->tanggalijin ?? date('Y-m-d')])
+            ->with('success', 'Data izin berhasil dihapus.');
     }
 }
