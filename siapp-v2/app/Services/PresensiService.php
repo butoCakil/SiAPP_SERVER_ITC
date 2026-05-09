@@ -119,21 +119,41 @@ class PresensiService
             return $this->prosesEvent($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice);
         }
 
+        if ($kodeDevice === 'IJIN') {
+            return $this->prosesIjin($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $device->info_device);
+        }
+
         // ── GATE: presensi masuk (mode 1) ──
         if ($mode === 1) {
             return $this->prosesGateMasuk(
-                $nokartu, $noReg, $nama, $kode, $keterangan,
-                $idchip, $nodevice, $jam, $tanggal,
-                $wa, $wta, $waktumasuk, $kodeDevice
+                $nokartu,
+                $noReg,
+                $nama,
+                $kode,
+                $keterangan,
+                $idchip,
+                $nodevice,
+                $jam,
+                $tanggal,
+                $wa,
+                $wta,
+                $waktumasuk,
+                $kodeDevice
             );
         }
 
         // ── GATE: presensi pulang (mode 2) ──
         if ($mode === 2) {
             return $this->prosesGatePulang(
-                $nokartu, $nama, $keterangan,
-                $idchip, $nodevice, $jam, $tanggal,
-                $waktupulang, $kodeDevice
+                $nokartu,
+                $nama,
+                $keterangan,
+                $idchip,
+                $nodevice,
+                $jam,
+                $tanggal,
+                $waktupulang,
+                $kodeDevice
             );
         }
 
@@ -142,11 +162,18 @@ class PresensiService
 
     // ── Presensi Masuk (GATE mode 1) ──
     private function prosesGateMasuk(
-        string $nokartu, string $noReg, string $nama,
-        string $kode, string $keterangan,
-        string $idchip, string $nodevice,
-        string $jam, string $tanggal,
-        string $wa, string $wta, string $waktumasuk,
+        string $nokartu,
+        string $noReg,
+        string $nama,
+        string $kode,
+        string $keterangan,
+        string $idchip,
+        string $nodevice,
+        string $jam,
+        string $tanggal,
+        string $wa,
+        string $wta,
+        string $waktumasuk,
         string $kodeDevice
     ): array {
         $sudahMasuk = DB::table('datapresensi')
@@ -197,10 +224,15 @@ class PresensiService
 
     // ── Presensi Pulang (GATE mode 2) ──
     private function prosesGatePulang(
-        string $nokartu, string $nama, string $keterangan,
-        string $idchip, string $nodevice,
-        string $jam, string $tanggal,
-        string $waktupulang, string $kodeDevice
+        string $nokartu,
+        string $nama,
+        string $keterangan,
+        string $idchip,
+        string $nodevice,
+        string $jam,
+        string $tanggal,
+        string $waktupulang,
+        string $kodeDevice
     ): array {
         $sudahPulang = DB::table('datapresensi')
             ->where('nokartu', $nokartu)
@@ -246,9 +278,14 @@ class PresensiService
 
     // ── Presensi Masjid ──
     private function prosesMasjid(
-        string $nokartu, string $noReg, string $nama,
-        string $idchip, string $nodevice,
-        string $jam, string $tanggal, string $kodeDevice
+        string $nokartu,
+        string $noReg,
+        string $nama,
+        string $idchip,
+        string $nodevice,
+        string $jam,
+        string $tanggal,
+        string $kodeDevice
     ): array {
         $batasDzuhurMulai  = '11:45:00';
         $batasDzuhurSelesai = '14:30:00';
@@ -297,9 +334,14 @@ class PresensiService
 
     // ── Presensi Event ──
     private function prosesEvent(
-        string $nokartu, string $noReg, string $nama,
-        string $idchip, string $nodevice,
-        string $jam, string $tanggal, string $kodeDevice
+        string $nokartu,
+        string $noReg,
+        string $nama,
+        string $idchip,
+        string $nodevice,
+        string $jam,
+        string $tanggal,
+        string $kodeDevice
     ): array {
         $existing = DB::table('presensiEvent')
             ->where('nokartu', $nokartu)
@@ -386,5 +428,78 @@ class PresensiService
                 'nokartu'  => $nokartu,
             ]]
         ];
+    }
+
+    // ── Izin Keluar/Pulang (IJIN) ──
+    private function prosesIjin(
+        string $nokartu,
+        string $noReg,
+        string $nama,
+        string $idchip,
+        string $nodevice,
+        string $jam,
+        string $tanggal,
+        string $infoDevice
+    ): array {
+        // Cek record terakhir hari ini
+        $last = DB::table('daftarijin')
+            ->where('nokartu', $nokartu)
+            ->where('tanggalijin', $tanggal)
+            ->orderBy('timestamp', 'desc')
+            ->first();
+
+        $now = strtotime($jam);
+
+        if ($last) {
+            $selisih = $now - strtotime($last->timestamp);
+
+            if ($selisih < 300) {
+                // Terlalu cepat (< 5 menit)
+                return $this->buatResponNama('510', $nama, $idchip, $nodevice, $nokartu);
+            }
+
+            if ($last->jam_keluar && !$last->jam_kembali) {
+                // Sudah keluar, belum kembali → UPDATE jam_kembali
+                DB::table('daftarijin')
+                    ->where('id', $last->id)
+                    ->update(['jam_kembali' => $jam]);
+
+                return $this->buatResponNama('BMIJ', $nama, $idchip, $nodevice, $nokartu);
+            }
+
+            if ($last->jam_keluar && $last->jam_kembali) {
+                $selisihKembali = $now - strtotime($last->jam_kembali);
+                if ($selisihKembali < 300) {
+                    return $this->buatResponNama('510', $nama, $idchip, $nodevice, $nokartu);
+                }
+                // Sudah kembali dan > 5 menit → INSERT baru (ijin lagi)
+                DB::table('daftarijin')->insert([
+                    'nokartu'    => $nokartu,
+                    'nis'        => $noReg,
+                    'nama'       => $nama,
+                    'info'       => $infoDevice,
+                    'jam_keluar' => $jam,
+                    'tanggalijin' => $tanggal,
+                    'kode'       => 'IJIN',
+                    'timestamp'  => now(),
+                ]);
+
+                return $this->buatResponNama('BMIJ', $nama, $idchip, $nodevice, $nokartu);
+            }
+        }
+
+        // Belum ada record → INSERT pertama (keluar)
+        DB::table('daftarijin')->insert([
+            'nokartu'    => $nokartu,
+            'nis'        => $noReg,
+            'nama'       => $nama,
+            'info'       => $infoDevice,
+            'jam_keluar' => $jam,
+            'tanggalijin' => $tanggal,
+            'kode'       => 'IJIN',
+            'timestamp'  => now(),
+        ]);
+
+        return $this->buatResponNama('BMIJ', $nama, $idchip, $nodevice, $nokartu);
     }
 }
