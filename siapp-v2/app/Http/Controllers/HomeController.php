@@ -17,7 +17,7 @@ class HomeController extends Controller
         $tab         = $request->input('tab', 'presensi');
 
         // ── Status presensi masuk/pulang ──
-        $statusMasuk = match((int)($setting->mode ?? 0)) {
+        $statusMasuk = match ((int)($setting->mode ?? 0)) {
             1 => ['label' => 'MASUK',  'color' => '#00c853', 'icon' => 'door-open',   'sub' => 'Presensi masuk sedang dibuka'],
             2 => ['label' => 'PULANG', 'color' => '#ff8800', 'icon' => 'door-closed', 'sub' => 'Presensi pulang sedang dibuka'],
             default => ['label' => 'TUTUP', 'color' => '#607d8b', 'icon' => 'ban',    'sub' => 'Presensi sedang ditutup'],
@@ -85,10 +85,91 @@ class HomeController extends Controller
         $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->values();
 
         return view('home', compact(
-            'setting', 'statusMasuk', 'statusSholat',
-            'totalHadir', 'totalDzuhur', 'totalAshar', 'totalIzin',
-            'kelasList', 'filterKelas', 'tab',
-            'recentPresensi', 'sholatList', 'tanggal', 'jam'
+            'setting',
+            'statusMasuk',
+            'statusSholat',
+            'totalHadir',
+            'totalDzuhur',
+            'totalAshar',
+            'totalIzin',
+            'kelasList',
+            'filterKelas',
+            'tab',
+            'recentPresensi',
+            'sholatList',
+            'tanggal',
+            'jam'
         ));
+    }
+
+    public function poll(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $tanggal     = date('Y-m-d');
+        $filterKelas = $request->input('kelas', '');
+
+        // ── Stat ──
+        $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
+        $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
+        $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
+        $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
+
+        // ── Presensi ──
+        $recentPresensi = DB::table('datapresensi')
+            ->where('tanggal', $tanggal)
+            ->when($filterKelas, fn($q) => $q->where('info', $filterKelas))
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(fn($p) => [
+                'nama'        => $p->nama,
+                'nomorinduk'  => $p->nomorinduk ?? '-',
+                'info'        => $p->info,
+                'waktumasuk'  => $p->waktumasuk ?? '-',
+                'ketmasuk'    => $p->ketmasuk ?? '-',
+                'waktupulang' => ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : null,
+                'ketpulang'   => $p->ketpulang ?? '-',
+            ]);
+
+        // ── Sholat ──
+        $eventRaw = DB::table('presensiEvent as pe')
+            ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
+            ->where('pe.tanggal', $tanggal)
+            ->when($filterKelas, fn($q) => $q->where('ds.kelas', $filterKelas))
+            ->select('pe.nis', 'ds.nama', 'ds.kelas', 'pe.keterangan', 'pe.ruang', 'pe.mulai', 'pe.timestamp')
+            ->orderBy('pe.timestamp', 'desc')
+            ->get();
+
+        $sholatMap = [];
+        foreach ($eventRaw as $e) {
+            $nis = $e->nis;
+            if (!isset($sholatMap[$nis])) {
+                $sholatMap[$nis] = [
+                    'nama'      => $e->nama ?? '-',
+                    'kelas'     => $e->kelas ?? '-',
+                    'dzuhur'    => null,
+                    'ashar'     => null,
+                    'izin_mens' => false,
+                ];
+            }
+            if ($e->ruang === 'Izin Mens') {
+                $sholatMap[$nis]['izin_mens'] = true;
+                $sholatMap[$nis]['dzuhur'] = $e->mulai;
+            } elseif ($e->keterangan === 'DZUHUR') {
+                $sholatMap[$nis]['dzuhur'] = $e->mulai;
+            } elseif ($e->keterangan === 'ASHAR') {
+                $sholatMap[$nis]['ashar'] = $e->mulai;
+            }
+        }
+
+        return response()->json([
+            'stat' => [
+                'hadir'  => $totalHadir,
+                'dzuhur' => $totalDzuhur,
+                'ashar'  => $totalAshar,
+                'izin'   => $totalIzin,
+            ],
+            'presensi' => $recentPresensi->values(),
+            'sholat'   => array_values($sholatMap),
+        ]);
     }
 }

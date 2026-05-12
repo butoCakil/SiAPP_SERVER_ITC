@@ -422,19 +422,19 @@
     {{-- Stat Mini --}}
     <div class="stat-row">
         <div class="stat-mini">
-            <div class="val" style="color:#00c853;">{{ $totalHadir }}</div>
+            <div class="val" id="stat-hadir"  style="color:#00c853;">{{ $totalHadir }}</div>
             <div class="lbl">Hadir Hari Ini</div>
         </div>
         <div class="stat-mini">
-            <div class="val" style="color:#ff8800;">{{ $totalDzuhur }}</div>
+            <div class="val" id="stat-dzuhur" style="color:#ff8800;">{{ $totalDzuhur }}</div>
             <div class="lbl">Sholat Dzuhur</div>
         </div>
         <div class="stat-mini">
-            <div class="val" style="color:#9c27b0;">{{ $totalAshar }}</div>
+            <div class="val" id="stat-ashar"  style="color:#9c27b0;">{{ $totalAshar }}</div>
             <div class="lbl">Sholat Ashar</div>
         </div>
         <div class="stat-mini">
-            <div class="val" style="color:#e91e8c;">{{ $totalIzin }}</div>
+            <div class="val" id="stat-izin"   style="color:#e91e8c;">{{ $totalIzin }}</div>
             <div class="lbl">🌸 Izin Mens</div>
         </div>
     </div>
@@ -611,18 +611,100 @@ document.getElementById('search-input').addEventListener('input', function() {
     });
 });
 
-// ── Auto refresh 30 detik ──
-let secs = 30;
+// ── Polling realtime (5 detik, tanpa reload) ──
+const POLL_URL  = '{{ route("home.poll") }}';
+const POLL_KELAS = '{{ $filterKelas }}';
+const CURRENT_TAB = '{{ $tab }}';
+
+// Badge renderer helpers
+function badgeKetMasuk(ket) {
+    if (['M','TW','MSK'].includes(ket)) return `<span class="badge badge-tw">Tepat</span>`;
+    if (['T','TL'].includes(ket))       return `<span class="badge badge-tl">Toleransi</span>`;
+    if (ket === 'TLT')                  return `<span class="badge badge-tlt">Terlambat</span>`;
+    return `<span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">${ket||'-'}</span>`;
+}
+function badgeKetPulang(ket) {
+    if (['P','PLG'].includes(ket)) return `<span class="badge badge-plg">Normal</span>`;
+    if (ket === 'PA')              return `<span class="badge badge-tl">Awal</span>`;
+    return `<span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">${ket||'-'}</span>`;
+}
+
+function renderPresensi(list) {
+    if (!list.length) return `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i>Belum ada data presensi hari ini</div></td></tr>`;
+    return list.map((p, i) => `
+        <tr data-search="${(p.nama||'').toLowerCase()}">
+            <td>${i+1}</td>
+            <td><div class="nama-text">${p.nama}</div><div class="kelas-text">${p.nomorinduk}</div></td>
+            <td>${p.info}</td>
+            <td>${p.waktumasuk||'-'}</td>
+            <td>${badgeKetMasuk(p.ketmasuk)}</td>
+            <td>${p.waktupulang||'-'}</td>
+            <td>${badgeKetPulang(p.ketpulang)}</td>
+        </tr>`).join('');
+}
+
+function renderSholat(list) {
+    if (!list.length) return `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-mosque"></i>Belum ada data sholat hari ini</div></td></tr>`;
+    return list.map((s, i) => {
+        const dzuhurBadge = s.dzuhur
+            ? (s.izin_mens ? `<span class="badge badge-i">🌸 ${s.dzuhur}</span>` : `<span class="badge badge-d">🕛 ${s.dzuhur}</span>`)
+            : `<span style="color:var(--muted);">—</span>`;
+        const asharBadge = s.ashar
+            ? `<span class="badge badge-a">🕓 ${s.ashar}</span>`
+            : `<span style="color:var(--muted);">—</span>`;
+        const status = s.izin_mens
+            ? `<span class="badge badge-i">🌸 Izin Mens</span>`
+            : (s.dzuhur && s.ashar ? `<span class="badge badge-keduanya">✅ Lengkap</span>`
+            : (s.dzuhur || s.ashar ? `<span class="badge badge-tl">⚠️ Sebagian</span>` : ''));
+        return `
+            <tr data-search="${(s.nama||'').toLowerCase()}">
+                <td>${i+1}</td>
+                <td><div class="nama-text">${s.nama}</div></td>
+                <td>${s.kelas}</td>
+                <td>${dzuhurBadge}</td>
+                <td>${asharBadge}</td>
+                <td>${status}</td>
+            </tr>`;
+    }).join('');
+}
+
+function doPoll() {
+    const searchVal = document.getElementById('search-input').value.toLowerCase();
+    fetch(`${POLL_URL}?kelas=${encodeURIComponent(POLL_KELAS)}`)
+        .then(r => r.json())
+        .then(data => {
+            // Update stat
+            document.getElementById('stat-hadir').textContent  = data.stat.hadir;
+            document.getElementById('stat-dzuhur').textContent = data.stat.dzuhur;
+            document.getElementById('stat-ashar').textContent  = data.stat.ashar;
+            document.getElementById('stat-izin').textContent   = data.stat.izin;
+
+            // Update tabel sesuai tab aktif
+            const tbody = document.querySelector('#main-table tbody');
+            if (!tbody) return;
+            if (CURRENT_TAB === 'presensi') {
+                tbody.innerHTML = renderPresensi(data.presensi);
+            } else {
+                tbody.innerHTML = renderSholat(data.sholat);
+            }
+
+            // Terapkan search filter yang sedang aktif
+            if (searchVal) {
+                tbody.querySelectorAll('tr[data-search]').forEach(row => {
+                    row.style.display = row.dataset.search.includes(searchVal) ? '' : 'none';
+                });
+            }
+        })
+        .catch(() => {}); // silent fail, tidak ganggu UI
+}
+
+// Jalankan polling
+doPoll(); // langsung sekali saat load
+setInterval(doPoll, 5000);
+
+// Hapus progress bar (tidak dipakai lagi)
 const bar = document.getElementById('refresh-bar');
-const timer = setInterval(() => {
-    secs--;
-    bar.style.width = ((30 - secs) / 30 * 100) + '%';
-    bar.style.transitionDuration = '1s';
-    if (secs <= 0) {
-        clearInterval(timer);
-        location.reload();
-    }
-}, 1000);
+if (bar) bar.style.display = 'none';
 </script>
 </body>
 </html>
