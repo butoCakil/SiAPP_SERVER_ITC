@@ -480,6 +480,7 @@ const dzuhur    = chartData.map(d => parseInt(d.dzuhur));
 const ashar     = chartData.map(d => parseInt(d.ashar));
 const izin      = chartData.map(d => parseInt(d.izin));
 
+Chart.register(ChartDataLabels);
 const ctx = document.getElementById('chartSholat').getContext('2d');
 let myChart = new Chart(ctx, {
     type: 'bar',
@@ -516,6 +517,13 @@ let myChart = new Chart(ctx, {
         responsive: true,
         plugins: {
             legend: { position: 'top' },
+            datalabels: {
+                anchor: 'end',
+                align: 'end',
+                color: '#555',
+                font: { size: 9, weight: 'bold' },
+                formatter: (value) => value > 0 ? value : '',
+            },
             tooltip: {
                 callbacks: {
                     title: ctx => '📅 ' + ctx[0].label,

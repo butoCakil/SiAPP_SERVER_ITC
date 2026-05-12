@@ -35,7 +35,7 @@ if (isset($_GET['f']) == 'ull') {
 
     <!-- <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script> -->
     <script src="dist/jquery/jquery-3.7.1.min.js"></script>
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#cekkartu").load("baca.php");
@@ -111,7 +111,8 @@ if (isset($_GET['f']) == 'ull') {
                     background-size: 25%;
                 }
 
-                .logo_s img, .logo_jur img {
+                .logo_s img,
+                .logo_jur img {
                     height: 50px;
                     width: 50px;
                 }
@@ -156,12 +157,9 @@ if (isset($_GET['f']) == 'ull') {
                 margin-left: auto;
                 margin-right: auto;
 
-                <?php if ($full_recent) { ?>
-                    width: 100%;
-                <?php } else { ?>
-                    width: 68%;
-                <?php } ?>
-                height: max-content;
+                <?php if ($full_recent) { ?>width: 100%;
+                <?php } else { ?>width: 68%;
+                <?php } ?>height: max-content;
             }
 
             @media only screen and (max-width: 768px) {
@@ -186,62 +184,62 @@ if (isset($_GET['f']) == 'ull') {
                         </div>
                         <!-- Riwayat Presensi List -->
                     <?php } elseif (@$_GET['s'] == 'listrecord' || @$_GET['s'] == 'eventrecord') { ?>
-                            <div class="" style="min-height: 400px;">
-                                <div class="box recent shadow_1">
-                                    <div class="recent-title">
-                                        <div class="group">
-                                            <h4 class="shadow_1">
-                                                <span class="iconify" data-icon="clarity:history-line"></span>
-                                                <?php if (@$_GET['s'] == 'listrecord'){ ?>
+                        <div class="" style="min-height: 400px;">
+                            <div class="box recent shadow_1">
+                                <div class="recent-title">
+                                    <div class="group">
+                                        <h4 class="shadow_1">
+                                            <span class="iconify" data-icon="clarity:history-line"></span>
+                                            <?php if (@$_GET['s'] == 'listrecord') { ?>
                                                 Riwayat Presensi
-                                                <?php } elseif(@$_GET['s'] == 'eventrecord'){ ?>
+                                            <?php } elseif (@$_GET['s'] == 'eventrecord') { ?>
                                                 Riwayat Sholat
-                                                <?php } ?>
-                                            </h4>
-                                                <div style="display: flex; justify-content: center;">
-                                                    <!-- <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post"> -->
-                                                    <form id="myForm" action="recent.php" method="post">
-                                                        <div class="input-group input-group-sm">
-                                                            <select name="tampilkelasriwayat" id="riwayatharipresensi" class="shadow_1">
-                                                                <option value="" <?= ($tampilhari == "") ? "selected" : ""; ?>>-- Semua Kelas --</option>
-                                                                <option value="XAT1" <?= ($tampilhari == "XAT1") ? "selected" : ""; ?>>X AT 1</option>
-                                                                <option value="XAT2" <?= ($tampilhari == "XAT2") ? "selected" : ""; ?>>X AT 2</option>
-                                                                <option value="XAT3" <?= ($tampilhari == "XAT3") ? "selected" : ""; ?>>X AT 3</option>
+                                            <?php } ?>
+                                        </h4>
+                                        <div style="display: flex; justify-content: center;">
+                                            <!-- <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post"> -->
+                                            <form id="myForm" action="recent.php" method="post">
+                                                <div class="input-group input-group-sm">
+                                                    <select name="tampilkelasriwayat" id="riwayatharipresensi" class="shadow_1">
+                                                        <option value="" <?= ($tampilhari == "") ? "selected" : ""; ?>>-- Semua Kelas --</option>
+                                                        <option value="XAT1" <?= ($tampilhari == "XAT1") ? "selected" : ""; ?>>X AT 1</option>
+                                                        <option value="XAT2" <?= ($tampilhari == "XAT2") ? "selected" : ""; ?>>X AT 2</option>
+                                                        <option value="XAT3" <?= ($tampilhari == "XAT3") ? "selected" : ""; ?>>X AT 3</option>
 
-                                                                <option value="XDKV1" <?= ($tampilhari == "XDKV1") ? "selected" : ""; ?>>X DKV 1</option>
-                                                                <option value="XDKV2" <?= ($tampilhari == "XDKV2") ? "selected" : ""; ?>>X DKV 2</option>
-                                                                <option value="XDKV3" <?= ($tampilhari == "XDKV3") ? "selected" : ""; ?>>X DKV 3</option>
+                                                        <option value="XDKV1" <?= ($tampilhari == "XDKV1") ? "selected" : ""; ?>>X DKV 1</option>
+                                                        <option value="XDKV2" <?= ($tampilhari == "XDKV2") ? "selected" : ""; ?>>X DKV 2</option>
+                                                        <option value="XDKV3" <?= ($tampilhari == "XDKV3") ? "selected" : ""; ?>>X DKV 3</option>
 
-                                                                <option value="XTE1" <?= ($tampilhari == "XTE1") ? "selected" : ""; ?>>X TE 1</option>
-                                                                <option value="XTE2" <?= ($tampilhari == "XTE2") ? "selected" : ""; ?>>X TE 2</option>
-                                                                <option value="XTE3" <?= ($tampilhari == "XTE3") ? "selected" : ""; ?>>X TE 3</option>
-                                                                <option value="XTE4" <?= ($tampilhari == "XTE4") ? "selected" : ""; ?>>X TE 4</option>
+                                                        <option value="XTE1" <?= ($tampilhari == "XTE1") ? "selected" : ""; ?>>X TE 1</option>
+                                                        <option value="XTE2" <?= ($tampilhari == "XTE2") ? "selected" : ""; ?>>X TE 2</option>
+                                                        <option value="XTE3" <?= ($tampilhari == "XTE3") ? "selected" : ""; ?>>X TE 3</option>
+                                                        <option value="XTE4" <?= ($tampilhari == "XTE4") ? "selected" : ""; ?>>X TE 4</option>
 
-                                                                <option value="XIAT1" <?= ($tampilhari == "XIAT1") ? "selected" : ""; ?>>XI AT 1</option>
-                                                                <option value="XIAT2" <?= ($tampilhari == "XIAT2") ? "selected" : ""; ?>>XI AT 2</option>
-                                                                <option value="XIAT3" <?= ($tampilhari == "XIAT3") ? "selected" : ""; ?>>XI AT 3</option>
+                                                        <option value="XIAT1" <?= ($tampilhari == "XIAT1") ? "selected" : ""; ?>>XI AT 1</option>
+                                                        <option value="XIAT2" <?= ($tampilhari == "XIAT2") ? "selected" : ""; ?>>XI AT 2</option>
+                                                        <option value="XIAT3" <?= ($tampilhari == "XIAT3") ? "selected" : ""; ?>>XI AT 3</option>
 
-                                                                <option value="XIDKV1" <?= ($tampilhari == "XIDKV1") ? "selected" : ""; ?>>XI DKV 1</option>
-                                                                <option value="XIDKV2" <?= ($tampilhari == "XIDKV2") ? "selected" : ""; ?>>XI DKV 2</option>
-                                                                <option value="XIDKV3" <?= ($tampilhari == "XIDKV3") ? "selected" : ""; ?>>XI DKV 3</option>
+                                                        <option value="XIDKV1" <?= ($tampilhari == "XIDKV1") ? "selected" : ""; ?>>XI DKV 1</option>
+                                                        <option value="XIDKV2" <?= ($tampilhari == "XIDKV2") ? "selected" : ""; ?>>XI DKV 2</option>
+                                                        <option value="XIDKV3" <?= ($tampilhari == "XIDKV3") ? "selected" : ""; ?>>XI DKV 3</option>
 
-                                                                <option value="XITE1" <?= ($tampilhari == "XITE1") ? "selected" : ""; ?>>XI TE 1</option>
-                                                                <option value="XITE2" <?= ($tampilhari == "XITE2") ? "selected" : ""; ?>>XI TE 2</option>
-                                                                <option value="XITE3" <?= ($tampilhari == "XITE3") ? "selected" : ""; ?>>XI TE 3</option>
+                                                        <option value="XITE1" <?= ($tampilhari == "XITE1") ? "selected" : ""; ?>>XI TE 1</option>
+                                                        <option value="XITE2" <?= ($tampilhari == "XITE2") ? "selected" : ""; ?>>XI TE 2</option>
+                                                        <option value="XITE3" <?= ($tampilhari == "XITE3") ? "selected" : ""; ?>>XI TE 3</option>
 
-                                                                <option value="XIIAT1" <?= ($tampilhari == "XIIAT1") ? "selected" : ""; ?>>XII AT 1</option>
-                                                                <option value="XIIAT2" <?= ($tampilhari == "XIIAT2") ? "selected" : ""; ?>>XII AT 2</option>
-                                                                <option value="XIIAT3" <?= ($tampilhari == "XIIAT3") ? "selected" : ""; ?>>XII AT 3</option>
+                                                        <option value="XIIAT1" <?= ($tampilhari == "XIIAT1") ? "selected" : ""; ?>>XII AT 1</option>
+                                                        <option value="XIIAT2" <?= ($tampilhari == "XIIAT2") ? "selected" : ""; ?>>XII AT 2</option>
+                                                        <option value="XIIAT3" <?= ($tampilhari == "XIIAT3") ? "selected" : ""; ?>>XII AT 3</option>
 
-                                                                <option value="XIIDKV1" <?= ($tampilhari == "XIIDKV1") ? "selected" : ""; ?>>XII DKV 1</option>
-                                                                <option value="XIIDKV2" <?= ($tampilhari == "XIIDKV2") ? "selected" : ""; ?>>XII DKV 2</option>
-                                                                <option value="XIIDKV3" <?= ($tampilhari == "XIIDKV3") ? "selected" : ""; ?>>XII DKV 3</option>
+                                                        <option value="XIIDKV1" <?= ($tampilhari == "XIIDKV1") ? "selected" : ""; ?>>XII DKV 1</option>
+                                                        <option value="XIIDKV2" <?= ($tampilhari == "XIIDKV2") ? "selected" : ""; ?>>XII DKV 2</option>
+                                                        <option value="XIIDKV3" <?= ($tampilhari == "XIIDKV3") ? "selected" : ""; ?>>XII DKV 3</option>
 
-                                                                <option value="XIITE1" <?= ($tampilhari == "XIITE1") ? "selected" : ""; ?>>XII TE 1</option>
-                                                                <option value="XIITE2" <?= ($tampilhari == "XIITE2") ? "selected" : ""; ?>>XII TE 2</option>
-                                                                <option value="XIITE3" <?= ($tampilhari == "XIITE3") ? "selected" : ""; ?>>XII TE 3</option>
-                                                            </select>
-                                                            <!-- <select name="tampilhaririwayat" id="riwayatharipresensi" class="shadow_1">
+                                                        <option value="XIITE1" <?= ($tampilhari == "XIITE1") ? "selected" : ""; ?>>XII TE 1</option>
+                                                        <option value="XIITE2" <?= ($tampilhari == "XIITE2") ? "selected" : ""; ?>>XII TE 2</option>
+                                                        <option value="XIITE3" <?= ($tampilhari == "XIITE3") ? "selected" : ""; ?>>XII TE 3</option>
+                                                    </select>
+                                                    <!-- <select name="tampilhaririwayat" id="riwayatharipresensi" class="shadow_1">
                                                                 <option value="0" <?= ($tampilhari == "0") ? "selected" : ""; ?>>Hari ini</option>
                                                                 <option value="1" <?= ($tampilhari == "1") ? "selected" : ""; ?>>Kemarin</option>
                                                                 <option value="2" <?= ($tampilhari == "2") ? "selected" : ""; ?>>2 hari lalu</option>
@@ -250,7 +248,7 @@ if (isset($_GET['f']) == 'ull') {
                                                                 <option value="5" <?= ($tampilhari == "5") ? "selected" : ""; ?>>5 hari lalu</option>
                                                                 <option value="6" <?= ($tampilhari == "6") ? "selected" : ""; ?>>Semua</option>
                                                             </select> -->
-                                                            <!-- <select name="tampilketriwayat" id="riwayatketpresensi" class="shadow_1">
+                                                    <!-- <select name="tampilketriwayat" id="riwayatketpresensi" class="shadow_1">
                                                                 <option value="semua" <?= ($tampilket == "semua") ? "selected" : ""; ?>>Semua</option>
                                                                 <option value="masuk" <?= ($tampilket == "masuk") ? "selected" : ""; ?>>Masuk</option>
                                                                 <option value="pulang" <?= ($tampilket == "pulang") ? "selected" : ""; ?>>Pulang</option>
@@ -271,54 +269,54 @@ if (isset($_GET['f']) == 'ull') {
                                                                 <option value="100" <?= ($tampiljlm == "100") ? "selected" : ""; ?>>100</option>
                                                                 <option value="semua" <?= ($tampiljlm == "semua") ? "selected" : ""; ?>>Semua</option>
                                                             </select> -->
-                                                            <!-- <button id="tombol_set_home" type="submit" name="tampilanriwayat" value="OK" class="btn btn-dark border-0">
+                                                    <!-- <button id="tombol_set_home" type="submit" name="tampilanriwayat" value="OK" class="btn btn-dark border-0">
                                                                 &#9989;&nbsp;SET
                                                             </button> -->
-                                                            <label id="tombol_set_home" class="bg-dark border-0" disabled>
-                                                                &nbsp;Pilih&nbsp;Kelas&nbsp;
-                                                            </label>
-                                                        </div>
-                                                    </form>
+                                                    <label id="tombol_set_home" class="bg-dark border-0" disabled>
+                                                        &nbsp;Pilih&nbsp;Kelas&nbsp;
+                                                    </label>
                                                 </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div class="tabel-riwayat">
-                                        <div id="riwayat"></div>
-                                    </div>
-                                    <div class="ml-2 mt-2">
-                                        <?php 
-                                        if ($full_recent) { 
-                                            if (@$_GET['s'] == 'listrecord'){
-                                        ?>
-                                            
+                                </div>
+                                <div class="tabel-riwayat">
+                                    <div id="riwayat"></div>
+                                </div>
+                                <div class="ml-2 mt-2">
+                                    <?php
+                                    if ($full_recent) {
+                                        if (@$_GET['s'] == 'listrecord') {
+                                    ?>
+
                                             <a href="?s=listrecord" class="mt-1 text-decoration-none badge bg-primary mr-2"
                                                 style="float: right; cursor: pointer;">Tampilkan normal</a>
-                                        <?php 
-                                            } elseif(@$_GET['s'] == 'eventrecord'){
+                                        <?php
+                                        } elseif (@$_GET['s'] == 'eventrecord') {
                                         ?>
                                             <a href="?s=eventrecord" class="mt-1 text-decoration-none badge bg-primary mr-2"
                                                 style="float: right; cursor: pointer;">Tampilkan normal</a>
-                                        <?php   
-                                            }
-                                        } else { 
-                                            if (@$_GET['s'] == 'listrecord'){
+                                        <?php
+                                        }
+                                    } else {
+                                        if (@$_GET['s'] == 'listrecord') {
                                         ?>
                                             <a href="?s=listrecord&f=ull" class="mt-1 text-decoration-none badge bg-primary mr-2"
                                                 style="float: right; cursor: pointer;">Tampilkan Lebar</a>
 
-                                        <?php 
-                                            } elseif(@$_GET['s'] == 'eventrecord'){
+                                        <?php
+                                        } elseif (@$_GET['s'] == 'eventrecord') {
                                         ?>
                                             <a href="?s=eventrecord&f=ull" class="mt-1 text-decoration-none badge bg-primary mr-2"
                                                 style="float: right; cursor: pointer;">Tampilkan Lebar</a>
-                                        <?php
-                                            }
-                                        } 
-                                        ?>
-                                    </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
 
-                                    <!-- label keterangan -->
-                                    <?php if (@$_GET['s'] == 'listrecord'){ ?>
+                                <!-- label keterangan -->
+                                <?php if (@$_GET['s'] == 'listrecord') { ?>
                                     <div id="ket2" class="ml-2">
                                         <div id="ket2_2">
                                             <label>&nbsp;Keterangan: </label>
@@ -335,149 +333,145 @@ if (isset($_GET['f']) == 'ull') {
                                             <label class="bg-danger badge">Alpha</label>
                                         </div>
                                     </div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-
-                            <script>
-                                $(document).ready(function(){
-                                    // Fungsi untuk memuat konten dari recent.php dengan POST data form
-                                    function loadContent() {
-                                        $.ajax({
-                                            <?php if (@$_GET['s'] == 'listrecord') { ?>
-                                                url: 'recent.php',
-                                            <?php } elseif (@$_GET['s'] == 'eventrecord') { ?>
-                                                url: 'recentevent.php',
-                                            <?php } ?>
-                                            type: 'POST',
-                                            data: $('#myForm').serialize(),  // Menyertakan data form
-                                            success: function(response) {
-                                                $('#riwayat').html(response);  // Menampilkan hasil di elemen #riwayat
-                                            }
-                                        });
-                                    }
-
-                                    // Memuat data setiap 2 detik (2000 ms)
-                                    setInterval(loadContent, 2000);
-
-                                    // Menangani submit form tanpa reload halaman
-                                    $('#myForm').on('submit', function(e) {
-                                        e.preventDefault();  // Menghindari reload halaman
-                                        loadContent();       // Memuat konten saat form disubmit
-                                    });
-                                });
-                            </script>
-
-                            <style>
-                                .recent {
-                                    overflow: hidden;
-                                    background-color: rgba(198, 221, 251, 0.3);
-                                    border-radius: 50px 3px 50px 3px;
-                                    margin-right: 10px;
-                                    margin-left: 10px;
-                                    margin-bottom: 20px;
-                                    margin-top: 10px;
-                                    width: 100%;
-                                    min-height: 400px;
-                                    max-height: 880px;
-                                    font-size: 2ex;
-                                }
-
-                                .recent .badge {
-                                    border-radius: 10px 3px 10px 3px;
-                                    padding: 3px 8px;
-                                }
-
-                                .recent #riwayatharipresensi {
-                                    border-radius: 20px 0px 0px 3px;
-                                    padding-left: 20px;
-                                }
-
-                                .recent #tombol_set_home {
-                                    border-radius: 0px 3px 20px 0px;
-                                    padding-right: 10px;
-                                }
-
-                                .recent h4 {
-                                    text-align: center;
-                                    font-size: 20px;
-                                    font-weight: 400;
-                                    font-style: italic;
-                                    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                                    /* background-color: rgba(0, 50, 100, 0.7); */
-                                    background: linear-gradient(to bottom, rgba(1, 88, 174, 0.7) 0%, rgba(0, 17, 34, 0.7) 100%);
-                                    color: #eee6e6;
-                                    padding: 2px;
-                                    width: 220px;
-                                    justify-content: center;
-                                    margin-left: auto;
-                                    margin-right: auto;
-                                    border-radius: 50px 5px 50px 5px;
-                                    margin-top: 10px;
-                                }
-
-                                .recent h4 .iconify {
-                                    padding-bottom: 4px;
-                                }
-
-                                .recent h6,
-                                .recent a {
-                                    display: flex;
-                                    margin: auto;
-                                }
-
-                                #labet-kettabel {
-                                    font-size: 5px;
-                                }
-
-                                <?php if ($full_recent) { ?>
-                                    .tabel-riwayat {
-                                        overflow: auto;
-                                        height: 600px;
-                                        margin-top: 0px;
-                                        margin-right: -300px;
-                                        padding-right: 300px;
-                                    }
-
-                                <?php } else { ?>
-                                    .tabel-riwayat {
-                                        overflow: auto;
-                                        min-height: 200px;
-                                        max-height: 440px;
-                                        margin-top: 0px;
-                                        margin-right: -300px;
-                                        padding-right: 300px;
-                                    }
-
                                 <?php } ?>
+                            </div>
+                        </div>
 
-                                #ket1 {
-                                    margin-bottom: 0;
+                        <script>
+                            $(document).ready(function() {
+                                // Fungsi untuk memuat konten dari recent.php dengan POST data form
+                                function loadContent() {
+                                    $.ajax({
+                                        <?php if (@$_GET['s'] == 'listrecord') { ?>
+                                            url: 'recent.php',
+                                        <?php } elseif (@$_GET['s'] == 'eventrecord') { ?>
+                                            url: 'recentevent.php',
+                                        <?php } ?>
+                                        type: 'POST',
+                                        data: $('#myForm').serialize(), // Menyertakan data form
+                                        success: function(response) {
+                                            $('#riwayat').html(response); // Menampilkan hasil di elemen #riwayat
+                                        }
+                                    });
                                 }
 
-                                #ket2 {
-                                    margin-top: -5px;
-                                    margin-left: 20px;
-                                }
+                                // Memuat data setiap 2 detik (2000 ms)
+                                setInterval(loadContent, 2000);
 
-                                #ket2 #ket2_2 label {
-                                    font-size: 14px;
-                                }
+                                // Menangani submit form tanpa reload halaman
+                                $('#myForm').on('submit', function(e) {
+                                    e.preventDefault(); // Menghindari reload halaman
+                                    loadContent(); // Memuat konten saat form disubmit
+                                });
+                            });
+                        </script>
 
-                                #ket2_1 {
-                                    margin-top: 0px;
-                                    margin-left: 10px;
-                                }
+                        <style>
+                            .recent {
+                                overflow: hidden;
+                                background-color: rgba(198, 221, 251, 0.3);
+                                border-radius: 50px 3px 50px 3px;
+                                margin-right: 10px;
+                                margin-left: 10px;
+                                margin-bottom: 20px;
+                                margin-top: 10px;
+                                width: 100%;
+                                min-height: 400px;
+                                max-height: 880px;
+                                font-size: 2ex;
+                            }
 
-                                .label-tombol {
-                                    font-size: 10px;
-                                    background-color: rgb(54, 120, 206);
-                                    color: rgb(167, 189, 248);
-                                    float: right;
-                                    margin-bottom: 50px;
-                                    margin-right: 20px;
-                                }
-                            </style>
+                            .recent .badge {
+                                border-radius: 10px 3px 10px 3px;
+                                padding: 3px 8px;
+                            }
+
+                            .recent #riwayatharipresensi {
+                                border-radius: 20px 0px 0px 3px;
+                                padding-left: 20px;
+                            }
+
+                            .recent #tombol_set_home {
+                                border-radius: 0px 3px 20px 0px;
+                                padding-right: 10px;
+                            }
+
+                            .recent h4 {
+                                text-align: center;
+                                font-size: 20px;
+                                font-weight: 400;
+                                font-style: italic;
+                                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                                /* background-color: rgba(0, 50, 100, 0.7); */
+                                background: linear-gradient(to bottom, rgba(1, 88, 174, 0.7) 0%, rgba(0, 17, 34, 0.7) 100%);
+                                color: #eee6e6;
+                                padding: 2px;
+                                width: 220px;
+                                justify-content: center;
+                                margin-left: auto;
+                                margin-right: auto;
+                                border-radius: 50px 5px 50px 5px;
+                                margin-top: 10px;
+                            }
+
+                            .recent h4 .iconify {
+                                padding-bottom: 4px;
+                            }
+
+                            .recent h6,
+                            .recent a {
+                                display: flex;
+                                margin: auto;
+                            }
+
+                            #labet-kettabel {
+                                font-size: 5px;
+                            }
+
+                            <?php if ($full_recent) { ?>.tabel-riwayat {
+                                overflow: auto;
+                                height: 600px;
+                                margin-top: 0px;
+                                margin-right: -300px;
+                                padding-right: 300px;
+                            }
+
+                            <?php } else { ?>.tabel-riwayat {
+                                overflow: auto;
+                                min-height: 200px;
+                                max-height: 440px;
+                                margin-top: 0px;
+                                margin-right: -300px;
+                                padding-right: 300px;
+                            }
+
+                            <?php } ?>#ket1 {
+                                margin-bottom: 0;
+                            }
+
+                            #ket2 {
+                                margin-top: -5px;
+                                margin-left: 20px;
+                            }
+
+                            #ket2 #ket2_2 label {
+                                font-size: 14px;
+                            }
+
+                            #ket2_1 {
+                                margin-top: 0px;
+                                margin-left: 10px;
+                            }
+
+                            .label-tombol {
+                                font-size: 10px;
+                                background-color: rgb(54, 120, 206);
+                                color: rgb(167, 189, 248);
+                                float: right;
+                                margin-bottom: 50px;
+                                margin-right: 20px;
+                            }
+                        </style>
 
                         <!-- defaultt home -->
                     <?php } else { ?>
@@ -578,12 +572,11 @@ if (isset($_GET['f']) == 'ull') {
 
             <?php
             if ($full_recent) {
-                ?>
-                .login-form {
-                    display: none;
-                }
+            ?>.login-form {
+                display: none;
+            }
 
-                <?php
+            <?php
             }
             ?>
         </style>
@@ -668,7 +661,7 @@ if (isset($_GET['f']) == 'ull') {
                     <div class="mt-2 text-center">
                         <a href="../" class="btn btn-dark btn-sm border-0 rounded-pill">
                             << Kembali
-                        </a>
+                                </a>
                     </div>
                 <?php } ?>
                 <div class="d-flex justify-content-around mt-4">
@@ -781,6 +774,88 @@ if (isset($_GET['f']) == 'ull') {
     </div>
 
 </body>
+
+<!-- Popup beralih ke SiAPP v2 -->
+<script>
+    (function() {
+        if (sessionStorage.getItem('dismiss_v2_popup')) return;
+        window.addEventListener('DOMContentLoaded', function() {
+            let countdown = 15;
+            const overlay = document.createElement('div');
+            overlay.id = 'v2-overlay';
+            overlay.style.cssText = `
+            position:fixed; inset:0; z-index:99999;
+            background:rgba(0,0,0,0.6);
+            display:flex; align-items:center; justify-content:center;
+            font-family:'Segoe UI',sans-serif;
+        `;
+            overlay.innerHTML = `
+            <div style="
+                background:#1a2235; color:#e2e8f0;
+                border-radius:16px; padding:32px 28px;
+                max-width:360px; width:90%;
+                text-align:center;
+                box-shadow:0 20px 60px rgba(0,0,0,0.5);
+                border:1px solid rgba(255,255,255,0.08);
+            ">
+                <div style="font-size:32px; margin-bottom:12px;">🚀</div>
+                <div style="font-size:18px; font-weight:800; margin-bottom:8px;
+                    background:linear-gradient(135deg,#60a5fa,#a78bfa);
+                    -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+                    SiAPP Versi Baru Tersedia
+                </div>
+                <div style="font-size:13px; color:#94a3b8; margin-bottom:24px; line-height:1.6;">
+                    Tersedia tampilan baru SiAPP dengan fitur realtime, presensi & sholat terupdate otomatis.
+                </div>
+                <div style="display:flex; gap:10px; justify-content:center;">
+                    <a href="http://172.16.80.123:8080/home"
+                        style="background:linear-gradient(135deg,#3b82f6,#6366f1);
+                        color:#fff; text-decoration:none;
+                        padding:10px 22px; border-radius:10px;
+                        font-size:13px; font-weight:700;
+                        box-shadow:0 4px 12px rgba(59,130,246,0.4);">
+                        Buka Versi Baru
+                    </a>
+                    <button onclick="
+                        sessionStorage.setItem('dismiss_v2_popup','1');
+                        document.getElementById('v2-overlay').remove();
+                    " style="background:rgba(255,255,255,0.08);
+                        color:#94a3b8; border:1px solid rgba(255,255,255,0.1);
+                        padding:10px 22px; border-radius:10px;
+                        font-size:13px; font-weight:600; cursor:pointer;">
+                        Tetap di Sini
+                    </button>
+                </div>
+                <div style="margin-top:16px; font-size:10px; color:#475569;">
+                    Menutup otomatis dalam <span id="v2-countdown">15</span> detik
+                </div>
+            </div>
+        `;
+            document.body.appendChild(overlay);
+
+            // Klik di luar popup → tutup
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    sessionStorage.setItem('dismiss_v2_popup', '1');
+                    overlay.remove();
+                    clearInterval(timer);
+                }
+            });
+
+            // Countdown otomatis tutup
+            const timer = setInterval(function() {
+                countdown--;
+                const el = document.getElementById('v2-countdown');
+                if (el) el.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    sessionStorage.setItem('dismiss_v2_popup', '1');
+                    overlay.remove();
+                }
+            }, 1000);
+        });
+    })();
+</script>
 
 </html>
 

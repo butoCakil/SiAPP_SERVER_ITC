@@ -10,7 +10,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $tanggal     = date('Y-m-d');
+        $tanggal     = $request->input('tanggal', date('Y-m-d'));
+        $isToday     = ($tanggal === date('Y-m-d'));
         $jam         = date('H:i:s');
         $setting     = DB::table('statusnya')->first();
         $filterKelas = $request->input('kelas', '');
@@ -85,28 +86,29 @@ class HomeController extends Controller
         $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->values();
 
         return view('home', compact(
-            'setting',
-            'statusMasuk',
-            'statusSholat',
             'totalHadir',
             'totalDzuhur',
             'totalAshar',
             'totalIzin',
+            'statusMasuk',
+            'statusSholat',
+            'setting',
             'kelasList',
             'filterKelas',
             'tab',
-            'recentPresensi',
-            'sholatList',
             'tanggal',
-            'jam'
+            'isToday',
+            'recentPresensi',
+            'sholatList'
         ));
     }
 
     public function poll(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $tanggal     = date('Y-m-d');
+        $tanggal     = $request->input('tanggal', date('Y-m-d'));
         $filterKelas = $request->input('kelas', '');
+        $setting     = DB::table('statusnya')->first();
 
         // ── Stat ──
         $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
@@ -161,6 +163,75 @@ class HomeController extends Controller
             }
         }
 
+        // ── Rekap presensi per kelas ──
+        $tingkatAktif = json_decode($setting->tingkat_aktif ?? '["X","XI","XII"]', true);
+
+        $rekapPresensi = DB::table('datasiswa as ds')
+            ->leftJoin('datapresensi as dp', function ($join) use ($tanggal) {
+                $join->on('dp.nomorinduk', '=', 'ds.nis')
+                    ->where('dp.tanggal', $tanggal);
+            })
+            ->whereIn('ds.tingkat', $tingkatAktif)
+            ->selectRaw("
+                ds.kelas,
+                COUNT(DISTINCT ds.id) as total,
+                COUNT(DISTINCT CASE WHEN dp.ketmasuk = 'M' THEN dp.id END) as tepat,
+                COUNT(DISTINCT CASE WHEN dp.ketmasuk IN ('T','TLT') THEN dp.id END) as terlambat,
+                COUNT(DISTINCT CASE WHEN dp.ketpulang IN ('P','PLG') THEN dp.id END) as pulang_normal,
+                COUNT(DISTINCT CASE WHEN dp.ketpulang = 'C'  THEN dp.id END) as pulang_cepat,
+                COUNT(DISTINCT CASE WHEN dp.ketmasuk IS NOT NULL AND dp.ketmasuk != '-' AND (dp.ketpulang IS NULL OR dp.ketpulang IN ('0','-')) THEN dp.id END) as belum_pulang
+            ")
+            ->groupBy('ds.kelas')
+            ->orderBy('ds.kelas')
+            ->get();
+
+        // ── Rekap sholat per kelas ──
+        $rekapSholat = DB::table('datasiswa as ds')
+            ->leftJoin('presensiEvent as pe', function ($join) use ($tanggal) {
+                $join->on('pe.nis', '=', 'ds.nis')
+                    ->where('pe.tanggal', $tanggal);
+            })
+            ->whereIn('ds.tingkat', $tingkatAktif)
+            ->selectRaw("
+                ds.kelas,
+                COUNT(DISTINCT ds.id) as total,
+                COUNT(DISTINCT CASE WHEN pe.keterangan='DZUHUR' AND pe.ruang != 'Izin Mens' THEN pe.nis END) as dzuhur,
+                COUNT(DISTINCT CASE WHEN pe.keterangan='ASHAR'  AND pe.ruang != 'Izin Mens' THEN pe.nis END) as ashar,
+                COUNT(DISTINCT CASE WHEN pe.ruang = 'Izin Mens' THEN pe.nis END) as izin
+            ")
+            ->groupBy('ds.kelas')
+            ->orderBy('ds.kelas')
+            ->get()
+            ->map(function ($row) {
+                $row->keduanya = min($row->dzuhur, $row->ashar);
+                $row->alpa     = max(0, $row->total - $row->dzuhur - $row->ashar - $row->izin);
+                return $row;
+            });
+
+        // ── Chart sholat 14 hari ──
+        $chartSholat = DB::table('presensiEvent')
+            ->selectRaw("tanggal,
+        SUM(CASE WHEN keterangan='DZUHUR' AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as dzuhur,
+        SUM(CASE WHEN keterangan='ASHAR'  AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as ashar,
+        SUM(CASE WHEN ruang='Izin Mens' THEN 1 ELSE 0 END) as izin")
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->where('tanggal', '<=', $tanggal)
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
+            ->get();
+
+        // ── Chart presensi 14 hari ──
+        $chartPresensi = DB::table('datapresensi')
+            ->selectRaw("tanggal,
+        SUM(CASE WHEN ketmasuk = 'M'   THEN 1 ELSE 0 END) as tepat,
+        SUM(CASE WHEN ketmasuk = 'T'   THEN 1 ELSE 0 END) as toleransi,
+        SUM(CASE WHEN ketmasuk = 'TLT' THEN 1 ELSE 0 END) as terlambat")
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->where('tanggal', '<=', $tanggal)
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
+            ->get();
+
         return response()->json([
             'stat' => [
                 'hadir'  => $totalHadir,
@@ -168,8 +239,12 @@ class HomeController extends Controller
                 'ashar'  => $totalAshar,
                 'izin'   => $totalIzin,
             ],
-            'presensi' => $recentPresensi->values(),
-            'sholat'   => array_values($sholatMap),
+            'presensi'      => $recentPresensi->values(),
+            'sholat'        => array_values($sholatMap),
+            'rekapPresensi' => $rekapPresensi->values(),
+            'rekapSholat'   => $rekapSholat->values(),
+            'chartSholat'   => $chartSholat->values(),
+            'chartPresensi' => $chartPresensi->values(),
         ]);
     }
 }

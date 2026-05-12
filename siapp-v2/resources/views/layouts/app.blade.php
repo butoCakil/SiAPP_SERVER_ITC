@@ -50,7 +50,7 @@
 
         {{-- Sidebar --}}
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="{{ route('dashboard') }}" class="brand-link">
+            <a href="{{ route('home') }}" class="brand-link">
                 <i class="fas fa-wifi brand-image ml-3 elevation-3"
                     style="font-size:24px; opacity:.8; line-height:1.8;"></i>
                 <span class="brand-text font-weight-light">SiAPP</span>
@@ -203,6 +203,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 
     <script>
         function updateBadgeOnline() {

@@ -346,7 +346,87 @@
         background: #1a2235;
         z-index: 2;
     }
+
+    /* Rekap bar */
+    .rekap-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text);
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .rekap-legend {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--muted);
+    }
+    .rekap-legend span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .leg-dot {
+        width: 10px; height: 10px;
+        border-radius: 2px;
+        display: inline-block;
+    }
+    .rekap-row {
+        display: flex;
+        align-items: center;
+        padding: 3px 14px;
+        gap: 8px;
+        font-size: 11px;
+    }
+    .rekap-kelas {
+        width: 70px;
+        text-align: right;
+        color: var(--muted);
+        flex-shrink: 0;
+        font-size: 10px;
+    }
+    .rekap-track {
+        flex: 1;
+        display: flex;
+        height: 18px;
+        border-radius: 4px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.04);
+    }
+    .rekap-seg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        font-weight: 700;
+        color: #fff;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: width 0.4s ease;
+    }
+    .rekap-nums {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+    .rekap-num {
+        width: 22px;
+        text-align: center;
+        font-size: 9px;
+        font-weight: 700;
+        border-radius: 3px;
+        padding: 1px 0;
+    }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 </head>
 <body>
 
@@ -462,9 +542,26 @@
         </form>
         <input type="text" class="search-box" id="search-input"
             placeholder="🔍 Cari nama...">
-        <span style="font-size:11px; color:var(--muted); margin-left:auto;">
-            📅 {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l, d F Y') }}
-        </span>
+        <div style="display:flex; align-items:center; gap:8px; margin-left:auto;">
+            @if(!$isToday)
+            <a href="{{ route('home', ['tab'=>$tab, 'kelas'=>$filterKelas]) }}"
+                style="font-size:11px; background:#3b82f6; color:#fff; padding:4px 12px; border-radius:8px; text-decoration:none; font-weight:600;">
+                📅 Hari Ini
+            </a>
+            @endif
+            <label style="font-size:11px; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:6px;"
+                onclick="document.getElementById('tgl-picker').showPicker()">
+                🗓️ {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l, d F Y') }}
+            </label>
+            <form id="form-tanggal" action="{{ route('home') }}" method="GET" style="display:none;">
+                <input type="hidden" name="tab" value="{{ $tab }}">
+                <input type="hidden" name="kelas" value="{{ $filterKelas }}">
+                <input type="date" id="tgl-picker" name="tanggal"
+                    value="{{ $tanggal }}"
+                    max="{{ date('Y-m-d') }}"
+                    onchange="document.getElementById('form-tanggal').submit()">
+            </form>
+        </div>
     </div>
 
     {{-- Data Table --}}
@@ -496,9 +593,7 @@
                         <td>
                             @if(in_array($p->ketmasuk, ['M','TW','MSK']))
                                 <span class="badge badge-tw">Tepat</span>
-                            @elseif(in_array($p->ketmasuk, ['T','TL','TLT']))
-                                <span class="badge badge-tl">Toleransi</span>
-                            @elseif($p->ketmasuk === 'TLT')
+                            @elseif(in_array($p->ketmasuk, ['T','TLT']))
                                 <span class="badge badge-tlt">Terlambat</span>
                             @else
                                 <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">{{ $p->ketmasuk ?? '-' }}</span>
@@ -591,6 +686,20 @@
         </div>
     </div>
 
+    {{-- Bar Rekap Per Kelas --}}
+    <div class="data-card" id="section-rekap" style="margin-top:12px;">
+        <div class="rekap-header">
+            <span id="rekap-title">📊 Rekap Per Kelas</span>
+            <span class="rekap-legend" id="rekap-legend"></span>
+        </div>
+        <div id="rekap-bars"></div>
+    </div>
+
+    {{-- Chart 14 Hari --}}
+    <div class="data-card" id="section-chart" style="margin-top:12px; padding:14px;">
+        <canvas id="chartHome" height="80"></canvas>
+    </div>
+
 </main>
 
 <script>
@@ -612,15 +721,16 @@ document.getElementById('search-input').addEventListener('input', function() {
 });
 
 // ── Polling realtime (5 detik, tanpa reload) ──
-const POLL_URL  = '{{ route("home.poll") }}';
-const POLL_KELAS = '{{ $filterKelas }}';
+const POLL_URL    = '{{ route("home.poll") }}';
+const POLL_KELAS  = '{{ $filterKelas }}';
+const POLL_TGL    = '{{ $tanggal }}';
 const CURRENT_TAB = '{{ $tab }}';
+const IS_TODAY    = {{ $isToday ? 'true' : 'false' }};
 
 // Badge renderer helpers
 function badgeKetMasuk(ket) {
     if (['M','TW','MSK'].includes(ket)) return `<span class="badge badge-tw">Tepat</span>`;
-    if (['T','TL'].includes(ket))       return `<span class="badge badge-tl">Toleransi</span>`;
-    if (ket === 'TLT')                  return `<span class="badge badge-tlt">Terlambat</span>`;
+    if (['T','TLT'].includes(ket))      return `<span class="badge badge-tlt">Terlambat</span>`;
     return `<span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);">${ket||'-'}</span>`;
 }
 function badgeKetPulang(ket) {
@@ -668,9 +778,101 @@ function renderSholat(list) {
     }).join('');
 }
 
+// ── Chart 14 hari ──
+let homeChart = null;
+
+function renderChart(data, tab) {
+    if (!data || !data.length) return;
+
+    const labels = data.map(d => d.tanggal);
+    const ctx    = document.getElementById('chartHome').getContext('2d');
+
+    let datasets;
+    if (tab === 'sholat') {
+        datasets = [
+            {
+                label: 'Dzuhur',
+                data: data.map(d => d.dzuhur),
+                backgroundColor: '#ff8800',
+                borderColor: '#ff8800',
+                borderRadius: 4,
+            },
+            {
+                label: 'Ashar',
+                data: data.map(d => d.ashar),
+                backgroundColor: '#9c27b0',
+                borderColor: '#9c27b0',
+                borderRadius: 4,
+            },
+            {
+                label: 'Izin Mens',
+                data: data.map(d => d.izin),
+                backgroundColor: '#e91e8c',
+                borderColor: '#e91e8c',
+                borderRadius: 4,
+            },
+        ];
+    } else {
+        datasets = [
+            {
+                label: 'Tepat',
+                data: data.map(d => d.tepat),
+                backgroundColor: '#00c853',
+                borderColor: '#00c853',
+                borderRadius: 4,
+            },
+            {
+                label: 'Terlambat',
+                data: data.map(d => d.terlambat),
+                backgroundColor: '#f44336',
+                borderColor: '#f44336',
+                borderRadius: 4,
+            },
+        ];
+    }
+
+    if (homeChart) {
+        homeChart.data.labels   = labels;
+        homeChart.data.datasets = datasets;
+        homeChart.update('none'); // tanpa animasi saat polling
+    } else {
+        Chart.register(ChartDataLabels);
+        homeChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#aaa', boxWidth: 14, font: { size: 11 } }
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        color: '#ccc',
+                        font: { size: 9, weight: 'bold' },
+                        formatter: (value) => value > 0 ? value : '',
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#888', font: { size: 10 } },
+                        grid:  { color: 'rgba(255,255,255,0.04)' },
+                    },
+                    y: {
+                        ticks: { color: '#888', font: { size: 10 } },
+                        grid:  { color: 'rgba(255,255,255,0.06)' },
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+    }
+}
+
 function doPoll() {
     const searchVal = document.getElementById('search-input').value.toLowerCase();
-    fetch(`${POLL_URL}?kelas=${encodeURIComponent(POLL_KELAS)}`)
+    fetch(`${POLL_URL}?kelas=${encodeURIComponent(POLL_KELAS)}&tanggal=${POLL_TGL}`)
         .then(r => r.json())
         .then(data => {
             // Update stat
@@ -688,6 +890,18 @@ function doPoll() {
                 tbody.innerHTML = renderSholat(data.sholat);
             }
 
+            // Update bar rekap
+            renderRekap(
+                CURRENT_TAB === 'presensi' ? data.rekapPresensi : data.rekapSholat,
+                CURRENT_TAB
+            );
+
+            // Update chart
+            renderChart(
+                CURRENT_TAB === 'presensi' ? data.chartPresensi : data.chartSholat,
+                CURRENT_TAB
+            );
+
             // Terapkan search filter yang sedang aktif
             if (searchVal) {
                 tbody.querySelectorAll('tr[data-search]').forEach(row => {
@@ -698,9 +912,107 @@ function doPoll() {
         .catch(() => {}); // silent fail, tidak ganggu UI
 }
 
+// ── Render bar rekap ──
+function renderRekap(data, tab) {
+    const container = document.getElementById('rekap-bars');
+    const legend    = document.getElementById('rekap-legend');
+    const title     = document.getElementById('rekap-title');
+
+    if (!data || !data.length) {
+        container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:11px;">Belum ada data</div>';
+        return;
+    }
+
+    if (tab === 'presensi') {
+        title.textContent = '📊 Rekap Presensi Per Kelas';
+        legend.innerHTML = `
+            <span><i class="leg-dot" style="background:#00c853"></i>Tepat</span>
+            <span><i class="leg-dot" style="background:#f44336"></i>Terlambat</span>
+            <span><i class="leg-dot" style="background:#3b82f6"></i>Pulang Normal</span>
+            <span><i class="leg-dot" style="background:#7c3aed"></i>Pulang Cepat</span>
+            <span><i class="leg-dot" style="background:rgba(255,255,255,0.08)"></i>Belum Hadir</span>
+        `;
+        container.innerHTML = data.map(row => {
+            const total = row.total || 1;
+            const segs = [
+                { val: row.tepat,         color: '#00c853' },
+                { val: row.terlambat,     color: '#f44336' },
+                { val: row.pulang_normal, color: '#3b82f6' },
+                { val: row.pulang_cepat,  color: '#7c3aed' },
+            ];
+            const belumHadir = Math.max(0, total - row.tepat - row.terlambat);
+
+            const segHtml = segs.map(s => {
+                const pct = (s.val / total * 100).toFixed(1);
+                return `<div class="rekap-seg" style="width:${pct}%;background:${s.color};">${s.val > 0 ? s.val : ''}</div>`;
+            }).join('');
+            const alpaHtml = `<div class="rekap-seg" style="width:${(belumHadir/total*100).toFixed(1)}%;background:rgba(255,255,255,0.08);color:var(--muted);">${belumHadir > 0 ? belumHadir : ''}</div>`;
+
+            return `
+            <div class="rekap-row">
+                <div class="rekap-kelas">${row.kelas}</div>
+                <div class="rekap-track">${segHtml}${alpaHtml}</div>
+                <div class="rekap-nums">
+                    <span class="rekap-num" style="background:rgba(0,200,83,0.15);color:#00c853;">${row.tepat}</span>
+                    <span class="rekap-num" style="background:rgba(244,67,54,0.15);color:#f44336;">${row.terlambat}</span>
+                    <span class="rekap-num" style="background:rgba(59,130,246,0.15);color:#3b82f6;">${row.pulang_normal}</span>
+                    <span class="rekap-num" style="background:rgba(124,58,237,0.15);color:#7c3aed;">${row.pulang_cepat}</span>
+                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${belumHadir}</span>
+                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
+                </div>
+            </div>`;
+        }).join('');
+
+    } else {
+        title.textContent = '📊 Rekap Sholat Per Kelas';
+        legend.innerHTML = `
+            <span><i class="leg-dot" style="background:#00c853"></i>D+A</span>
+            <span><i class="leg-dot" style="background:#3b82f6"></i>Dzuhur</span>
+            <span><i class="leg-dot" style="background:#9c27b0"></i>Ashar</span>
+            <span><i class="leg-dot" style="background:#e91e8c"></i>Izin Mens</span>
+            <span><i class="leg-dot" style="background:rgba(255,255,255,0.08)"></i>Alpa</span>
+        `;
+        container.innerHTML = data.map(row => {
+            const total    = row.total || 1;
+            const keduanya = Math.min(row.dzuhur, row.ashar);
+            const dzOnly   = row.dzuhur - keduanya;
+            const asOnly   = row.ashar  - keduanya;
+            const alpa     = Math.max(0, total - row.dzuhur - row.ashar - row.izin + keduanya);
+
+            const segs = [
+                { val: keduanya, color: '#00c853' },
+                { val: dzOnly,   color: '#3b82f6' },
+                { val: asOnly,   color: '#9c27b0' },
+                { val: row.izin, color: '#e91e8c' },
+                { val: alpa,     color: 'rgba(255,255,255,0.08)', muted: true },
+            ];
+            const segHtml = segs.map(s => {
+                const pct = (s.val / total * 100).toFixed(1);
+                return `<div class="rekap-seg" style="width:${pct}%;background:${s.color};${s.muted?'color:var(--muted);':''}">${s.val > 0 ? s.val : ''}</div>`;
+            }).join('');
+
+            return `
+            <div class="rekap-row">
+                <div class="rekap-kelas">${row.kelas}</div>
+                <div class="rekap-track">${segHtml}</div>
+                <div class="rekap-nums">
+                    <span class="rekap-num" style="background:rgba(0,200,83,0.15);color:#00c853;">${keduanya}</span>
+                    <span class="rekap-num" style="background:rgba(59,130,246,0.15);color:#3b82f6;">${row.dzuhur}</span>
+                    <span class="rekap-num" style="background:rgba(156,39,176,0.15);color:#9c27b0;">${row.ashar}</span>
+                    <span class="rekap-num" style="background:rgba(233,30,140,0.15);color:#e91e8c;">${row.izin}</span>
+                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${alpa}</span>
+                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
+                </div>
+            </div>`;
+        }).join('');
+    }
+}
+
 // Jalankan polling
-doPoll(); // langsung sekali saat load
-setInterval(doPoll, 5000);
+doPoll(); // selalu load sekali saat halaman dibuka
+if (IS_TODAY) {
+    setInterval(doPoll, 5000); // polling hanya untuk hari ini
+}
 
 // Hapus progress bar (tidak dipakai lagi)
 const bar = document.getElementById('refresh-bar');
