@@ -289,6 +289,7 @@
                         </div>
                     </div>
                 </div>
+                <p><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal=2026-05-12 --force</small></p>
             </div>
         </div>
 
