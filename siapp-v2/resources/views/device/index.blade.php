@@ -94,7 +94,10 @@
     color: #444;
     margin: 7px 0 2px;
 }
-
+.dc-buf-unknown { color: #888; }
+.dc-buf-empty   { color: #00c853; font-weight: 600; }
+.dc-buf-warn    { color: #ff8800; font-weight: 600; }
+.dc-buf-danger  { color: #f44336; font-weight: 700; }
 .ram-bar {
     width: 100%; height: 9px;
     border-radius: 8px;

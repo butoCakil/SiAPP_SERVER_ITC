@@ -195,28 +195,52 @@ class PushPresensi extends Command
             'pe.nis',
             'ds.nama',
             'ds.kelas',
-            'pe.mulai as waktu'
+            'pe.mulai',
+            'pe.keterangan'
         )->get();
 
         if ($data->isEmpty()) return 0;
 
+        $siswaMap = [];
+        foreach ($data as $e) {
+            $nis = $e->nis;
+            if (!isset($siswaMap[$nis])) {
+                $siswaMap[$nis] = [
+                    'ids'          => [],
+                    'nis'          => $nis,
+                    'nama'         => $e->nama ?? '-',
+                    'kelas'        => $e->kelas ?? '-',
+                    'waktu_dzuhur' => null,
+                    'waktu_ashar'  => null,
+                ];
+            }
+            $siswaMap[$nis]['ids'][] = $e->id;
+            if ($e->keterangan === 'DZUHUR') {
+                $siswaMap[$nis]['waktu_dzuhur'] = $e->mulai;
+            } elseif ($e->keterangan === 'ASHAR') {
+                $siswaMap[$nis]['waktu_ashar'] = $e->mulai;
+            }
+        }
+
+        $dataList = collect(array_values($siswaMap));
         $payload = [
             'type'      => 'izin_mens',
             'timestamp' => now()->toIso8601String(),
             'tanggal'   => $this->tanggal,
-            'total'     => $data->count(),
-            'data'      => $data->map(fn($p) => [
-                'nis'   => $p->nis,
-                'nama'  => $p->nama,
-                'kelas' => $p->kelas,
-                'waktu' => $p->waktu,
+            'total'     => $dataList->count(),
+            'data'      => $dataList->map(fn($s) => [
+                'nis'          => $s['nis'],
+                'nama'         => $s['nama'],
+                'kelas'        => $s['kelas'],
+                'waktu_dzuhur' => $s['waktu_dzuhur'],
+                'waktu_ashar'  => $s['waktu_ashar'],
             ])->values(),
         ];
 
         $ok = $this->kirim($url, $payload, 'Izin Menstruasi');
 
         if ($ok) {
-            $ids = $data->pluck('id');
+            $ids = collect(array_merge(...array_column(array_values($siswaMap), 'ids')));
             DB::table('presensiEvent')->whereIn('id', $ids)->update(['pushed_at' => now()]);
         }
 

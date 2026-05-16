@@ -78,6 +78,7 @@ class DeviceService
             'ssid'    => $data['ssid']    ?? null,
             'rssi'    => $data['rssi']    ?? null,
             'latency' => $data['latency'] ?? null,
+            'count'   => $data['count']   ?? null,
             'serial'  => $data['serial']  ?? null,
             'version' => $data['version'] ?? null,
         ], JSON_UNESCAPED_UNICODE);

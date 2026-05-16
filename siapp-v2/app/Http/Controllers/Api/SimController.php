@@ -149,22 +149,35 @@ class SimController extends Controller
 
         if ($kelas) $query->where('ds.kelas', $kelas);
 
-        $data = $query->select(
-                'pe.nis', 'ds.nama', 'ds.kelas', 'pe.mulai as waktu'
-            )->get()
-            ->map(fn($p) => [
-                'nis'   => $p->nis,
-                'nama'  => $p->nama,
-                'kelas' => $p->kelas,
-                'waktu' => $p->waktu,
-            ]);
+        $events = $query->select(
+        'pe.nis', 'ds.nama', 'ds.kelas', 'pe.mulai', 'pe.keterangan'
+            )->get();
+
+        $siswaMap = [];
+        foreach ($events as $e) {
+            $nis = $e->nis;
+            if (!isset($siswaMap[$nis])) {
+                $siswaMap[$nis] = [
+                    'nis'          => $nis,
+                    'nama'         => $e->nama ?? '-',
+                    'kelas'        => $e->kelas ?? '-',
+                    'waktu_dzuhur' => null,
+                    'waktu_ashar'  => null,
+                ];
+            }
+            if ($e->keterangan === 'DZUHUR') {
+                $siswaMap[$nis]['waktu_dzuhur'] = $e->mulai;
+            } elseif ($e->keterangan === 'ASHAR') {
+                $siswaMap[$nis]['waktu_ashar'] = $e->mulai;
+            }
+        }
 
         return response()->json([
             'type'      => 'izin_mens',
             'timestamp' => now()->toIso8601String(),
             'tanggal'   => $tanggal,
-            'total'     => $data->count(),
-            'data'      => $data->values(),
+            'total'     => count($siswaMap),
+            'data'      => array_values($siswaMap),
         ]);
     }
 

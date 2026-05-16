@@ -63,6 +63,25 @@
         <div class="rssi-fill" data-pct="{{ $rssiPct }}"></div>
     </div>
 
+    {{-- Buffer RAM --}}
+    @php
+        $bufferCount = isset($status['count']) ? (int)$status['count'] : null;
+        if ($bufferCount === null) {
+            $bufferClass = 'dc-buf-unknown';
+            $bufferLabel = '🗂️ Buffer: -';
+        } elseif ($bufferCount === 0) {
+            $bufferClass = 'dc-buf-empty';
+            $bufferLabel = '🗂️ Buffer: kosong';
+        } elseif ($bufferCount <= 50) {
+            $bufferClass = 'dc-buf-warn';
+            $bufferLabel = '🗂️ Buffer: ' . $bufferCount . ' data';
+        } else {
+            $bufferClass = 'dc-buf-danger';
+            $bufferLabel = '🗂️ Buffer: ' . $bufferCount . ' data ⚠️';
+        }
+    @endphp
+    <div class="bar-label {{ $bufferClass }}">{{ $bufferLabel }}</div>
+
     {{-- Detail Info --}}
     <div class="dc-detail">
         <div>📡 {{ $ssid }}</div>
