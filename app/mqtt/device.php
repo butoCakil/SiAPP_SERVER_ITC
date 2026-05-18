@@ -140,12 +140,14 @@ function procMsg($topic, $msg)
         $latency = $data['latency'] ?? null;
         $serial = $data['serial'] ?? null;
         $version = $data['version'] ?? null;
+        $count = isset($data['count']) ? (int)$data['count'] : null;
         $last_status_json = json_encode([
             'status' => $status,
             'ram' => $ram,
             'ssid' => $ssid,
             'rssi' => $rssi,
             'latency' => $latency,
+            'count' => $count,
             'serial' => $serial,
             'version' => $version
         ], JSON_UNESCAPED_UNICODE);
@@ -200,11 +202,13 @@ function procMsg($topic, $msg)
         $ram     = $data['ram'] ?? null;
         $rssi    = $data['rssi'] ?? null;
         $latency = $data['latency'] ?? null;
+        $count = isset($data['count']) ? (int)$data['count'] : null;
 
         $last_status_json = json_encode([
             'status'  => $status,
             'ram'     => $ram,
             'rssi'    => $rssi,
+            'count' => $count,
             'latency' => $latency
         ], JSON_UNESCAPED_UNICODE);
 
