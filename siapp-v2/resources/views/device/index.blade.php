@@ -364,13 +364,9 @@ function toggleDetail(id) {
     const el = document.getElementById('dc-collapse-'+id);
     const arrow = document.getElementById('dc-arrow-'+id);
     const smBtns = document.getElementById('dc-smbtns-'+id);
-    const delBtn = document.getElementById('dc-del-'+id);
     el.classList.toggle('show');
     arrow.classList.toggle('rotated');
     if (smBtns) smBtns.classList.toggle('d-none');
-    if (delBtn) {
-        delBtn.style.display = el.classList.contains('show') ? 'inline-flex' : 'none';
-    }
 }
 
 // ── Kirim perintah ke satu device ──

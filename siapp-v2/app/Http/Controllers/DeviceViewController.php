@@ -21,7 +21,7 @@ class DeviceViewController extends Controller
 
     public function destroy(Request $request, string $id)
     {
-        DB::table('devices')->where('device_id', $id)->delete();
+        DB::table('devices')->where('device_id', $id)->update(['hidden' => 1]);
         return response()->json(['status' => 'ok']);
     }
 
@@ -77,7 +77,7 @@ class DeviceViewController extends Controller
 
     private function getData(): array
     {
-        $devices      = DB::table('devices')->orderByRaw('online DESC, device_id ASC')->get();
+        $devices      = DB::table('devices')->where('hidden', 0)->orderByRaw('online DESC, device_id ASC')->get();
         $regDevices   = DB::table('reg_device')->get()->keyBy('no_device');
         $onlineCount  = $devices->where('online', 1)->count();
         $offlineCount = $devices->where('online', 0)->count();

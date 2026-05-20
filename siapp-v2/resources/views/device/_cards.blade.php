@@ -51,6 +51,11 @@
             <div class="dc-dot {{ $isOnline ? 'online' : 'offline' }}"></div>
             <div class="dc-status-label">{{ $isOnline ? 'Online' : 'Offline' }}</div>
         </div>
+        <button title="Hapus"
+            style="position:absolute;top:2px;right:4px;width:14px;height:14px;border-radius:0;border:none;background:transparent;color:#bbb;font-size:11px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:10;transition:color 0.2s;"
+            onmouseover="this.style.color='#c00';"
+            onmouseout="this.style.color='#bbb';"
+            onclick="deleteDevice('{{ $device->device_id }}')">✕</button>
     </div>
 
     {{-- RAM Bar --}}
@@ -114,12 +119,6 @@
             <button class="btn-xs-round bxr-reboot" title="Reboot"
                 onclick="handleCmd(this,'{{ $device->device_id }}','reboot')">🔁</button>
         </div>
-
-        {{-- Delete button (visible when expanded) --}}
-        <button id="dc-del-{{ $device->device_id }}"
-            class="btn-xs-round bxr-reboot" title="Hapus"
-            style="display:none; margin-left:auto;"
-            onclick="if(confirm('Hapus device {{ $device->device_id }}?')) deleteDevice('{{ $device->device_id }}')">🗑</button>
     </div>
 
     {{-- Collapsible detail --}}
