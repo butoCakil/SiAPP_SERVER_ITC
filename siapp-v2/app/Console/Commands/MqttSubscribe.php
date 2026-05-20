@@ -87,6 +87,20 @@ class MqttSubscribe extends Command
         $result   = $service->prosesTag($json);
         $response = json_encode($result);
 
+        // ── Log ke tempreq ──
+        try {
+            $decoded = json_decode($response, true);
+            $pesan   = $decoded['respon'][0]['message'] ?? ($decoded['status'] ?? '-');
+            \Illuminate\Support\Facades\DB::table('tempreq')->insert([
+                'ip'     => $json['ipa'] ?? '-',
+                'req'    => json_encode($json),
+                'info'   => $pesan,
+                'detail' => $response,
+            ]);
+        } catch (\Throwable $e) {
+            $this->warn('Gagal log tempreq: ' . $e->getMessage());
+        }
+
         $this->kirimRespon($mqtt, $nodevice, $response);
         $this->info('[' . $timestamp . '] Respon ke ' . $nodevice . ': ' . $response);
     }
