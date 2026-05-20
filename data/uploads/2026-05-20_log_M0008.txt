@@ -1,0 +1,90 @@
+[2026-05-19 17:00:07] Delete File Berhasil: /log_M0008.txt
+[2026-05-19 17:00:08] telah diJadwalkan Restart!
+[2026-05-19 17:00:09] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-20 05:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-20 05:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 05:00:01] Upload # gagal!
+[2026-05-20 05:00:13] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-20 05:00:13] Update DB Harian Berhasil!
+[2026-05-20 05:00:14] telah diJadwalkan Restart!
+[2026-05-20 05:00:16] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-20 07:30:00] Saatnya upload data #1!
+[2026-05-20 07:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 07:30:01] Upload #1 gagal, dijadwalkan ulang pada 7:45
+[2026-05-20 07:45:00] Saatnya upload data #1!
+[2026-05-20 07:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 07:45:01] Upload #1 gagal, dijadwalkan ulang pada 8:0
+[2026-05-20 08:00:00] Saatnya upload data #1!
+[2026-05-20 08:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 08:00:01] Upload #1 gagal, dijadwalkan ulang pada 8:15
+[2026-05-20 08:15:00] Saatnya upload data #1!
+[2026-05-20 08:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 08:15:01] Upload #1 gagal, dijadwalkan ulang pada 8:30
+[2026-05-20 08:30:00] Saatnya upload data #1!
+[2026-05-20 08:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 08:30:01] Upload #1 gagal, dijadwalkan ulang pada 8:45
+[2026-05-20 08:45:00] Saatnya upload data #1!
+[2026-05-20 08:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 08:45:01] Upload #1 gagal, dijadwalkan ulang pada 9:0
+[2026-05-20 09:00:00] Saatnya upload data #1!
+[2026-05-20 09:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 09:00:01] Upload #1 gagal, dijadwalkan ulang pada 9:15
+[2026-05-20 09:15:00] Saatnya upload data #1!
+[2026-05-20 09:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 09:15:01] Upload #1 gagal, dijadwalkan ulang pada 9:30
+[2026-05-20 09:30:00] Saatnya upload data #1!
+[2026-05-20 09:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 09:30:01] Upload #1 gagal, dijadwalkan ulang pada 9:45
+[2026-05-20 09:39:18] MQTT gagal, rc=-2
+[2026-05-20 09:45:00] Saatnya upload data #1!
+[2026-05-20 09:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 09:45:01] Upload #1 gagal, dijadwalkan ulang pada 10:0
+[2026-05-20 10:00:00] Saatnya upload data #1!
+[2026-05-20 10:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 10:00:01] Upload #1 gagal, dijadwalkan ulang pada 10:15
+[2026-05-20 10:15:00] Saatnya upload data #1!
+[2026-05-20 10:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 10:15:01] Upload #1 gagal, dijadwalkan ulang pada 10:30
+[2026-05-20 10:30:00] Saatnya upload data #1!
+[2026-05-20 10:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 10:30:01] Upload #1 gagal, dijadwalkan ulang pada 10:45
+[2026-05-20 10:45:00] Saatnya upload data #1!
+[2026-05-20 10:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 10:45:01] Upload #1 gagal, dijadwalkan ulang pada 11:0
+[2026-05-20 11:00:00] Saatnya upload data #1!
+[2026-05-20 11:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 11:00:01] Upload #1 gagal, dijadwalkan ulang pada 11:15
+[2026-05-20 11:15:00] Saatnya upload data #1!
+[2026-05-20 11:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 11:15:01] Upload #1 gagal, dijadwalkan ulang pada 11:30
+[2026-05-20 11:30:00] Saatnya upload data #1!
+[2026-05-20 11:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 11:30:01] Upload #1 gagal, dijadwalkan ulang pada 11:45
+[2026-05-20 11:45:00] Saatnya upload data #1!
+[2026-05-20 11:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 11:45:01] Upload #1 gagal, dijadwalkan ulang pada 12:0
+[2026-05-20 12:00:00] Saatnya upload data #1!
+[2026-05-20 12:00:05] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-20 12:00:05] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-20 12:00:06] Upload #1 sukses, tidak diulang.
+[2026-05-20 13:00:00] Saatnya upload data #2!
+[2026-05-20 13:00:06] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-20 13:00:06] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-20 13:00:07] Upload #2 sukses, tidak diulang.
+[2026-05-20 13:59:05] Order dari server:
+[2026-05-20 13:59:05] devices/M0008/settings
+[2026-05-20 13:59:05] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-20 13:59:05] Perintah Server: Upload presensi
+[2026-05-20 13:59:10] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-20 13:59:10] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-20 15:15:35] MQTT gagal, rc=-2
+[2026-05-20 15:15:45] MQTT gagal, rc=-2
+[2026-05-20 15:15:55] MQTT gagal, rc=-2
+[2026-05-20 15:16:05] MQTT gagal, rc=-2
+[2026-05-20 15:16:15] MQTT gagal, rc=-2
+[2026-05-20 15:16:26] MQTT gagal, rc=-2
+[2026-05-20 15:19:15] MQTT gagal, rc=-2
+[2026-05-20 15:19:23] MQTT gagal, rc=-2
+[2026-05-20 17:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-20 17:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-20 17:00:01] Upload # gagal!

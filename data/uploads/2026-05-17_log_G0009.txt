@@ -1,0 +1,20 @@
+[2026-05-16 17:00:44] Delete File Berhasil: /log_G0009.txt
+[2026-05-16 17:00:45] telah diJadwalkan Restart!
+[2026-05-16 17:00:46] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-17 05:00:28] Upload Data Presensi - Sebelum Restart
+[2026-05-17 05:00:28] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-17 05:00:29] Upload # gagal!
+[2026-05-17 05:00:36] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-17 05:00:36] Update DB Harian Berhasil!
+[2026-05-17 05:00:37] telah diJadwalkan Restart!
+[2026-05-17 05:00:39] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-17 05:00:55] Upload Data Presensi - Sebelum Restart
+[2026-05-17 05:00:55] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-17 05:00:56] Upload # gagal!
+[2026-05-17 05:01:03] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-17 05:01:03] Update DB Harian Berhasil!
+[2026-05-17 05:01:04] telah diJadwalkan Restart!
+[2026-05-17 05:01:05] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-17 17:00:23] Upload Data Presensi - Sebelum Restart
+[2026-05-17 17:00:23] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-17 17:00:24] Upload # gagal!

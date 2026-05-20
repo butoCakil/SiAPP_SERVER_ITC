@@ -1,0 +1,89 @@
+[2026-05-08 09:53:57] Order dari server:
+[2026-05-08 09:53:57] devices/RT0009/settings
+[2026-05-08 09:53:57] Pesan: {"device_id":"RT0009","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-08 09:55:02] Order dari server:
+[2026-05-08 09:55:02] devices/RT0009/settings
+[2026-05-08 09:55:02] Pesan: {"device_id":"RT0009","command":{"sync":true}}
+[2026-05-08 09:55:54] Order dari server:
+[2026-05-08 09:55:54] devices/RT0009/settings
+[2026-05-08 09:55:54] Pesan: {"device_id":"RT0009","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-08 09:56:26] Order dari server:
+[2026-05-08 09:56:26] devices/RT0009/settings
+[2026-05-08 09:56:26] Pesan: {"device_id":"RT0009","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-08 10:08:48] Order dari server:
+[2026-05-08 10:08:49] devices/M0009/settings
+[2026-05-08 10:08:49] Pesan: {"device_id":"M0009","command":{"reboot":true}}
+[2026-05-08 10:08:49] Perintah Server: Reboot device
+[2026-05-08 10:08:49] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-08 10:09:07] Order dari server:
+[2026-05-08 10:09:07] devices/M0009/settings
+[2026-05-08 10:09:07] Pesan: {"device_id":"M0009","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-13 09:22:56] MQTT gagal, rc=-2
+[2026-05-13 09:41:20] MQTT gagal, rc=-2
+[2026-05-13 09:41:30] MQTT gagal, rc=-2
+[2026-05-13 09:41:40] MQTT gagal, rc=-2
+[2026-05-13 09:41:50] MQTT gagal, rc=-2
+[2026-05-13 09:42:00] MQTT gagal, rc=-2
+[2026-05-13 09:56:03] MQTT gagal, rc=-2
+[2026-05-13 09:57:49] MQTT gagal, rc=-2
+[2026-05-13 09:57:59] MQTT gagal, rc=-2
+[2026-05-13 09:58:09] MQTT gagal, rc=-2
+[2026-05-13 09:58:19] MQTT gagal, rc=-2
+[2026-05-13 09:58:29] MQTT gagal, rc=-2
+[2026-05-13 09:59:26] MQTT gagal, rc=-2
+[2026-05-13 09:59:36] MQTT gagal, rc=-2
+[2026-05-13 09:59:46] MQTT gagal, rc=-2
+[2026-05-13 09:59:56] MQTT gagal, rc=-2
+[2026-05-13 10:00:06] MQTT gagal, rc=-2
+[2026-05-13 10:00:17] MQTT gagal, rc=-2
+[2026-05-13 10:00:27] MQTT gagal, rc=-2
+[2026-05-13 12:22:46] Order dari server:
+[2026-05-13 12:22:46] devices/M0009/settings
+[2026-05-13 12:22:46] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 12:22:46] Perintah Server: Upload presensi
+[2026-05-13 12:22:50] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 12:22:50] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 12:22:51] Order dari server:
+[2026-05-13 12:22:51] devices/M0009/settings
+[2026-05-13 12:22:51] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 12:22:51] Perintah Server: Upload presensi
+[2026-05-13 12:22:52] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-13 12:52:09] Order dari server:
+[2026-05-13 12:52:09] devices/M0009/settings
+[2026-05-13 12:52:09] Pesan: {"device_id":"M0009","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-13 13:00:00] Saatnya upload data #2!
+[2026-05-13 13:00:03] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 13:00:04] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 13:00:05] Upload #2 sukses, tidak diulang.
+[2026-05-13 13:06:29] Order dari server:
+[2026-05-13 13:06:29] devices/M0009/settings
+[2026-05-13 13:06:29] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 13:06:29] Perintah Server: Upload presensi
+[2026-05-13 13:06:29] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-13 13:08:08] Order dari server:
+[2026-05-13 13:08:08] devices/M0009/settings
+[2026-05-13 13:08:08] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 13:08:08] Perintah Server: Upload presensi
+[2026-05-13 13:08:08] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-13 14:12:57] Order dari server:
+[2026-05-13 14:12:57] devices/M0009/settings
+[2026-05-13 14:12:57] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 14:12:57] Perintah Server: Upload presensi
+[2026-05-13 14:13:05] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 14:13:05] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 15:19:15] Order dari server:
+[2026-05-13 15:19:15] devices/M0009/settings
+[2026-05-13 15:19:15] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 15:19:16] Perintah Server: Upload presensi
+[2026-05-13 15:19:20] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 15:19:20] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 15:20:36] Order dari server:
+[2026-05-13 15:20:36] devices/M0009/settings
+[2026-05-13 15:20:36] Pesan: {"device_id":"M0009","command":{"upload":true}}
+[2026-05-13 15:20:36] Perintah Server: Upload presensi
+[2026-05-13 15:20:40] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 15:20:40] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 17:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-13 17:00:03] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 17:00:04] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 17:00:05] Upload # sukses.

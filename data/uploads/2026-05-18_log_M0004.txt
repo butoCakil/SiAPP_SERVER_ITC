@@ -1,0 +1,58 @@
+[2026-05-17 17:00:10] Delete File Berhasil: /log_M0004.txt
+[2026-05-17 17:00:12] telah diJadwalkan Restart!
+[2026-05-17 17:00:13] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-18 05:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-18 05:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 05:00:01] Upload # gagal!
+[2026-05-18 05:00:36] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-18 05:00:37] Update DB Harian Berhasil!
+[2026-05-18 05:00:38] telah diJadwalkan Restart!
+[2026-05-18 05:00:39] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-18 07:30:00] Saatnya upload data #1!
+[2026-05-18 07:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 07:30:01] Upload #1 gagal, dijadwalkan ulang pada 7:45
+[2026-05-18 07:45:00] Saatnya upload data #1!
+[2026-05-18 07:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 07:45:01] Upload #1 gagal, dijadwalkan ulang pada 8:0
+[2026-05-18 08:00:00] Saatnya upload data #1!
+[2026-05-18 08:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 08:00:01] Upload #1 gagal, dijadwalkan ulang pada 8:15
+[2026-05-18 08:15:00] Saatnya upload data #1!
+[2026-05-18 08:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 08:15:01] Upload #1 gagal, dijadwalkan ulang pada 8:30
+[2026-05-18 08:30:00] Saatnya upload data #1!
+[2026-05-18 08:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 08:30:01] Upload #1 gagal, dijadwalkan ulang pada 8:45
+[2026-05-18 08:45:00] Saatnya upload data #1!
+[2026-05-18 08:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 08:45:01] Upload #1 gagal, dijadwalkan ulang pada 9:0
+[2026-05-18 09:00:00] Saatnya upload data #1!
+[2026-05-18 09:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 09:00:01] Upload #1 gagal, dijadwalkan ulang pada 9:15
+[2026-05-18 09:15:00] Saatnya upload data #1!
+[2026-05-18 09:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 09:15:01] Upload #1 gagal, dijadwalkan ulang pada 9:30
+[2026-05-18 09:30:00] Saatnya upload data #1!
+[2026-05-18 09:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 09:30:01] Upload #1 gagal, dijadwalkan ulang pada 9:45
+[2026-05-18 09:32:08] Order dari server:
+[2026-05-18 09:32:08] devices/M0004/settings
+[2026-05-18 09:32:08] Pesan: {"device_id":"M0004","command":{"sync":true}}
+[2026-05-18 09:32:08] Perintah Server: Jalankan sinkronisasi
+[2026-05-18 09:32:19] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-18 09:32:19] Update DB Berhasil!
+[2026-05-18 09:32:51] Order dari server:
+[2026-05-18 09:32:51] devices/M0004/settings
+[2026-05-18 09:32:51] Pesan: {"device_id":"M0004","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-18 09:33:07] Order dari server:
+[2026-05-18 09:33:07] devices/M0004/settings
+[2026-05-18 09:33:07] Pesan: {"device_id":"M0004","command":{"upload":true}}
+[2026-05-18 09:33:07] Perintah Server: Upload presensi
+[2026-05-18 09:33:07] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 13:00:00] Saatnya upload data #2!
+[2026-05-18 13:00:04] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-18 13:00:04] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-18 13:00:05] Upload #2 sukses, tidak diulang.
+[2026-05-18 17:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-18 17:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-18 17:00:01] Upload # gagal!

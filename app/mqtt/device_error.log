@@ -59,3 +59,5 @@
 [11-May-2026 09:10:12 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
 [11-May-2026 14:46:17 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
 [11-May-2026 14:46:17 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused
+[15-May-2026 03:12:35 Asia/Jakarta] PHP Warning:  stream_socket_client(): Unable to connect to tcp://localhost:1883 (Connection refused) in /opt/lampp/htdocs/app/mqtt/vendor/bluerhinos/phpmqtt/phpMQTT.php on line 150
+[15-May-2026 03:12:35 Asia/Jakarta] Error:stream_socket_create() 111, Connection refused

@@ -1,0 +1,60 @@
+[2026-05-08 11:13:55] Order dari server:
+[2026-05-08 11:13:55] devices/M0008/settings
+[2026-05-08 11:13:55] Pesan: {"device_id":"M0008","settings":{"mode":2,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-13 09:50:15] MQTT gagal, rc=-2
+[2026-05-13 09:50:25] MQTT gagal, rc=-2
+[2026-05-13 09:50:35] MQTT gagal, rc=-2
+[2026-05-13 09:50:45] MQTT gagal, rc=-2
+[2026-05-13 09:50:55] MQTT gagal, rc=-2
+[2026-05-13 09:51:05] MQTT gagal, rc=-2
+[2026-05-13 10:15:47] MQTT gagal, rc=-2
+[2026-05-13 10:15:57] MQTT gagal, rc=-2
+[2026-05-13 10:16:07] MQTT gagal, rc=-2
+[2026-05-13 10:16:17] MQTT gagal, rc=-2
+[2026-05-13 10:16:27] MQTT gagal, rc=-2
+[2026-05-13 12:22:46] Order dari server:
+[2026-05-13 12:22:46] devices/M0008/settings
+[2026-05-13 12:22:46] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 12:22:46] Perintah Server: Upload presensi
+[2026-05-13 12:22:52] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 12:22:53] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 12:22:54] Order dari server:
+[2026-05-13 12:22:54] devices/M0008/settings
+[2026-05-13 12:22:54] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 12:22:54] Perintah Server: Upload presensi
+[2026-05-13 12:22:54] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-13 12:52:09] Order dari server:
+[2026-05-13 12:52:09] devices/M0008/settings
+[2026-05-13 12:52:10] Pesan: {"device_id":"M0008","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5"}}
+[2026-05-13 13:00:00] Saatnya upload data #2!
+[2026-05-13 13:00:05] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 13:00:05] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 13:00:06] Upload #2 sukses, tidak diulang.
+[2026-05-13 13:07:09] Order dari server:
+[2026-05-13 13:07:09] devices/M0008/settings
+[2026-05-13 13:07:09] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 13:07:09] Perintah Server: Upload presensi
+[2026-05-13 13:07:14] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 13:07:14] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 14:12:57] Order dari server:
+[2026-05-13 14:12:57] devices/M0008/settings
+[2026-05-13 14:12:57] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 14:12:57] Perintah Server: Upload presensi
+[2026-05-13 14:13:02] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 14:13:02] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 15:19:16] Order dari server:
+[2026-05-13 15:19:16] devices/M0008/settings
+[2026-05-13 15:19:16] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 15:19:16] Perintah Server: Upload presensi
+[2026-05-13 15:19:22] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 15:19:23] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 15:20:36] Order dari server:
+[2026-05-13 15:20:36] devices/M0008/settings
+[2026-05-13 15:20:36] Pesan: {"device_id":"M0008","command":{"upload":true}}
+[2026-05-13 15:20:36] Perintah Server: Upload presensi
+[2026-05-13 15:20:41] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 15:20:41] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 17:00:00] Upload Data Presensi - Sebelum Restart
+[2026-05-13 17:00:05] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-13 17:00:05] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-13 17:00:06] Upload # sukses.
