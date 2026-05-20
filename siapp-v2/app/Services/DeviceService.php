@@ -94,10 +94,15 @@ class DeviceService
             $upsert['fw_version'] = $data['version'];
         }
 
-        DB::table('devices')->updateOrInsert(
-            ['device_id' => $deviceId],
-            array_merge($upsert, ['created_at' => now()])
-        );
+        if ($existing) {
+            DB::table('devices')->where('device_id', $deviceId)->update($upsert);
+        } else {
+            DB::table('devices')->insert(array_merge($upsert, [
+                'device_id'  => $deviceId,
+                'hidden'     => 0,
+                'created_at' => now(),
+            ]));
+        }
     }
 
     // ── Update info device di DB ──
@@ -109,15 +114,24 @@ class DeviceService
             'version' => $data['version'] ?? null,
         ], JSON_UNESCAPED_UNICODE);
 
-        DB::table('devices')->updateOrInsert(
-            ['device_id' => $deviceId],
-            [
+        $exists = DB::table('devices')->where('device_id', $deviceId)->exists();
+
+        if ($exists) {
+            DB::table('devices')->where('device_id', $deviceId)->update([
                 'info'       => $info,
                 'fw_version' => $data['version'] ?? null,
                 'updated_at' => now(),
+            ]);
+        } else {
+            DB::table('devices')->insert([
+                'device_id'  => $deviceId,
+                'info'       => $info,
+                'fw_version' => $data['version'] ?? null,
+                'hidden'     => 0,
                 'created_at' => now(),
-            ]
-        );
+                'updated_at' => now(),
+            ]);
+        }
     }
 
     // ── Update feedback device di DB ──
