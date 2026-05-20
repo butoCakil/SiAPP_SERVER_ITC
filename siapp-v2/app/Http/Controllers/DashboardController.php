@@ -20,8 +20,8 @@ class DashboardController extends Controller
         $totalPulang = DB::table('datapresensi')->where('tanggal', $tanggal)->whereNotNull('waktupulang')->where('waktupulang', '!=', '00:00:00')->count();
 
         // ── Device ──
-        $totalDevice  = DB::table('devices')->count();
-        $deviceOnline = DB::table('devices')->where('online', 1)->count();
+        $totalDevice  = DB::table('devices')->where('hidden', 0)->count();
+        $deviceOnline = DB::table('devices')->where('hidden', 0)->where('online', 1)->count();
 
         // ── Setting ──
         $setting = DB::table('statusnya')->first();
