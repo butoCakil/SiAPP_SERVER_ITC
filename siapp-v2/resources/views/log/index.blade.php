@@ -65,6 +65,13 @@
             <span class="badge badge-info ml-1">{{ number_format($deviceTotal) }}</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ $tab==='logfile' ? 'active' : '' }}"
+            href="{{ route('log', ['tab'=>'logfile']) }}">
+            <i class="fas fa-file-alt mr-1"></i>Log File Device
+            <span class="badge badge-secondary ml-1">{{ count($logFiles) }}</span>
+        </a>
+    </li>
 </ul>
 
 @if($tab === 'tempreq')
@@ -192,7 +199,7 @@
 
 </div>
 
-@else
+@elseif($tab === 'device')
 {{-- ── DEVICE LOG ── --}}
 <div class="row">
 
@@ -333,6 +340,99 @@
     </div>
 
 </div>
+@elseif($tab === 'logfile')
+{{-- ── LOG FILE DEVICE ── --}}
+<div class="row">
+    <div class="col-12 mb-3">
+        <form action="{{ route('log') }}" method="GET" class="d-flex flex-wrap" style="gap:8px;">
+            <input type="hidden" name="tab" value="logfile">
+            <select name="device3" class="form-control form-control-sm" style="width:180px;">
+                <option value="">Semua Device</option>
+                @foreach($deviceList3 as $d)
+                    <option value="{{ $d }}" {{ $filterDevice3===$d ? 'selected':'' }}>{{ $d }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+            <a href="{{ route('log', ['tab'=>'logfile']) }}" class="btn btn-sm btn-outline-secondary">Reset</a>
+        </form>
+    </div>
+
+    <div class="col-12">
+        <div class="card card-outline card-secondary">
+            <div class="card-header">
+                <h3 class="card-title" style="font-size:12px;">
+                    <i class="fas fa-file-alt mr-1"></i>Log File Device
+                    <span class="badge badge-secondary ml-1">{{ count($logFiles) }} file</span>
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive" style="max-height:600px; overflow-y:auto;">
+                    <table class="table table-sm table-hover log-table mb-0">
+                        <thead class="thead-dark" style="position:sticky;top:0;z-index:2;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Device</th>
+                                <th>File</th>
+                                <th>Ukuran</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($logFiles as $lf)
+                            <tr>
+                                <td>{{ $lf['tanggal'] }}</td>
+                                <td><strong>{{ $lf['device_id'] }}</strong></td>
+                                <td><small class="text-muted">{{ $lf['filename'] }}</small></td>
+                                <td><small>{{ number_format($lf['size'] / 1024, 1) }} KB</small></td>
+                                <td>
+                                    <button class="btn btn-xs btn-outline-primary"
+                                        onclick="lihatLog('{{ $lf['filename'] }}', '{{ $lf['device_id'] }} - {{ $lf['tanggal'] }}')">
+                                        <i class="fas fa-eye"></i> Lihat
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-3">Tidak ada file log</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Modal lihat log --}}
+<div class="modal fade" id="modalLog" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLogTitle">Log</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body p-0">
+                <pre id="modalLogContent"
+                    style="background:#1a2235;color:#e0e0e0;padding:16px;margin:0;max-height:70vh;overflow-y:auto;font-size:11px;border-radius:0;">Loading...</pre>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
+
+@push('scripts')
+<script>
+function lihatLog(filename, title) {
+    document.getElementById('modalLogTitle').textContent = '📜 ' + title;
+    document.getElementById('modalLogContent').textContent = 'Loading...';
+    $('#modalLog').modal('show');
+    fetch('{{ route("log.file.read") }}?f=' + encodeURIComponent(filename))
+        .then(r => r.text())
+        .then(t => { document.getElementById('modalLogContent').textContent = t; })
+        .catch(() => { document.getElementById('modalLogContent').textContent = 'Gagal memuat file.'; });
+}
+</script>
+@endpush
 
 @endsection

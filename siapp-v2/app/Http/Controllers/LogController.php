@@ -31,7 +31,7 @@ class LogController extends Controller
 
         // ── Tab device_logs ──
         $filterDevice  = $request->input('device', '');
-        $filterTanggal2= $request->input('tanggal2', date('Y-m-d'));
+        $filterTanggal2 = $request->input('tanggal2', date('Y-m-d'));
 
         $queryDevice = DB::table('device_logs')
             ->when($filterDevice,   fn($q) => $q->where('device_id', $filterDevice))
@@ -42,12 +42,55 @@ class LogController extends Controller
         $deviceTotal  = DB::table('device_logs')->count();
         $deviceList   = DB::table('device_logs')->distinct()->orderBy('device_id')->pluck('device_id');
 
+        // ── Tab log_file ──
+        $logFileDir    = '/opt/lampp/htdocs/data/uploads/';
+        $filterDevice3 = $request->input('device3', '');
+        $allFiles      = glob($logFileDir . '*_log_*.txt') ?: [];
+        rsort($allFiles);
+
+        $logFiles   = [];
+        $deviceList3 = [];
+        foreach ($allFiles as $f) {
+            $base = basename($f);
+            if (preg_match('/^\d{4}-\d{2}-\d{2}_log_(.+)\.txt$/', $base, $m)) {
+                $deviceList3[] = $m[1];
+            }
+        }
+        $deviceList3 = array_values(array_unique($deviceList3));
+        sort($deviceList3);
+
+        foreach ($allFiles as $f) {
+            $base = basename($f);
+            if (preg_match('/^(\d{4}-\d{2}-\d{2})_log_(.+)\.txt$/', $base, $m)) {
+                if (!$filterDevice3 || $m[2] === $filterDevice3) {
+                    $logFiles[] = [
+                        'filename'  => $base,
+                        'tanggal'   => $m[1],
+                        'device_id' => $m[2],
+                        'size'      => filesize($f),
+                        'path'      => $f,
+                    ];
+                }
+            }
+        }
+
         return view('log.index', compact(
             'tab',
-            'tempreqLogs', 'tempreqTotal', 'infoList',
-            'filterTanggal', 'filterIp', 'filterInfo', 'filterSearch',
-            'deviceLogs', 'deviceTotal', 'deviceList',
-            'filterDevice', 'filterTanggal2'
+            'tempreqLogs',
+            'tempreqTotal',
+            'infoList',
+            'filterTanggal',
+            'filterIp',
+            'filterInfo',
+            'filterSearch',
+            'deviceLogs',
+            'deviceTotal',
+            'deviceList',
+            'filterDevice',
+            'filterTanggal2',
+            'logFiles',
+            'deviceList3',
+            'filterDevice3'
         ));
     }
 

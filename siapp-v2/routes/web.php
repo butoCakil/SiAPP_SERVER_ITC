@@ -238,3 +238,12 @@ Route::get('/api-internal/device-online', function () {
         'online' => DB::table('devices')->where('online', 1)->count()
     ]);
 })->middleware('auth.admin');
+
+Route::get('/log/file', function (\Illuminate\Http\Request $request) {
+    $filename = basename($request->input('f', ''));
+    $path     = '/opt/lampp/htdocs/data/uploads/' . $filename;
+    if (!$filename || !file_exists($path) || !str_ends_with($filename, '.txt')) {
+        abort(404);
+    }
+    return response(file_get_contents($path), 200, ['Content-Type' => 'text/plain; charset=utf-8']);
+})->middleware('auth.admin')->name('log.file.read');
