@@ -336,6 +336,76 @@
         </div>
         @endif
 
+        {{-- ── Notifikasi WA ── --}}
+        <div class="card card-outline card-warning mb-3">
+            <div class="card-header py-2">
+                <h3 class="card-title"><i class="fab fa-whatsapp mr-2"></i>Notifikasi WhatsApp</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="font-size:12px;"><i class="fas fa-phone mr-1"></i>Nomor WA Tujuan</label>
+                            <input type="text" name="wa_number" class="form-control form-control-sm"
+                                placeholder="082241863393"
+                                value="{{ $setting->wa_number ?? '082241863393' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="font-size:12px;"><i class="fas fa-key mr-1"></i>Device ID Whacenter</label>
+                            <input type="text" name="wa_device_id" class="form-control form-control-sm"
+                                style="font-family:monospace;"
+                                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                                value="{{ $setting->wa_device_id ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-clock mr-1"></i>Offline Setelah (detik)</label>
+                            <input type="number" name="offline_after" class="form-control form-control-sm"
+                                value="{{ $setting->offline_after ?? 120 }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-exclamation-triangle mr-1"></i>Eskalasi Setelah (detik)</label>
+                            <input type="number" name="escalation_after" class="form-control form-control-sm"
+                                value="{{ $setting->escalation_after ?? 300 }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-moon mr-1"></i>Quiet Hours (jam)</label>
+                            <div class="d-flex" style="gap:6px;">
+                                <input type="number" name="notif_quiet_start" class="form-control form-control-sm"
+                                    placeholder="Mulai" min="0" max="23"
+                                    value="{{ $setting->notif_quiet_start ?? 18 }}">
+                                <input type="number" name="notif_quiet_end" class="form-control form-control-sm"
+                                    placeholder="Selesai" min="0" max="23"
+                                    value="{{ $setting->notif_quiet_end ?? 6 }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-bell mr-1"></i>Eskalasi Window (jam)</label>
+                            <div class="d-flex" style="gap:6px;">
+                                <input type="number" name="notif_escalation_start" class="form-control form-control-sm"
+                                    placeholder="Mulai" min="0" max="23"
+                                    value="{{ $setting->notif_escalation_start ?? 10 }}">
+                                <input type="number" name="notif_escalation_end" class="form-control form-control-sm"
+                                    placeholder="Selesai" min="0" max="23"
+                                    value="{{ $setting->notif_escalation_end ?? 16 }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary btn-block">
             <i class="fas fa-save mr-2"></i>Simpan Setting
         </button>

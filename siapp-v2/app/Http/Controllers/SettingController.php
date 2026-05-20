@@ -38,6 +38,14 @@ class SettingController extends Controller
             'timid_ijin_url'     => $request->input('timid_ijin_url', ''),
             'timid_api_key'      => $request->input('timid_api_key', ''),
             'push_interval'      => (int) $request->input('push_interval', 5),
+            'wa_number'          => $request->input('wa_number', ''),
+            'wa_device_id'       => $request->input('wa_device_id', ''),
+            'offline_after'      => (int) $request->input('offline_after', 120),
+            'escalation_after'   => (int) $request->input('escalation_after', 300),
+            'notif_quiet_start'  => (int) $request->input('notif_quiet_start', 18),
+            'notif_quiet_end'    => (int) $request->input('notif_quiet_end', 6),
+            'notif_escalation_start' => (int) $request->input('notif_escalation_start', 10),
+            'notif_escalation_end'   => (int) $request->input('notif_escalation_end', 16),
         ]);
 
         return back()->with('success', 'Setting berhasil disimpan.');
