@@ -26,6 +26,7 @@ class DeviceOfflineChecker extends Command
         $escalationStart   = $setting->notif_escalation_start ?? 10;
         $escalationEnd     = $setting->notif_escalation_end   ?? 16;
         $waNumber          = $setting->wa_number          ?? '082241863393';
+        $waNumbers         = $setting->wa_numbers         ?? null;
         $waDeviceId        = $setting->wa_device_id       ?? '';
 
         $now = now()->toDateTimeString();
@@ -123,7 +124,9 @@ class DeviceOfflineChecker extends Command
             $msg  = "📢 STATUS UPDATE\n";
             $msg .= "⏱ {$now}\n";
             $msg .= "Severity: {$severity}\n";
-            $msg .= "────────────────\n\n";
+            $msg .= "────────────────\n";
+            $msg .= "📊 Online: {$totalOnline} | Offline: {$totalOffline} | Total: {$totalDevices}\n";
+            $msg .= "────────────────\n";
 
             foreach ($changes as $id => $c) {
                 $info = $deviceInfo[$id]['info'] ? ("_(" . $deviceInfo[$id]['info'] . ")_") : "";
@@ -134,11 +137,10 @@ class DeviceOfflineChecker extends Command
                 }
             }
 
-            $msg .= "📊 Online: {$totalOnline} | Offline: {$totalOffline} | Total: {$totalDevices}\n";
             $msg .= $this->buildSnapshot($currentStatus, $deviceInfo);
 
             if (!$this->isQuietHours($quietStart, $quietEnd)) {
-                $this->kirimWA($waNumber, $waDeviceId, $msg);
+                $this->kirimWAAll($waNumber, $waDeviceId, $waNumbers, $msg);
                 $this->line('[' . now() . '] Delta report sent.');
             }
         }
@@ -194,7 +196,7 @@ class DeviceOfflineChecker extends Command
             $msg .= "\n" . $this->buildSnapshot($currentStatus, $deviceInfo);
 
             if (!$this->isQuietHours($quietStart, $quietEnd)) {
-                $this->kirimWA($waNumber, $waDeviceId, $msg);
+                $this->kirimWAAll($waNumber, $waDeviceId, $waNumbers, $msg);
 
                 foreach ($escalateList as $id) {
                     $escalationState[$id] = $today;
@@ -271,5 +273,30 @@ class DeviceOfflineChecker extends Command
     private function isWeekday(): bool
     {
         return (int) now()->format('N') <= 5;
+    }
+
+    private function kirimWAAll(string $defaultNumber, string $deviceId, ?string $numbersJson, string $message): void
+    {
+        $numbers = [];
+
+        // Coba parse wa_numbers JSON
+        if ($numbersJson) {
+            $parsed = json_decode($numbersJson, true);
+            if (is_array($parsed) && count($parsed) > 0) {
+                $numbers = $parsed;
+            }
+        }
+
+        // Fallback ke wa_number lama kalau wa_numbers kosong
+        if (empty($numbers)) {
+            $numbers = [$defaultNumber];
+        }
+
+        foreach ($numbers as $number) {
+            $number = trim($number);
+            if ($number) {
+                $this->kirimWA($number, $deviceId, $message);
+            }
+        }
     }
 }

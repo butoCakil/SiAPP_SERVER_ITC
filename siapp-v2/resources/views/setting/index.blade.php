@@ -361,7 +361,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- Multi Nomor WA --}}
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label style="font-size:12px;"><i class="fas fa-users mr-1"></i>Nomor WA Tambahan</label>
+                        <div id="wa-numbers-container">
+                            @php
+                                $waNumbers = json_decode($setting->wa_numbers ?? '[]', true) ?? [];
+                            @endphp
+                            @foreach($waNumbers as $i => $num)
+                            <div class="d-flex mb-1" style="gap:6px;">
+                                <input type="text" name="wa_numbers[]"
+                                    class="form-control form-control-sm"
+                                    placeholder="08xxxxxxxxxx"
+                                    value="{{ $num }}">
+                                <button type="button" class="btn btn-sm btn-danger flex-shrink-0"
+                                    onclick="this.closest('.d-flex').remove()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            @endforeach
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-success mt-1"
+                            onclick="addWaNumber()">
+                            <i class="fas fa-plus mr-1"></i>Tambah Nomor
+                        </button>
+                        <small class="text-muted d-block mt-1">
+                            Jika diisi, notif dikirim ke semua nomor ini. Jika kosong, pakai Nomor WA Tujuan di atas.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
                     <div class="col-md-3">
                         <div class="form-group mb-0">
                             <label style="font-size:12px;"><i class="fas fa-clock mr-1"></i>Offline Setelah (detik)</label>
@@ -426,6 +457,22 @@ function copyUrl(id) {
         document.execCommand('copy');
         toastr.success('URL berhasil disalin!');
     });
+}
+
+function addWaNumber() {
+    const container = document.getElementById('wa-numbers-container');
+    const div = document.createElement('div');
+    div.className = 'd-flex mb-1';
+    div.style.gap = '6px';
+    div.innerHTML = `
+        <input type="text" name="wa_numbers[]"
+            class="form-control form-control-sm"
+            placeholder="08xxxxxxxxxx">
+        <button type="button" class="btn btn-sm btn-danger flex-shrink-0"
+            onclick="this.closest('.d-flex').remove()">
+            <i class="fas fa-times"></i>
+        </button>`;
+    container.appendChild(div);
 }
 </script>
 @endpush

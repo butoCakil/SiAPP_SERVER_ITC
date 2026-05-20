@@ -39,6 +39,7 @@ class SettingController extends Controller
             'timid_api_key'      => $request->input('timid_api_key', ''),
             'push_interval'      => (int) $request->input('push_interval', 5),
             'wa_number'          => $request->input('wa_number', ''),
+            'wa_numbers'         => json_encode(array_filter($request->input('wa_numbers', []))),
             'wa_device_id'       => $request->input('wa_device_id', ''),
             'offline_after'      => (int) $request->input('offline_after', 120),
             'escalation_after'   => (int) $request->input('escalation_after', 300),
