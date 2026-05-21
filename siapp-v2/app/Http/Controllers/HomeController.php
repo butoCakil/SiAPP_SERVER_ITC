@@ -61,7 +61,7 @@ class HomeController extends Controller
             ->where('pe.tanggal', $tanggal)
             ->when($filterKelas, fn($q) => $q->where('ds.kelas', $filterKelas))
             ->select('pe.nis', 'ds.nama', 'ds.kelas', 'pe.keterangan', 'pe.ruang', 'pe.mulai', 'pe.timestamp')
-            ->orderBy('pe.timestamp', 'desc')
+            ->orderBy('pe.mulai', 'desc')
             ->get();
 
         // Pivot sholat
@@ -75,15 +75,21 @@ class HomeController extends Controller
                     'dzuhur'      => null,
                     'ashar'       => null,
                     'izin_mens'   => false,
-                    'last_time'   => $e->timestamp,
+                    'last_time'   => $e->mulai,
                 ];
+            } else {
+                // Update last_time ke timestamp terbaru dari semua event siswa ini
+                if ($e->timestamp > $sholatMap[$nis]['last_time']) {
+                    $sholatMap[$nis]['last_time'] = $e->timestamp;
+                }
             }
             if ($e->keterangan === 'DZUHUR') $sholatMap[$nis]['dzuhur'] = $e->mulai;
             if ($e->keterangan === 'ASHAR')  $sholatMap[$nis]['ashar']  = $e->mulai;
             if ($e->ruang === 'Izin Mens')   $sholatMap[$nis]['izin_mens'] = true;
         }
-        // $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->take(30)->values();
-        $sholatList = collect(array_values($sholatMap))->sortByDesc('last_time')->values();
+        $sholatList = collect(array_values($sholatMap))
+            ->sortByDesc('last_time')
+            ->values();
 
         return view('home', compact(
             'totalHadir',
@@ -138,7 +144,7 @@ class HomeController extends Controller
             ->where('pe.tanggal', $tanggal)
             ->when($filterKelas, fn($q) => $q->where('ds.kelas', $filterKelas))
             ->select('pe.nis', 'ds.nama', 'ds.kelas', 'pe.keterangan', 'pe.ruang', 'pe.mulai', 'pe.timestamp')
-            ->orderBy('pe.timestamp', 'desc')
+            ->orderBy('pe.mulai', 'desc')
             ->get();
 
         $sholatMap = [];
@@ -151,7 +157,12 @@ class HomeController extends Controller
                     'dzuhur'    => null,
                     'ashar'     => null,
                     'izin_mens' => false,
+                    'last_time' => $e->mulai,
                 ];
+            } else {
+                if ($e->mulai > $sholatMap[$nis]['last_time']) {
+                    $sholatMap[$nis]['last_time'] = $e->mulai;
+                }
             }
             if ($e->ruang === 'Izin Mens') {
                 $sholatMap[$nis]['izin_mens'] = true;
@@ -240,7 +251,7 @@ class HomeController extends Controller
                 'izin'   => $totalIzin,
             ],
             'presensi'      => $recentPresensi->values(),
-            'sholat'        => array_values($sholatMap),
+            'sholat'        => collect(array_values($sholatMap))->sortByDesc('last_time')->values(),
             'rekapPresensi' => $rekapPresensi->values(),
             'rekapSholat'   => $rekapSholat->values(),
             'chartSholat'   => $chartSholat->values(),
