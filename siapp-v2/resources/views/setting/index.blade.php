@@ -293,49 +293,6 @@
             </div>
         </div>
 
-        {{-- ── Link REST API ── --}}
-        @php
-            $simToken = DB::table('api')->where('jenis','sim_token')->where('status','aktif')->value('kode_api');
-            $baseUrl  = request()->getSchemeAndHttpHost();
-        @endphp
-        @if($simToken)
-        <div class="card card-outline card-secondary mb-3">
-            <div class="card-header py-2">
-                <h3 class="card-title"><i class="fas fa-link mr-2"></i>Link REST API</h3>
-                <div class="card-tools">
-                    <small class="text-muted">Gunakan header <code>X-Api-Key</code> atau tambahkan <code>?api_key=TOKEN</code></small>
-                </div>
-            </div>
-            <div class="card-body p-2">
-                @foreach([
-                    ['🔵','Presensi',   '/api/sim/presensi?tanggal='.date('Y-m-d')],
-                    ['🟠','Sholat',     '/api/sim/sholat?tanggal='.date('Y-m-d')],
-                    ['🌸','Izin Mens',  '/api/sim/izin-mens?tanggal='.date('Y-m-d')],
-                    ['🚪','Izin Keluar','/api/sim/ijin?tanggal='.date('Y-m-d')],
-                    ['👥','Siswa',      '/api/sim/siswa'],
-                ] as [$icon, $label, $path])
-                @php $url = $baseUrl . $path . (str_contains($path,'?') ? '&' : '?') . 'api_key=' . $simToken; @endphp
-                <div class="d-flex align-items-center mb-1" style="gap:6px;">
-                    <span style="width:100px; font-size:11px; font-weight:600; flex-shrink:0;">{{ $icon }} {{ $label }}</span>
-                    <input type="text" class="form-control form-control-sm"
-                        style="font-family:monospace; font-size:11px;"
-                        value="{{ $url }}" readonly
-                        id="url-{{ Str::slug($label) }}">
-                    <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0"
-                        onclick="copyUrl('url-{{ Str::slug($label) }}')" title="Copy">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                    <a href="{{ $url }}" target="_blank"
-                        class="btn btn-sm btn-outline-primary flex-shrink-0" title="Buka">
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-                @endforeach
-                <small class="text-muted ml-1">Token dapat diganti di menu <a href="{{ route('apikey') }}">API Key</a></small>
-            </div>
-        </div>
-        @endif
-
         {{-- ── Notifikasi WA ── --}}
         <div class="card card-outline card-warning mb-3">
             <div class="card-header py-2">
