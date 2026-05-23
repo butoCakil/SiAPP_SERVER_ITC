@@ -39,10 +39,10 @@
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user text-muted"></i></span>
+                        <span class="input-group-text"><i class="fas fa-user-circle text-muted"></i></span>
                     </div>
                     <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                        placeholder="Username" value="{{ old('username') }}" autofocus>
+                        placeholder="Username / Email" value="{{ old('username') }}" autofocus>
                 </div>
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">

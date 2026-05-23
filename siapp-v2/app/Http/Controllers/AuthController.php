@@ -23,7 +23,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $admin = Admin::where('username', $request->username)
+        $admin = Admin::where(function ($q) use ($request) {
+            $q->where('username', $request->username)
+                ->orWhere('email', $request->username);
+        })
             ->where('status', 'login')
             ->first();
 
@@ -35,7 +38,7 @@ class AuthController extends Controller
             'admin_id'   => $admin->id,
             'admin_nama' => $admin->username,
             'admin_foto' => $admin->foto,
-            'admin_email'=> $admin->email,
+            'admin_email' => $admin->email,
         ]);
 
         return redirect()->route('dashboard');
