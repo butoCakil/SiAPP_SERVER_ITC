@@ -257,3 +257,16 @@ Route::get('/log/file', function (\Illuminate\Http\Request $request) {
     }
     return response(file_get_contents($path), 200, ['Content-Type' => 'text/plain; charset=utf-8']);
 })->middleware('auth.admin')->name('log.file.read');
+
+/*
+|--------------------------------------------------------------------------
+| PASSWORD RESET
+|--------------------------------------------------------------------------
+*/
+Route::get('/forgot-password', [App\Http\Controllers\PasswordResetController::class, 'showForgot'])->name('password.forgot');
+Route::post('/forgot-password', [App\Http\Controllers\PasswordResetController::class, 'requestReset'])->name('password.request');
+Route::get('/reset-password/{token}', [App\Http\Controllers\PasswordResetController::class, 'showReset'])->name('password.reset.form');
+Route::post('/reset-password/{token}', [App\Http\Controllers\PasswordResetController::class, 'doReset'])->name('password.reset.do');
+Route::get('/reset-password/{token}/otp', [App\Http\Controllers\PasswordResetController::class, 'showOtp'])->name('password.otp');
+Route::post('/reset-password/{token}/otp', [App\Http\Controllers\PasswordResetController::class, 'verifyOtp'])->name('password.otp.verify');
+Route::post('/akun/{id}/reset-link', [App\Http\Controllers\PasswordResetController::class, 'kirimDariAkun'])->middleware('auth.admin')->name('akun.reset.link');

@@ -117,6 +117,10 @@
                                 onclick="resetPass({{ $a->id }}, '{{ $a->username }}')">
                                 <i class="fas fa-key"></i>
                             </button>
+                            <button class="btn btn-xs btn-secondary"
+                                onclick="kirimReset({{ $a->id }}, '{{ $a->username }}', {{ $a->wa ? 'true' : 'false' }})">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
                             @if(!$isSelf)
                             <form action="{{ route('akun.destroy', $a->id) }}" method="POST"
                                 onsubmit="return confirm('Hapus akun {{ $a->username }}?')">
@@ -268,6 +272,48 @@
     </div>
 </div>
 
+{{-- Modal Kirim Reset --}}
+<div class="modal fade" id="modalKirimReset" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-paper-plane mr-2"></i>Kirim Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <form id="formKirimReset" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p class="text-muted" style="font-size:12px;">
+                        Kirim link & OTP reset password ke: <strong id="reset-target-nama"></strong>
+                    </p>
+                    <div class="form-group mb-0">
+                        <label style="font-size:12px;">Kirim via:</label>
+                        <div class="d-flex" style="gap:8px;">
+                            <div class="icheck-primary">
+                                <input type="radio" name="metode" id="metode-email" value="email" checked>
+                                <label for="metode-email"><i class="fas fa-envelope mr-1"></i>Email</label>
+                            </div>
+                            <div class="icheck-success" id="wrap-wa">
+                                <input type="radio" name="metode" id="metode-wa" value="wa">
+                                <label for="metode-wa"><i class="fab fa-whatsapp mr-1"></i>WhatsApp</label>
+                            </div>
+                        </div>
+                        <small id="info-wa" class="text-warning" style="display:none;">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>Akun ini tidak memiliki nomor WA
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-paper-plane mr-1"></i>Kirim
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -284,6 +330,15 @@ function resetPass(id, nama) {
     document.getElementById('reset-nama').textContent   = nama;
     document.getElementById('formPassword').action      = '/akun/' + id + '/password';
     $('#modalPassword').modal('show');
+}
+
+function kirimReset(id, nama, hasWa) {
+    document.getElementById('reset-target-nama').textContent = nama;
+    document.getElementById('formKirimReset').action = '/akun/' + id + '/reset-link';
+    document.getElementById('metode-email').checked = true;
+    document.getElementById('metode-wa').disabled = !hasWa;
+    document.getElementById('info-wa').style.display = hasWa ? 'none' : 'block';
+    $('#modalKirimReset').modal('show');
 }
 </script>
 @endpush
