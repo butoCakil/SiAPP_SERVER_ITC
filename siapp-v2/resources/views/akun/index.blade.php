@@ -19,6 +19,13 @@
 
 @section('content')
 
+@php
+    $loginUsername = session('admin_nama', '');
+    $isPengembang  = $loginUsername === 'Pengembang';
+    $isSuperAdmin  = $loginUsername === 'Super Admin';
+    $canManage     = $isPengembang || $isSuperAdmin;
+@endphp
+
 @if(session('success'))
 <div class="alert alert-success alert-dismissible">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -33,9 +40,11 @@
 @endif
 
 <div class="d-flex mb-3">
+    @if($canManage)
     <button class="btn btn-success btn-sm ml-auto" data-toggle="modal" data-target="#modalTambah">
         <i class="fas fa-user-plus mr-1"></i>Tambah Akun
     </button>
+    @endif
 </div>
 
 <div class="card card-outline card-primary">
@@ -54,12 +63,18 @@
                     <th>Email</th>
                     <th>WhatsApp</th>
                     <th>Terakhir Login</th>
+                    @if($canManage)
                     <th>Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
                 @foreach($akuns as $i => $a)
-                @php $isSelf = session('admin_id') == $a->id; @endphp
+                @php
+                    $isSelf       = session('admin_id') == $a->id;
+                    $isPengembangRow = $a->username === 'Pengembang';
+                    $canEdit      = $isPengembang || ($isSuperAdmin && !$isPengembangRow);
+                @endphp
                 <tr class="{{ $isSelf ? 'table-info' : '' }}">
                     <td>{{ $i + 1 }}</td>
                     <td>
@@ -73,7 +88,13 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ $a->email }}</td>
+                    <td>
+                        @if($isPengembangRow && !$isPengembang)
+                            <span class="text-muted">—</span>
+                        @else
+                            {{ $a->email }}
+                        @endif
+                    </td>
                     <td>
                         @if($a->wa)
                             <a href="https://wa.me/{{ $a->wa }}" target="_blank" class="text-success">
@@ -84,8 +105,10 @@
                         @endif
                     </td>
                     <td><small class="text-muted">{{ $a->timestamp }}</small></td>
+                    @if($canManage)
                     <td>
                         <div class="d-flex" style="gap:4px;">
+                            @if($canEdit)
                             <button class="btn btn-xs btn-warning"
                                 onclick="editAkun({{ $a->id }}, '{{ $a->username }}', '{{ $a->email }}', '{{ $a->wa }}')">
                                 <i class="fas fa-edit"></i>
@@ -103,8 +126,12 @@
                                 </button>
                             </form>
                             @endif
+                            @else
+                            <span class="text-muted" style="font-size:11px;">—</span>
+                            @endif
                         </div>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
@@ -173,6 +200,16 @@
                     <div class="form-group">
                         <label>Username</label>
                         <input type="text" name="username" id="edit-username" class="form-control" required>
+                        
+                        {{-- di bawah input username --}}
+                        @error('username')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                        {{-- di bawah input email --}}
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Email</label>
