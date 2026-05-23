@@ -140,7 +140,10 @@ Route::get('/presensi/event', [PresensiViewController::class, 'event'])
 // Rekap Bulanan Per Siswa
 Route::get('/presensi/rekap', [PresensiViewController::class, 'rekap'])
     ->middleware('auth.admin')->name('presensi.rekap');
-
+Route::get('/presensi/rekap/semester', [PresensiViewController::class, 'rekapSemester'])
+    ->middleware('auth.admin')->name('presensi.rekap.semester');
+Route::get('/presensi/rekap/semester/{nis}', [PresensiViewController::class, 'rekapSemesterDetail'])
+    ->middleware('auth.admin')->name('presensi.rekap.semester.detail');
 Route::get('/presensi/rekap/{nis}', [PresensiViewController::class, 'rekapDetail'])
     ->middleware('auth.admin')->name('presensi.rekap.detail');
 

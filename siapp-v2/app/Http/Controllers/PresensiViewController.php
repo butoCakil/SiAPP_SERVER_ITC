@@ -350,6 +350,244 @@ class PresensiViewController extends Controller
     }
 
     // ══════════════════════════════════════════
+    // REKAP SEMESTER — TABEL SEMUA SISWA
+    // ══════════════════════════════════════════
+
+    public function rekapSemester(Request $request)
+    {
+        $tahun     = $request->input('tahun', date('Y'));
+        $semester  = $request->input('semester', date('m') >= 7 ? 'gasal' : 'genap');
+        $filterKelas = $request->input('kelas', '');
+
+        // Tentukan range bulan
+        if ($semester === 'gasal') {
+            $bulanList = ['07', '08', '09', '10', '11', '12'];
+            $tahunList = array_fill(0, 6, $tahun);
+        } else {
+            $bulanList = ['01', '02', '03', '04', '05', '06'];
+            $tahunList = array_fill(0, 6, $tahun);
+        }
+
+        $periodeList = array_map(fn($b, $t) => $t . '-' . $b, $bulanList, $tahunList);
+
+        $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
+        if ($filterKelas) $queryS->where('kelas', $filterKelas);
+        $siswaList = $queryS->get();
+
+        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+
+        // Hitung summary per siswa per bulan
+        $siswaData = $siswaList->map(function ($s) use ($periodeList) {
+            $bulanData = [];
+            foreach ($periodeList as $bulan) {
+                $masuk = DB::table('datapresensi')
+                    ->where('nokartu', $s->nokartu)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->count();
+
+                $terlambat = DB::table('datapresensi')
+                    ->where('nokartu', $s->nokartu)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->whereIn('ketmasuk', ['T', 'TL', 'TLT'])
+                    ->count();
+
+                $pulang = DB::table('datapresensi')
+                    ->where('nokartu', $s->nokartu)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->whereNotNull('waktupulang')
+                    ->where('waktupulang', '!=', '00:00:00')
+                    ->count();
+
+                $izin = DB::table('daftarijin')
+                    ->where('nis', $s->nis)
+                    ->where('tanggalijin', 'like', $bulan . '%')
+                    ->whereIn('kode', ['IJIN', 'IZIN'])
+                    ->count();
+
+                $dhuhur = DB::table('presensiEvent')
+                    ->where('nis', $s->nis)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->where('keterangan', 'DZUHUR')
+                    ->where('ruang', '!=', 'Izin Mens')
+                    ->count();
+
+                $ashar = DB::table('presensiEvent')
+                    ->where('nis', $s->nis)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->where('keterangan', 'ASHAR')
+                    ->where('ruang', '!=', 'Izin Mens')
+                    ->count();
+
+                $izinMens = DB::table('presensiEvent')
+                    ->where('nis', $s->nis)
+                    ->where('tanggal', 'like', $bulan . '%')
+                    ->where('ruang', 'Izin Mens')
+                    ->count();
+
+                $bulanData[$bulan] = compact(
+                    'masuk',
+                    'terlambat',
+                    'pulang',
+                    'izin',
+                    'dhuhur',
+                    'ashar',
+                    'izinMens'
+                );
+            }
+            return (object) array_merge((array) $s, ['bulanData' => $bulanData]);
+        });
+
+        return view('presensi.rekap-semester', compact(
+            'tahun',
+            'semester',
+            'filterKelas',
+            'periodeList',
+            'bulanList',
+            'siswaData',
+            'kelasList'
+        ));
+    }
+
+    // ══════════════════════════════════════════
+    // REKAP SEMESTER DETAIL — KALENDER PER SISWA
+    // ══════════════════════════════════════════
+
+    public function rekapSemesterDetail(Request $request, string $nis)
+    {
+        $tahun    = $request->input('tahun', date('Y'));
+        $semester = $request->input('semester', date('m') >= 7 ? 'gasal' : 'genap');
+
+        if ($semester === 'gasal') {
+            $bulanList = ['07', '08', '09', '10', '11', '12'];
+        } else {
+            $bulanList = ['01', '02', '03', '04', '05', '06'];
+        }
+
+        $periodeList = array_map(fn($b) => $tahun . '-' . $b, $bulanList);
+
+        $setting   = DB::table('statusnya')->first();
+        $hariKerja = $setting->info ?? '5';
+
+        $siswa = DB::table('datasiswa')->where('nis', $nis)->first();
+        if (!$siswa) abort(404);
+
+        $summaryTotal = [
+            'masuk' => 0,
+            'terlambat' => 0,
+            'pulang' => 0,
+            'izin' => 0,
+            'dhuhur' => 0,
+            'ashar' => 0,
+            'izin_mens' => 0,
+            'libur' => 0,
+            'tanpa_ket' => 0,
+        ];
+
+        $kalenderPerBulan = [];
+
+        foreach ($periodeList as $bulan) {
+            $bln        = date('m', strtotime($bulan . '-01'));
+            $thn        = date('Y', strtotime($bulan . '-01'));
+            $jumlahHari = cal_days_in_month(CAL_GREGORIAN, $bln, $thn);
+
+            $presensiList = DB::table('datapresensi')
+                ->where('nokartu', $siswa->nokartu)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->get()->keyBy('tanggal');
+
+            $eventList = DB::table('presensiEvent')
+                ->where('nis', $nis)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->get()->groupBy('tanggal');
+
+            $izinList = DB::table('daftarijin')
+                ->where('nis', $nis)
+                ->where('tanggalijin', 'like', $bulan . '%')
+                ->get()->groupBy('tanggalijin');
+
+            $kalender = [];
+            for ($hari = 1; $hari <= $jumlahHari; $hari++) {
+                $tgl     = $thn . '-' . sprintf('%02d', $bln) . '-' . sprintf('%02d', $hari);
+                $dayName = date('l', strtotime($tgl));
+
+                $isLibur = ($hariKerja == '5')
+                    ? in_array($dayName, ['Saturday', 'Sunday'])
+                    : $dayName === 'Sunday';
+
+                $presensi = $presensiList[$tgl] ?? null;
+                $events   = $eventList[$tgl] ?? collect();
+                $izins    = $izinList[$tgl] ?? collect();
+
+                $dhuhur   = $events->firstWhere('keterangan', 'DZUHUR');
+                $ashar    = $events->firstWhere('keterangan', 'ASHAR');
+                $izinMens = $events->first(fn($e) => $e->ruang === 'Izin Mens');
+
+                if ($isLibur) {
+                    $tipe = 'libur';
+                    $summaryTotal['libur']++;
+                } elseif ($presensi) {
+                    if (in_array($presensi->ketmasuk, ['T', 'TL', 'TLT'])) {
+                        $tipe = 'terlambat';
+                        $summaryTotal['terlambat']++;
+                    } else {
+                        $tipe = 'hadir';
+                        $summaryTotal['masuk']++;
+                    }
+                    if ($presensi->waktupulang && $presensi->waktupulang !== '00:00:00') {
+                        $summaryTotal['pulang']++;
+                    }
+                } else {
+                    $tipe = 'tanpa_ket';
+                    $summaryTotal['tanpa_ket']++;
+                }
+
+                if ($dhuhur && $dhuhur->ruang !== 'Izin Mens') $summaryTotal['dhuhur']++;
+                if ($ashar  && $ashar->ruang  !== 'Izin Mens') $summaryTotal['ashar']++;
+                if ($izinMens) $summaryTotal['izin_mens']++;
+                $summaryTotal['izin'] += $izins->count();
+
+                $kalender[] = [
+                    'tgl'      => $tgl,
+                    'hari'     => $hari,
+                    'day'      => $dayName,
+                    'is_libur' => $isLibur,
+                    'tipe'     => $tipe,
+                    'presensi' => $presensi,
+                    'dhuhur'   => $dhuhur,
+                    'ashar'    => $ashar,
+                    'izin_mens' => $izinMens,
+                    'izins'    => $izins,
+                ];
+            }
+
+            $kalenderPerBulan[$bulan] = [
+                'bulan'      => $bulan,
+                'bln'        => $bln,
+                'thn'        => $thn,
+                'jumlahHari' => $jumlahHari,
+                'kalender'   => $kalender,
+            ];
+        }
+
+        // Navigasi tahun
+        $tahunSebelum = $tahun - 1;
+        $tahunBerikut = $tahun + 1;
+
+        return view('presensi.rekap-semester-detail', compact(
+            'tahun',
+            'semester',
+            'nis',
+            'siswa',
+            'periodeList',
+            'bulanList',
+            'kalenderPerBulan',
+            'summaryTotal',
+            'tahunSebelum',
+            'tahunBerikut'
+        ));
+    }
+
+    // ══════════════════════════════════════════
     // PEMBIASAAN SHOLAT
     // ══════════════════════════════════════════
 

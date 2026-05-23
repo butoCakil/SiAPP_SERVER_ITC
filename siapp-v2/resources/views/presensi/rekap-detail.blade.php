@@ -70,10 +70,25 @@
     #print-area, #print-area * { visibility: visible; }
     #print-area { position: absolute; left: 0; top: 0; width: 100%; }
 }
+
+.tab-rekap { display:flex; gap:4px; margin-bottom:16px; }
+.tab-rekap a {
+    padding: 7px 18px; border-radius: 6px 6px 0 0;
+    font-size: 13px; font-weight: 600;
+    border: 1px solid #dee2e6; border-bottom: none;
+    background: #f8f9fa; color: #495057; text-decoration: none;
+}
+.tab-rekap a.active { background: #007bff; color: #fff; border-color: #007bff; }
 </style>
 @endpush
 
 @section('content')
+
+{{-- Tab --}}
+<div class="tab-rekap">
+    <a href="{{ route('presensi.rekap.detail', ['nis'=>$siswa->nis,'bulan'=>$bulan]) }}" class="active">Bulanan</a>
+    <a href="{{ route('presensi.rekap.semester.detail', ['nis'=>$siswa->nis,'semester'=> date('m') >= 7 ? 'gasal' : 'genap','tahun'=>date('Y')]) }}">Semester</a>
+</div>
 
 {{-- Navigasi --}}
 <div class="card no-print">

@@ -16,10 +16,25 @@
 .badge-ashar     { background:#6f42c1; color:#fff; }
 .badge-mens      { background:#e83e8c; color:#fff; }
 .nav-bulan { display:flex; align-items:center; gap:8px; }
+
+.tab-rekap { display:flex; gap:4px; margin-bottom:16px; }
+.tab-rekap a {
+    padding: 7px 18px; border-radius: 6px 6px 0 0;
+    font-size: 13px; font-weight: 600;
+    border: 1px solid #dee2e6; border-bottom: none;
+    background: #f8f9fa; color: #495057; text-decoration: none;
+}
+.tab-rekap a.active { background: #007bff; color: #fff; border-color: #007bff; }
 </style>
 @endpush
 
 @section('content')
+
+{{-- Tab --}}
+<div class="tab-rekap">
+    <a href="{{ route('presensi.rekap', ['bulan'=>$bulan,'kelas'=>$filterKelas]) }}" class="active">Bulanan</a>
+    <a href="{{ route('presensi.rekap.semester', ['kelas'=>$filterKelas]) }}">Semester</a>
+</div>
 
 {{-- Filter & Navigasi --}}
 <div class="card no-print">
