@@ -132,6 +132,224 @@ class PresensiViewController extends Controller
     }
 
     // ══════════════════════════════════════════
+    // REKAP BULANAN — LIST SEMUA SISWA
+    // ══════════════════════════════════════════
+
+    public function rekap(Request $request)
+    {
+        $bulan      = $request->input('bulan', date('Y-m'));
+        $filterKelas = $request->input('kelas', '');
+
+        if ($bulan > date('Y-m')) $bulan = date('Y-m');
+
+        $tahun = date('Y', strtotime($bulan . '-01'));
+        $bln   = date('m', strtotime($bulan . '-01'));
+
+        // Navigasi bulan
+        $bulanSebelum = date('Y-m', strtotime($bulan . '-01 -1 month'));
+        $bulanBerikut = date('Y-m', strtotime($bulan . '-01 +1 month'));
+        $bulanBerikut = $bulanBerikut > date('Y-m') ? null : $bulanBerikut;
+
+        // List siswa
+        $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
+        if ($filterKelas) $queryS->where('kelas', $filterKelas);
+        $siswaList = $queryS->get();
+
+        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+
+        // Hitung summary per siswa untuk bulan ini
+        $siswaData = $siswaList->map(function ($s) use ($bulan) {
+
+            $masuk = DB::table('datapresensi')
+                ->where('nokartu', $s->nokartu)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->count();
+
+            $terlambat = DB::table('datapresensi')
+                ->where('nokartu', $s->nokartu)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->whereIn('ketmasuk', ['T', 'TL', 'TLT'])
+                ->count();
+
+            $pulang = DB::table('datapresensi')
+                ->where('nokartu', $s->nokartu)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->whereNotNull('waktupulang')
+                ->where('waktupulang', '!=', '00:00:00')
+                ->count();
+
+            $izin = DB::table('daftarijin')
+                ->where('nis', $s->nis)
+                ->where('tanggalijin', 'like', $bulan . '%')
+                ->whereIn('kode', ['IJIN', 'IZIN'])
+                ->count();
+
+            $dhuhur = DB::table('presensiEvent')
+                ->where('nis', $s->nis)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->where('keterangan', 'DZUHUR')
+                ->where('ruang', '!=', 'Izin Mens')
+                ->count();
+
+            $ashar = DB::table('presensiEvent')
+                ->where('nis', $s->nis)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->where('keterangan', 'ASHAR')
+                ->where('ruang', '!=', 'Izin Mens')
+                ->count();
+
+            $izinMens = DB::table('presensiEvent')
+                ->where('nis', $s->nis)
+                ->where('tanggal', 'like', $bulan . '%')
+                ->where('ruang', 'Izin Mens')
+                ->count();
+
+            return (object) array_merge((array) $s, compact(
+                'masuk',
+                'terlambat',
+                'pulang',
+                'izin',
+                'dhuhur',
+                'ashar',
+                'izinMens'
+            ));
+        });
+
+        return view('presensi.rekap', compact(
+            'bulan',
+            'tahun',
+            'bln',
+            'siswaData',
+            'kelasList',
+            'filterKelas',
+            'bulanSebelum',
+            'bulanBerikut'
+        ));
+    }
+
+    // ══════════════════════════════════════════
+    // REKAP DETAIL — KALENDER PER SISWA
+    // ══════════════════════════════════════════
+
+    public function rekapDetail(Request $request, string $nis)
+    {
+        $bulan = $request->input('bulan', date('Y-m'));
+        if ($bulan > date('Y-m')) $bulan = date('Y-m');
+
+        $tahun      = date('Y', strtotime($bulan . '-01'));
+        $bln        = date('m', strtotime($bulan . '-01'));
+        $jumlahHari = cal_days_in_month(CAL_GREGORIAN, $bln, $tahun);
+
+        $setting   = DB::table('statusnya')->first();
+        $hariKerja = $setting->info ?? '5';
+
+        $siswa = DB::table('datasiswa')->where('nis', $nis)->first();
+        if (!$siswa) abort(404);
+
+        // Presensi bulan ini
+        $presensiList = DB::table('datapresensi')
+            ->where('nokartu', $siswa->nokartu)
+            ->where('tanggal', 'like', $bulan . '%')
+            ->get()->keyBy('tanggal');
+
+        // Event sholat bulan ini
+        $eventList = DB::table('presensiEvent')
+            ->where('nis', $nis)
+            ->where('tanggal', 'like', $bulan . '%')
+            ->get()->groupBy('tanggal');
+
+        // Izin keluar bulan ini
+        $izinList = DB::table('daftarijin')
+            ->where('nis', $nis)
+            ->where('tanggalijin', 'like', $bulan . '%')
+            ->get()->groupBy('tanggalijin');
+
+        $kalender = [];
+        $summary  = [
+            'masuk' => 0,
+            'terlambat' => 0,
+            'pulang' => 0,
+            'izin' => 0,
+            'dhuhur' => 0,
+            'ashar' => 0,
+            'izin_mens' => 0,
+            'libur' => 0,
+            'tanpa_ket' => 0,
+        ];
+
+        for ($hari = 1; $hari <= $jumlahHari; $hari++) {
+            $tgl     = $tahun . '-' . sprintf('%02d', $bln) . '-' . sprintf('%02d', $hari);
+            $dayName = date('l', strtotime($tgl));
+
+            $isLibur = ($hariKerja == '5')
+                ? in_array($dayName, ['Saturday', 'Sunday'])
+                : $dayName === 'Sunday';
+
+            $presensi = $presensiList[$tgl] ?? null;
+            $events   = $eventList[$tgl] ?? collect();
+            $izins    = $izinList[$tgl] ?? collect();
+
+            $dhuhur   = $events->firstWhere('keterangan', 'DZUHUR');
+            $ashar    = $events->firstWhere('keterangan', 'ASHAR');
+            $izinMens = $events->first(fn($e) => $e->ruang === 'Izin Mens');
+
+            if ($isLibur) {
+                $tipe = 'libur';
+                $summary['libur']++;
+            } elseif ($presensi) {
+                if (in_array($presensi->ketmasuk, ['T', 'TL', 'TLT'])) {
+                    $tipe = 'terlambat';
+                    $summary['terlambat']++;
+                } else {
+                    $tipe = 'hadir';
+                    $summary['masuk']++;
+                }
+                if ($presensi->waktupulang && $presensi->waktupulang !== '00:00:00') {
+                    $summary['pulang']++;
+                }
+            } else {
+                $tipe = 'tanpa_ket';
+                $summary['tanpa_ket']++;
+            }
+
+            if ($dhuhur && $dhuhur->ruang !== 'Izin Mens') $summary['dhuhur']++;
+            if ($ashar  && $ashar->ruang  !== 'Izin Mens') $summary['ashar']++;
+            if ($izinMens) $summary['izin_mens']++;
+            $summary['izin'] += $izins->count();
+
+            $kalender[] = [
+                'tgl'      => $tgl,
+                'hari'     => $hari,
+                'day'      => $dayName,
+                'is_libur' => $isLibur,
+                'tipe'     => $tipe,
+                'presensi' => $presensi,
+                'dhuhur'   => $dhuhur,
+                'ashar'    => $ashar,
+                'izin_mens' => $izinMens,
+                'izins'    => $izins,
+            ];
+        }
+
+        $bulanSebelum = date('Y-m', strtotime($bulan . '-01 -1 month'));
+        $bulanBerikut = date('Y-m', strtotime($bulan . '-01 +1 month'));
+        $bulanBerikut = $bulanBerikut > date('Y-m') ? null : $bulanBerikut;
+
+        return view('presensi.rekap-detail', compact(
+            'bulan',
+            'tahun',
+            'bln',
+            'jumlahHari',
+            'siswa',
+            'nis',
+            'kalender',
+            'summary',
+            'bulanSebelum',
+            'bulanBerikut'
+        ));
+    }
+
+    // ══════════════════════════════════════════
     // PEMBIASAAN SHOLAT
     // ══════════════════════════════════════════
 

@@ -89,22 +89,29 @@
                                 <li class="nav-item">
                                     <a href="{{ route('presensi') }}"
                                         class="nav-link {{ request()->routeIs('presensi') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="{{ request()->routeIs('presensi') ? 'fas fa-dot-circle' : 'far fa-circle' }} nav-icon"></i>
                                         <p>Harian</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('presensi.event') }}"
                                         class="nav-link {{ request()->routeIs('presensi.event') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="{{ request()->routeIs('presensi.event') ? 'fas fa-dot-circle' : 'far fa-circle' }} nav-icon"></i>
                                         <p>Pembiasaan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('presensi.ijin') }}"
                                         class="nav-link {{ request()->routeIs('presensi.ijin*') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="{{ request()->routeIs('presensi.ijin*') ? 'fas fa-dot-circle' : 'far fa-circle' }} nav-icon"></i>
                                         <p>Izin Keluar</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('presensi.rekap') }}"
+                                        class="nav-link {{ request()->routeIs('presensi.rekap*') ? 'active' : '' }}">
+                                        <i class="{{ request()->routeIs('presensi.rekap*') ? 'fas fa-dot-circle' : 'far fa-circle' }} nav-icon"></i>
+                                        <p>Rekap</p>
                                     </a>
                                 </li>
                             </ul>
