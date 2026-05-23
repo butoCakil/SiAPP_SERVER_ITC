@@ -137,7 +137,7 @@ class PresensiViewController extends Controller
 
     public function rekap(Request $request)
     {
-        $bulan      = $request->input('bulan', date('Y-m'));
+        $bulan       = $request->input('bulan', date('Y-m'));
         $filterKelas = $request->input('kelas', '');
 
         if ($bulan > date('Y-m')) $bulan = date('Y-m');
@@ -145,74 +145,85 @@ class PresensiViewController extends Controller
         $tahun = date('Y', strtotime($bulan . '-01'));
         $bln   = date('m', strtotime($bulan . '-01'));
 
-        // Navigasi bulan
         $bulanSebelum = date('Y-m', strtotime($bulan . '-01 -1 month'));
         $bulanBerikut = date('Y-m', strtotime($bulan . '-01 +1 month'));
         $bulanBerikut = $bulanBerikut > date('Y-m') ? null : $bulanBerikut;
 
-        // List siswa
         $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
         if ($filterKelas) $queryS->where('kelas', $filterKelas);
         $siswaList = $queryS->get();
-
         $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
 
-        // Hitung summary per siswa untuk bulan ini
-        $siswaData = $siswaList->map(function ($s) use ($bulan) {
+        // ── Bulk query ──
+        $nokartuList = $siswaList->pluck('nokartu')->toArray();
+        $nisList     = $siswaList->pluck('nis')->toArray();
 
-            $masuk = DB::table('datapresensi')
-                ->where('nokartu', $s->nokartu)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->count();
+        $presensiRaw = DB::table('datapresensi')
+            ->whereIn('nokartu', $nokartuList)
+            ->where('tanggal', 'like', $bulan . '%')
+            ->select('nokartu', 'ketmasuk', 'waktupulang')
+            ->get();
 
-            $terlambat = DB::table('datapresensi')
-                ->where('nokartu', $s->nokartu)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->whereIn('ketmasuk', ['T', 'TL', 'TLT'])
-                ->count();
+        $izinRaw = DB::table('daftarijin')
+            ->whereIn('nis', $nisList)
+            ->where('tanggalijin', 'like', $bulan . '%')
+            ->whereIn('kode', ['IJIN', 'IZIN'])
+            ->select('nis')
+            ->get();
 
-            $pulang = DB::table('datapresensi')
-                ->where('nokartu', $s->nokartu)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->whereNotNull('waktupulang')
-                ->where('waktupulang', '!=', '00:00:00')
-                ->count();
+        $eventRaw = DB::table('presensiEvent')
+            ->whereIn('nis', $nisList)
+            ->where('tanggal', 'like', $bulan . '%')
+            ->select('nis', 'keterangan', 'ruang')
+            ->get();
 
-            $izin = DB::table('daftarijin')
-                ->where('nis', $s->nis)
-                ->where('tanggalijin', 'like', $bulan . '%')
-                ->whereIn('kode', ['IJIN', 'IZIN'])
-                ->count();
+        // ── Index ──
+        $presensiIdx = [];
+        foreach ($presensiRaw as $p) {
+            if (!isset($presensiIdx[$p->nokartu])) {
+                $presensiIdx[$p->nokartu] = ['masuk' => 0, 'terlambat' => 0, 'pulang' => 0];
+            }
+            $presensiIdx[$p->nokartu]['masuk']++;
+            if (in_array($p->ketmasuk, ['T', 'TL', 'TLT'])) {
+                $presensiIdx[$p->nokartu]['terlambat']++;
+            }
+            if ($p->waktupulang && $p->waktupulang !== '00:00:00') {
+                $presensiIdx[$p->nokartu]['pulang']++;
+            }
+        }
 
-            $dhuhur = DB::table('presensiEvent')
-                ->where('nis', $s->nis)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->where('keterangan', 'DZUHUR')
-                ->where('ruang', '!=', 'Izin Mens')
-                ->count();
+        $izinIdx = [];
+        foreach ($izinRaw as $i) {
+            $izinIdx[$i->nis] = ($izinIdx[$i->nis] ?? 0) + 1;
+        }
 
-            $ashar = DB::table('presensiEvent')
-                ->where('nis', $s->nis)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->where('keterangan', 'ASHAR')
-                ->where('ruang', '!=', 'Izin Mens')
-                ->count();
+        $eventIdx = [];
+        foreach ($eventRaw as $e) {
+            if (!isset($eventIdx[$e->nis])) {
+                $eventIdx[$e->nis] = ['dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
+            }
+            if ($e->ruang === 'Izin Mens') {
+                $eventIdx[$e->nis]['izinMens']++;
+            } elseif ($e->keterangan === 'DZUHUR') {
+                $eventIdx[$e->nis]['dhuhur']++;
+            } elseif ($e->keterangan === 'ASHAR') {
+                $eventIdx[$e->nis]['ashar']++;
+            }
+        }
 
-            $izinMens = DB::table('presensiEvent')
-                ->where('nis', $s->nis)
-                ->where('tanggal', 'like', $bulan . '%')
-                ->where('ruang', 'Izin Mens')
-                ->count();
-
-            return (object) array_merge((array) $s, compact(
-                'masuk',
-                'terlambat',
-                'pulang',
-                'izin',
-                'dhuhur',
-                'ashar',
-                'izinMens'
-            ));
+        // ── Susun data ──
+        $siswaData = $siswaList->map(function ($s) use ($presensiIdx, $izinIdx, $eventIdx) {
+            $p = $presensiIdx[$s->nokartu] ?? [];
+            $e = $eventIdx[$s->nis]       ?? [];
+            return (object) array_merge((array) $s, [
+                'masuk'     => $p['masuk']     ?? 0,
+                'terlambat' => $p['terlambat'] ?? 0,
+                'pulang'    => $p['pulang']    ?? 0,
+                'izin'      => $izinIdx[$s->nis] ?? 0,
+                'dhuhur'    => $e['dhuhur']    ?? 0,
+                'ashar'     => $e['ashar']     ?? 0,
+                'izinMens'  => $e['izinMens']  ?? 0,
+            ]);
         });
 
         return view('presensi.rekap', compact(
@@ -355,84 +366,103 @@ class PresensiViewController extends Controller
 
     public function rekapSemester(Request $request)
     {
-        $tahun     = $request->input('tahun', date('Y'));
-        $semester  = $request->input('semester', date('m') >= 7 ? 'gasal' : 'genap');
+        $tahun       = $request->input('tahun', date('Y'));
+        $semester    = $request->input('semester', date('m') >= 7 ? 'gasal' : 'genap');
         $filterKelas = $request->input('kelas', '');
 
-        // Tentukan range bulan
         if ($semester === 'gasal') {
             $bulanList = ['07', '08', '09', '10', '11', '12'];
-            $tahunList = array_fill(0, 6, $tahun);
         } else {
             $bulanList = ['01', '02', '03', '04', '05', '06'];
-            $tahunList = array_fill(0, 6, $tahun);
         }
 
-        $periodeList = array_map(fn($b, $t) => $t . '-' . $b, $bulanList, $tahunList);
+        $periodeList = array_map(fn($b) => $tahun . '-' . $b, $bulanList);
+        $tglMulai    = $periodeList[0] . '-01';
+        $tglAkhir    = $periodeList[5] . '-31';
 
         $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
         if ($filterKelas) $queryS->where('kelas', $filterKelas);
         $siswaList = $queryS->get();
-
         $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
 
-        // Hitung summary per siswa per bulan
-        $siswaData = $siswaList->map(function ($s) use ($periodeList) {
+        // ── Bulk query semua data semester sekaligus ──
+        $nokartuList = $siswaList->pluck('nokartu')->toArray();
+        $nisList     = $siswaList->pluck('nis')->toArray();
+
+        // Presensi — group by nokartu + bulan
+        $presensiRaw = DB::table('datapresensi')
+            ->whereIn('nokartu', $nokartuList)
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->select('nokartu', 'tanggal', 'ketmasuk', 'waktupulang')
+            ->get();
+
+        // Izin — group by nis + bulan
+        $izinRaw = DB::table('daftarijin')
+            ->whereIn('nis', $nisList)
+            ->whereBetween('tanggalijin', [$tglMulai, $tglAkhir])
+            ->whereIn('kode', ['IJIN', 'IZIN'])
+            ->select('nis', 'tanggalijin')
+            ->get();
+
+        // Event sholat — group by nis + bulan
+        $eventRaw = DB::table('presensiEvent')
+            ->whereIn('nis', $nisList)
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->select('nis', 'tanggal', 'keterangan', 'ruang')
+            ->get();
+
+        // ── Index data ke array [nokartu/nis][bulan] ──
+        $presensiIdx = [];
+        foreach ($presensiRaw as $p) {
+            $bln = substr($p->tanggal, 0, 7);
+            if (!isset($presensiIdx[$p->nokartu][$bln])) {
+                $presensiIdx[$p->nokartu][$bln] = ['masuk' => 0, 'terlambat' => 0, 'pulang' => 0];
+            }
+            $presensiIdx[$p->nokartu][$bln]['masuk']++;
+            if (in_array($p->ketmasuk, ['T', 'TL', 'TLT'])) {
+                $presensiIdx[$p->nokartu][$bln]['terlambat']++;
+            }
+            if ($p->waktupulang && $p->waktupulang !== '00:00:00') {
+                $presensiIdx[$p->nokartu][$bln]['pulang']++;
+            }
+        }
+
+        $izinIdx = [];
+        foreach ($izinRaw as $i) {
+            $bln = substr($i->tanggalijin, 0, 7);
+            $izinIdx[$i->nis][$bln] = ($izinIdx[$i->nis][$bln] ?? 0) + 1;
+        }
+
+        $eventIdx = [];
+        foreach ($eventRaw as $e) {
+            $bln = substr($e->tanggal, 0, 7);
+            if (!isset($eventIdx[$e->nis][$bln])) {
+                $eventIdx[$e->nis][$bln] = ['dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
+            }
+            if ($e->ruang === 'Izin Mens') {
+                $eventIdx[$e->nis][$bln]['izinMens']++;
+            } elseif ($e->keterangan === 'DZUHUR') {
+                $eventIdx[$e->nis][$bln]['dhuhur']++;
+            } elseif ($e->keterangan === 'ASHAR') {
+                $eventIdx[$e->nis][$bln]['ashar']++;
+            }
+        }
+
+        // ── Susun data per siswa ──
+        $siswaData = $siswaList->map(function ($s) use ($periodeList, $presensiIdx, $izinIdx, $eventIdx) {
             $bulanData = [];
             foreach ($periodeList as $bulan) {
-                $masuk = DB::table('datapresensi')
-                    ->where('nokartu', $s->nokartu)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->count();
-
-                $terlambat = DB::table('datapresensi')
-                    ->where('nokartu', $s->nokartu)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->whereIn('ketmasuk', ['T', 'TL', 'TLT'])
-                    ->count();
-
-                $pulang = DB::table('datapresensi')
-                    ->where('nokartu', $s->nokartu)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->whereNotNull('waktupulang')
-                    ->where('waktupulang', '!=', '00:00:00')
-                    ->count();
-
-                $izin = DB::table('daftarijin')
-                    ->where('nis', $s->nis)
-                    ->where('tanggalijin', 'like', $bulan . '%')
-                    ->whereIn('kode', ['IJIN', 'IZIN'])
-                    ->count();
-
-                $dhuhur = DB::table('presensiEvent')
-                    ->where('nis', $s->nis)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->where('keterangan', 'DZUHUR')
-                    ->where('ruang', '!=', 'Izin Mens')
-                    ->count();
-
-                $ashar = DB::table('presensiEvent')
-                    ->where('nis', $s->nis)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->where('keterangan', 'ASHAR')
-                    ->where('ruang', '!=', 'Izin Mens')
-                    ->count();
-
-                $izinMens = DB::table('presensiEvent')
-                    ->where('nis', $s->nis)
-                    ->where('tanggal', 'like', $bulan . '%')
-                    ->where('ruang', 'Izin Mens')
-                    ->count();
-
-                $bulanData[$bulan] = compact(
-                    'masuk',
-                    'terlambat',
-                    'pulang',
-                    'izin',
-                    'dhuhur',
-                    'ashar',
-                    'izinMens'
-                );
+                $p = $presensiIdx[$s->nokartu][$bulan] ?? [];
+                $i = $eventIdx[$s->nis][$bulan] ?? [];
+                $bulanData[$bulan] = [
+                    'masuk'     => $p['masuk']     ?? 0,
+                    'terlambat' => $p['terlambat'] ?? 0,
+                    'pulang'    => $p['pulang']    ?? 0,
+                    'izin'      => $izinIdx[$s->nis][$bulan] ?? 0,
+                    'dhuhur'    => $i['dhuhur']    ?? 0,
+                    'ashar'     => $i['ashar']     ?? 0,
+                    'izinMens'  => $i['izinMens']  ?? 0,
+                ];
             }
             return (object) array_merge((array) $s, ['bulanData' => $bulanData]);
         });
