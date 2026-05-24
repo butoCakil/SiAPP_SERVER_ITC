@@ -143,7 +143,7 @@
         @endif
 
         <div class="dc-viewlog">
-            <a href="{{ route('log') }}?tab=device&device={{ $device->device_id }}&tanggal2={{ date('Y-m-d') }}">
+            <a href="{{ route('device.log', $device->device_id) }}">
                 📜 View Log ({{ $device->device_id }})
             </a>
         </div>

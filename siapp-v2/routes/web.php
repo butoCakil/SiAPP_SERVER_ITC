@@ -91,6 +91,10 @@ Route::get('/device/cards', [DeviceViewController::class, 'cards'])
     ->middleware('auth.admin')
     ->name('device.cards');
 
+Route::get('/device/{id}/log', [DeviceViewController::class, 'logViewer'])
+    ->middleware('auth.admin')
+    ->name('device.log');
+
 Route::delete('/device/{id}', [DeviceViewController::class, 'destroy'])
     ->middleware('auth.admin')
     ->name('device.destroy');
