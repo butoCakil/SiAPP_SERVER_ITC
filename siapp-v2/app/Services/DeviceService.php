@@ -44,8 +44,12 @@ class DeviceService
                 'waktumasuk'  => $setting->waktumasuk,
                 'waktupulang' => $setting->waktupulang,
                 'info'        => $setting->info,
-                'dhuha_start' => $setting->dhuha_start ?? '07:00:00',
-                'dhuha_end'   => $setting->dhuha_end   ?? '11:00:00',
+                'dhuha_start'  => $setting->dhuha_start  ?? '07:00:00',
+                'dhuha_end'    => $setting->dhuha_end    ?? '11:00:00',
+                'dzuhur_start' => $setting->dzuhur_start ?? '11:30:00',
+                'dzuhur_end'   => $setting->dzuhur_end   ?? '13:30:00',
+                'ashar_start'  => $setting->ashar_start  ?? '15:00:00',
+                'ashar_end'    => $setting->ashar_end    ?? '16:30:00',
             ],
         ], JSON_UNESCAPED_UNICODE);
 

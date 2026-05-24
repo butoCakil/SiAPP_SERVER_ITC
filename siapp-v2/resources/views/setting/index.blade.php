@@ -240,6 +240,96 @@
             </div>
         </div>
 
+        {{-- ── Window Waktu Sholat ── --}}
+        <div class="card card-outline card-warning mb-3">
+            <div class="card-header py-2">
+                <h3 class="card-title"><i class="fas fa-mosque mr-2"></i>Window Waktu Sholat</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {{-- Dhuha --}}
+                    <div class="col-md-4">
+                        <div class="card mb-0">
+                            <div class="card-header py-2" style="background:#4caf50; color:#fff;">
+                                <i class="fas fa-sun mr-1"></i>Dhuha
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Mulai <small class="text-muted">(dibuka)</small></label>
+                                            <input type="time" name="dhuha_start" class="form-control form-control-sm"
+                                                value="{{ $setting->dhuha_start ?? '07:00:00' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Selesai <small class="text-muted">(ditutup)</small></label>
+                                            <input type="time" name="dhuha_end" class="form-control form-control-sm"
+                                                value="{{ $setting->dhuha_end ?? '11:00:00' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Dzuhur --}}
+                    <div class="col-md-4">
+                        <div class="card mb-0">
+                            <div class="card-header py-2" style="background:#ff8800; color:#fff;">
+                                <i class="fas fa-mosque mr-1"></i>Dzuhur
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Mulai <small class="text-muted">(dibuka)</small></label>
+                                            <input type="time" name="dzuhur_start" class="form-control form-control-sm"
+                                                value="{{ $setting->dzuhur_start ?? '11:30:00' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Selesai <small class="text-muted">(ditutup)</small></label>
+                                            <input type="time" name="dzuhur_end" class="form-control form-control-sm"
+                                                value="{{ $setting->dzuhur_end ?? '13:30:00' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Ashar --}}
+                    <div class="col-md-4">
+                        <div class="card mb-0">
+                            <div class="card-header py-2" style="background:#9c27b0; color:#fff;">
+                                <i class="fas fa-mosque mr-1"></i>Ashar
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Mulai <small class="text-muted">(dibuka)</small></label>
+                                            <input type="time" name="ashar_start" class="form-control form-control-sm"
+                                                value="{{ $setting->ashar_start ?? '15:00:00' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-0">
+                                            <label style="font-size:12px;">Selesai <small class="text-muted">(ditutup)</small></label>
+                                            <input type="time" name="ashar_end" class="form-control form-control-sm"
+                                                value="{{ $setting->ashar_end ?? '16:30:00' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block"><i class="fas fa-info-circle mr-1"></i>Window waktu ini dikirim ke device via MQTT saat setting disimpan atau tombol Set ditekan di halaman Device.</small>
+            </div>
+        </div>
+
         {{-- ── Integrasi TIM IT ── --}}
         <div class="card card-outline card-info mb-3">
             <div class="card-header py-2">
