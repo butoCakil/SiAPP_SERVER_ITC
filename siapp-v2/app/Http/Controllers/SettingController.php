@@ -25,6 +25,8 @@ class SettingController extends Controller
             'wtp_jumat'   => $request->wtp_jumat,
             'wp'          => $request->wp,
             'wp_jumat'    => $request->wp_jumat,
+            'dhuha_start' => $request->input('dhuha_start', '07:00:00'),
+            'dhuha_end'   => $request->input('dhuha_end', '11:00:00'),
             'hari_kerja'  => (int) $request->hari_kerja,
             'auto_mode'   => (int) $request->auto_mode,
             'waktumasuk'  => $request->waktumasuk,

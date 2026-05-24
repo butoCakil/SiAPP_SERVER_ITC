@@ -44,6 +44,8 @@ class DeviceService
                 'waktumasuk'  => $setting->waktumasuk,
                 'waktupulang' => $setting->waktupulang,
                 'info'        => $setting->info,
+                'dhuha_start' => $setting->dhuha_start ?? '07:00:00',
+                'dhuha_end'   => $setting->dhuha_end   ?? '11:00:00',
             ],
         ], JSON_UNESCAPED_UNICODE);
 
@@ -154,7 +156,7 @@ class DeviceService
             'timestamp' => $data['timestamp'] ?? null,
         ], JSON_UNESCAPED_UNICODE);
 
-        $column = match($mode) {
+        $column = match ($mode) {
             1       => 'last_command',
             2       => 'last_setting',
             default => 'last_status',

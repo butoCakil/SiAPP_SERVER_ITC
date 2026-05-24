@@ -208,6 +208,38 @@
             </div>
         </div>
 
+        {{-- ── Window Waktu Dhuha ── --}}
+        <div class="card card-outline card-success mb-3">
+            <div class="card-header py-2">
+                <h3 class="card-title"><i class="fas fa-sun mr-2"></i>Window Waktu Dhuha</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;">Mulai Dhuha <small class="text-muted">(dibuka)</small></label>
+                            <input type="time" name="dhuha_start" class="form-control form-control-sm"
+                                value="{{ $setting->dhuha_start ?? '07:00:00' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;">Selesai Dhuha <small class="text-muted">(ditutup)</small></label>
+                            <input type="time" name="dhuha_end" class="form-control form-control-sm"
+                                value="{{ $setting->dhuha_end ?? '11:00:00' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-success p-2 mb-0" style="font-size:12px;">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Window waktu ini akan dikirim ke device via MQTT saat setting disimpan.
+                            Device akan otomatis membuka/menutup sesi Dhuha sesuai waktu ini.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- ── Integrasi TIM IT ── --}}
         <div class="card card-outline card-info mb-3">
             <div class="card-header py-2">

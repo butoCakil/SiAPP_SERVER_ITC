@@ -26,6 +26,8 @@
 .sholat-card .s-lbl  { font-size: 11px; opacity: 0.85; }
 .sc-dzuhur   { background: linear-gradient(135deg,#ff8800,#cc5500); }
 .sc-ashar    { background: linear-gradient(135deg,#9c27b0,#6a0080); }
+.sc-dhuha    { background: linear-gradient(135deg,#4caf50,#2e7d32); }
+.badge-dhuha { background:#4caf50; color:#fff; font-size:11px; }
 .sc-keduanya { background: linear-gradient(135deg,#00c853,#00964b); }
 .sc-izin     { background: linear-gradient(135deg,#e91e8c,#ad1457); }
 .sc-kurang   { background: linear-gradient(135deg,#607d8b,#37474f); }
@@ -87,6 +89,15 @@
 {{-- Stat Cards --}}
 <div class="row">
     <div class="col-6 col-md col-sm-6">
+        <div class="sholat-card sc-dhuha">
+            <div class="s-icon">🌅</div>
+            <div>
+                <div class="s-val">{{ $totalDhuha }}</div>
+                <div class="s-lbl">Dhuha</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md col-sm-6">
         <div class="sholat-card sc-dzuhur">
             <div class="s-icon">🕛</div>
             <div>
@@ -139,6 +150,7 @@
         <i class="fas fa-print mr-1"></i>Print PDF
     </button>
     <button class="filter-tab active" onclick="filterTabel('semua', this)">🕌 Semua ({{ $siswaList->count() }})</button>
+    <button class="filter-tab" onclick="filterTabel('dhuha', this)">🌅 Dhuha saja ({{ $totalDhuha }})</button>
     <button class="filter-tab" onclick="filterTabel('dzuhur', this)">🕛 Dzuhur saja ({{ $totalDzuhur - $totalKeduanya }})</button>
     <button class="filter-tab" onclick="filterTabel('ashar', this)">🕓 Ashar saja ({{ $totalAshar - $totalKeduanya }})</button>
     <button class="filter-tab" onclick="filterTabel('keduanya', this)">✅ Keduanya ({{ $totalKeduanya }})</button>
@@ -173,6 +185,7 @@
                         <th>NIS</th>
                         <th>Nama</th>
                         <th>Kelas</th>
+                        <th>Dhuha</th>
                         <th>Dzuhur</th>
                         <th>Ashar</th>
                         <th>Status</th>
@@ -182,13 +195,15 @@
                 <tbody>
                     @forelse($siswaList as $i => $s)
                     @php
+                        $hasDhuha   = !is_null($s['dhuha']);
                         $hasDzuhur  = !is_null($s['dzuhur']);
                         $hasAshar   = !is_null($s['ashar']);
                         $hasKeduanya = $hasDzuhur && $hasAshar;
-                        $hasIzin    = $s['dzuhur_izin'] || $s['ashar_izin'];
+                        $hasIzin    = $s['dzuhur_izin'] || $s['ashar_izin'] || $s['dhuha_izin'];
                         $belum      = !$hasKeduanya;
 
                         $rowFilter = 'semua ';
+                        if ($hasDhuha) $rowFilter .= 'dhuha ';
                         if ($hasDzuhur && !$hasAshar) $rowFilter .= 'dzuhur ';
                         if ($hasAshar && !$hasDzuhur) $rowFilter .= 'ashar ';
                         if ($hasKeduanya) $rowFilter .= 'keduanya ';
@@ -201,6 +216,17 @@
                         <td><code>{{ $s['nis'] }}</code></td>
                         <td><strong>{{ $s['nama'] }}</strong></td>
                         <td><small>{{ $s['kelas'] }}</small></td>
+                        <td>
+                            @if($hasDhuha)
+                                @if($s['dhuha_izin'])
+                                    <span class="badge badge-izin-mens">🌸 Izin {{ $s['dhuha'] }}</span>
+                                @else
+                                    <span class="badge badge-dhuha">🌅 {{ $s['dhuha'] }}</span>
+                                @endif
+                            @else
+                                <span class="badge badge-absen">—</span>
+                            @endif
+                        </td>
                         <td>
                             @if($hasDzuhur)
                                 @if($s['dzuhur_izin'])
@@ -236,6 +262,16 @@
                         </td>
                     <td class="no-print">
                             <div class="d-flex" style="gap:4px;">
+                                @if($s['dhuha_id'])
+                                <form action="{{ route('presensi.event.destroy', $s['dhuha_id']) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Hapus presensi Dhuha {{ $s['nama'] }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-xs btn-success" title="Hapus Dhuha">
+                                        <i class="fas fa-trash"></i> Dhuha
+                                    </button>
+                                </form>
+                                @endif
                                 @if($s['dzuhur_id'])
                                 <form action="{{ route('presensi.event.destroy', $s['dzuhur_id']) }}"
                                     method="POST"
@@ -272,7 +308,7 @@
         </div>
     </div>
     <div class="card-footer text-muted" style="font-size:11px;">
-        Dzuhur: {{ $totalDzuhur }} | Ashar: {{ $totalAshar }} |
+        Dhuha: {{ $totalDhuha }} | Dzuhur: {{ $totalDzuhur }} | Ashar: {{ $totalAshar }} |
         Keduanya: {{ $totalKeduanya }} | Izin Mens: {{ $totalIzin }} |
         Belum Lengkap: {{ $totalTidakKeduanya }}
     </div>
@@ -306,6 +342,7 @@
                     <div class="form-group">
                         <label>Jenis Sholat <span class="text-danger">*</span></label>
                         <select name="keterangan" class="form-control" required>
+                            <option value="DHUHA">🌅 Dhuha</option>
                             <option value="DZUHUR">🕛 Dzuhur</option>
                             <option value="ASHAR">🕓 Ashar</option>
                         </select>

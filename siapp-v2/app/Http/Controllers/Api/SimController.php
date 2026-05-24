@@ -22,11 +22,15 @@ class SimController extends Controller
         if ($kelas) $query->where('dp.info', $kelas);
 
         $data = $query->select(
-                'dp.nomorinduk as nis', 'dp.nama', 'dp.info as kelas',
-                'dp.waktumasuk', 'dp.ketmasuk',
-                'dp.waktupulang', 'dp.ketpulang',
-                'dp.infodevice2 as device'
-            )->get()
+            'dp.nomorinduk as nis',
+            'dp.nama',
+            'dp.info as kelas',
+            'dp.waktumasuk',
+            'dp.ketmasuk',
+            'dp.waktupulang',
+            'dp.ketpulang',
+            'dp.infodevice2 as device'
+        )->get()
             ->map(fn($p) => [
                 'nis'          => $p->nis,
                 'nama'         => $p->nama,
@@ -58,9 +62,14 @@ class SimController extends Controller
             ->whereBetween('dp.tanggal', [$dari, $sampai])
             ->orderBy('dp.tanggal')->orderBy('dp.waktumasuk')
             ->select(
-                'dp.tanggal', 'dp.nomorinduk as nis', 'dp.nama', 'dp.info as kelas',
-                'dp.waktumasuk', 'dp.ketmasuk',
-                'dp.waktupulang', 'dp.ketpulang',
+                'dp.tanggal',
+                'dp.nomorinduk as nis',
+                'dp.nama',
+                'dp.info as kelas',
+                'dp.waktumasuk',
+                'dp.ketmasuk',
+                'dp.waktupulang',
+                'dp.ketpulang',
                 'dp.infodevice2 as device'
             )->get()
             ->map(fn($p) => [
@@ -99,9 +108,13 @@ class SimController extends Controller
         if ($kelas) $query->where('ds.kelas', $kelas);
 
         $events = $query->select(
-                'pe.nis', 'ds.nama', 'ds.kelas',
-                'pe.keterangan', 'pe.ruang', 'pe.mulai'
-            )->get();
+            'pe.nis',
+            'ds.nama',
+            'ds.kelas',
+            'pe.keterangan',
+            'pe.ruang',
+            'pe.mulai'
+        )->get();
 
         // Pivot per siswa
         $siswaMap = [];
@@ -109,16 +122,21 @@ class SimController extends Controller
             $nis = $e->nis;
             if (!isset($siswaMap[$nis])) {
                 $siswaMap[$nis] = [
-                    'nis'          => $nis,
-                    'nama'         => $e->nama ?? '-',
-                    'kelas'        => $e->kelas ?? '-',
-                    'dzuhur'       => null,
-                    'ashar'        => null,
-                    'device_dzuhur'=> null,
-                    'device_ashar' => null,
+                    'nis'           => $nis,
+                    'nama'          => $e->nama ?? '-',
+                    'kelas'         => $e->kelas ?? '-',
+                    'dhuha'         => null,
+                    'dzuhur'        => null,
+                    'ashar'         => null,
+                    'device_dhuha'  => null,
+                    'device_dzuhur' => null,
+                    'device_ashar'  => null,
                 ];
             }
-            if ($e->keterangan === 'DZUHUR') {
+            if ($e->keterangan === 'DHUHA') {
+                $siswaMap[$nis]['dhuha']        = $e->mulai;
+                $siswaMap[$nis]['device_dhuha'] = $e->ruang;
+            } elseif ($e->keterangan === 'DZUHUR') {
                 $siswaMap[$nis]['dzuhur']        = $e->mulai;
                 $siswaMap[$nis]['device_dzuhur'] = $e->ruang;
             } elseif ($e->keterangan === 'ASHAR') {
@@ -150,8 +168,12 @@ class SimController extends Controller
         if ($kelas) $query->where('ds.kelas', $kelas);
 
         $events = $query->select(
-        'pe.nis', 'ds.nama', 'ds.kelas', 'pe.mulai', 'pe.keterangan'
-            )->get();
+            'pe.nis',
+            'ds.nama',
+            'ds.kelas',
+            'pe.mulai',
+            'pe.keterangan'
+        )->get();
 
         $siswaMap = [];
         foreach ($events as $e) {
@@ -197,9 +219,13 @@ class SimController extends Controller
         if ($status === 'sudah') $query->whereNotNull('di.jam_kembali');
 
         $data = $query->select(
-                'di.nis', 'di.nama', 'ds.kelas',
-                'di.jam_keluar', 'di.jam_kembali', 'di.info'
-            )->get()
+            'di.nis',
+            'di.nama',
+            'ds.kelas',
+            'di.jam_keluar',
+            'di.jam_kembali',
+            'di.info'
+        )->get()
             ->map(fn($p) => [
                 'nis'         => $p->nis,
                 'nama'        => $p->nama,

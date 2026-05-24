@@ -107,10 +107,15 @@ foreach ($data['data'] as $item) {
     $jam     = substr($waktu, 11, 8);
 
     // Mapping sesi → keterangan
+    // s='H'  → DHUHA
     // s='D'  → DZUHUR
     // s='A'  → ASHAR
     // s='DA' → DZUHUR + ASHAR (dua baris)
     $map = [];
+
+    if (str_contains($sesi, 'H')) {
+        $map[] = ['DHUHA', $waktu, $tanggal, $jam];
+    }
 
     if (str_contains($sesi, 'D')) {
         $map[] = ['DZUHUR', $waktu, $tanggal, $jam];
@@ -165,7 +170,8 @@ foreach ($data['data'] as $item) {
             foreach ($json_content['data'] as &$existing) {
                 if (($existing['nokartu'] ?? '') === $nokartu
                     && ($existing['keterangan'] ?? '') === $ket
-                    && ($existing['tanggal'] ?? '') === $tgl) {
+                    && ($existing['tanggal'] ?? '') === $tgl
+                ) {
                     $existing = $json_entry;
                     $found = true;
                     break;
@@ -173,7 +179,6 @@ foreach ($data['data'] as $item) {
             }
             unset($existing);
             if (!$found) $json_content['data'][] = $json_entry;
-
         } else {
             $errors[] = "Gagal insert $nis ($ket): " . $stmt->error;
         }

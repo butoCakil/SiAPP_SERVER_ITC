@@ -103,6 +103,7 @@ foreach ($data['data'] as $item) {
     $jam     = substr($waktu, 11, 8);
 
     $map = [];
+    if (str_contains($sesi, 'H')) $map[] = ['DHUHA', $tanggal, $jam];
     if (str_contains($sesi, 'D')) $map[] = ['DZUHUR', $tanggal, $jam];
     if (str_contains($sesi, 'A')) $map[] = ['ASHAR',  $tanggal, $jam];
 
@@ -137,9 +138,11 @@ foreach ($data['data'] as $item) {
             ];
             $found = false;
             foreach ($json_content['data'] as &$existing) {
-                if ($existing['nokartu'] === $nokartu
+                if (
+                    $existing['nokartu'] === $nokartu
                     && $existing['keterangan'] === $ket
-                    && $existing['tanggal'] === $tgl) {
+                    && $existing['tanggal'] === $tgl
+                ) {
                     $existing = $json_entry;
                     $found = true;
                     break;
