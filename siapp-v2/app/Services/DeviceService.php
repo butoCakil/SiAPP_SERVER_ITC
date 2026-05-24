@@ -12,13 +12,12 @@ class DeviceService
     private int    $port;
     private string $username;
     private string $password;
-
     public function __construct()
     {
-        $this->host     = config('mqtt.host');
-        $this->port     = config('mqtt.port');
-        $this->username = config('mqtt.username');
-        $this->password = config('mqtt.password');
+        $this->host     = (string) config('mqtt.host', 'localhost');
+        $this->port     = (int)    config('mqtt.port', 1883);
+        $this->username = (string) config('mqtt.username', '');
+        $this->password = (string) config('mqtt.password', '');
     }
 
     // ── Publish setting ke device ──
