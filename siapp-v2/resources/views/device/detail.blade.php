@@ -151,6 +151,34 @@
                     @endif
                 </div>
             </div>
+
+            @php $koneksi = json_decode($device->last_koneksi, true) ?? []; @endphp
+            @if(!empty($koneksi))
+            <div class="card mt-2">
+                <div class="card-header py-2"><strong>🔌 Koneksi Terakhir Dikirim</strong></div>
+                <div class="card-body">
+                    @if($koneksi['wifi_nama'] ?? null)
+                    <div class="info-row"><span class="info-label">WiFi</span><span>{{ $koneksi['wifi_nama'] }} (index {{ $koneksi['wifi_index'] }})</span></div>
+                    @endif
+                    @if($koneksi['upload_nama'] ?? null)
+                    <div class="info-row"><span class="info-label">URL Upload</span><span>{{ $koneksi['upload_nama'] }} (index {{ $koneksi['upload_index'] }})</span></div>
+                    @endif
+                    @if($koneksi['up1'] ?? null)
+                    <div class="info-row"><span class="info-label">Upload #1</span><span>{{ $koneksi['up1'] }}</span></div>
+                    @endif
+                    @if($koneksi['up2'] ?? null)
+                    <div class="info-row"><span class="info-label">Upload #2</span><span>{{ $koneksi['up2'] }}</span></div>
+                    @endif
+                    @if($koneksi['rs1'] ?? null)
+                    <div class="info-row"><span class="info-label">Restart #1</span><span>{{ $koneksi['rs1'] }}</span></div>
+                    @endif
+                    @if($koneksi['rs2'] ?? null)
+                    <div class="info-row"><span class="info-label">Restart #2</span><span>{{ $koneksi['rs2'] }}</span></div>
+                    @endif
+                    <div class="info-row"><span class="info-label">Dikirim</span><span>{{ $koneksi['timestamp'] }}</span></div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 

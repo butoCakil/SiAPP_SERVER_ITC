@@ -164,6 +164,37 @@ class DeviceViewController extends Controller
         $service = new \App\Services\DeviceService();
         $result  = $service->kirimKoneksi($id, $koneksi);
 
+        // Simpan last_koneksi ke DB
+        $wifiPresets = [
+            0=>'Instruktur-TE', 1=>'Instruktur-MM', 2=>'WIFI-RFID-13',
+            3=>'WIFI-RFID-14', 4=>'WIFI-RFID-152', 5=>'HOTSPOT-SKANEBA',
+            6=>'HOTSPOT-SISWA', 7=>'HOTSPOT-SKANEBA-ITC', 8=>'mqtt', 9=>'bumblebee',
+        ];
+        $uploadPresets = [
+            0=>'upload Presensi', 1=>'upload Sholat',
+            2=>'upload Izin', 3=>'upload Izin Mens',
+        ];
+        
+        // Ambil data lama, merge dengan yang baru
+        $existing = DB::table('devices')->where('device_id', $id)->value('last_koneksi');
+        $koneksiLama = $existing ? json_decode($existing, true) : [];
+
+        $koneksiInfo = array_merge($koneksiLama, array_filter([
+            'wifi_index'    => $request->filled('wifi_index') ? (int)$request->wifi_index : null,
+            'wifi_nama'     => $request->filled('wifi_index') ? ($wifiPresets[(int)$request->wifi_index] ?? '-') : null,
+            'upload_index'  => $request->filled('upload_index') ? (int)$request->upload_index : null,
+            'upload_nama'   => $request->filled('upload_index') ? ($uploadPresets[(int)$request->upload_index] ?? '-') : null,
+            'up1'           => $request->filled('up1_h') ? sprintf('%02d:%02d', $request->up1_h, $request->up1_m) : null,
+            'up2'           => $request->filled('up2_h') ? sprintf('%02d:%02d', $request->up2_h, $request->up2_m) : null,
+            'rs1'           => $request->filled('rs1_h') ? sprintf('%02d:%02d', $request->rs1_h, $request->rs1_m) : null,
+            'rs2'           => $request->filled('rs2_h') ? sprintf('%02d:%02d', $request->rs2_h, $request->rs2_m) : null,
+        ], fn($v) => $v !== null));
+
+        $koneksiInfo['timestamp'] = now()->format('Y-m-d H:i:s');
+        DB::table('devices')->where('device_id', $id)->update([
+            'last_koneksi' => json_encode($koneksiInfo, JSON_UNESCAPED_UNICODE),
+        ]);
+
         return redirect()->route('device.detail', $id)
             ->with('success', 'Koneksi berhasil dikirim ke device.');
     }
