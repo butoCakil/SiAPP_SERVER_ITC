@@ -274,6 +274,10 @@ Route::get('/api-internal/device-metrics/{id}', function (string $id) {
     return response()->json($metrics);
 })->middleware('auth.admin');
 
+Route::post('/device/{id}/koneksi', [DeviceViewController::class, 'kirimKoneksi'])
+    ->middleware('auth.admin')
+    ->name('device.koneksi');
+
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET

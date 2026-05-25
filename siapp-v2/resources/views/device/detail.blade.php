@@ -171,23 +171,126 @@
 
 {{-- Tab: Kontrol --}}
 <div class="tab-pane" id="tab-kontrol">
-    <div class="card">
+    {{-- Perintah Cepat --}}
+    <div class="card mb-3">
+        <div class="card-header py-2"><strong><i class="fas fa-terminal mr-1"></i>Perintah Cepat</strong></div>
         <div class="card-body">
-            <div class="ctrl-section">
-                <h6><i class="fas fa-terminal mr-1"></i>Perintah Cepat</h6>
-                <div class="d-flex flex-wrap" style="gap:8px;">
-                    <button class="btn btn-primary" onclick="kirimPerintah('setSetting')" {{ !$device->online ? 'disabled' : '' }}>⚙️ Kirim Setting</button>
-                    <button class="btn btn-success" onclick="kirimPerintah('upload')" {{ !$device->online ? 'disabled' : '' }}>📤 Upload Presensi</button>
-                    <button class="btn btn-info" onclick="kirimPerintah('sync')" {{ !$device->online ? 'disabled' : '' }}>🔄 Sync DB</button>
-                    <button class="btn btn-warning" onclick="kirimPerintah('toggleSerial')" {{ !$device->online ? 'disabled' : '' }}>🔍 Toggle Serial</button>
-                    <button class="btn btn-danger" onclick="kirimPerintah('reboot')">🔁 Reboot</button>
-                </div>
+            <div class="d-flex flex-wrap" style="gap:8px;">
+                <button class="btn btn-primary" onclick="kirimPerintah('setSetting')" {{ !$device->online ? 'disabled' : '' }}>⚙️ Kirim Setting</button>
+                <button class="btn btn-success" onclick="kirimPerintah('upload')" {{ !$device->online ? 'disabled' : '' }}>📤 Upload Presensi</button>
+                <button class="btn btn-info" onclick="kirimPerintah('sync')" {{ !$device->online ? 'disabled' : '' }}>🔄 Sync DB</button>
+                <button class="btn btn-warning" onclick="kirimPerintah('toggleSerial')" {{ !$device->online ? 'disabled' : '' }}>🔍 Toggle Serial</button>
+                <button class="btn btn-danger" onclick="kirimPerintah('reboot')">🔁 Reboot</button>
             </div>
         </div>
     </div>
-    <div class="alert alert-info mt-3">
-        <i class="fas fa-info-circle mr-1"></i>
-        Fitur kontrol lanjutan (ganti WiFi, URL upload, waktu jadwal per-device) akan tersedia setelah update firmware.
+
+    {{-- Koneksi Device --}}
+    <div class="card mb-3">
+        <div class="card-header py-2"><strong><i class="fas fa-network-wired mr-1"></i>Koneksi & Jadwal Device</strong></div>
+        <div class="card-body">
+            <form action="{{ route('device.koneksi', $id) }}" method="POST">
+                @csrf
+                <div class="row">
+                    {{-- WiFi Preset --}}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="font-size:12px;"><i class="fas fa-wifi mr-1"></i>WiFi Preset</label>
+                            <select name="wifi_index" class="form-control form-control-sm">
+                                <option value="">— Tidak diubah —</option>
+                                @php
+                                $wifiPresets = [
+                                    0 => 'Instruktur-TE',
+                                    1 => 'Instruktur-MM',
+                                    2 => 'WIFI-RFID-13',
+                                    3 => 'WIFI-RFID-14',
+                                    4 => 'WIFI-RFID-152',
+                                    5 => 'HOTSPOT-SKANEBA',
+                                    6 => 'HOTSPOT-SISWA',
+                                    7 => 'HOTSPOT-SKANEBA-ITC',
+                                    8 => 'mqtt',
+                                    9 => 'bumblebee',
+                                ];
+                                @endphp
+                                @foreach($wifiPresets as $idx => $nama)
+                                    <option value="{{ $idx }}">{{ $idx }} — {{ $nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    {{-- URL Upload Preset --}}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="font-size:12px;"><i class="fas fa-upload mr-1"></i>URL Upload Preset</label>
+                            <select name="upload_index" class="form-control form-control-sm">
+                                <option value="">— Tidak diubah —</option>
+                                @php
+                                $uploadPresets = [
+                                    0 => 'upload Presensi',
+                                    1 => 'upload Sholat',
+                                    2 => 'upload Izin',
+                                    3 => 'upload Izin Mens',
+                                ];
+                                @endphp
+                                @foreach($uploadPresets as $idx => $nama)
+                                    <option value="{{ $idx }}">{{ $idx }} — {{ $nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <label style="font-size:12px; font-weight:600;"><i class="fas fa-clock mr-1"></i>Jadwal Upload & Restart</label>
+                <div class="row mt-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="font-size:11px;" class="text-muted">Upload #1</label>
+                            <div class="d-flex" style="gap:4px;">
+                                <input type="number" name="up1_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
+                                <input type="number" name="up1_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="font-size:11px;" class="text-muted">Upload #2</label>
+                            <div class="d-flex" style="gap:4px;">
+                                <input type="number" name="up2_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
+                                <input type="number" name="up2_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="font-size:11px;" class="text-muted">Restart #1</label>
+                            <div class="d-flex" style="gap:4px;">
+                                <input type="number" name="rs1_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
+                                <input type="number" name="rs1_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="font-size:11px;" class="text-muted">Restart #2</label>
+                            <div class="d-flex" style="gap:4px;">
+                                <input type="number" name="rs2_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
+                                <input type="number" name="rs2_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <small class="text-muted d-block mb-3">
+                    <i class="fas fa-info-circle mr-1"></i>Kosongkan field yang tidak ingin diubah.
+                </small>
+
+                <button type="submit" class="btn btn-primary" {{ !$device->online ? 'disabled' : '' }}>
+                    <i class="fas fa-paper-plane mr-1"></i>Kirim ke Device
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 

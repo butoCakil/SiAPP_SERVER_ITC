@@ -55,6 +55,17 @@ class DeviceService
         return $this->publish("devices/{$deviceId}/settings", $payload);
     }
 
+    // ── Publish koneksi ke device ──
+    public function kirimKoneksi(string $deviceId, array $koneksi): array
+    {
+        $payload = json_encode([
+            'device_id' => $deviceId,
+            'koneksi'   => $koneksi,
+        ], JSON_UNESCAPED_UNICODE);
+
+        return $this->publish("devices/{$deviceId}/settings", $payload);
+    }
+
     // ── Publish command ke device ──
     public function kirimCommand(string $deviceId, array $command): array
     {

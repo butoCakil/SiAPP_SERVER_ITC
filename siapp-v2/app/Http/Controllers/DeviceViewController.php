@@ -145,6 +145,29 @@ class DeviceViewController extends Controller
         ));
     }
 
+    public function kirimKoneksi(Request $request, string $id)
+    {
+        $koneksi = [];
+
+        if ($request->filled('wifi_index'))   $koneksi['wifi_index']   = (int) $request->wifi_index;
+        if ($request->filled('upload_index')) $koneksi['upload_index'] = (int) $request->upload_index;
+
+        if ($request->filled('up1_h')) $koneksi['up1'] = ['h' => (int)$request->up1_h, 'm' => (int)$request->up1_m];
+        if ($request->filled('up2_h')) $koneksi['up2'] = ['h' => (int)$request->up2_h, 'm' => (int)$request->up2_m];
+        if ($request->filled('rs1_h')) $koneksi['rs1'] = ['h' => (int)$request->rs1_h, 'm' => (int)$request->rs1_m];
+        if ($request->filled('rs2_h')) $koneksi['rs2'] = ['h' => (int)$request->rs2_h, 'm' => (int)$request->rs2_m];
+
+        if (empty($koneksi)) {
+            return redirect()->route('device.detail', $id)->with('error', 'Tidak ada perubahan.');
+        }
+
+        $service = new \App\Services\DeviceService();
+        $result  = $service->kirimKoneksi($id, $koneksi);
+
+        return redirect()->route('device.detail', $id)
+            ->with('success', 'Koneksi berhasil dikirim ke device.');
+    }
+
     private function getData(): array
     {
         $devices      = DB::table('devices')->where('hidden', 0)->orderByRaw('online DESC, device_id ASC')->get();
