@@ -33,7 +33,9 @@
     <div class="dc-header">
         <div class="dc-title">
             <div class="dc-id">
-                {{ $device->device_id }}
+                <a href="{{ route('device.detail', $device->device_id) }}" style="color:inherit; text-decoration:none;">
+                    {{ $device->device_id }}
+                </a>
                 @if($device->fw_version)
                     <span class="dc-fw">{{ $device->fw_version }}</span>
                 @endif

@@ -75,6 +75,37 @@ class DeviceViewController extends Controller
             ->with('success', 'Device berhasil dihapus dari registrasi.');
     }
 
+    public function detail(string $id)
+    {
+        $device  = DB::table('devices')->where('device_id', $id)->first();
+        if (!$device) abort(404);
+
+        $reg     = DB::table('reg_device')->where('no_device', $id)->first();
+        $metrics = DB::table('device_metrics')
+            ->where('device_id', $id)
+            ->orderBy('recorded_at', 'asc')
+            ->get(['ram', 'rssi', 'ping', 'buffer', 'recorded_at']);
+
+        $status   = json_decode($device->last_status,  true) ?? [];
+        $setting  = json_decode($device->last_setting, true) ?? [];
+        $command  = json_decode($device->last_command, true) ?? [];
+
+        // Daftar tanggal log
+        $uploadDir = '/opt/lampp/htdocs/data/uploads/';
+        $files     = glob($uploadDir . '*_log_' . $id . '.txt');
+        $logDates  = [];
+        foreach ($files as $f) {
+            if (preg_match('/^(\d{4}-\d{2}-\d{2})_log_/', basename($f), $m)) {
+                $logDates[] = $m[1];
+            }
+        }
+        rsort($logDates);
+
+        return view('device.detail', compact(
+            'device', 'reg', 'metrics', 'status', 'setting', 'command', 'logDates', 'id'
+        ));
+    }
+
     public function logViewer(Request $request, string $id)
     {
         $tanggal   = $request->input('tanggal', date('Y-m-d'));
