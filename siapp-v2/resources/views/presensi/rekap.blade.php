@@ -12,6 +12,7 @@
 .badge-terlambat { background:#ffc107; color:#333; }
 .badge-pulang    { background:#007bff; color:#fff; }
 .badge-izin      { background:#6c757d; color:#fff; }
+.badge-dhuha     { background:#4caf50; color:#fff; }
 .badge-dhuhur    { background:#17a2b8; color:#fff; }
 .badge-ashar     { background:#6f42c1; color:#fff; }
 .badge-mens      { background:#e83e8c; color:#fff; }
@@ -95,6 +96,7 @@
                         <th title="Terlambat"><i class="fas fa-clock"></i> Telat</th>
                         <th title="Pulang"><i class="fas fa-sign-out-alt"></i> Pulang</th>
                         <th title="Izin Keluar"><i class="fas fa-door-open"></i> Izin</th>
+                        <th title="Sholat Dhuha"><i class="fas fa-sun"></i> Dhuha</th>
                         <th title="Sholat Dhuhur"><i class="fas fa-mosque"></i> Dhuhur</th>
                         <th title="Sholat Ashar"><i class="fas fa-mosque"></i> Ashar</th>
                         <th title="Izin Mens"><i class="fas fa-venus"></i> Mens</th>
@@ -128,6 +130,13 @@
                             @else — @endif
                         </td>
                         <td class="num">
+                            @if($s->dhuha > 0)
+                                <span class="badge badge-dhuha">{{ $s->dhuha }}</span>
+                            @else
+                                <span class="text-muted">—</span>
+                            @endif
+                            </td>
+                            <td>
                             @if($s->dhuhur > 0)
                                 <span class="badge badge-dhuhur">{{ $s->dhuhur }}</span>
                             @else — @endif

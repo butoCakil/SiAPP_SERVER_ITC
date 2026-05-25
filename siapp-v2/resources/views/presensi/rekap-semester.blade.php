@@ -53,6 +53,7 @@
 .cb-telat     { background:#ffc107; color:#333 !important; }
 .cb-pulang    { background:#007bff; }
 .cb-izin      { background:#6c757d; }
+.cb-dhuha     { background:#4caf50; }
 .cb-dhuhur    { background:#17a2b8; }
 .cb-ashar     { background:#6f42c1; }
 .cb-mens      { background:#e83e8c; }
@@ -135,6 +136,7 @@
                                         <span class="cb {{ $d['izin']      ? 'cb-izin'   : 'cb-zero' }}">{{ $d['izin']      ?: '—' }}</span>
                                     </div>
                                     <div class="row-b2">
+                                        <span class="cb {{ $d['dhuha']    ? 'cb-dhuha'  : 'cb-zero' }}">{{ $d['dhuha']    ?: '—' }}</span>
                                         <span class="cb {{ $d['dhuhur']   ? 'cb-dhuhur' : 'cb-zero' }}">{{ $d['dhuhur']   ?: '—' }}</span>
                                         <span class="cb {{ $d['ashar']    ? 'cb-ashar'  : 'cb-zero' }}">{{ $d['ashar']    ?: '—' }}</span>
                                         <span class="cb {{ $d['izinMens'] ? 'cb-mens'   : 'cb-zero' }}">{{ $d['izinMens'] ?: '—' }}</span>

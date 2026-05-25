@@ -200,10 +200,12 @@ class PresensiViewController extends Controller
         $eventIdx = [];
         foreach ($eventRaw as $e) {
             if (!isset($eventIdx[$e->nis])) {
-                $eventIdx[$e->nis] = ['dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
+                $eventIdx[$e->nis] = ['dhuha' => 0, 'dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
             }
             if ($e->ruang === 'Izin Mens') {
                 $eventIdx[$e->nis]['izinMens']++;
+            } elseif ($e->keterangan === 'DHUHA') {
+                $eventIdx[$e->nis]['dhuha']++;
             } elseif ($e->keterangan === 'DZUHUR') {
                 $eventIdx[$e->nis]['dhuhur']++;
             } elseif ($e->keterangan === 'ASHAR') {
@@ -220,6 +222,7 @@ class PresensiViewController extends Controller
                 'terlambat' => $p['terlambat'] ?? 0,
                 'pulang'    => $p['pulang']    ?? 0,
                 'izin'      => $izinIdx[$s->nis] ?? 0,
+                'dhuha'     => $e['dhuha']     ?? 0,
                 'dhuhur'    => $e['dhuhur']    ?? 0,
                 'ashar'     => $e['ashar']     ?? 0,
                 'izinMens'  => $e['izinMens']  ?? 0,
@@ -281,6 +284,7 @@ class PresensiViewController extends Controller
             'terlambat' => 0,
             'pulang' => 0,
             'izin' => 0,
+            'dhuha' => 0,
             'dhuhur' => 0,
             'ashar' => 0,
             'izin_mens' => 0,
@@ -300,6 +304,7 @@ class PresensiViewController extends Controller
             $events   = $eventList[$tgl] ?? collect();
             $izins    = $izinList[$tgl] ?? collect();
 
+            $dhuha    = $events->firstWhere('keterangan', 'DHUHA');
             $dhuhur   = $events->firstWhere('keterangan', 'DZUHUR');
             $ashar    = $events->firstWhere('keterangan', 'ASHAR');
             $izinMens = $events->first(fn($e) => $e->ruang === 'Izin Mens');
@@ -323,6 +328,7 @@ class PresensiViewController extends Controller
                 $summary['tanpa_ket']++;
             }
 
+            if ($dhuha && $dhuha->ruang !== 'Izin Mens') $summary['dhuha']++;
             if ($dhuhur && $dhuhur->ruang !== 'Izin Mens') $summary['dhuhur']++;
             if ($ashar  && $ashar->ruang  !== 'Izin Mens') $summary['ashar']++;
             if ($izinMens) $summary['izin_mens']++;
@@ -335,6 +341,7 @@ class PresensiViewController extends Controller
                 'is_libur' => $isLibur,
                 'tipe'     => $tipe,
                 'presensi' => $presensi,
+                'dhuha'    => $dhuha,
                 'dhuhur'   => $dhuhur,
                 'ashar'    => $ashar,
                 'izin_mens' => $izinMens,
@@ -437,10 +444,12 @@ class PresensiViewController extends Controller
         foreach ($eventRaw as $e) {
             $bln = substr($e->tanggal, 0, 7);
             if (!isset($eventIdx[$e->nis][$bln])) {
-                $eventIdx[$e->nis][$bln] = ['dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
+                $eventIdx[$e->nis][$bln] = ['dhuha' => 0, 'dhuhur' => 0, 'ashar' => 0, 'izinMens' => 0];
             }
             if ($e->ruang === 'Izin Mens') {
                 $eventIdx[$e->nis][$bln]['izinMens']++;
+            } elseif ($e->keterangan === 'DHUHA') {
+                $eventIdx[$e->nis][$bln]['dhuha']++;
             } elseif ($e->keterangan === 'DZUHUR') {
                 $eventIdx[$e->nis][$bln]['dhuhur']++;
             } elseif ($e->keterangan === 'ASHAR') {
@@ -459,6 +468,7 @@ class PresensiViewController extends Controller
                     'terlambat' => $p['terlambat'] ?? 0,
                     'pulang'    => $p['pulang']    ?? 0,
                     'izin'      => $izinIdx[$s->nis][$bulan] ?? 0,
+                    'dhuha'     => $i['dhuha']     ?? 0,
                     'dhuhur'    => $i['dhuhur']    ?? 0,
                     'ashar'     => $i['ashar']     ?? 0,
                     'izinMens'  => $i['izinMens']  ?? 0,
@@ -685,7 +695,8 @@ class PresensiViewController extends Controller
         $totalIzin          = $siswaList->filter(fn($s) => $s['dzuhur_izin'] || $s['ashar_izin'] || $s['dhuha_izin'])->count();
         $totalKeduanya      = $siswaList->filter(fn($s) => $s['dzuhur'] && $s['ashar'])->count();
         $totalTidakKeduanya = $siswaList->filter(fn($s) => !$s['dzuhur'] || !$s['ashar'])->count();
-
+        $kelasList          = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        
         return view('presensi.event', compact(
             'siswaList',
             'tanggal',

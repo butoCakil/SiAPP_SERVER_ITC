@@ -51,6 +51,7 @@
 .bg-terlambat { background: #ffc107; color: #333 !important; }
 .bg-tanpa_ket { background: #dc3545; }
 .bg-libur     { background: #adb5bd; }
+.bg-dhuha     { background: #4caf50; }
 .bg-dhuhur    { background: #17a2b8; }
 .bg-ashar     { background: #6f42c1; }
 .bg-mens      { background: #e83e8c; }
@@ -131,6 +132,7 @@
         ['val'=>$summary['terlambat'], 'lbl'=>'Terlambat','bg'=>'linear-gradient(135deg,#ffc107,#e0a800)', 'dark'=>true],
         ['val'=>$summary['pulang'],    'lbl'=>'Pulang',   'bg'=>'linear-gradient(135deg,#007bff,#0056b3)'],
         ['val'=>$summary['izin'],      'lbl'=>'Izin Keluar','bg'=>'linear-gradient(135deg,#6c757d,#495057)'],
+        ['val'=>$summary['dhuha'],      'lbl'=>'Dhuha',    'bg'=>'linear-gradient(135deg,#4caf50,#2e7d32)'],
         ['val'=>$summary['dhuhur'],    'lbl'=>'Dhuhur',   'bg'=>'linear-gradient(135deg,#17a2b8,#117a8b)'],
         ['val'=>$summary['ashar'],     'lbl'=>'Ashar',    'bg'=>'linear-gradient(135deg,#6f42c1,#4e2d8a)'],
         ['val'=>$summary['izin_mens'], 'lbl'=>'Izin Mens','bg'=>'linear-gradient(135deg,#e83e8c,#c0266a)'],
@@ -191,6 +193,9 @@
                 @endif
 
                 {{-- Sholat --}}
+                @if($k['dhuha'] && $k['dhuha']->ruang !== 'Izin Mens')
+                    <span class="kal-badge bg-dhuha">Dha</span>
+                @endif
                 @if($k['dhuhur'] && $k['dhuhur']->ruang !== 'Izin Mens')
                     <span class="kal-badge bg-dhuhur">Dzh</span>
                 @endif
@@ -213,6 +218,7 @@
             <span><span class="kal-badge bg-terlambat">■</span> Terlambat</span>
             <span><span class="kal-badge bg-tanpa_ket">■</span> Tanpa Ket</span>
             <span><span class="kal-badge bg-libur">■</span> Libur</span>
+            <span><span class="kal-badge bg-dhuha">■</span> Dhuha</span>
             <span><span class="kal-badge bg-dhuhur">■</span> Dhuhur</span>
             <span><span class="kal-badge bg-ashar">■</span> Ashar</span>
             <span><span class="kal-badge bg-mens">■</span> Izin Mens</span>
