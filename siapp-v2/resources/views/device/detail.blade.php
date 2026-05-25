@@ -373,7 +373,7 @@ function switchTab(name, btn) {
 async function kirimPerintah(cmd) {
     const res = await fetch('/api/device/perintah', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Api-Key': '{{ DB::table("api")->where("jenis","device_token")->where("status","aktif")->value("kode_api") }}' },
+        headers: { 'Content-Type': 'application/json', 'X-Device-Key': '{{ DB::table("api")->where("jenis","device_token")->where("status","aktif")->value("kode_api") }}' },
         body: JSON.stringify({ device_id: '{{ $id }}', [cmd]: 1 })
     });
     const data = await res.json();
