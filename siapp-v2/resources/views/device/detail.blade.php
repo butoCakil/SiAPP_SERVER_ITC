@@ -501,60 +501,101 @@ async function sdListDir() {
 }
 
 function renderSdResult(data) {
+    // ── Tombol navigasi ──
+    const path = data.path;
+    let navHtml = '<div class="d-flex align-items-center mb-2" style="gap:6px; flex-wrap:wrap;">';
+
+    // Tombol kembali
+    if (path !== '/') {
+        const parts = path.replace(/\/$/, '').split('/');
+        parts.pop();
+        const parentPath = parts.length === 0 ? '/' : parts.join('/');
+        navHtml += `<button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('sd-path').value='${parentPath}'; sdListDir();">
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
+        </button>`;
+    }
+
+    // Breadcrumb
+    navHtml += '<span style="font-size:12px; color:#666;"><i class="fas fa-hdd mr-1"></i>';
+    if (path === '/') {
+        navHtml += '<strong>/</strong>';
+    } else {
+        navHtml += `<a href="#" onclick="document.getElementById('sd-path').value='/'; sdListDir(); return false;">/</a>`;
+        const parts = path.replace(/^\//, '').replace(/\/$/, '').split('/');
+        let cumPath = '';
+        parts.forEach((p, i) => {
+            cumPath += '/' + p;
+            const cp = cumPath;
+            if (i < parts.length - 1) {
+                navHtml += ` / <a href="#" onclick="document.getElementById('sd-path').value='${cp}'; sdListDir(); return false;">${p}</a>`;
+            } else {
+                navHtml += ` / <strong>${p}</strong>`;
+            }
+        });
+    }
+    navHtml += '</span></div>';
+
+    document.getElementById('sd-dirs').innerHTML = navHtml;
+
     const uploadPresets = {
         0: { name: 'upload Presensi',    url: 'http://172.16.80.123/data/uploadPresensi.php' },
         1: { name: 'upload Sholat',      url: 'http://172.16.80.123/data/uploadSholat.php' },
         2: { name: 'upload Izin',        url: 'http://172.16.80.123/data/uploadIzin.php' },
         3: { name: 'upload Izin Mens',   url: 'http://172.16.80.123/data/uploadIzinSholat.php' },
+        4: { name: 'upload File (log)',  url: 'http://172.16.80.123/data/upload.php' },
     };
 
-    // Render dirs
-    let dirsHtml = '';
+    // Render gabungan folder + file dalam satu tabel
+    let tableHtml = '<table class="table table-sm table-hover mt-2" style="font-size:12px;">';
+    tableHtml += '<thead class="thead-dark"><tr><th style="width:30px;"></th><th>Nama</th><th style="width:90px;">Ukuran</th><th>Upload ke</th><th style="width:80px;">Aksi</th></tr></thead><tbody>';
+
+    // Folder dulu
     if (data.dirs && data.dirs.length > 0) {
-        dirsHtml = '<div class="mb-2"><strong style="font-size:12px;">📁 Folder</strong><div class="d-flex flex-wrap mt-1" style="gap:6px;">';
         data.dirs.forEach(dir => {
             const fullPath = (data.path.endsWith('/') ? data.path : data.path + '/') + dir;
-            dirsHtml += `<button class="btn btn-sm btn-outline-secondary" style="font-size:11px;" onclick="document.getElementById('sd-path').value='${fullPath}'; sdListDir();">
-                <i class="fas fa-folder mr-1"></i>${dir}
-            </button>`;
+            tableHtml += `<tr style="cursor:pointer;" onclick="document.getElementById('sd-path').value='${fullPath}'; sdListDir();">
+                <td><i class="fas fa-folder text-warning"></i></td>
+                <td><strong>${dir}</strong></td>
+                <td><span class="text-muted">—</span></td>
+                <td></td>
+                <td><span class="text-muted" style="font-size:10px;">Buka</span></td>
+            </tr>`;
         });
-        dirsHtml += '</div></div>';
     }
-    document.getElementById('sd-dirs').innerHTML = dirsHtml;
 
-    // Render files
-    let filesHtml = '';
+    // Lalu file
     if (data.files && data.files.length > 0) {
-        filesHtml = '<strong style="font-size:12px;">📄 File (' + data.files.length + ')</strong>';
-        filesHtml += '<table class="table table-sm table-bordered mt-1" style="font-size:12px;">';
-        filesHtml += '<thead><tr><th>#</th><th>Nama File</th><th>Ukuran</th><th>Upload ke</th><th>Aksi</th></tr></thead><tbody>';
         data.files.forEach((f, i) => {
             const filePath = (data.path.endsWith('/') ? data.path : data.path + '/') + f.n;
             const size = f.s > 1024 ? (f.s / 1024).toFixed(1) + ' KB' : f.s + ' B';
 
-            let selectHtml = '<select class="form-control form-control-sm" id="upload-url-' + i + '" style="font-size:11px;">';
+            let selectHtml = '<select class="form-control form-control-sm" id="upload-url-' + i + '" style="font-size:11px;" onclick="event.stopPropagation();">';
             Object.entries(uploadPresets).forEach(([k, v]) => {
                 selectHtml += `<option value="${v.url}">${v.name}</option>`;
             });
             selectHtml += '</select>';
 
-            filesHtml += `<tr>
-                <td>${i+1}</td>
+            tableHtml += `<tr>
+                <td><i class="fas fa-file-alt text-secondary"></i></td>
                 <td>${f.n}</td>
                 <td>${size}</td>
                 <td>${selectHtml}</td>
                 <td>
                     <button class="btn btn-xs btn-success" onclick="sdUploadFile('${filePath}', document.getElementById('upload-url-${i}').value)" style="font-size:11px;">
-                        <i class="fas fa-upload"></i> Upload
+                        <i class="fas fa-upload"></i>
                     </button>
                 </td>
             </tr>`;
         });
-        filesHtml += '</tbody></table>';
-    } else {
-        filesHtml = '<p class="text-muted" style="font-size:12px;">Tidak ada file di folder ini.</p>';
     }
-    document.getElementById('sd-files').innerHTML = filesHtml;
+
+    if ((!data.dirs || data.dirs.length === 0) && (!data.files || data.files.length === 0)) {
+        tableHtml += '<tr><td colspan="5" class="text-muted text-center">Folder kosong</td></tr>';
+    }
+
+    tableHtml += '</tbody></table>';
+    document.getElementById('sd-dirs').innerHTML += tableHtml;
+    document.getElementById('sd-files').innerHTML = '';
     document.getElementById('sd-result').style.display = 'block';
 }
 
