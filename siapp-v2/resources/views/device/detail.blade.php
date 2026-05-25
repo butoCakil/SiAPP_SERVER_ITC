@@ -104,6 +104,7 @@
     <button class="tab-btn active" onclick="switchTab('info', this)">📋 Info</button>
     <button class="tab-btn" onclick="switchTab('kontrol', this)">⚙️ Kontrol</button>
     <button class="tab-btn" onclick="switchTab('log', this)">📜 Log</button>
+    <button class="tab-btn" onclick="switchTab('filesd', this)">📁 File SD</button>
 </div>
 
 {{-- Tab: Info --}}
@@ -357,6 +358,31 @@
     </div>
 </div>
 
+{{-- Tab: File SD --}}
+<div class="tab-pane" id="tab-filesd">
+    <div class="card">
+        <div class="card-header py-2"><strong><i class="fas fa-sd-card mr-1"></i>File Explorer SD Card</strong></div>
+        <div class="card-body">
+            <div class="d-flex mb-3" style="gap:8px; align-items:center;">
+                <input type="text" id="sd-path" class="form-control form-control-sm" value="/" style="max-width:300px;" placeholder="Path, contoh: /presensisholat">
+                <button class="btn btn-sm btn-primary" onclick="sdListDir()">
+                    <i class="fas fa-folder-open mr-1"></i>Lihat Isi
+                </button>
+                <span id="sd-status" class="text-muted" style="font-size:12px;"></span>
+            </div>
+
+            <div id="sd-result" style="display:none;">
+                <div id="sd-dirs" class="mb-2"></div>
+                <div id="sd-files"></div>
+            </div>
+            <div id="sd-loading" style="display:none;" class="text-muted">
+                <i class="fas fa-spinner fa-spin mr-1"></i>Menunggu respon device...
+            </div>
+            <div id="sd-empty" class="text-muted" style="display:none;">Folder kosong atau tidak ada data.</div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -429,5 +455,122 @@ new Chart(document.getElementById('chart-metrics'), {
         }
     }
 });
+
+// ── File SD Explorer ──
+let sdPolling = null;
+
+async function sdListDir() {
+    const path = document.getElementById('sd-path').value || '/';
+    document.getElementById('sd-loading').style.display = 'block';
+    document.getElementById('sd-result').style.display = 'none';
+    document.getElementById('sd-empty').style.display = 'none';
+    document.getElementById('sd-status').textContent = 'Mengirim perintah...';
+
+    // Kirim command listDir ke device
+    await fetch('{{ route("device.listdir", $id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ path: path })
+    });
+
+    document.getElementById('sd-status').textContent = 'Menunggu respon device...';
+
+    // Poll hasil tiap 1 detik, maks 10x
+    let attempts = 0;
+    sdPolling = setInterval(async () => {
+        attempts++;
+        const res = await fetch('{{ route("device.dirlist", $id) }}');
+        const json = await res.json();
+
+        if (json.status === 'ok' && json.data && json.data.path === path) {
+            clearInterval(sdPolling);
+            document.getElementById('sd-loading').style.display = 'none';
+            document.getElementById('sd-status').textContent = 'Path: ' + json.data.path;
+            renderSdResult(json.data);
+        }
+
+        if (attempts >= 10) {
+            clearInterval(sdPolling);
+            document.getElementById('sd-loading').style.display = 'none';
+            document.getElementById('sd-status').textContent = 'Timeout — device tidak merespons.';
+        }
+    }, 1000);
+}
+
+function renderSdResult(data) {
+    const uploadPresets = {
+        0: { name: 'upload Presensi',    url: 'http://172.16.80.123/data/uploadPresensi.php' },
+        1: { name: 'upload Sholat',      url: 'http://172.16.80.123/data/uploadSholat.php' },
+        2: { name: 'upload Izin',        url: 'http://172.16.80.123/data/uploadIzin.php' },
+        3: { name: 'upload Izin Mens',   url: 'http://172.16.80.123/data/uploadIzinSholat.php' },
+    };
+
+    // Render dirs
+    let dirsHtml = '';
+    if (data.dirs && data.dirs.length > 0) {
+        dirsHtml = '<div class="mb-2"><strong style="font-size:12px;">📁 Folder</strong><div class="d-flex flex-wrap mt-1" style="gap:6px;">';
+        data.dirs.forEach(dir => {
+            const fullPath = (data.path.endsWith('/') ? data.path : data.path + '/') + dir;
+            dirsHtml += `<button class="btn btn-sm btn-outline-secondary" style="font-size:11px;" onclick="document.getElementById('sd-path').value='${fullPath}'; sdListDir();">
+                <i class="fas fa-folder mr-1"></i>${dir}
+            </button>`;
+        });
+        dirsHtml += '</div></div>';
+    }
+    document.getElementById('sd-dirs').innerHTML = dirsHtml;
+
+    // Render files
+    let filesHtml = '';
+    if (data.files && data.files.length > 0) {
+        filesHtml = '<strong style="font-size:12px;">📄 File (' + data.files.length + ')</strong>';
+        filesHtml += '<table class="table table-sm table-bordered mt-1" style="font-size:12px;">';
+        filesHtml += '<thead><tr><th>#</th><th>Nama File</th><th>Ukuran</th><th>Upload ke</th><th>Aksi</th></tr></thead><tbody>';
+        data.files.forEach((f, i) => {
+            const filePath = (data.path.endsWith('/') ? data.path : data.path + '/') + f.n;
+            const size = f.s > 1024 ? (f.s / 1024).toFixed(1) + ' KB' : f.s + ' B';
+
+            let selectHtml = '<select class="form-control form-control-sm" id="upload-url-' + i + '" style="font-size:11px;">';
+            Object.entries(uploadPresets).forEach(([k, v]) => {
+                selectHtml += `<option value="${v.url}">${v.name}</option>`;
+            });
+            selectHtml += '</select>';
+
+            filesHtml += `<tr>
+                <td>${i+1}</td>
+                <td>${f.n}</td>
+                <td>${size}</td>
+                <td>${selectHtml}</td>
+                <td>
+                    <button class="btn btn-xs btn-success" onclick="sdUploadFile('${filePath}', document.getElementById('upload-url-${i}').value)" style="font-size:11px;">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                </td>
+            </tr>`;
+        });
+        filesHtml += '</tbody></table>';
+    } else {
+        filesHtml = '<p class="text-muted" style="font-size:12px;">Tidak ada file di folder ini.</p>';
+    }
+    document.getElementById('sd-files').innerHTML = filesHtml;
+    document.getElementById('sd-result').style.display = 'block';
+}
+
+async function sdUploadFile(path, url) {
+    if (!confirm('Upload file ' + path + ' ke ' + url + '?')) return;
+    document.getElementById('sd-status').textContent = 'Mengirim perintah upload...';
+    const res = await fetch('{{ route("device.uploadfile", $id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ path: path, url: url })
+    });
+    const json = await res.json();
+    document.getElementById('sd-status').textContent = json.message ?? 'Perintah terkirim';
+}
 </script>
 @endpush

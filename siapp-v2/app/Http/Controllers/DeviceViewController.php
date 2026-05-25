@@ -207,4 +207,33 @@ class DeviceViewController extends Controller
         $offlineCount = $devices->where('online', 0)->count();
         return [$devices, $regDevices, $onlineCount, $offlineCount];
     }
+
+    public function listDir(Request $request, string $id)
+    {
+        $path = $request->input('path', '/');
+        $service = new \App\Services\DeviceService();
+        $service->kirimCommand($id, ['listDir' => $path]);
+        return response()->json(['status' => 'ok', 'message' => 'Perintah listDir terkirim']);
+    }
+
+    public function getDirList(string $id)
+    {
+        $device = DB::table('devices')->where('device_id', $id)->first();
+        if (!$device || !$device->last_dirlist) {
+            return response()->json(['status' => 'empty', 'data' => null]);
+        }
+        return response()->json(['status' => 'ok', 'data' => json_decode($device->last_dirlist, true)]);
+    }
+
+    public function uploadFileSd(Request $request, string $id)
+    {
+        $path = $request->input('path');
+        $url  = $request->input('url');
+        if (!$path || !$url) {
+            return response()->json(['status' => 'error', 'message' => 'path dan url wajib diisi']);
+        }
+        $service = new \App\Services\DeviceService();
+        $service->kirimCommand($id, ['uploadFile' => $path, 'uploadUrl' => $url]);
+        return response()->json(['status' => 'ok', 'message' => 'Perintah uploadFile terkirim']);
+    }
 }

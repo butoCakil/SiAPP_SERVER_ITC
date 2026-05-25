@@ -173,6 +173,18 @@ class DeviceService
     // ── Update feedback device di DB ──
     public function updateFeedback(string $deviceId, array $data): void
     {
+        // ── Handle dir_list (payload langsung dari firmware, tidak pakai mode) ──
+        if (isset($data['path']) && isset($data['files'])) {
+            DB::table('devices')
+                ->where('device_id', $deviceId)
+                ->update([
+                    'last_dirlist' => json_encode($data, JSON_UNESCAPED_UNICODE),
+                    'last_seen'    => now(),
+                    'updated_at'   => now(),
+                ]);
+            return;
+        }
+
         $mode    = (int) ($data['mode']    ?? 0);
         $version = $data['version'] ?? null;
 

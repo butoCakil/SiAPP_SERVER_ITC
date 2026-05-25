@@ -278,6 +278,13 @@ Route::post('/device/{id}/koneksi', [DeviceViewController::class, 'kirimKoneksi'
     ->middleware('auth.admin')
     ->name('device.koneksi');
 
+Route::post('/device/{id}/listdir', [DeviceViewController::class, 'listDir'])
+    ->middleware('auth.admin')->name('device.listdir');
+Route::post('/device/{id}/uploadfile', [DeviceViewController::class, 'uploadFileSd'])
+    ->middleware('auth.admin')->name('device.uploadfile');
+Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
+    ->middleware('auth.admin')->name('device.dirlist');
+
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET
