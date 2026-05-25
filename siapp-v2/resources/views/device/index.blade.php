@@ -421,6 +421,7 @@ async function refreshGrid() {
         document.getElementById('device-grid').innerHTML = html;
         updateBars();
         updateLastRefresh();
+        loadAllSparklines();
     } catch(e) {
         console.error('Refresh gagal:', e);
     } finally {
@@ -545,11 +546,15 @@ async function loadSparkline(deviceId) {
     }
 }
 
-// Load semua sparkline saat halaman load
-document.addEventListener('DOMContentLoaded', () => {
+function loadAllSparklines() {
     document.querySelectorAll('[data-device-id]').forEach(el => {
         loadSparkline(el.dataset.deviceId);
     });
+}
+
+// Load semua sparkline saat halaman load
+document.addEventListener('DOMContentLoaded', () => {
+    loadAllSparklines();
 });
 
 </script>

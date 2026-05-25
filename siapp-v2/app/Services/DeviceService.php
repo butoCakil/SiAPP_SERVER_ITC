@@ -100,6 +100,9 @@ class DeviceService
         }
 
         if ($existing) {
+            if ($online == 1) {
+                $upsert['hidden'] = 0;
+            }
             DB::table('devices')->where('device_id', $deviceId)->update($upsert);
         } else {
             DB::table('devices')->insert(array_merge($upsert, [
