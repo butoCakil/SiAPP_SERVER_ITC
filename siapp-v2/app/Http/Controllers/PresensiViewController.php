@@ -516,6 +516,7 @@ class PresensiViewController extends Controller
             'terlambat' => 0,
             'pulang' => 0,
             'izin' => 0,
+            'dhuha' => 0,
             'dhuhur' => 0,
             'ashar' => 0,
             'izin_mens' => 0,
@@ -558,6 +559,7 @@ class PresensiViewController extends Controller
                 $events   = $eventList[$tgl] ?? collect();
                 $izins    = $izinList[$tgl] ?? collect();
 
+                $dhuha    = $events->firstWhere('keterangan', 'DHUHA');
                 $dhuhur   = $events->firstWhere('keterangan', 'DZUHUR');
                 $ashar    = $events->firstWhere('keterangan', 'ASHAR');
                 $izinMens = $events->first(fn($e) => $e->ruang === 'Izin Mens');
@@ -581,6 +583,7 @@ class PresensiViewController extends Controller
                     $summaryTotal['tanpa_ket']++;
                 }
 
+                if ($dhuha && $dhuha->ruang !== 'Izin Mens') $summaryTotal['dhuha']++;
                 if ($dhuhur && $dhuhur->ruang !== 'Izin Mens') $summaryTotal['dhuhur']++;
                 if ($ashar  && $ashar->ruang  !== 'Izin Mens') $summaryTotal['ashar']++;
                 if ($izinMens) $summaryTotal['izin_mens']++;
@@ -593,6 +596,7 @@ class PresensiViewController extends Controller
                     'is_libur' => $isLibur,
                     'tipe'     => $tipe,
                     'presensi' => $presensi,
+                    'dhuha'    => $dhuha,
                     'dhuhur'   => $dhuhur,
                     'ashar'    => $ashar,
                     'izin_mens' => $izinMens,

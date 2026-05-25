@@ -42,6 +42,7 @@
 .bg-terlambat { background: #ffc107; color: #333 !important; }
 .bg-tanpa_ket { background: #dc3545; }
 .bg-libur     { background: #adb5bd; }
+.bg-dhuha     { background: #4caf50; }
 .bg-dhuhur    { background: #17a2b8; }
 .bg-ashar     { background: #6f42c1; }
 .bg-mens      { background: #e83e8c; }
@@ -112,6 +113,7 @@
         ['val'=>$summaryTotal['terlambat'], 'lbl'=>'Terlambat',  'bg'=>'linear-gradient(135deg,#ffc107,#e0a800)','dark'=>true],
         ['val'=>$summaryTotal['pulang'],    'lbl'=>'Pulang',     'bg'=>'linear-gradient(135deg,#007bff,#0056b3)'],
         ['val'=>$summaryTotal['izin'],      'lbl'=>'Izin Keluar','bg'=>'linear-gradient(135deg,#6c757d,#495057)'],
+        ['val'=>$summaryTotal['dhuha'],     'lbl'=>'Dhuha',      'bg'=>'linear-gradient(135deg,#4caf50,#2e7d32)'],
         ['val'=>$summaryTotal['dhuhur'],    'lbl'=>'Dhuhur',     'bg'=>'linear-gradient(135deg,#17a2b8,#117a8b)'],
         ['val'=>$summaryTotal['ashar'],     'lbl'=>'Ashar',      'bg'=>'linear-gradient(135deg,#6f42c1,#4e2d8a)'],
         ['val'=>$summaryTotal['izin_mens'], 'lbl'=>'Izin Mens',  'bg'=>'linear-gradient(135deg,#e83e8c,#c0266a)'],
@@ -170,6 +172,9 @@
                             @endif
                         @else
                             <span class="kal-badge bg-tanpa_ket">—</span>
+                        @endif
+                        @if($k['dhuha'] && $k['dhuha']->ruang !== 'Izin Mens')
+                            <span class="kal-badge bg-dhuha">Dh</span>
                         @endif
                         @if($k['dhuhur'] && $k['dhuhur']->ruang !== 'Izin Mens')
                             <span class="kal-badge bg-dhuhur">Dz</span>
