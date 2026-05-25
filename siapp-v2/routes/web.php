@@ -262,6 +262,14 @@ Route::get('/log/file', function (\Illuminate\Http\Request $request) {
     return response(file_get_contents($path), 200, ['Content-Type' => 'text/plain; charset=utf-8']);
 })->middleware('auth.admin')->name('log.file.read');
 
+Route::get('/api-internal/device-metrics/{id}', function (string $id) {
+    $metrics = DB::table('device_metrics')
+        ->where('device_id', $id)
+        ->orderBy('recorded_at', 'asc')
+        ->get(['ram', 'rssi', 'ping', 'buffer', 'recorded_at']);
+    return response()->json($metrics);
+})->middleware('auth.admin');
+
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET

@@ -87,6 +87,12 @@
     @endphp
     <div class="bar-label {{ $bufferClass }}">{{ $bufferLabel }}</div>
 
+    {{-- Sparkline --}}
+    <div style="margin: 6px 0;">
+        <canvas id="spark-{{ $device->device_id }}" height="40"
+            style="width:100%; border-radius:6px; background:#f8f9fa;"></canvas>
+    </div>
+
     {{-- Detail Info --}}
     <div class="dc-detail">
         <div>📡 {{ $ssid }}</div>

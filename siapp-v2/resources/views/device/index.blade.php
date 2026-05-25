@@ -459,5 +459,98 @@ async function deleteDevice(deviceId) {
     }
 }
 
+// ── Sparkline per device ──
+async function loadSparkline(deviceId) {
+    try {
+        const res  = await fetch('/api-internal/device-metrics/' + deviceId);
+        const data = await res.json();
+        if (!data || data.length === 0) return;
+
+        const labels = data.map(d => d.recorded_at.substring(11, 16));
+        const ram    = data.map(d => d.ram);
+        const rssi   = data.map(d => Math.min(100, Math.round(((Math.max(-100, Math.min(-40, d.rssi)) + 100) / 60) * 100)));
+        const ping   = data.map(d => Math.min(100, d.ping));
+
+        const canvas = document.getElementById('spark-' + deviceId);
+        if (!canvas) return;
+
+        new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: 'RAM%',
+                        data: ram,
+                        borderColor: '#2196f3',
+                        backgroundColor: 'rgba(33,150,243,0.08)',
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        tension: 0.3,
+                        fill: true,
+                    },
+                    {
+                        label: 'RSSI%',
+                        data: rssi,
+                        borderColor: '#ff9800',
+                        backgroundColor: 'rgba(255,152,0,0.08)',
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        tension: 0.3,
+                        fill: false,
+                    },
+                    {
+                        label: 'Ping%',
+                        data: ping,
+                        borderColor: '#4caf50',
+                        backgroundColor: 'rgba(76,175,80,0.08)',
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        tension: 0.3,
+                        fill: false,
+                    },
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        titleFont: { size: 10 },
+                        bodyFont: { size: 10 },
+                    },
+                    datalabels: { display: false }
+                },
+                scales: {
+                    x: {
+                        ticks: { font: { size: 8 }, maxTicksLimit: 6 },
+                        grid: { display: false }
+                    },
+                    y: {
+                        min: 0, max: 100,
+                        ticks: { font: { size: 8 }, maxTicksLimit: 4 },
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    }
+                }
+            }
+        });
+    } catch(e) {
+        console.warn('Sparkline error ' + deviceId, e);
+    }
+}
+
+// Load semua sparkline saat halaman load
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-device-id]').forEach(el => {
+        loadSparkline(el.dataset.deviceId);
+    });
+});
+
 </script>
 @endpush
