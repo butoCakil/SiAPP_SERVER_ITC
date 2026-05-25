@@ -108,8 +108,25 @@ class DeviceService
                 'created_at' => now(),
             ]));
         }
-    }
 
+        // ── Rekam metrik untuk sparkline ──
+        if ($online == 1) {
+            DB::table('device_metrics')->insert([
+                'device_id'   => $deviceId,
+                'ram'         => (int) ($data['ram']     ?? 0),
+                'rssi'        => (int) ($data['rssi']    ?? -100),
+                'ping'        => (int) ($data['latency'] ?? 0),
+                'buffer'      => (int) ($data['count']   ?? 0),
+                'recorded_at' => now(),
+            ]);
+
+            // Hapus data lebih dari 24 jam
+            DB::table('device_metrics')
+                ->where('device_id', $deviceId)
+                ->where('recorded_at', '<', now()->subHours(24))
+                ->delete();
+        }
+    }
     // ── Update info device di DB ──
     public function updateInfo(string $deviceId, array $data): void
     {
