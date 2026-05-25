@@ -223,7 +223,12 @@
                     {{-- WiFi Preset --}}
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label style="font-size:12px;"><i class="fas fa-wifi mr-1"></i>WiFi Preset</label>
+                            <label style="font-size:12px;"><i class="fas fa-wifi mr-1"></i>WiFi Preset
+                                @php $lk = json_decode($device->last_koneksi, true) ?? []; @endphp
+                                @if($lk['wifi_nama'] ?? null)
+                                    <span class="text-muted ml-1" style="font-size:10px;">(aktif: {{ $lk['wifi_nama'] }})</span>
+                                @endif
+                            </label>
                             <select name="wifi_index" class="form-control form-control-sm">
                                 <option value="">— Tidak diubah —</option>
                                 @php
@@ -250,7 +255,11 @@
                     {{-- URL Upload Preset --}}
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label style="font-size:12px;"><i class="fas fa-upload mr-1"></i>URL Upload Preset</label>
+                            <label style="font-size:12px;"><i class="fas fa-upload mr-1"></i>URL Upload Preset
+                                @if($lk['upload_nama'] ?? null)
+                                    <span class="text-muted ml-1" style="font-size:10px;">(aktif: {{ $lk['upload_nama'] }})</span>
+                                @endif
+                            </label>
                             <select name="upload_index" class="form-control form-control-sm">
                                 <option value="">— Tidak diubah —</option>
                                 @php
@@ -276,8 +285,8 @@
                         <div class="form-group">
                             <label style="font-size:11px;" class="text-muted">Upload #1</label>
                             <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="up1_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
-                                <input type="number" name="up1_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                                <input type="number" name="up1_h" class="form-control form-control-sm" placeholder="{{ isset($lk['up1']) ? substr($lk['up1'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
+                                <input type="number" name="up1_m" class="form-control form-control-sm" placeholder="{{ isset($lk['up1']) ? substr($lk['up1'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
                             </div>
                         </div>
                     </div>
@@ -285,8 +294,8 @@
                         <div class="form-group">
                             <label style="font-size:11px;" class="text-muted">Upload #2</label>
                             <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="up2_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
-                                <input type="number" name="up2_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                                <input type="number" name="up2_h" class="form-control form-control-sm" placeholder="{{ isset($lk['up2']) ? substr($lk['up2'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
+                                <input type="number" name="up2_m" class="form-control form-control-sm" placeholder="{{ isset($lk['up2']) ? substr($lk['up2'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
                             </div>
                         </div>
                     </div>
@@ -294,8 +303,8 @@
                         <div class="form-group">
                             <label style="font-size:11px;" class="text-muted">Restart #1</label>
                             <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="rs1_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
-                                <input type="number" name="rs1_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                                <input type="number" name="rs1_h" class="form-control form-control-sm" placeholder="{{ isset($lk['rs1']) ? substr($lk['rs1'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
+                                <input type="number" name="rs1_m" class="form-control form-control-sm" placeholder="{{ isset($lk['rs1']) ? substr($lk['rs1'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
                             </div>
                         </div>
                     </div>
@@ -303,8 +312,8 @@
                         <div class="form-group">
                             <label style="font-size:11px;" class="text-muted">Restart #2</label>
                             <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="rs2_h" class="form-control form-control-sm" placeholder="HH" min="0" max="23" style="width:60px;">
-                                <input type="number" name="rs2_m" class="form-control form-control-sm" placeholder="MM" min="0" max="59" style="width:60px;">
+                                <input type="number" name="rs2_h" class="form-control form-control-sm" placeholder="{{ isset($lk['rs2']) ? substr($lk['rs2'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
+                                <input type="number" name="rs2_m" class="form-control form-control-sm" placeholder="{{ isset($lk['rs2']) ? substr($lk['rs2'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
                             </div>
                         </div>
                     </div>
