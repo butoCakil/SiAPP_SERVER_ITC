@@ -132,8 +132,10 @@
                         <div class="info-row"><span class="info-label">Mode</span><span>{{ $det['mode'] ?? '-' }}</span></div>
                         <div class="info-row"><span class="info-label">Jam Masuk</span><span>{{ $det['waktumasuk'] ?? '-' }}</span></div>
                         <div class="info-row"><span class="info-label">Jam Pulang</span><span>{{ $det['waktupulang'] ?? '-' }}</span></div>
-                        <div class="info-row"><span class="info-label">Upload #1</span><span>{{ $det['wa'] ?? '-' }}</span></div>
-                        <div class="info-row"><span class="info-label">Upload #2</span><span>{{ $det['wtp'] ?? '-' }}</span></div>
+                        <div class="info-row"><span class="info-label">Upload #1</span><span>{{ $det['up1'] ?? ($det['wa'] ?? '-') }}</span></div>
+                        <div class="info-row"><span class="info-label">Upload #2</span><span>{{ $det['up2'] ?? ($det['wtp'] ?? '-') }}</span></div>
+                        <div class="info-row"><span class="info-label">Restart #1</span><span>{{ $det['rs1'] ?? '-' }}</span></div>
+                        <div class="info-row"><span class="info-label">Restart #2</span><span>{{ $det['rs2'] ?? '-' }}</span></div>
                         <div class="info-row"><span class="info-label">Timestamp</span><span>{{ $setting['timestamp'] ?? '-' }}</span></div>
                     @else
                         <p class="text-muted">Belum ada setting terkirim.</p>
@@ -279,50 +281,33 @@
                     </div>
                 </div>
 
-                <hr>
-                <label style="font-size:12px; font-weight:600;"><i class="fas fa-clock mr-1"></i>Jadwal Upload & Restart</label>
+                {{-- URL DB Preset --}}
                 <div class="row mt-2">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label style="font-size:11px;" class="text-muted">Upload #1</label>
-                            <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="up1_h" class="form-control form-control-sm" placeholder="{{ isset($lk['up1']) ? substr($lk['up1'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
-                                <input type="number" name="up1_m" class="form-control form-control-sm" placeholder="{{ isset($lk['up1']) ? substr($lk['up1'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label style="font-size:11px;" class="text-muted">Upload #2</label>
-                            <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="up2_h" class="form-control form-control-sm" placeholder="{{ isset($lk['up2']) ? substr($lk['up2'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
-                                <input type="number" name="up2_m" class="form-control form-control-sm" placeholder="{{ isset($lk['up2']) ? substr($lk['up2'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label style="font-size:11px;" class="text-muted">Restart #1</label>
-                            <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="rs1_h" class="form-control form-control-sm" placeholder="{{ isset($lk['rs1']) ? substr($lk['rs1'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
-                                <input type="number" name="rs1_m" class="form-control form-control-sm" placeholder="{{ isset($lk['rs1']) ? substr($lk['rs1'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label style="font-size:11px;" class="text-muted">Restart #2</label>
-                            <div class="d-flex" style="gap:4px;">
-                                <input type="number" name="rs2_h" class="form-control form-control-sm" placeholder="{{ isset($lk['rs2']) ? substr($lk['rs2'],0,2) : 'HH' }}" min="0" max="23" style="width:60px;">
-                                <input type="number" name="rs2_m" class="form-control form-control-sm" placeholder="{{ isset($lk['rs2']) ? substr($lk['rs2'],3,2) : 'MM' }}" min="0" max="59" style="width:60px;">
-                            </div>
+                            <label style="font-size:12px;"><i class="fas fa-database mr-1"></i>URL Database Preset
+                                @if($lk['db_nama'] ?? null)
+                                    <span class="text-muted ml-1" style="font-size:10px;">(aktif: {{ $lk['db_nama'] }})</span>
+                                @endif
+                            </label>
+                            <select name="db_index" class="form-control form-control-sm">
+                                <option value="">— Tidak diubah —</option>
+                                @php
+                                $dbPresets = [
+                                    0 => 'fakeRestApi',
+                                    1 => 'fakeRestApiMid',
+                                    2 => 'restAPI/datasiswa',
+                                    3 => 'restAPI/datagtk',
+                                    4 => 'restAPI/data',
+                                ];
+                                @endphp
+                                @foreach($dbPresets as $idx => $nama)
+                                    <option value="{{ $idx }}">{{ $idx }} — {{ $nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-
-                <small class="text-muted d-block mb-3">
-                    <i class="fas fa-info-circle mr-1"></i>Kosongkan field yang tidak ingin diubah.
-                </small>
 
                 <button type="submit" class="btn btn-primary" {{ !$device->online ? 'disabled' : '' }}>
                     <i class="fas fa-paper-plane mr-1"></i>Kirim ke Device

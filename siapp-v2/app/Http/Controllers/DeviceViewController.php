@@ -151,11 +151,7 @@ class DeviceViewController extends Controller
 
         if ($request->filled('wifi_index'))   $koneksi['wifi_index']   = (int) $request->wifi_index;
         if ($request->filled('upload_index')) $koneksi['upload_index'] = (int) $request->upload_index;
-
-        if ($request->filled('up1_h')) $koneksi['up1'] = ['h' => (int)$request->up1_h, 'm' => (int)$request->up1_m];
-        if ($request->filled('up2_h')) $koneksi['up2'] = ['h' => (int)$request->up2_h, 'm' => (int)$request->up2_m];
-        if ($request->filled('rs1_h')) $koneksi['rs1'] = ['h' => (int)$request->rs1_h, 'm' => (int)$request->rs1_m];
-        if ($request->filled('rs2_h')) $koneksi['rs2'] = ['h' => (int)$request->rs2_h, 'm' => (int)$request->rs2_m];
+        if ($request->filled('db_index'))     $koneksi['db_index']     = (int) $request->db_index;
 
         if (empty($koneksi)) {
             return redirect()->route('device.detail', $id)->with('error', 'Tidak ada perubahan.');
@@ -174,6 +170,11 @@ class DeviceViewController extends Controller
             0=>'upload Presensi', 1=>'upload Sholat',
             2=>'upload Izin', 3=>'upload Izin Mens',
         ];
+
+        $dbPresets = [
+            0 => 'fakeRestApi', 1 => 'fakeRestApiMid',
+            2 => 'restAPI/datasiswa', 3 => 'restAPI/datagtk', 4 => 'restAPI/data',
+        ];
         
         // Ambil data lama, merge dengan yang baru
         $existing = DB::table('devices')->where('device_id', $id)->value('last_koneksi');
@@ -184,10 +185,8 @@ class DeviceViewController extends Controller
             'wifi_nama'     => $request->filled('wifi_index') ? ($wifiPresets[(int)$request->wifi_index] ?? '-') : null,
             'upload_index'  => $request->filled('upload_index') ? (int)$request->upload_index : null,
             'upload_nama'   => $request->filled('upload_index') ? ($uploadPresets[(int)$request->upload_index] ?? '-') : null,
-            'up1'           => $request->filled('up1_h') ? sprintf('%02d:%02d', $request->up1_h, $request->up1_m) : null,
-            'up2'           => $request->filled('up2_h') ? sprintf('%02d:%02d', $request->up2_h, $request->up2_m) : null,
-            'rs1'           => $request->filled('rs1_h') ? sprintf('%02d:%02d', $request->rs1_h, $request->rs1_m) : null,
-            'rs2'           => $request->filled('rs2_h') ? sprintf('%02d:%02d', $request->rs2_h, $request->rs2_m) : null,
+            'db_index' => $request->filled('db_index') ? (int)$request->db_index : null,
+            'db_nama'  => $request->filled('db_index') ? ($dbPresets[(int)$request->db_index] ?? '-') : null,
         ], fn($v) => $v !== null));
 
         $koneksiInfo['timestamp'] = now()->format('Y-m-d H:i:s');
