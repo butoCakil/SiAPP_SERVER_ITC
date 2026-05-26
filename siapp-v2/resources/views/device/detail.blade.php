@@ -210,7 +210,18 @@
                 <button class="btn btn-primary" onclick="kirimPerintah('setSetting')" {{ !$device->online ? 'disabled' : '' }}>⚙️ Kirim Setting</button>
                 <button class="btn btn-success" onclick="kirimPerintah('upload')" {{ !$device->online ? 'disabled' : '' }}>📤 Upload Presensi</button>
                 <button class="btn btn-info" onclick="kirimPerintah('sync')" {{ !$device->online ? 'disabled' : '' }}>🔄 Sync DB</button>
-                <button class="btn btn-warning" onclick="kirimPerintah('toggleSerial')" {{ !$device->online ? 'disabled' : '' }}>🔍 Toggle Serial</button>
+                <button class="btn btn-warning" onclick="kirimPerintah('toggleSerial')" {{ !$device->online ? 'disabled' : '' }}>
+                    🔍 Serial
+                    @if(isset($status['serial']))
+                        @if($status['serial'])
+                            <span class="badge badge-success ml-1">ON</span>
+                        @else
+                            <span class="badge badge-secondary ml-1">OFF</span>
+                        @endif
+                    @else
+                        <span class="badge badge-light ml-1">?</span>
+                    @endif
+                </button>
                 <button class="btn btn-danger" onclick="kirimPerintah('reboot')">🔁 Reboot</button>
             </div>
         </div>
