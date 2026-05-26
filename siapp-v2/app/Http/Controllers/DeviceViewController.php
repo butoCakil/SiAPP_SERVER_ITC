@@ -152,6 +152,7 @@ class DeviceViewController extends Controller
         if ($request->filled('wifi_index'))   $koneksi['wifi_index']   = (int) $request->wifi_index;
         if ($request->filled('upload_index')) $koneksi['upload_index'] = (int) $request->upload_index;
         if ($request->filled('db_index'))     $koneksi['db_index']     = (int) $request->db_index;
+        if ($request->filled('mode_device')) $koneksi['mode_device'] = (int) $request->mode_device;
 
         if (empty($koneksi)) {
             return redirect()->route('device.detail', $id)->with('error', 'Tidak ada perubahan.');
@@ -175,6 +176,12 @@ class DeviceViewController extends Controller
             0 => 'fakeRestApi', 1 => 'fakeRestApiMid',
             2 => 'restAPI/datasiswa', 3 => 'restAPI/datagtk', 4 => 'restAPI/data',
         ];
+
+        $modePresets = [
+            0 => 'Normal', 
+            1 => 'Sholat', 
+            2 => 'Full Online'
+        ];
         
         // Ambil data lama, merge dengan yang baru
         $existing = DB::table('devices')->where('device_id', $id)->value('last_koneksi');
@@ -185,8 +192,10 @@ class DeviceViewController extends Controller
             'wifi_nama'     => $request->filled('wifi_index') ? ($wifiPresets[(int)$request->wifi_index] ?? '-') : null,
             'upload_index'  => $request->filled('upload_index') ? (int)$request->upload_index : null,
             'upload_nama'   => $request->filled('upload_index') ? ($uploadPresets[(int)$request->upload_index] ?? '-') : null,
-            'db_index' => $request->filled('db_index') ? (int)$request->db_index : null,
-            'db_nama'  => $request->filled('db_index') ? ($dbPresets[(int)$request->db_index] ?? '-') : null,
+            'db_index'    => $request->filled('db_index') ? (int)$request->db_index : null,
+            'db_nama'     => $request->filled('db_index') ? ($dbPresets[(int)$request->db_index] ?? '-') : null,
+            'mode_device' => $request->filled('mode_device') ? (int)$request->mode_device : null,
+            'mode_nama'   => $request->filled('mode_device') ? ($modePresets[(int)$request->mode_device] ?? '-') : null,
         ], fn($v) => $v !== null));
 
         $koneksiInfo['timestamp'] = now()->format('Y-m-d H:i:s');

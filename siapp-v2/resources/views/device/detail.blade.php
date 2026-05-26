@@ -281,7 +281,7 @@
                     </div>
                 </div>
 
-                {{-- URL DB Preset --}}
+                {{-- URL DB Preset + Mode Device --}}
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -307,8 +307,26 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="font-size:12px;"><i class="fas fa-sliders-h mr-1"></i>Mode Device
+                                @if(isset($lk['mode_nama']))
+                                    <span class="text-muted ml-1" style="font-size:10px;">(aktif: {{ $lk['mode_nama'] }})</span>
+                                @endif
+                            </label>
+                            <select name="mode_device" class="form-control form-control-sm">
+                                <option value="">— Tidak diubah —</option>
+                                <option value="0">0 — Normal (Presensi Siswa)</option>
+                                <option value="1">1 — Sholat (Pembiasaan Sholat)</option>
+                                <option value="2">2 — Full Online (Real-time)</option>
+                            </select>
+                            <small class="text-muted d-block mt-1">
+                                <i class="fas fa-exclamation-triangle text-warning mr-1"></i>
+                                Ubah mode harus sesuai URL Upload: Normal→upload Presensi, Sholat→upload Sholat.
+                            </small>
+                        </div>
+                    </div>
                 </div>
-
                 <button type="submit" class="btn btn-primary" {{ !$device->online ? 'disabled' : '' }}>
                     <i class="fas fa-paper-plane mr-1"></i>Kirim ke Device
                 </button>
