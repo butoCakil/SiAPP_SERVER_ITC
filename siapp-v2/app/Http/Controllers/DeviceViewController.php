@@ -244,4 +244,23 @@ class DeviceViewController extends Controller
         $service->kirimCommand($id, ['uploadFile' => $path, 'uploadUrl' => $url]);
         return response()->json(['status' => 'ok', 'message' => 'Perintah uploadFile terkirim']);
     }
+
+    public function updateLabel(Request $request, string $id)
+    {
+        $label = $request->input('label', '');
+
+        $exists = DB::table('reg_device')->where('no_device', $id)->exists();
+        if ($exists) {
+            DB::table('reg_device')->where('no_device', $id)->update([
+                'info_device' => $label,
+            ]);
+        } else {
+            // Simpan ke kolom info di tabel devices sebagai fallback
+            DB::table('devices')->where('device_id', $id)->update([
+                'info' => json_encode(['label' => $label], JSON_UNESCAPED_UNICODE),
+            ]);
+        }
+
+        return response()->json(['status' => 'ok']);
+    }
 }

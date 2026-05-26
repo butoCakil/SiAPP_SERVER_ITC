@@ -359,6 +359,25 @@ function updateLastRefresh() {
         .map(n => String(n).padStart(2,'0')).join(':');
 }
 
+async function editLabel(deviceId, currentLabel) {
+    const newLabel = prompt('Edit label device ' + deviceId + ':', currentLabel);
+    if (newLabel === null) return; // cancelled
+    const res = await fetch('/device/' + deviceId + '/label', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ label: newLabel })
+    });
+    const json = await res.json();
+    if (json.status === 'ok') {
+        location.reload();
+    } else {
+        alert('Gagal update label: ' + (json.message ?? 'Unknown error'));
+    }
+}
+
 // ── Toggle detail collapse ──
 function toggleDetail(id) {
     const el = document.getElementById('dc-collapse-'+id);

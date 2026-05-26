@@ -285,6 +285,10 @@ Route::post('/device/{id}/uploadfile', [DeviceViewController::class, 'uploadFile
 Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
     ->middleware('auth.admin')->name('device.dirlist');
 
+Route::post('/device/{id}/label', [DeviceViewController::class, 'updateLabel'])
+    ->middleware('auth.admin')
+    ->name('device.label');
+    
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET

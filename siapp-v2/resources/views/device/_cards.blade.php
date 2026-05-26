@@ -14,7 +14,8 @@
     $ssid     = $status['ssid']          ?? '-';
     $serial   = isset($status['serial']) ? (int)$status['serial'] : null;
 
-    $info = $reg->info_device ?? ($device->info ? json_decode($device->info, true)['ssid'] ?? '-' : '-');
+    $infoJson = $device->info ? json_decode($device->info, true) : [];
+    $info = $reg->info_device ?? $infoJson['label'] ?? $infoJson['ssid'] ?? '-';
 
     $today     = date('Y-m-d');
     $sinceRaw  = $isOnline ? ($device->online_since ?? '') : ($device->offline_since ?? '');
@@ -40,9 +41,11 @@
                     <span class="dc-fw">{{ $device->fw_version }}</span>
                 @endif
             </div>
-            @if($info && $info !== '-')
-                <span class="dc-info">{{ $info }}</span>
-            @endif
+            <span class="dc-info" style="display:inline-flex; align-items:center; gap:4px;">
+                {{ $info && $info !== '-' ? $info : '-' }}
+                <span onclick="editLabel('{{ $device->device_id }}', '{{ addslashes($info) }}')"
+                    title="Edit label" style="cursor:pointer; font-size:10px; opacity:0.6;">✏️</span>
+            </span>
             @if($sinceTime)
                 <div class="{{ $isOnline ? 'dc-since-online' : 'dc-since-offline' }}">
                     {{ $isOnline ? 'Online' : 'Last Offline' }}: {{ $sinceTime }}
