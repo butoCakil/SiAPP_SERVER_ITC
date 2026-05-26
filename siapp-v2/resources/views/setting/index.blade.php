@@ -330,6 +330,48 @@
             </div>
         </div>
 
+        {{-- ── Jadwal Upload & Restart Device ── --}}
+        <div class="card card-outline card-secondary mb-3">
+            <div class="card-header py-2">
+                <h3 class="card-title"><i class="fas fa-clock mr-2"></i>Jadwal Upload & Restart Device</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-upload mr-1"></i>Upload #1</label>
+                            <input type="time" name="upload1" class="form-control form-control-sm"
+                                value="{{ $setting->upload1 ?? '07:30:00' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-upload mr-1"></i>Upload #2</label>
+                            <input type="time" name="upload2" class="form-control form-control-sm"
+                                value="{{ $setting->upload2 ?? '13:00:00' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-redo mr-1"></i>Restart #1</label>
+                            <input type="time" name="restart1" class="form-control form-control-sm"
+                                value="{{ $setting->restart1 ?? '05:00:00' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label style="font-size:12px;"><i class="fas fa-redo mr-1"></i>Restart #2</label>
+                            <input type="time" name="restart2" class="form-control form-control-sm"
+                                value="{{ $setting->restart2 ?? '17:00:00' }}">
+                        </div>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">
+                    <i class="fas fa-info-circle mr-1"></i>Jadwal ini dikirim ke semua device via MQTT saat tombol "Kirim Setting" ditekan di halaman Device.
+                </small>
+            </div>
+        </div>
+
         {{-- ── Integrasi TIM IT ── --}}
         <div class="card card-outline card-info mb-3">
             <div class="card-header py-2">
