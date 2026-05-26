@@ -49,6 +49,10 @@ class DeviceService
                 'dzuhur_end'   => $setting->dzuhur_end   ?? '13:30:00',
                 'ashar_start'  => $setting->ashar_start  ?? '15:00:00',
                 'ashar_end'    => $setting->ashar_end    ?? '16:30:00',
+                'up1'          => $setting->upload1      ?? '07:30:00',
+                'up2'          => $setting->upload2      ?? '13:00:00',
+                'rs1'          => $setting->restart1     ?? '05:00:00',
+                'rs2'          => $setting->restart2     ?? '17:00:00',
             ],
         ], JSON_UNESCAPED_UNICODE);
 
