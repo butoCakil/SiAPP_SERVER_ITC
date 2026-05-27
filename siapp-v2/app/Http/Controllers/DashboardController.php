@@ -126,10 +126,11 @@ class DashboardController extends Controller
 
         $chartSholat = DB::table('presensiEvent')
             ->selectRaw('tanggal,
-                SUM(CASE WHEN keterangan="DZUHUR" THEN 1 ELSE 0 END) as dzuhur,
-                SUM(CASE WHEN keterangan="ASHAR" THEN 1 ELSE 0 END) as ashar,
+                SUM(CASE WHEN keterangan="DHUHA"  AND ruang != "Izin Mens" THEN 1 ELSE 0 END) as dhuha,
+                SUM(CASE WHEN keterangan="DZUHUR" AND ruang != "Izin Mens" THEN 1 ELSE 0 END) as dzuhur,
+                SUM(CASE WHEN keterangan="ASHAR"  AND ruang != "Izin Mens" THEN 1 ELSE 0 END) as ashar,
                 SUM(CASE WHEN ruang="Izin Mens" THEN 1 ELSE 0 END) as izin')
-            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days', strtotime($tanggal))))
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-30 days', strtotime($tanggal))))
             ->where('tanggal', '<=', $tanggal)
             ->groupBy('tanggal')
             ->orderBy('tanggal')

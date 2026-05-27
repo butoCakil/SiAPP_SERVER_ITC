@@ -797,14 +797,22 @@ function renderChart(data, tab) {
     });
     const filtered = workdays.slice(-15); // ambil 15 hari kerja terakhir
     const labels = filtered.map(d => {
-        const dow  = new Date(d.tanggal).getDay();
-        return [d.tanggal, hariNames[dow]];
+        const parts = d.tanggal.split('-');
+        const dow   = new Date(d.tanggal).getDay();
+        return [parts[2]+'-'+parts[1]+'-'+parts[0].slice(2), hariNames[dow]];
     });
     const ctx    = document.getElementById('chartHome').getContext('2d');
 
     let datasets;
     if (tab === 'sholat') {
         datasets = [
+            {
+                label: 'Dhuha',
+                data: filtered.map(d => d.dhuha),
+                backgroundColor: '#2196f3',
+                borderColor: '#2196f3',
+                borderRadius: 4,
+            },
             {
                 label: 'Dzuhur',
                 data: filtered.map(d => d.dzuhur),

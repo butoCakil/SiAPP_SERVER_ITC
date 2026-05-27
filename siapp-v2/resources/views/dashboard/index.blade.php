@@ -476,11 +476,24 @@ updateJam();
 setTimeout(() => location.reload(), 60000);
 
 // ── Chart Pembiasaan Sholat ──
-const chartData = @json($chartSholat);
-const labels    = chartData.map(d => d.tanggal);
-const dzuhur    = chartData.map(d => parseInt(d.dzuhur));
-const ashar     = chartData.map(d => parseInt(d.ashar));
-const izin      = chartData.map(d => parseInt(d.izin));
+const chartData  = @json($chartSholat);
+const hariKerja  = {{ (int)($setting->hari_kerja ?? 5) }};
+const hariNames  = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+const workdays   = chartData.filter(d => {
+    const dow = new Date(d.tanggal).getDay();
+    if (hariKerja === 5) return dow >= 1 && dow <= 5;
+    if (hariKerja === 6) return dow >= 1 && dow <= 6;
+    return true;
+});
+const filtered   = workdays.slice(-15);
+const labels     = filtered.map(d => {
+    const parts = d.tanggal.split('-');
+    return [parts[2]+'-'+parts[1]+'-'+parts[0].slice(2), hariNames[new Date(d.tanggal).getDay()]];
+});
+const dhuha      = filtered.map(d => parseInt(d.dhuha));
+const dzuhur     = filtered.map(d => parseInt(d.dzuhur));
+const ashar      = filtered.map(d => parseInt(d.ashar));
+const izin       = filtered.map(d => parseInt(d.izin));
 
 Chart.register(ChartDataLabels);
 const ctx = document.getElementById('chartSholat').getContext('2d');
@@ -489,6 +502,14 @@ let myChart = new Chart(ctx, {
     data: {
         labels: labels,
         datasets: [
+            {
+                label: 'Dhuha',
+                data: dhuha,
+                backgroundColor: 'rgba(33,150,243,0.75)',
+                borderColor: '#2196f3',
+                borderWidth: 2,
+                borderRadius: 4,
+            },
             {
                 label: 'Dzuhur',
                 data: dzuhur,
