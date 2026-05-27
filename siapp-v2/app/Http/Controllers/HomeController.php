@@ -25,15 +25,19 @@ class HomeController extends Controller
         };
 
         // ── Status sholat ──
-        $batasDzuhurMulai   = '11:45:00';
-        $batasDzuhurSelesai = '14:30:00';
-        $batasAsharMulai    = '14:30:01';
-        $batasAsharSelesai  = '17:00:00';
+        $batasDhuhaStart  = $setting->dhuha_start  ?? '07:00:00';
+        $batasDhuhaEnd    = $setting->dhuha_end    ?? '11:00:00';
+        $batasDzuhurStart = $setting->dzuhur_start ?? '11:30:00';
+        $batasDzuhurEnd   = $setting->dzuhur_end   ?? '13:30:00';
+        $batasAsharStart  = $setting->ashar_start  ?? '15:00:00';
+        $batasAsharEnd    = $setting->ashar_end    ?? '16:30:00';
 
-        if ($jam >= $batasDzuhurMulai && $jam <= $batasDzuhurSelesai) {
+        if ($jam >= $batasDzuhurStart && $jam <= $batasDzuhurEnd) {
             $statusSholat = ['label' => 'DZUHUR', 'color' => '#ff8800', 'aktif' => true];
-        } elseif ($jam >= $batasAsharMulai && $jam <= $batasAsharSelesai) {
+        } elseif ($jam >= $batasAsharStart && $jam <= $batasAsharEnd) {
             $statusSholat = ['label' => 'ASHAR',  'color' => '#9c27b0', 'aktif' => true];
+        } elseif ($jam >= $batasDhuhaStart && $jam <= $batasDhuhaEnd) {
+            $statusSholat = ['label' => 'DHUHA',  'color' => '#2196f3', 'aktif' => true];
         } else {
             $statusSholat = ['label' => 'TUTUP',  'color' => '#607d8b', 'aktif' => false];
         }

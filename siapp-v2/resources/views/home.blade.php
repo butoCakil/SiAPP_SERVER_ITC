@@ -487,9 +487,11 @@
                     {{ $statusSholat['aktif'] ? $statusSholat['label'].' AKTIF' : 'TUTUP' }}
                 </div>
                 <div class="status-sub">
-                    🕛 Dzuhur: 11:45 – 14:30
+                    🌅 Dhuha: {{ substr($setting->dhuha_start, 0, 5) }} – {{ substr($setting->dhuha_end, 0, 5) }}
                     &nbsp;|&nbsp;
-                    🕓 Ashar: 14:30 – 17:00
+                    🕛 Dzuhur: {{ substr($setting->dzuhur_start, 0, 5) }} – {{ substr($setting->dzuhur_end, 0, 5) }}
+                    &nbsp;|&nbsp;
+                    🕓 Ashar: {{ substr($setting->ashar_start, 0, 5) }} – {{ substr($setting->ashar_end, 0, 5) }}
                 </div>
             </div>
             @if($statusSholat['aktif'])
