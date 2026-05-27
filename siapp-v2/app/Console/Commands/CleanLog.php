@@ -16,10 +16,13 @@ class CleanLog extends Command
         $days  = (int) $this->option('days');
         $batas = now()->subDays($days)->toDateString();
 
-        $deletedReq    = DB::table('tempreq')->whereDate('timestamp', '<', $batas)->delete();
-        $deletedDevice = DB::table('device_logs')->whereDate('received_at', '<', $batas)->delete();
+        $deletedReq     = DB::table('tempreq')->whereDate('timestamp', '<', $batas)->delete();
+        $deletedDevice  = DB::table('device_logs')->whereDate('received_at', '<', $batas)->delete();
+        $deletedMetrics = DB::table('device_metrics')
+            ->where('recorded_at', '<', now()->subHours(24))
+            ->delete();
 
-        $msg = "log:clean — hapus >{$days} hari: tempreq={$deletedReq}, device_logs={$deletedDevice}";
+        $msg = "log:clean — hapus >{$days} hari: tempreq={$deletedReq}, device_logs={$deletedDevice}, metrics={$deletedMetrics}";
         $this->info('[' . now() . '] ' . $msg);
         Log::info($msg);
     }

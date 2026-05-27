@@ -139,10 +139,10 @@ class DeviceService
             ]);
 
             // Hapus data lebih dari 24 jam
-            DB::table('device_metrics')
-                ->where('device_id', $deviceId)
-                ->where('recorded_at', '<', now()->subHours(24))
-                ->delete();
+            // DB::table('device_metrics')
+            //     ->where('device_id', $deviceId)
+            //     ->where('recorded_at', '<', now()->subHours(24))
+            //     ->delete();
         }
     }
     // ── Update info device di DB ──
@@ -212,14 +212,19 @@ class DeviceService
             default => 'last_status',
         };
 
+        $updateData = [
+            $column      => $detailJson,
+            'last_seen'  => now(),
+            'updated_at' => now(),
+        ];
+
+        if (!empty($version)) {
+            $updateData['fw_version'] = $version;
+        }
+
         DB::table('devices')
             ->where('device_id', $deviceId)
-            ->update([
-                'fw_version' => $version,
-                $column      => $detailJson,
-                'last_seen'  => now(),
-                'updated_at' => now(),
-            ]);
+            ->update($updateData);
     }
 
     // ── Simpan log device ──
