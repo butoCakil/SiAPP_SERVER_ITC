@@ -226,10 +226,12 @@
                     <i class="fas fa-mosque mr-1"></i>
                     {{ $statusSholat['label'] }}
                 </span>
-                <div class="mt-2" style="font-size:11px; color:#888;">
-                    🕛 Dzuhur: 11:45 - 14:30
+                <div class="mt-2" style="font-size:11px; color:#888; line-height:1.8;">
+                    🌅 Dhuha: {{ substr($setting->dhuha_start, 0, 5) }} – {{ substr($setting->dhuha_end, 0, 5) }}
                     &nbsp;|&nbsp;
-                    🕓 Ashar: 14:30 - 17:00
+                    🕛 Dzuhur: {{ substr($setting->dzuhur_start, 0, 5) }} – {{ substr($setting->dzuhur_end, 0, 5) }}
+                    &nbsp;|&nbsp;
+                    🕓 Ashar: {{ substr($setting->ashar_start, 0, 5) }} – {{ substr($setting->ashar_end, 0, 5) }}
                 </div>
                 <a href="{{ route('presensi.event') }}" class="btn btn-xs btn-outline-secondary mt-2" style="font-size:11px;">
                     <i class="fas fa-list mr-1"></i>Rekap
@@ -243,7 +245,7 @@
     {{-- Recent Presensi --}}
     @if($isToday)
     <div class="col-md-8">
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-primary h-100">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fas fa-list mr-2"></i>Aktivitas Terbaru
