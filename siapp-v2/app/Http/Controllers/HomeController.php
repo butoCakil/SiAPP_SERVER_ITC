@@ -233,7 +233,7 @@ class HomeController extends Controller
         SUM(CASE WHEN keterangan='DZUHUR' AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as dzuhur,
         SUM(CASE WHEN keterangan='ASHAR'  AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as ashar,
         SUM(CASE WHEN ruang='Izin Mens' THEN 1 ELSE 0 END) as izin")
-            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-30 days')))
             ->where('tanggal', '<=', $tanggal)
             ->groupBy('tanggal')
             ->orderBy('tanggal')
@@ -245,7 +245,7 @@ class HomeController extends Controller
         SUM(CASE WHEN ketmasuk = 'M'   THEN 1 ELSE 0 END) as tepat,
         SUM(CASE WHEN ketmasuk = 'T'   THEN 1 ELSE 0 END) as toleransi,
         SUM(CASE WHEN ketmasuk = 'TLT' THEN 1 ELSE 0 END) as terlambat")
-            ->where('tanggal', '>=', date('Y-m-d', strtotime('-14 days')))
+            ->where('tanggal', '>=', date('Y-m-d', strtotime('-30 days')))
             ->where('tanggal', '<=', $tanggal)
             ->groupBy('tanggal')
             ->orderBy('tanggal')
@@ -264,6 +264,7 @@ class HomeController extends Controller
             'rekapSholat'   => $rekapSholat->values(),
             'chartSholat'   => $chartSholat->values(),
             'chartPresensi' => $chartPresensi->values(),
+            'hari_kerja'    => (int) ($setting->hari_kerja ?? 5),
         ]);
     }
 }

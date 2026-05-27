@@ -728,6 +728,7 @@ const POLL_KELAS  = '{{ $filterKelas }}';
 const POLL_TGL    = '{{ $tanggal }}';
 const CURRENT_TAB = '{{ $tab }}';
 const IS_TODAY    = {{ $isToday ? 'true' : 'false' }};
+const HARI_KERJA = {{ (int)($setting->hari_kerja ?? 5) }};
 
 // Badge renderer helpers
 function badgeKetMasuk(ket) {
@@ -786,7 +787,19 @@ let homeChart = null;
 function renderChart(data, tab) {
     if (!data || !data.length) return;
 
-    const labels = data.map(d => d.tanggal);
+    const hariKerja = typeof HARI_KERJA !== 'undefined' ? HARI_KERJA : 5;
+    const hariNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    const workdays = data.filter(d => {
+        const dow = new Date(d.tanggal).getDay();
+        if (hariKerja === 5) return dow >= 1 && dow <= 5;
+        if (hariKerja === 6) return dow >= 1 && dow <= 6;
+        return true;
+    });
+    const filtered = workdays.slice(-15); // ambil 15 hari kerja terakhir
+    const labels = filtered.map(d => {
+        const dow  = new Date(d.tanggal).getDay();
+        return [d.tanggal, hariNames[dow]];
+    });
     const ctx    = document.getElementById('chartHome').getContext('2d');
 
     let datasets;
@@ -794,21 +807,21 @@ function renderChart(data, tab) {
         datasets = [
             {
                 label: 'Dzuhur',
-                data: data.map(d => d.dzuhur),
+                data: filtered.map(d => d.dzuhur),
                 backgroundColor: '#ff8800',
                 borderColor: '#ff8800',
                 borderRadius: 4,
             },
             {
                 label: 'Ashar',
-                data: data.map(d => d.ashar),
+                data: filtered.map(d => d.ashar),
                 backgroundColor: '#9c27b0',
                 borderColor: '#9c27b0',
                 borderRadius: 4,
             },
             {
                 label: 'Izin Mens',
-                data: data.map(d => d.izin),
+                data: filtered.map(d => d.izin),
                 backgroundColor: '#e91e8c',
                 borderColor: '#e91e8c',
                 borderRadius: 4,
@@ -818,14 +831,14 @@ function renderChart(data, tab) {
         datasets = [
             {
                 label: 'Tepat',
-                data: data.map(d => d.tepat),
+                data: filtered.map(d => d.tepat),
                 backgroundColor: '#00c853',
                 borderColor: '#00c853',
                 borderRadius: 4,
             },
             {
                 label: 'Terlambat',
-                data: data.map(d => d.terlambat),
+                data: filtered.map(d => d.terlambat),
                 backgroundColor: '#f44336',
                 borderColor: '#f44336',
                 borderRadius: 4,
@@ -858,7 +871,7 @@ function renderChart(data, tab) {
                 },
                 scales: {
                     x: {
-                        ticks: { color: '#888', font: { size: 10 } },
+                        ticks: { color: '#888', font: { size: 10 }, maxRotation: 0 },
                         grid:  { color: 'rgba(255,255,255,0.04)' },
                     },
                     y: {
