@@ -112,19 +112,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header py-2"><strong>📡 Status Terakhir</strong></div>
-                <div class="card-body">
-                    <div class="info-row"><span class="info-label">Status</span><span>{{ $status['status'] ?? '-' }}</span></div>
-                    <div class="info-row"><span class="info-label">SSID</span><span>{{ $status['ssid'] ?? '-' }}</span></div>
-                    <div class="info-row"><span class="info-label">Serial</span><span>{{ isset($status['serial']) ? ($status['serial'] ? 'ON' : 'OFF') : '-' }}</span></div>
-                    <div class="info-row"><span class="info-label">Firmware</span><span>{{ $status['version'] ?? $device->fw_version ?? '-' }}</span></div>
-                    <div class="info-row"><span class="info-label">Last Seen</span><span>{{ $device->last_seen ?? '-' }}</span></div>
-                    <div class="info-row"><span class="info-label">Online Since</span><span>{{ $device->online_since ?? '-' }}</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
                 <div class="card-header py-2"><strong>⚙️ Setting Terakhir</strong></div>
                 <div class="card-body">
                     @if(!empty($setting))
@@ -152,6 +139,19 @@
                     @else
                         <p class="text-muted">Belum ada command terkirim.</p>
                     @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header py-2"><strong>📡 Status Terakhir</strong></div>
+                <div class="card-body">
+                    <div class="info-row"><span class="info-label">Status</span><span>{{ $status['status'] ?? '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">SSID</span><span>{{ $status['ssid'] ?? '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">Serial</span><span>{{ isset($status['serial']) ? ($status['serial'] ? 'ON' : 'OFF') : '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">Firmware</span><span>{{ $status['version'] ?? $device->fw_version ?? '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">Last Seen</span><span>{{ $device->last_seen ?? '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">Online Since</span><span>{{ $device->online_since ?? '-' }}</span></div>
                 </div>
             </div>
 

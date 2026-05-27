@@ -1,0 +1,161 @@
+[2026-02-20 12:53:28] Order dari server:
+[2026-02-20 12:53:29] devices/M0001/settings
+[2026-02-20 12:53:29] Pesan: {"device_id":"M0001","command":{"reboot":true,"sync":false,"upload":false,"toggleSerial":null}}
+[2026-02-20 12:53:29] Perintah Server: Reboot device
+[2026-02-20 12:53:29] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-02-20 13:04:33] MQTT connection failed, rc=-2
+[2026-02-20 13:07:04] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-02-20 13:09:39] MQTT connection failed, rc=-2
+[2026-02-20 13:11:29] MQTT connection failed, rc=-2
+[2026-02-20 13:13:59] MQTT connection failed, rc=-2
+[2026-02-20 13:23:00] MQTT connection failed, rc=-2
+[2026-02-20 13:24:31] MQTT connection failed, rc=-2
+[2026-02-20 13:32:32] MQTT connection failed, rc=-2
+[2026-02-20 13:35:02] MQTT connection failed, rc=-2
+[2026-05-25 10:48:19] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-25 10:49:16] Order dari server:
+[2026-05-25 10:49:16] devices/M0001/settings
+[2026-05-25 10:49:16] Pesan: {"device_id":"M0001","command":{"sync":true}}
+[2026-05-25 10:49:16] Perintah Server: Jalankan sinkronisasi
+[2026-05-25 10:49:30] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-05-25 10:49:30] Update DB Berhasil!
+[2026-05-25 10:49:51] Order dari server:
+[2026-05-25 10:49:51] devices/M0001/settings
+[2026-05-25 10:49:51] Pesan: {"device_id":"M0001","command":{"upload":true}}
+[2026-05-25 10:49:51] Perintah Server: Upload presensi
+[2026-05-25 10:49:57] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-05-25 10:49:57] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-05-25 11:20:45] MQTT gagal, rc=-2
+[2026-05-25 11:20:55] MQTT gagal, rc=-2
+[2026-05-25 11:35:34] MQTT gagal, rc=-2
+[2026-05-25 11:35:44] MQTT gagal, rc=-2
+[2026-05-25 11:35:54] MQTT gagal, rc=-2
+[2026-05-25 11:36:04] MQTT gagal, rc=-2
+[2026-05-25 11:36:14] MQTT gagal, rc=-2
+[2026-05-25 11:38:27] MQTT gagal, rc=-2
+[2026-05-25 11:44:10] MQTT gagal, rc=-2
+[2026-05-25 11:45:03] MQTT gagal, rc=-2
+[2026-05-25 11:45:13] MQTT gagal, rc=-2
+[2026-05-25 11:50:57] Order dari server:
+[2026-05-25 11:50:57] devices/M0001/settings
+[2026-05-25 11:50:57] Pesan: {"device_id":"M0001","koneksi":{"wifi_index":0,"up1":{"h":12,"m":50},"up2":{"h":16,"m":0},"rs1":{"h":6,"m":0},"rs2":{"h":18,"m":0}}}
+[2026-05-25 11:58:42] Order dari server:
+[2026-05-25 11:58:42] devices/M0001/settings
+[2026-05-25 11:58:42] Pesan: {"device_id":"M0001","koneksi":{"wifi_index":0,"up1":{"h":12,"m":50},"up2":{"h":15,"m":50}}}
+[2026-05-25 11:58:42] WiFi -> Instruktur-TE
+[2026-05-25 11:58:42] Upload1 -> 12:50
+[2026-05-25 11:58:42] Upload2 -> 15:50
+[2026-05-25 12:05:13] Order dari server:
+[2026-05-25 12:05:13] devices/M0001/settings
+[2026-05-25 12:05:13] Pesan: {"device_id":"M0001","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5","dhuha_start":"07:00:00","dhuha_end":"11:00:00","dzuhur_start":"11:30:00","dzuhur_end":"13:30:00","ashar_start":"15:00:00","ashar_end":"16:30:00"}}
+[2026-05-25 12:08:14] Order dari server:
+[2026-05-25 12:08:14] devices/M0001/settings
+[2026-05-25 12:08:14] Pesan: {"device_id":"M0001","koneksi":{"wifi_index":0}}
+[2026-05-25 12:08:14] WiFi -> Instruktur-TE
+[2026-05-25 12:09:55] Order dari server:
+[2026-05-25 12:09:55] devices/M0001/settings
+[2026-05-25 12:09:55] Pesan: {"device_id":"M0001","koneksi":{"wifi_index":0}}
+[2026-05-25 12:09:55] WiFi -> Instruktur-TE
+[2026-05-25 12:18:53] Order dari server:
+[2026-05-25 12:18:53] devices/M0001/settings
+[2026-05-25 12:18:53] Pesan: {"device_id":"M0001","koneksi":{"wifi_index":0,"upload_index":1,"up1":{"h":12,"m":50},"up2":{"h":15,"m":40},"rs1":{"h":6,"m":0},"rs2":{"h":18,"m":0}}}
+[2026-05-25 12:18:53] WiFi -> Instruktur-TE
+[2026-05-25 12:18:53] Upload -> upload Sholat
+[2026-05-25 12:18:53] Upload1 -> 12:50
+[2026-05-25 12:18:53] Upload2 -> 15:40
+[2026-05-25 12:18:53] Restart1 -> 6:0
+[2026-05-25 12:18:53] Restart2 -> 18:0
+[2026-05-25 12:36:29] MQTT gagal, rc=-2
+[2026-05-25 12:36:39] MQTT gagal, rc=-2
+[2026-05-25 12:40:56] Order dari server:
+[2026-05-25 12:40:56] devices/M0001/settings
+[2026-05-25 12:40:56] Pesan: {"device_id":"M0001","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5","dhuha_start":"07:00:00","dhuha_end":"11:00:00","dzuhur_start":"11:30:00","dzuhur_end":"13:30:00","ashar_start":"15:00:00","ashar_end":"16:30:00"}}
+[2026-05-25 12:43:45] Order dari server:
+[2026-05-25 12:43:45] devices/M0001/settings
+[2026-05-25 12:43:45] Pesan: {"device_id":"M0001","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5","dhuha_start":"07:00:00","dhuha_end":"11:00:00","dzuhur_start":"11:30:00","dzuhur_end":"13:30:00","ashar_start":"15:00:00","ashar_end":"16:30:00"}}
+[2026-05-25 12:43:53] MQTT gagal, rc=-2
+[2026-05-25 12:47:22] Order dari server:
+[2026-05-25 12:47:22] devices/M0001/settings
+[2026-05-25 12:47:22] Pesan: {"device_id":"M0001","settings":{"mode":0,"wa":"05:00:00","wta":"07:30:00","wtp":"13:00:00","wtp_jumat":"11:00:00","wp":"19:30:00","wp_jumat":"16:00:00","hari_kerja":5,"waktumasuk":"07:00:00","waktupulang":"15:00:00","info":"5","dhuha_start":"07:00:00","dhuha_end":"11:00:00","dzuhur_start":"11:30:00","dzuhur_end":"13:30:00","ashar_start":"15:00:00","ashar_end":"16:30:00"}}
+[2026-05-25 13:00:00] Saatnya upload data #2!
+[2026-05-25 13:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-25 13:00:01] Upload #2 gagal, dijadwalkan ulang pada 13:15
+[2026-05-25 13:15:00] Saatnya upload data #2!
+[2026-05-25 13:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-25 13:15:01] Upload #2 gagal, dijadwalkan ulang pada 13:30
+[2026-05-25 13:24:43] MQTT gagal, rc=-2
+[2026-05-25 13:25:29] Order dari server:
+[2026-05-25 13:25:30] devices/M0001/settings
+[2026-05-25 13:25:30] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 13:25:30] List dir: /
+[2026-05-25 13:25:30] Dir list terkirim: /
+[2026-05-25 13:36:45] Order dari server:
+[2026-05-25 13:36:45] devices/M0001/settings
+[2026-05-25 13:36:45] Pesan: {"device_id":"M0001","command":{"upload":true}}
+[2026-05-25 13:36:45] Perintah Server: Upload presensi
+[2026-05-25 13:36:45] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-05-25 13:36:52] Order dari server:
+[2026-05-25 13:36:52] devices/M0001/settings
+[2026-05-25 13:36:52] Pesan: {"device_id":"M0001","command":{"toggleSerial":1}}
+[2026-05-25 13:36:52] Toggle serial: 0
+[2026-05-25 13:37:10] Order dari server:
+[2026-05-25 13:37:10] devices/M0001/settings
+[2026-05-25 13:37:10] Pesan: {"device_id":"M0001","command":{"reboot":true}}
+[2026-05-25 13:37:10] Perintah Server: Reboot device
+[2026-05-25 13:37:10] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-05-25 13:43:17] MQTT gagal, rc=-2
+[2026-05-25 13:43:27] MQTT gagal, rc=-2
+[2026-05-25 15:07:08] Order dari server:
+[2026-05-25 15:07:08] devices/M0001/settings
+[2026-05-25 15:07:08] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:07:08] List dir: /
+[2026-05-25 15:07:08] Dir list terkirim: /
+[2026-05-25 15:08:29] Order dari server:
+[2026-05-25 15:08:29] devices/M0001/settings
+[2026-05-25 15:08:29] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:08:29] List dir: /
+[2026-05-25 15:08:29] Dir list terkirim: /
+[2026-05-25 15:11:26] Order dari server:
+[2026-05-25 15:11:26] devices/M0001/settings
+[2026-05-25 15:11:26] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:11:26] List dir: /
+[2026-05-25 15:11:26] Dir list terkirim: /
+[2026-05-25 15:11:58] Order dari server:
+[2026-05-25 15:11:58] devices/M0001/settings
+[2026-05-25 15:11:58] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:11:58] List dir: /
+[2026-05-25 15:11:59] Dir list terkirim: /
+[2026-05-25 15:13:01] Order dari server:
+[2026-05-25 15:13:01] devices/M0001/settings
+[2026-05-25 15:13:01] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:13:01] List dir: /
+[2026-05-25 15:13:01] Dir list terkirim: /
+[2026-05-25 15:15:50] Order dari server:
+[2026-05-25 15:15:50] devices/M0001/settings
+[2026-05-25 15:15:50] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:15:50] List dir: /
+[2026-05-25 15:15:50] Dir list terkirim: /
+[2026-05-25 15:16:04] Order dari server:
+[2026-05-25 15:16:04] devices/M0001/settings
+[2026-05-25 15:16:04] Pesan: {"device_id":"M0001","command":{"listDir":"\/presensisholat"}}
+[2026-05-25 15:16:04] List dir: /presensisholat
+[2026-05-25 15:16:04] Dir list terkirim: /presensisholat
+[2026-05-25 15:16:42] Order dari server:
+[2026-05-25 15:16:42] devices/M0001/settings
+[2026-05-25 15:16:42] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:16:42] List dir: /
+[2026-05-25 15:16:42] Dir list terkirim: /
+[2026-05-25 15:17:45] Order dari server:
+[2026-05-25 15:17:45] devices/M0001/settings
+[2026-05-25 15:17:45] Pesan: {"device_id":"M0001","command":{"listDir":"\/DBlite"}}
+[2026-05-25 15:17:45] List dir: /DBlite
+[2026-05-25 15:17:45] Dir list terkirim: /DBlite
+[2026-05-25 15:22:45] Order dari server:
+[2026-05-25 15:22:45] devices/M0001/settings
+[2026-05-25 15:22:45] Pesan: {"device_id":"M0001","command":{"listDir":"\/"}}
+[2026-05-25 15:22:45] List dir: /
+[2026-05-25 15:22:45] Dir list terkirim: /
+[2026-05-25 15:23:10] Order dari server:
+[2026-05-25 15:23:10] devices/M0001/settings
+[2026-05-25 15:23:10] Pesan: {"device_id":"M0001","command":{"uploadFile":"\/log_M0001.txt","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-05-25 15:23:10] Upload file: /log_M0001.txt -> http://172.16.80.123/data/upload.php

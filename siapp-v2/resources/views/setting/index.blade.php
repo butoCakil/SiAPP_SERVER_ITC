@@ -86,7 +86,7 @@
         <input type="hidden" name="auto_mode" value="{{ $setting->auto_mode }}">
         <input type="hidden" name="info"      value="{{ $setting->info ?? '' }}">
 
-        <div class="card card-outline card-primary mb-3">
+        <div class="card card-outline card-danger mb-3">
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-calendar-alt mr-2"></i>Jadwal & Waktu</h3>
             </div>
@@ -209,7 +209,7 @@
         </div>
 
         {{-- ── Window Waktu Dhuha ── --}}
-        <div class="card card-outline card-success mb-3">
+        <div class="card card-outline card-warning mb-3">
             <div class="card-header py-2">
                 <h3 class="card-title"><i class="fas fa-sun mr-2"></i>Window Waktu Dhuha</h3>
             </div>
@@ -241,7 +241,7 @@
         </div>
 
         {{-- ── Window Waktu Sholat ── --}}
-        <div class="card card-outline card-warning mb-3">
+        <div class="card card-outline card-primary mb-3">
             <div class="card-header py-2">
                 <h3 class="card-title"><i class="fas fa-mosque mr-2"></i>Window Waktu Sholat</h3>
             </div>
@@ -458,7 +458,7 @@
         </div>
 
         {{-- ── Notifikasi WA ── --}}
-        <div class="card card-outline card-warning mb-3">
+        <div class="card card-outline card-success mb-3">
             <div class="card-header py-2">
                 <h3 class="card-title"><i class="fab fa-whatsapp mr-2"></i>Notifikasi WhatsApp</h3>
             </div>

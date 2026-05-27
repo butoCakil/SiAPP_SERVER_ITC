@@ -1,0 +1,36 @@
+{
+    "data": [
+        {
+            "nokartu": "A365A2E2",
+            "nis": "3396",
+            "tanggal": "2026-05-24",
+            "jam": "17:26:37",
+            "keterangan": "ASHAR",
+            "nodevice": "M0010"
+        },
+        {
+            "nokartu": "5A8B1980",
+            "nis": "1234",
+            "tanggal": "2026-05-25",
+            "jam": "10:48:32",
+            "keterangan": "DHUHA",
+            "nodevice": "M0001"
+        },
+        {
+            "nokartu": "A365A2E2",
+            "nis": "3396",
+            "tanggal": "2026-05-25",
+            "jam": "14:16:11",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "F48310BB",
+            "nis": "3696",
+            "tanggal": "2026-05-25",
+            "jam": "15:53:18",
+            "keterangan": "ASHAR",
+            "nodevice": "M0010"
+        }
+    ]
+}
