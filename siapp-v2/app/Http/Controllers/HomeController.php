@@ -230,6 +230,7 @@ class HomeController extends Controller
         // ── Chart sholat 14 hari ──
         $chartSholat = DB::table('presensiEvent')
             ->selectRaw("tanggal,
+        SUM(CASE WHEN keterangan='DHUHA'  AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as dhuha,
         SUM(CASE WHEN keterangan='DZUHUR' AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as dzuhur,
         SUM(CASE WHEN keterangan='ASHAR'  AND ruang != 'Izin Mens' THEN 1 ELSE 0 END) as ashar,
         SUM(CASE WHEN ruang='Izin Mens' THEN 1 ELSE 0 END) as izin")
