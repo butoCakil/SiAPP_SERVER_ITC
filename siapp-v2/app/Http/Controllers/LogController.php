@@ -154,4 +154,128 @@ class LogController extends Controller
         $deleted = $query->delete();
         return back()->with('success', "Device log berhasil dihapus ({$deleted} records).");
     }
+
+    // ── AJAX: Data sidebar ──
+    public function sidebar()
+    {
+        // Device list untuk MQTT log
+        $mqttDevices = DB::table('device_logs')
+            ->selectRaw('device_id, DATE(received_at) as tanggal, COUNT(*) as total')
+            ->groupBy('device_id', 'tanggal')
+            ->orderBy('device_id')
+            ->orderByDesc('tanggal')
+            ->get()
+            ->groupBy('device_id');
+
+        // Device list untuk File SD
+        $logFileDir = '/opt/lampp/htdocs/data/uploads/';
+        $allFiles   = glob($logFileDir . '*_log_*.txt') ?: [];
+        rsort($allFiles);
+        $sdDevices  = [];
+        foreach ($allFiles as $f) {
+            $base = basename($f);
+            if (preg_match('/^(\d{4}-\d{2}-\d{2})_log_(.+)\.txt$/', $base, $m)) {
+                $sdDevices[$m[2]][] = [
+                    'tanggal'  => $m[1],
+                    'filename' => $base,
+                    'size'     => filesize($f),
+                ];
+            }
+        }
+
+        // Server log files
+        $logDir     = storage_path('logs');
+        $serverLogs = glob($logDir . '/laravel-*.log') ?: [];
+        rsort($serverLogs);
+        $serverFiles = array_map(fn($f) => [
+            'filename' => basename($f),
+            'size'     => filesize($f),
+            'tanggal'  => preg_replace('/laravel-(.+)\.log/', '$1', basename($f)),
+        ], $serverLogs);
+
+        // Request log summary per tanggal
+        $requestDates = DB::table('tempreq')
+            ->selectRaw('DATE(timestamp) as tanggal, COUNT(*) as total')
+            ->groupBy('tanggal')
+            ->orderByDesc('tanggal')
+            ->limit(30)
+            ->get();
+
+        return response()->json([
+            'mqtt'    => $mqttDevices,
+            'sd'      => $sdDevices,
+            'server'  => $serverFiles,
+            'request' => $requestDates,
+        ]);
+    }
+
+    // ── AJAX: MQTT log per device per tanggal ──
+    public function ajaxMqtt(Request $request)
+    {
+        $device  = $request->input('device');
+        $tanggal = $request->input('tanggal', date('Y-m-d'));
+        $page    = (int) $request->input('page', 1);
+        $perPage = 100;
+
+        $logs = DB::table('device_logs')
+            ->when($device,  fn($q) => $q->where('device_id', $device))
+            ->when($tanggal, fn($q) => $q->whereDate('received_at', $tanggal))
+            ->orderBy('received_at', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        return response()->json([
+            'data'      => $logs->items(),
+            'total'     => $logs->total(),
+            'lastPage'  => $logs->lastPage(),
+            'current'   => $logs->currentPage(),
+        ]);
+    }
+
+    // ── AJAX: Request log ──
+    public function ajaxRequest(Request $request)
+    {
+        $tanggal = $request->input('tanggal', date('Y-m-d'));
+        $page    = (int) $request->input('page', 1);
+        $perPage = 100;
+
+        $logs = DB::table('tempreq')
+            ->when($tanggal, fn($q) => $q->whereDate('timestamp', $tanggal))
+            ->orderBy('timestamp', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        return response()->json([
+            'data'     => $logs->items(),
+            'total'    => $logs->total(),
+            'lastPage' => $logs->lastPage(),
+            'current'  => $logs->currentPage(),
+        ]);
+    }
+
+    // ── AJAX: Server log content ──
+    public function ajaxServer(Request $request)
+    {
+        $filename = $request->input('file', '');
+        $logDir   = storage_path('logs');
+        $path     = $logDir . '/' . basename($filename);
+
+        if (!$filename || !file_exists($path) || !str_starts_with(realpath($path), realpath($logDir))) {
+            return response()->json(['error' => 'File tidak ditemukan'], 404);
+        }
+
+        // Ambil 200 baris terakhir
+        $lines = [];
+        $fp    = fopen($path, 'r');
+        $buffer = [];
+        while (!feof($fp)) {
+            $buffer[] = fgets($fp);
+            if (count($buffer) > 200) array_shift($buffer);
+        }
+        fclose($fp);
+
+        return response()->json([
+            'filename' => basename($path),
+            'size'     => filesize($path),
+            'lines'    => array_values($buffer),
+        ]);
+    }
 }

@@ -4,435 +4,537 @@
 
 @push('styles')
 <style>
-.log-table th { font-size: 10px; white-space: nowrap; }
-.log-table td { font-size: 11px; vertical-align: middle; font-family: monospace; }
-.payload-cell { max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.info-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
-.stat-log { background: #1a2235; border-radius: 10px; padding: 12px 18px; color:#fff; }
-.stat-log .val { font-size: 22px; font-weight: 700; }
-.stat-log .lbl { font-size: 11px; opacity: 0.6; }
-.danger-zone { border: 1px solid rgba(244,67,54,0.3); border-radius: 10px; padding: 14px; background: rgba(244,67,54,0.04); }
+/* ── Layout Split ── */
+.log-wrapper { display:flex; height:calc(100vh - 160px); gap:0; border:1px solid #dee2e6; border-radius:8px; overflow:hidden; }
+.log-sidebar { width:240px; min-width:200px; background:#1e2a3a; color:#cdd6e0; overflow-y:auto; flex-shrink:0; }
+.log-main    { flex:1; display:flex; flex-direction:column; overflow:hidden; background:#fff; }
 
-.pagination { margin: 0; font-size: 12px; }
-.pagination .page-link { padding: 4px 10px; }
+/* ── Sidebar ── */
+.log-sidebar-header { padding:10px 14px; font-size:11px; font-weight:700; text-transform:uppercase; color:#7a9cb8; border-bottom:1px solid #2d3f52; letter-spacing:1px; }
+.log-section-title { padding:8px 14px 4px; font-size:10px; font-weight:700; text-transform:uppercase; color:#4a7fa5; letter-spacing:1px; }
+.log-device-group { border-bottom:1px solid #2a3a4a; }
+.log-device-header { display:flex; align-items:center; gap:6px; padding:7px 14px; cursor:pointer; font-size:12px; font-weight:600; color:#a8c0d6; transition:background 0.15s; }
+.log-device-header:hover { background:#253447; }
+.log-device-header.active { background:#2d4a6a; color:#fff; }
+.log-device-header i.arrow { margin-left:auto; font-size:10px; transition:transform 0.2s; }
+.log-device-header.open i.arrow { transform:rotate(90deg); }
+.log-date-list { display:none; }
+.log-date-list.open { display:block; }
+.log-date-item { padding:5px 14px 5px 32px; font-size:11px; color:#7a9cb8; cursor:pointer; transition:background 0.15s; display:flex; justify-content:space-between; }
+.log-date-item:hover { background:#253447; color:#cdd6e0; }
+.log-date-item.active { background:#1a6ba0; color:#fff; }
+.log-single-item { padding:7px 14px; font-size:12px; color:#a8c0d6; cursor:pointer; display:flex; align-items:center; gap:6px; transition:background 0.15s; border-bottom:1px solid #2a3a4a; }
+.log-single-item:hover { background:#253447; }
+.log-single-item.active { background:#2d4a6a; color:#fff; }
+.log-badge { font-size:9px; background:#2d4a6a; color:#7ab8e0; padding:1px 6px; border-radius:8px; margin-left:auto; }
+
+/* ── Main Panel ── */
+.log-tabs { display:flex; border-bottom:1px solid #dee2e6; background:#f8f9fa; flex-shrink:0; }
+.log-tab { padding:8px 16px; font-size:12px; font-weight:600; cursor:pointer; color:#6c757d; border-bottom:2px solid transparent; transition:all 0.15s; }
+.log-tab:hover { color:#007bff; }
+.log-tab.active { color:#007bff; border-bottom-color:#007bff; background:#fff; }
+.log-tab-pane { display:none; flex:1; overflow:hidden; flex-direction:column; }
+.log-tab-pane.active { display:flex; }
+
+/* ── Log Content ── */
+.log-toolbar { padding:8px 12px; border-bottom:1px solid #dee2e6; background:#f8f9fa; display:flex; gap:8px; align-items:center; flex-shrink:0; flex-wrap:wrap; }
+.log-content { flex:1; overflow-y:auto; font-family:monospace; font-size:11px; }
+.log-table { width:100%; border-collapse:collapse; }
+.log-table th { background:#343a40; color:#fff; padding:6px 10px; font-size:11px; position:sticky; top:0; z-index:1; }
+.log-table td { padding:5px 10px; border-bottom:1px solid #f0f0f0; font-size:11px; vertical-align:top; }
+.log-table tr:hover td { background:#f8f9fa; }
+.log-pre { padding:12px; white-space:pre-wrap; word-break:break-all; line-height:1.5; color:#333; background:#fff; }
+.log-pre .log-error   { color:#dc3545; }
+.log-pre .log-warning { color:#fd7e14; }
+.log-pre .log-info    { color:#0d6efd; }
+.log-empty { display:flex; align-items:center; justify-content:center; height:100%; color:#aaa; font-size:13px; flex-direction:column; gap:8px; }
+.log-loading { display:flex; align-items:center; justify-content:center; height:100%; color:#aaa; font-size:13px; }
+
+/* ── Pagination ── */
+.log-pagination { padding:8px 12px; border-top:1px solid #dee2e6; background:#f8f9fa; display:flex; gap:6px; align-items:center; flex-shrink:0; font-size:12px; }
+
+/* ── Delete actions ── */
+.log-actions { padding:8px 12px; border-top:1px solid #dee2e6; background:#fff8f8; display:flex; gap:6px; flex-wrap:wrap; flex-shrink:0; }
 </style>
 @endpush
 
 @section('content')
+<div class="log-wrapper">
 
-@if(session('success'))
-<div class="alert alert-success alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ session('success') }}
-</div>
-@endif
-@if(session('error'))
-<div class="alert alert-danger alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ session('error') }}
-</div>
-@endif
-
-{{-- Stat Cards --}}
-<div class="row mb-3">
-    <div class="col-md-3 col-6 mb-2">
-        <div class="stat-log">
-            <div class="val text-warning">{{ number_format($tempreqTotal) }}</div>
-            <div class="lbl">Total Request Log</div>
-        </div>
-    </div>
-    <div class="col-md-3 col-6 mb-2">
-        <div class="stat-log">
-            <div class="val text-info">{{ number_format($deviceTotal) }}</div>
-            <div class="lbl">Total Device Log</div>
-        </div>
-    </div>
-</div>
-
-{{-- Tabs --}}
-<ul class="nav nav-tabs mb-3">
-    <li class="nav-item">
-        <a class="nav-link {{ $tab==='tempreq' ? 'active' : '' }}"
-            href="{{ route('log', ['tab'=>'tempreq']) }}">
-            <i class="fas fa-list mr-1"></i>Request Log
-            <span class="badge badge-warning ml-1">{{ number_format($tempreqTotal) }}</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ $tab==='device' ? 'active' : '' }}"
-            href="{{ route('log', ['tab'=>'device']) }}">
-            <i class="fas fa-mobile-alt mr-1"></i>Device Log
-            <span class="badge badge-info ml-1">{{ number_format($deviceTotal) }}</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ $tab==='logfile' ? 'active' : '' }}"
-            href="{{ route('log', ['tab'=>'logfile']) }}">
-            <i class="fas fa-file-alt mr-1"></i>Log File Device
-            <span class="badge badge-secondary ml-1">{{ count($logFiles) }}</span>
-        </a>
-    </li>
-</ul>
-
-@if($tab === 'tempreq')
-{{-- ── REQUEST LOG ── --}}
-<div class="row">
-
-    {{-- Filter --}}
-    <div class="col-12 mb-3">
-        <form action="{{ route('log') }}" method="GET" class="d-flex flex-wrap" style="gap:8px;">
-            <input type="hidden" name="tab" value="tempreq">
-            <input type="date" name="tanggal" class="form-control form-control-sm"
-                style="width:160px;" value="{{ $filterTanggal }}">
-            <input type="text" name="ip" class="form-control form-control-sm"
-                style="width:140px;" placeholder="Filter IP..." value="{{ $filterIp }}">
-            <select name="info" class="form-control form-control-sm" style="width:120px;">
-                <option value="">Semua Jenis</option>
-                @foreach($infoList as $info)
-                    <option value="{{ $info }}" {{ $filterInfo===$info ? 'selected':'' }}>{{ $info }}</option>
-                @endforeach
-            </select>
-            <input type="text" name="q" class="form-control form-control-sm"
-                style="width:200px;" placeholder="🔍 Cari detail..." value="{{ $filterSearch }}">
-            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
-            <a href="{{ route('log', ['tab'=>'tempreq']) }}" class="btn btn-sm btn-outline-secondary">Reset</a>
-        </form>
-    </div>
-
-    {{-- Tabel --}}
-    <div class="col-12">
-        <div class="card card-outline card-warning">
-            <div class="card-header">
-                <h3 class="card-title" style="font-size:12px;">
-                    <i class="fas fa-list mr-1"></i>Request Log
-                    <span class="badge badge-warning ml-1">{{ $tempreqLogs->total() }} hasil</span>
-                </h3>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive" style="max-height:500px; overflow-y:auto;">
-                    <table class="table table-sm table-hover log-table mb-0">
-                        <thead class="thead-dark" style="position:sticky;top:0;z-index:2;">
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>IP</th>
-                                <th>Jenis</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($tempreqLogs as $log)
-                            <tr>
-                                <td style="white-space:nowrap;">{{ $log->timestamp }}</td>
-                                <td>{{ $log->ip }}</td>
-                                <td>
-                                    <span class="info-badge" style="
-                                        background: {{ $log->info === 'SMPM' ? 'rgba(0,200,83,0.15)' : ($log->info === 'IDTT' ? 'rgba(244,67,54,0.15)' : 'rgba(59,130,246,0.15)') }};
-                                        color: {{ $log->info === 'SMPM' ? '#00c853' : ($log->info === 'IDTT' ? '#f44336' : '#3b82f6') }};">
-                                        {{ $log->info }}
-                                    </span>
-                                </td>
-                                <td class="payload-cell" title="{{ $log->detail }}">{{ $log->detail }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-3">Tidak ada data</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer">
-                {{ $tempreqLogs->links() }}
+    {{-- ═══════════════════════════════ --}}
+    {{-- PANEL KIRI (SIDEBAR) --}}
+    {{-- ═══════════════════════════════ --}}
+    <div class="log-sidebar" id="log-sidebar">
+        <div class="log-sidebar-header"><i class="fas fa-list mr-1"></i>Log Sources</div>
+        <div id="sidebar-content">
+            <div style="padding:20px; text-align:center; color:#4a7fa5; font-size:12px;">
+                <i class="fas fa-spinner fa-spin"></i> Memuat...
             </div>
         </div>
     </div>
 
-    {{-- Danger Zone --}}
-    <div class="col-12 mt-3">
-        <div class="danger-zone">
-            <h6 class="text-danger mb-3"><i class="fas fa-trash mr-1"></i>Kelola Request Log</h6>
-            <div class="d-flex flex-wrap" style="gap:8px;">
-                <form action="{{ route('log.tempreq.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus log tanggal {{ $filterTanggal }}?')">
+    {{-- ═══════════════════════════════ --}}
+    {{-- PANEL KANAN (MAIN) --}}
+    {{-- ═══════════════════════════════ --}}
+    <div class="log-main">
+
+        {{-- Tab Headers --}}
+        <div class="log-tabs" id="log-tabs" style="display:none;">
+            <div class="log-tab active" data-tab="mqtt" onclick="switchLogTab('mqtt', this)">
+                <i class="fas fa-broadcast-tower mr-1"></i>MQTT
+            </div>
+            <div class="log-tab" data-tab="sd" onclick="switchLogTab('sd', this)">
+                <i class="fas fa-sd-card mr-1"></i>File SD
+            </div>
+            <div class="log-tab" data-tab="request" onclick="switchLogTab('request', this)">
+                <i class="fas fa-exchange-alt mr-1"></i>Request
+            </div>
+            <div class="log-tab" data-tab="server" id="tab-server" onclick="switchLogTab('server', this)" style="display:none;">
+                <i class="fas fa-server mr-1"></i>Server
+            </div>
+        </div>
+
+        {{-- Welcome state --}}
+        <div class="log-empty" id="log-welcome">
+            <i class="fas fa-mouse-pointer fa-2x" style="color:#dee2e6;"></i>
+            <span>Pilih sumber log dari panel kiri</span>
+        </div>
+
+        {{-- ── Tab MQTT ── --}}
+        <div class="log-tab-pane" id="pane-mqtt">
+            <div class="log-toolbar">
+                <span id="mqtt-title" style="font-weight:600; font-size:12px;"></span>
+                <input type="text" id="mqtt-search" class="form-control form-control-sm" style="width:200px;" placeholder="Cari payload...">
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadMqtt()"><i class="fas fa-sync"></i></button>
+                <button class="btn btn-sm btn-outline-primary" onclick="copyLog('mqtt-content')"><i class="fas fa-copy mr-1"></i>Salin</button>
+                <span id="mqtt-total" class="text-muted ml-auto" style="font-size:11px;"></span>
+            </div>
+            <div class="log-content" id="mqtt-content">
+                <div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>
+            </div>
+            <div class="log-pagination" id="mqtt-pagination"></div>
+            <div class="log-actions">
+                <form method="POST" action="{{ route('log.device.clear') }}" onsubmit="return confirm('Hapus log device ini?')">
                     @csrf @method('DELETE')
-                    <input type="hidden" name="tanggal" value="{{ $filterTanggal }}">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-calendar-day mr-1"></i>Hapus Tgl {{ $filterTanggal }}
-                    </button>
+                    <input type="hidden" name="device" id="mqtt-delete-device">
+                    <input type="hidden" name="tanggal" id="mqtt-delete-tanggal">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash mr-1"></i>Hapus Tanggal Ini</button>
                 </form>
-                <form action="{{ route('log.tempreq.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus semua request log sebelum hari ini?')">
+                <form method="POST" action="{{ route('log.device.clear') }}" onsubmit="return confirm('Hapus semua log device ini?')">
                     @csrf @method('DELETE')
-                    <input type="hidden" name="before_today" value="1">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-calendar-minus mr-1"></i>Hapus Sebelum Hari Ini
-                    </button>
+                    <input type="hidden" name="device" id="mqtt-delete-device2">
+                    <input type="hidden" name="all" value="1">
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash mr-1"></i>Hapus Semua</button>
                 </form>
-                <form action="{{ route('log.tempreq.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus request log lebih dari 7 hari?')">
+            </div>
+        </div>
+
+        {{-- ── Tab File SD ── --}}
+        <div class="log-tab-pane" id="pane-sd">
+            <div class="log-toolbar">
+                <span id="sd-title" style="font-weight:600; font-size:12px;"></span>
+                <span id="sd-size" class="text-muted" style="font-size:11px;"></span>
+                <button class="btn btn-sm btn-outline-primary ml-auto" onclick="copyLog('sd-content')"><i class="fas fa-copy mr-1"></i>Salin</button>
+            </div>
+            <div class="log-content" id="sd-content">
+                <div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>
+            </div>
+        </div>
+
+        {{-- ── Tab Request ── --}}
+        <div class="log-tab-pane" id="pane-request">
+            <div class="log-toolbar">
+                <span id="request-title" style="font-weight:600; font-size:12px;"></span>
+                <input type="text" id="request-search" class="form-control form-control-sm" style="width:200px;" placeholder="Cari detail...">
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadRequest()"><i class="fas fa-sync"></i></button>
+                <button class="btn btn-sm btn-outline-primary" onclick="copyLog('request-content')"><i class="fas fa-copy mr-1"></i>Salin</button>
+                <span id="request-total" class="text-muted ml-auto" style="font-size:11px;"></span>
+            </div>
+            <div class="log-content" id="request-content">
+                <div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>
+            </div>
+            <div class="log-pagination" id="request-pagination"></div>
+            <div class="log-actions">
+                <form method="POST" action="{{ route('log.tempreq.clear') }}" onsubmit="return confirm('Hapus request log tanggal ini?')">
                     @csrf @method('DELETE')
-                    <input type="hidden" name="keep_days" value="7">
-                    <button type="submit" class="btn btn-sm btn-outline-warning">
-                        <i class="fas fa-history mr-1"></i>Hapus &gt; 7 Hari
-                    </button>
+                    <input type="hidden" name="tanggal" id="request-delete-tanggal">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash mr-1"></i>Hapus Tanggal Ini</button>
                 </form>
-                <form action="{{ route('log.tempreq.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus request log lebih dari 30 hari?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="keep_days" value="30">
-                    <button type="submit" class="btn btn-sm btn-outline-warning">
-                        <i class="fas fa-history mr-1"></i>Hapus &gt; 30 Hari
-                    </button>
-                </form>
-                <form action="{{ route('log.tempreq.clear') }}" method="POST"
-                    onsubmit="return confirm('HAPUS SEMUA request log? Tidak bisa dibatalkan!')">
+                <form method="POST" action="{{ route('log.tempreq.clear') }}" onsubmit="return confirm('Hapus semua request log?')">
                     @csrf @method('DELETE')
                     <input type="hidden" name="all" value="1">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fas fa-exclamation-triangle mr-1"></i>Hapus Semua ({{ number_format($tempreqTotal) }})
-                    </button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash mr-1"></i>Hapus Semua</button>
                 </form>
             </div>
         </div>
-    </div>
 
-</div>
-
-@elseif($tab === 'device')
-{{-- ── DEVICE LOG ── --}}
-<div class="row">
-
-    {{-- Filter --}}
-    <div class="col-12 mb-3">
-        <form action="{{ route('log') }}" method="GET" class="d-flex flex-wrap" style="gap:8px;">
-            <input type="hidden" name="tab" value="device">
-            <input type="date" name="tanggal2" class="form-control form-control-sm"
-                style="width:160px;" value="{{ $filterTanggal2 }}">
-            <select name="device" class="form-control form-control-sm" style="width:160px;">
-                <option value="">Semua Device</option>
-                @foreach($deviceList as $d)
-                    <option value="{{ $d }}" {{ $filterDevice===$d ? 'selected':'' }}>{{ $d }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
-            <a href="{{ route('log', ['tab'=>'device']) }}" class="btn btn-sm btn-outline-secondary">Reset</a>
-        </form>
-    </div>
-
-    {{-- Tabel --}}
-    <div class="col-12">
-        <div class="card card-outline card-info">
-            <div class="card-header">
-                <h3 class="card-title" style="font-size:12px;">
-                    <i class="fas fa-mobile-alt mr-1"></i>Device Log
-                    <span class="badge badge-info ml-1">{{ $deviceLogs->total() }} hasil</span>
-                </h3>
+        {{-- ── Tab Server ── --}}
+        <div class="log-tab-pane" id="pane-server">
+            <div class="log-toolbar">
+                <span id="server-title" style="font-weight:600; font-size:12px;"></span>
+                <span id="server-size" class="text-muted" style="font-size:11px;"></span>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadServer(currentServerFile)"><i class="fas fa-sync"></i></button>
+                <button class="btn btn-sm btn-outline-primary ml-auto" onclick="copyLog('server-content')"><i class="fas fa-copy mr-1"></i>Salin</button>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive" style="max-height:500px; overflow-y:auto;">
-                    <table class="table table-sm table-hover log-table mb-0">
-                        <thead class="thead-dark" style="position:sticky;top:0;z-index:2;">
-                            <tr>
-                                <th>Waktu</th>
-                                <th>Device ID</th>
-                                <th>Topic</th>
-                                <th>Status</th>
-                                <th>RAM</th>
-                                <th>RSSI</th>
-                                <th>Payload</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($deviceLogs as $log)
-                            @php
-                                $payload = json_decode($log->payload, true);
-                            @endphp
-                            <tr>
-                                <td style="white-space:nowrap;">{{ $log->received_at }}</td>
-                                <td><strong>{{ $log->device_id }}</strong></td>
-                                <td><small class="text-muted">{{ $log->topic }}</small></td>
-                                <td>
-                                    @if(isset($payload['status']))
-                                        <span class="badge {{ $payload['status']==='online' ? 'badge-success' : 'badge-secondary' }}">
-                                            {{ $payload['status'] }}
-                                        </span>
-                                    @else — @endif
-                                </td>
-                                <td>{{ isset($payload['ram']) ? $payload['ram'].'KB' : '-' }}</td>
-                                <td>{{ isset($payload['rssi']) ? $payload['rssi'].'dBm' : '-' }}</td>
-                                <td class="payload-cell" title="{{ $log->payload }}">
-                                    <small>{{ Str::limit($log->payload, 80) }}</small>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-3">Tidak ada data</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="card-footer">
-                {{ $deviceLogs->links() }}
+            <div class="log-content" id="server-content">
+                <div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>
             </div>
         </div>
-    </div>
 
-    {{-- Danger Zone --}}
-    <div class="col-12 mt-3">
-        <div class="danger-zone">
-            <h6 class="text-danger mb-3"><i class="fas fa-trash mr-1"></i>Hapus Device Log</h6>
-            <div class="d-flex flex-wrap" style="gap:8px;">
-                @if($filterDevice)
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus semua log device {{ $filterDevice }}?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="device" value="{{ $filterDevice }}">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-trash mr-1"></i>Hapus Log Device {{ $filterDevice }}
-                    </button>
-                </form>
-                @endif
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus log tanggal {{ $filterTanggal2 }}?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="tanggal" value="{{ $filterTanggal2 }}">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-calendar-day mr-1"></i>Hapus Tgl {{ $filterTanggal2 }}
-                    </button>
-                </form>
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus semua device log sebelum hari ini?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="before_today" value="1">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-calendar-minus mr-1"></i>Hapus Sebelum Hari Ini
-                    </button>
-                </form>
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus device log lebih dari 7 hari?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="keep_days" value="7">
-                    <button type="submit" class="btn btn-sm btn-outline-warning">
-                        <i class="fas fa-history mr-1"></i>Hapus &gt; 7 Hari
-                    </button>
-                </form>
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('Hapus device log lebih dari 30 hari?')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="keep_days" value="30">
-                    <button type="submit" class="btn btn-sm btn-outline-warning">
-                        <i class="fas fa-history mr-1"></i>Hapus &gt; 30 Hari
-                    </button>
-                </form>
-                <form action="{{ route('log.device.clear') }}" method="POST"
-                    onsubmit="return confirm('HAPUS SEMUA device log? Tidak bisa dibatalkan!')">
-                    @csrf @method('DELETE')
-                    <input type="hidden" name="all" value="1">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fas fa-exclamation-triangle mr-1"></i>Hapus Semua ({{ number_format($deviceTotal) }})
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</div>
-@elseif($tab === 'logfile')
-{{-- ── LOG FILE DEVICE ── --}}
-<div class="row">
-    <div class="col-12 mb-3">
-        <form action="{{ route('log') }}" method="GET" class="d-flex flex-wrap" style="gap:8px;">
-            <input type="hidden" name="tab" value="logfile">
-            <select name="device3" class="form-control form-control-sm" style="width:180px;">
-                <option value="">Semua Device</option>
-                @foreach($deviceList3 as $d)
-                    <option value="{{ $d }}" {{ $filterDevice3===$d ? 'selected':'' }}>{{ $d }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
-            <a href="{{ route('log', ['tab'=>'logfile']) }}" class="btn btn-sm btn-outline-secondary">Reset</a>
-        </form>
-    </div>
-
-    <div class="col-12">
-        <div class="card card-outline card-secondary">
-            <div class="card-header">
-                <h3 class="card-title" style="font-size:12px;">
-                    <i class="fas fa-file-alt mr-1"></i>Log File Device
-                    <span class="badge badge-secondary ml-1">{{ count($logFiles) }} file</span>
-                </h3>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive" style="max-height:600px; overflow-y:auto;">
-                    <table class="table table-sm table-hover log-table mb-0">
-                        <thead class="thead-dark" style="position:sticky;top:0;z-index:2;">
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Device</th>
-                                <th>File</th>
-                                <th>Ukuran</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($logFiles as $lf)
-                            <tr>
-                                <td>{{ $lf['tanggal'] }}</td>
-                                <td><strong>{{ $lf['device_id'] }}</strong></td>
-                                <td><small class="text-muted">{{ $lf['filename'] }}</small></td>
-                                <td><small>{{ number_format($lf['size'] / 1024, 1) }} KB</small></td>
-                                <td>
-                                    <button class="btn btn-xs btn-outline-primary"
-                                        onclick="lihatLog('{{ $lf['filename'] }}', '{{ $lf['device_id'] }} - {{ $lf['tanggal'] }}')">
-                                        <i class="fas fa-eye"></i> Lihat
-                                    </button>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-3">Tidak ada file log</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
-{{-- Modal lihat log --}}
-<div class="modal fade" id="modalLog" tabindex="-1">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLogTitle">Log</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body p-0">
-                <pre id="modalLogContent"
-                    style="background:#1a2235;color:#e0e0e0;padding:16px;margin:0;max-height:70vh;overflow-y:auto;font-size:11px;border-radius:0;">Loading...</pre>
-            </div>
-        </div>
-    </div>
-</div>
-@endif
+@endsection
 
 @push('scripts')
 <script>
-function lihatLog(filename, title) {
-    document.getElementById('modalLogTitle').textContent = '📜 ' + title;
-    document.getElementById('modalLogContent').textContent = 'Loading...';
-    $('#modalLog').modal('show');
-    fetch('{{ route("log.file.read") }}?f=' + encodeURIComponent(filename))
-        .then(r => r.text())
-        .then(t => { document.getElementById('modalLogContent').textContent = t; })
-        .catch(() => { document.getElementById('modalLogContent').textContent = 'Gagal memuat file.'; });
+const CSRF = '{{ csrf_token() }}';
+
+// ── State ──
+let currentDevice   = null;
+let currentTanggal  = null;
+let currentType     = null; // mqtt | sd | request | server
+let currentServerFile = null;
+let mqttPage = 1;
+let requestPage = 1;
+
+// ── Load sidebar ──
+async function loadSidebar() {
+    const res = await fetch('{{ route("log.sidebar") }}', {
+        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+    });
+    const data = await res.json();
+    renderSidebar(data);
+}
+
+function renderSidebar(data) {
+    window._sidebarData = data;
+    let html = '';
+
+    // ── MQTT Log ──
+    html += `<div class="log-section-title"><i class="fas fa-broadcast-tower mr-1"></i>MQTT Log</div>`;
+    for (const [device, dates] of Object.entries(data.mqtt)) {
+        html += `<div class="log-device-group">
+            <div class="log-device-header" onclick="toggleDevice(this, '${device}', 'mqtt')">
+                <i class="fas fa-microchip" style="color:#4a90d9;"></i> ${device}
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="log-date-list" id="mqtt-dates-${device}">`;
+        dates.forEach(d => {
+            html += `<div class="log-date-item" onclick="selectMqtt('${device}', '${d.tanggal}', this)">
+                <span>${d.tanggal}</span>
+                <span class="log-badge">${d.total}</span>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // ── File SD ──
+    html += `<div class="log-section-title" style="margin-top:8px;"><i class="fas fa-sd-card mr-1"></i>File SD</div>`;
+    for (const [device, files] of Object.entries(data.sd)) {
+        html += `<div class="log-device-group">
+            <div class="log-device-header" onclick="toggleDevice(this, '${device}', 'sd')">
+                <i class="fas fa-mobile-alt" style="color:#28a745;"></i> ${device}
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="log-date-list" id="sd-dates-${device}">`;
+        files.forEach(f => {
+            const size = formatSize(f.size);
+            html += `<div class="log-date-item" onclick="console.log('SD click:', '${f.filename}', '${device}'); selectSd('${f.filename}', '${device}', '${f.tanggal}', this)">
+                <span>${f.tanggal}</span>
+                <span class="log-badge">${size}</span>
+            </div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // ── Request Log ──
+    html += `<div class="log-section-title" style="margin-top:8px;"><i class="fas fa-exchange-alt mr-1"></i>Request Log</div>`;
+    data.request.forEach(r => {
+        html += `<div class="log-single-item" onclick="selectRequest('${r.tanggal}', this)">
+            <i class="fas fa-calendar-day" style="color:#fd7e14;"></i>
+            <span>${r.tanggal}</span>
+            <span class="log-badge">${r.total}</span>
+        </div>`;
+    });
+
+    // ── Server Log ──
+    html += `<div class="log-section-title" style="margin-top:8px;"><i class="fas fa-server mr-1"></i>Server Log</div>`;
+    data.server.forEach(f => {
+        if (f.size === 0) return;
+        html += `<div class="log-single-item" onclick="selectServer('${f.filename}', '${f.tanggal}', this)">
+            <i class="fas fa-file-alt" style="color:#6f42c1;"></i>
+            <span>${f.tanggal}</span>
+            <span class="log-badge">${formatSize(f.size)}</span>
+        </div>`;
+    });
+
+    document.getElementById('sidebar-content').innerHTML = html;
+}
+
+// ── Toggle device expand ──
+function toggleDevice(el, device, type) {
+    const listId = `${type}-dates-${device}`;
+    const list   = document.getElementById(listId);
+    el.classList.toggle('open');
+    list.classList.toggle('open');
+}
+
+// ── Select MQTT ──
+function selectMqtt(device, tanggal, el) {
+    setActiveItem(el);
+    currentDevice  = device;
+    currentTanggal = tanggal;
+    currentType    = 'mqtt';
+    mqttPage       = 1;
+    document.getElementById('mqtt-delete-device').value  = device;
+    document.getElementById('mqtt-delete-device2').value = device;
+    document.getElementById('mqtt-delete-tanggal').value = tanggal;
+    showMainPanel('mqtt');
+    document.getElementById('mqtt-title').textContent = `${device} — ${tanggal}`;
+    loadMqtt();
+}
+
+async function loadMqtt() {
+    const search = document.getElementById('mqtt-search').value;
+    document.getElementById('mqtt-content').innerHTML = '<div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>';
+    const res = await fetch(`{{ route("log.ajax.mqtt") }}?device=${currentDevice}&tanggal=${currentTanggal}&page=${mqttPage}`, {
+        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+    });
+    const data = await res.json();
+    document.getElementById('mqtt-total').textContent = `${data.total} records`;
+    let html = '<table class="log-table"><thead><tr><th>Waktu</th><th>Topic</th><th>Payload</th></tr></thead><tbody>';
+    if (!data.data.length) {
+        html = '<div class="log-empty"><i class="fas fa-inbox fa-2x" style="color:#dee2e6;"></i><span>Tidak ada data</span></div>';
+    } else {
+        data.data.forEach(r => {
+            const payload = r.payload ? r.payload.substring(0, 200) : '-';
+            html += `<tr>
+                <td style="white-space:nowrap;">${r.received_at}</td>
+                <td style="color:#4a90d9;">${r.topic ?? '-'}</td>
+                <td style="word-break:break-all;">${escHtml(payload)}</td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+    }
+    document.getElementById('mqtt-content').innerHTML = html;
+    renderPagination('mqtt-pagination', data.current, data.lastPage, (p) => { mqttPage = p; loadMqtt(); });
+}
+
+// ── Select File SD ──
+function selectSd(filename, device, tanggal, el) {
+    setActiveItem(el);
+    currentType = 'sd';
+    showMainPanel('sd');
+    document.getElementById('sd-title').textContent = `${device} — ${tanggal}`;
+    loadSdFile(filename);
+}
+
+async function loadSdFile(filename) {
+    document.getElementById('sd-content').innerHTML = '<div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>';
+    const res = await fetch(`{{ route("log.file.read") }}?f=${encodeURIComponent(filename)}`, {
+        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+    });
+    const text = await res.text();
+    const lines = text.split('\n');
+    let html = '<div class="log-pre">';
+    lines.forEach(line => {
+        const esc = escHtml(line);
+        if (line.includes('gagal') || line.includes('Gagal') || line.includes('ERROR') || line.includes('error')) {
+            html += `<span class="log-error">${esc}</span>\n`;
+        } else if (line.includes('sukses') || line.includes('Sukses') || line.includes('berhasil')) {
+            html += `<span style="color:#28a745;">${esc}</span>\n`;
+        } else {
+            html += esc + '\n';
+        }
+    });
+    html += '</div>';
+    document.getElementById('sd-content').innerHTML = html;
+    document.getElementById('sd-size').textContent = `${lines.length} baris`;
+}
+
+// ── Select Request ──
+function selectRequest(tanggal, el) {
+    setActiveItem(el);
+    currentTanggal  = tanggal;
+    currentType     = 'request';
+    requestPage     = 1;
+    document.getElementById('request-delete-tanggal').value = tanggal;
+    showMainPanel('request');
+    document.getElementById('request-title').textContent = `Request Log — ${tanggal}`;
+    loadRequest();
+}
+
+async function loadRequest() {
+    document.getElementById('request-content').innerHTML = '<div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>';
+    const search = document.getElementById('request-search').value;
+    const res = await fetch(`{{ route("log.ajax.request") }}?tanggal=${currentTanggal}&page=${requestPage}&q=${encodeURIComponent(search)}`, {
+        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+    });
+    const data = await res.json();
+    document.getElementById('request-total').textContent = `${data.total} records`;
+    let html = '<table class="log-table"><thead><tr><th>Timestamp</th><th>IP</th><th>Jenis</th><th>Detail</th></tr></thead><tbody>';
+    if (!data.data.length) {
+        html = '<div class="log-empty"><i class="fas fa-inbox fa-2x" style="color:#dee2e6;"></i><span>Tidak ada data</span></div>';
+    } else {
+        data.data.forEach(r => {
+            html += `<tr>
+                <td style="white-space:nowrap;">${r.timestamp}</td>
+                <td>${r.ip ?? '-'}</td>
+                <td><span class="badge badge-secondary">${r.info ?? '-'}</span></td>
+                <td style="word-break:break-all; max-width:400px;">${escHtml((r.detail ?? '').substring(0, 300))}</td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+    }
+    document.getElementById('request-content').innerHTML = html;
+    renderPagination('request-pagination', data.current, data.lastPage, (p) => { requestPage = p; loadRequest(); });
+}
+
+// ── Select Server ──
+function selectServer(filename, tanggal, el) {
+    setActiveItem(el);
+    currentServerFile = filename;
+    currentType = 'server';
+    document.getElementById('tab-server').style.display = 'block';
+    showMainPanel('server');
+    document.getElementById('server-title').textContent = `Server Log — ${tanggal}`;
+    loadServer(filename);
+}
+
+async function loadServer(filename) {
+    document.getElementById('server-content').innerHTML = '<div class="log-loading"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat...</div>';
+    const res = await fetch(`{{ route("log.ajax.server") }}?file=${encodeURIComponent(filename)}`, {
+        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
+    });
+    const data = await res.json();
+    if (data.error) {
+        document.getElementById('server-content').innerHTML = `<div class="log-empty"><span>${data.error}</span></div>`;
+        return;
+    }
+    document.getElementById('server-size').textContent = `${formatSize(data.size)} — ${data.lines.length} baris terakhir`;
+    let html = '<div class="log-pre">';
+    data.lines.forEach(line => {
+        if (!line) return;
+        const esc = escHtml(line);
+        if (line.includes('.ERROR') || line.includes('ERROR')) {
+            html += `<span class="log-error">${esc}</span>`;
+        } else if (line.includes('.WARNING') || line.includes('WARNING')) {
+            html += `<span class="log-warning">${esc}</span>`;
+        } else if (line.includes('.INFO') || line.includes('INFO')) {
+            html += `<span class="log-info">${esc}</span>`;
+        } else {
+            html += esc;
+        }
+    });
+    html += '</div>';
+    document.getElementById('server-content').innerHTML = html;
+    // Scroll ke bawah
+    const el = document.getElementById('server-content');
+    el.scrollTop = el.scrollHeight;
+}
+
+// ── Show main panel ──
+function showMainPanel(type) {
+    document.getElementById('log-welcome').style.display = 'none';
+    document.getElementById('log-tabs').style.display    = 'flex';
+    document.querySelectorAll('.log-tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`pane-${type}`).classList.add('active');
+    document.querySelector(`.log-tab[data-tab="${type}"]`).classList.add('active');
+}
+
+function switchLogTab(type, el) {
+    if (!currentDevice && (type === 'mqtt' || type === 'sd')) return;
+    if (type === 'request' && currentType !== 'request') {
+        document.querySelectorAll('.log-tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('pane-request').classList.add('active');
+        el.classList.add('active');
+
+        // Auto-load request log dari tanggal yang sama
+        if (currentTanggal && window._sidebarData) {
+            const exists = window._sidebarData.request.find(r => r.tanggal === currentTanggal);
+            if (exists) {
+                currentType = 'request';
+                requestPage = 1;
+                document.getElementById('request-delete-tanggal').value = currentTanggal;
+                document.getElementById('request-title').textContent = `Request Log — ${currentTanggal}`;
+                loadRequest();
+                return;
+            }
+        }
+        document.getElementById('request-content').innerHTML = '<div class="log-empty"><i class="fas fa-hand-point-left fa-2x" style="color:#dee2e6;"></i><span>File tidak ada, Pilih file lain dari sidebar Request Log</span></div>';
+        return;
+    }
+    if (type === 'server' && currentType !== 'server') return;
+    if (type === 'sd' && currentType !== 'sd') {
+        document.querySelectorAll('.log-tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('pane-sd').classList.add('active');
+        el.classList.add('active');
+
+        // Coba auto-load file SD terbaru dari device yang sama
+        if (currentDevice && window._sidebarData && window._sidebarData.sd[currentDevice]) {
+            const files = window._sidebarData.sd[currentDevice];
+            if (files.length > 0) {
+                const f = files[0]; // file terbaru
+                currentType = 'sd';
+                document.getElementById('sd-title').textContent = `${currentDevice} — ${f.tanggal}`;
+                loadSdFile(f.filename);
+                return;
+            }
+        }
+        document.getElementById('sd-content').innerHTML = '<div class="log-empty"><i class="fas fa-hand-point-left fa-2x" style="color:#dee2e6;"></i><span>File Tidak ada, Pilih file lain dari sidebar File SD</span></div>';
+        return;
+    }
+    document.querySelectorAll('.log-tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.log-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`pane-${type}`).classList.add('active');
+    el.classList.add('active');
+}
+
+// ── Helpers ──
+function setActiveItem(el) {
+    document.querySelectorAll('.log-date-item, .log-single-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function renderPagination(containerId, current, last, callback) {
+    if (last <= 1) { document.getElementById(containerId).innerHTML = ''; return; }
+    let html = `<span class="text-muted">Hal ${current} / ${last}</span>`;
+    if (current > 1) html += `<button class="btn btn-xs btn-outline-secondary" onclick="(${callback.toString()})(${current-1})">‹ Prev</button>`;
+    if (current < last) html += `<button class="btn btn-xs btn-outline-secondary" onclick="(${callback.toString()})(${current+1})">Next ›</button>`;
+    document.getElementById(containerId).innerHTML = html;
+}
+
+function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/1048576).toFixed(1) + ' MB';
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Init ──
+loadSidebar();
+
+function copyLog(contentId) {
+    const el = document.getElementById(contentId);
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        toastr.success('Log berhasil disalin!');
+    }).catch(() => {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        toastr.success('Log berhasil disalin!');
+    });
 }
 </script>
 @endpush
-
-@endsection

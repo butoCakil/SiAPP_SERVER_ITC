@@ -211,6 +211,15 @@ Route::delete('/log/device', [LogController::class, 'clearDevice'])
     ->middleware('auth.admin')
     ->name('log.device.clear');
 
+Route::get('/log/sidebar', [LogController::class, 'sidebar'])
+    ->middleware('auth.admin')->name('log.sidebar');
+Route::get('/log/ajax/mqtt', [LogController::class, 'ajaxMqtt'])
+    ->middleware('auth.admin')->name('log.ajax.mqtt');
+Route::get('/log/ajax/request', [LogController::class, 'ajaxRequest'])
+    ->middleware('auth.admin')->name('log.ajax.request');
+Route::get('/log/ajax/server', [LogController::class, 'ajaxServer'])
+    ->middleware('auth.admin')->name('log.ajax.server');
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC API / DEVICE
