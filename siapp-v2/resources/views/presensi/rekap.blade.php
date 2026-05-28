@@ -26,6 +26,15 @@
     background: #f8f9fa; color: #495057; text-decoration: none;
 }
 .tab-rekap a.active { background: #007bff; color: #fff; border-color: #007bff; }
+
+@media print {
+    .no-print { display: none !important; }
+    #print-area-rekap, #print-area-rekap * { visibility: visible; }
+    #print-area-rekap { position: absolute; left: 0; top: 0; width: 100%; }
+    .print-header { display: block !important; }
+    body { font-size: 11px; }
+}
+.print-header { display: none; }
 </style>
 @endpush
 
@@ -78,11 +87,24 @@
                 {{ \Carbon\Carbon::createFromDate($tahun, $bln, 1)->locale('id')->translatedFormat('F Y') }}
                 — {{ $siswaData->count() }} siswa
             </span>
+            <button onclick="window.print()" class="btn btn-outline-dark btn-sm ml-auto no-print" style="border-radius:20px;">
+                <i class="fas fa-print mr-1"></i>Print PDF
+            </button>
         </form>
     </div>
 </div>
 
 {{-- Tabel --}}
+<div class="card" id="print-area-rekap">
+    <div class="print-header" style="padding:12px 16px 0;">
+        <h5 style="margin:0;">Rekap Bulanan Presensi & Sholat</h5>
+        <div style="font-size:12px; color:#555;">
+            {{ \Carbon\Carbon::createFromDate($tahun, $bln, 1)->locale('id')->translatedFormat('F Y') }}
+            @if($filterKelas) — Kelas {{ $filterKelas }} @endif
+            — {{ $siswaData->count() }} siswa
+        </div>
+        <hr style="margin:8px 0;">
+    </div>
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">
