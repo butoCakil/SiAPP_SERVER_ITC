@@ -463,7 +463,7 @@
             <div class="status-info">
                 <div class="status-type">Presensi Masuk / Pulang</div>
                 <div class="status-label" style="color: {{ $statusMasuk['color'] }};">{{ $statusMasuk['label'] }}</div>
-                <div class="status-sub">{{ $statusMasuk['sub'] }}</div>
+                <div class="status-sub" id="status-masuk-sub">{{ $statusMasuk['sub'] }}</div>
                 @if($setting)
                 <div class="status-sub mt-1">
                     🕐 Masuk: {{ $setting->wa }} – {{ $setting->wta }}
@@ -903,6 +903,10 @@ function doPoll() {
             document.getElementById('stat-dzuhur').textContent = data.stat.dzuhur;
             document.getElementById('stat-ashar').textContent  = data.stat.ashar;
             document.getElementById('stat-izin').textContent   = data.stat.izin;
+            if (data.kaldik_info !== undefined) {
+                const subEl = document.getElementById('status-masuk-sub');
+                if (subEl) subEl.textContent = data.kaldik_info ?? subEl.dataset.default;
+            }
 
             // Update tabel sesuai tab aktif
             const tbody = document.querySelector('#main-table tbody');

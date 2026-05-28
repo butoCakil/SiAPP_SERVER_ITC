@@ -81,14 +81,13 @@ class PresensiService
         $wtp         = $setting->wtp;  // batas pulang toleransi
         $wp          = $setting->wp;   // batas pulang
 
-        // ── Cek kalender libur (via liburnas.json) ──
-        $jsonPath = base_path('../beranda/app/liburnas.json');
-        if (file_exists($jsonPath)) {
-            $liburnas = json_decode(file_get_contents($jsonPath), true);
-            $keyTanggal = date('Ymd', strtotime($tanggal));
-            if (isset($liburnas[$keyTanggal])) {
-                return $this->buatRespon('HLTM', $idchip, $nodevice, $nokartu);
-            }
+        // ── Cek kalender libur (via kaldik) ──
+        $isLiburKaldik = DB::table('kaldik')
+            ->where('tanggal', $tanggal)
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
+            ->exists();
+        if ($isLiburKaldik) {
+            return $this->buatRespon('HLTM', $idchip, $nodevice, $nokartu);
         }
 
         // ── Cek siswa ──

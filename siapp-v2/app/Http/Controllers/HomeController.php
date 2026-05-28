@@ -142,6 +142,24 @@ class HomeController extends Controller
         $filterKelas = $request->input('kelas', '');
         $setting     = DB::table('statusnya')->first();
 
+        // ── Kaldik ──
+        $kaldikHariIni = DB::table('kaldik')
+            ->where('tanggal', $tanggal)
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
+            ->first();
+        $kaldikInfo = null;
+        if ($kaldikHariIni) {
+            $tipeLabel = match ($kaldikHariIni->tipe) {
+                'libur_nasional'  => '🔴 Libur Nasional',
+                'cuti_bersama'    => '🟠 Cuti Bersama',
+                'libur_semester'  => '🟣 Libur Semester',
+                'daring'          => '🔵 Pembelajaran Daring',
+                'force_majeure'   => '⚫ Force Majeure',
+                default           => 'Libur',
+            };
+            $kaldikInfo = $tipeLabel . ': ' . $kaldikHariIni->judul;
+        }
+
         // ── Stat ──
         $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
@@ -284,6 +302,7 @@ class HomeController extends Controller
             'chartSholat'   => $chartSholat->values(),
             'chartPresensi' => $chartPresensi->values(),
             'hari_kerja'    => (int) ($setting->hari_kerja ?? 5),
+            'kaldik_info'   => $kaldikInfo,
         ]);
     }
 }
