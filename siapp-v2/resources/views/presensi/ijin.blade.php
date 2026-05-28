@@ -142,7 +142,11 @@
                         <tr>
                             <td>{{ $i + 1 }}</td>
                             <td><code>{{ $p->nis }}</code></td>
-                            <td><strong>{{ $p->nama }}</strong></td>
+                            <td>
+                                <a href="{{ route('presensi.rekap.detail', ['nis'=>$p->nis]) }}" style="color:inherit;">
+                                    <strong>{{ $p->nama }}</strong>
+                                </a>
+                            </td>
                             <td>{{ $p->kelas ?? '-' }}</td>
                             <td>{{ $p->info ?? '-' }}</td>
                             <td>{{ $p->jam_keluar ?? '-' }}</td>

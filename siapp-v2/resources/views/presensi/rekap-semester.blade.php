@@ -58,6 +58,14 @@
 .cb-ashar     { background:#6f42c1; }
 .cb-mens      { background:#e83e8c; }
 .cb-zero      { color:#adb5bd !important; background:none; font-weight:400; }
+
+@media print {
+    .no-print { display: none !important; }
+    #print-area-semester, #print-area-semester * { visibility: visible; }
+    #print-area-semester { position: absolute; left: 0; top: 0; width: 100%; }
+    .print-header { display: block !important; }
+}
+.print-header { display: none; }
 </style>
 @endpush
 
@@ -97,12 +105,24 @@
             <span class="text-muted ml-2" style="font-size:12px;">
                 {{ $siswaData->count() }} siswa
             </span>
+            <button onclick="window.print()" class="btn btn-outline-dark btn-sm ml-auto no-print" style="border-radius:20px;">
+                <i class="fas fa-print mr-1"></i>Print PDF
+            </button>
         </form>
     </div>
 </div>
 
 {{-- Tabel --}}
-<div class="card">
+<div class="card" id="print-area-semester">
+    <div class="print-header" style="padding:12px 16px 0;">
+        <h5 style="margin:0;">Rekap Semester Presensi & Sholat</h5>
+        <div style="font-size:12px; color:#555;">
+            Semester {{ ucfirst($semester) }} {{ $tahun }}
+            @if($filterKelas) — Kelas {{ $filterKelas }} @endif
+            — {{ $siswaData->count() }} siswa
+        </div>
+        <hr style="margin:8px 0;">
+    </div>
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-sm table-bordered table-hover tbl-semester mb-0">
@@ -123,7 +143,11 @@
                     @forelse($siswaData as $i => $s)
                     <tr>
                         <td>{{ $i + 1 }}</td>
-                        <td class="nama-col">{{ $s->nama }}</td>
+                        <td class="nama-col">
+                            <a href="{{ route('presensi.rekap.semester.detail', ['nis'=>$s->nis, 'semester'=>$semester, 'tahun'=>$tahun]) }}" style="color:inherit;">
+                                {{ $s->nama }}
+                            </a>
+                        </td>
                         <td class="kelas-col">{{ $s->kelas }}</td>
                         @foreach($periodeList as $bulan)
                             @php $d = $s->bulanData[$bulan]; @endphp

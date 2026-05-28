@@ -178,7 +178,11 @@
                         <tr>
                             <td>{{ $i + 1 }}</td>
                             <td><code>{{ $p->nomorinduk }}</code></td>
-                            <td><strong>{{ $p->nama }}</strong></td>
+                            <td>
+                                <a href="{{ route('presensi.rekap.detail', ['nis'=>$p->nomorinduk]) }}" style="color:inherit;">
+                                    <strong>{{ $p->nama }}</strong>
+                                </a>
+                            </td>
                             <td>{{ $p->info }}</td>
                             <td>{{ $p->waktumasuk ?? '-' }}</td>
                             <td>

@@ -214,7 +214,11 @@
                         data-search="{{ strtolower($s['nis'].' '.$s['nama'].' '.$s['kelas']) }}">
                         <td>{{ $i + 1 }}</td>
                         <td><code>{{ $s['nis'] }}</code></td>
-                        <td><strong>{{ $s['nama'] }}</strong></td>
+                        <td>
+                            <a href="{{ route('presensi.rekap.detail', ['nis'=>$s['nis']]) }}" style="color:inherit;">
+                                <strong>{{ $s['nama'] }}</strong>
+                            </a>
+                        </td>
                         <td><small>{{ $s['kelas'] }}</small></td>
                         <td>
                             @if($hasDhuha)
