@@ -129,7 +129,11 @@
                     @forelse($siswaData as $i => $s)
                     <tr>
                         <td>{{ $i + 1 }}</td>
-                        <td><strong>{{ $s->nama }}</strong></td>
+                        <td>
+                            <a href="{{ route('presensi.rekap.detail', ['nis'=>$s->nis, 'bulan'=>$bulan]) }}" style="color:inherit;">
+                                <strong>{{ $s->nama }}</strong>
+                            </a>
+                        </td>
                         <td>{{ $s->kelas }}</td>
                         <td class="num">
                             @if($s->masuk > 0)
