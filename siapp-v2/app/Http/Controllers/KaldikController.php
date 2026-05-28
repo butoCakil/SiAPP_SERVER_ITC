@@ -28,7 +28,7 @@ class KaldikController extends Controller
         $request->validate([
             'tanggal'    => 'required|date',
             'judul'      => 'required|string|max:255',
-            'tipe'       => 'required|in:libur_nasional,cuti_bersama,libur_semester,kegiatan',
+            'tipe' => 'required|in:libur_nasional,cuti_bersama,libur_semester,kegiatan,daring,force_majeure',
             'keterangan' => 'nullable|string|max:255',
         ]);
 
@@ -43,7 +43,7 @@ class KaldikController extends Controller
         $request->validate([
             'tanggal'    => 'required|date',
             'judul'      => 'required|string|max:255',
-            'tipe'       => 'required|in:libur_nasional,cuti_bersama,libur_semester,kegiatan',
+            'tipe' => 'required|in:libur_nasional,cuti_bersama,libur_semester,kegiatan,daring,force_majeure',
             'keterangan' => 'nullable|string|max:255',
         ]);
 
@@ -121,7 +121,7 @@ class KaldikController extends Controller
 
         $inserted = 0;
         $errors   = [];
-        $tipeValid = ['libur_nasional', 'cuti_bersama', 'libur_semester', 'kegiatan'];
+        $tipeValid = ['libur_nasional', 'cuti_bersama', 'libur_semester', 'kegiatan', 'daring', 'force_majeure'];
 
         foreach ($rows as $i => $row) {
             if ($i === 0) continue; // skip header

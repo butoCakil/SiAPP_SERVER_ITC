@@ -18,7 +18,8 @@
 .kaldik-cal td.libur { background:#ffebee !important; }
 .kaldik-cal td.kegiatan { background:#e3f2fd !important; }
 .kaldik-cal td.today { font-weight:700; border:2px solid #007bff; border-radius:4px; }
-.kaldik-dot { display:block; width:6px; height:6px; border-radius:50%; margin:1px auto 0; }
+.kaldik-dots { display:flex; flex-wrap:wrap; justify-content:center; gap:2px; margin-top:2px; }
+.kaldik-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
 .kaldik-badge { display:inline-block; font-size:9px; padding:1px 5px; border-radius:10px; color:#fff; margin-top:2px; max-width:90%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .legend-row { display:flex; gap:12px; flex-wrap:wrap; font-size:12px; margin-bottom:12px; }
 .legend-item { display:flex; align-items:center; gap:4px; }
@@ -67,6 +68,8 @@
     <div class="legend-item"><div class="legend-dot" style="background:#ff6f00;"></div> Cuti Bersama</div>
     <div class="legend-item"><div class="legend-dot" style="background:#7b1fa2;"></div> Libur Semester</div>
     <div class="legend-item"><div class="legend-dot" style="background:#1565c0;"></div> Kegiatan</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#00838f;"></div> Pembelajaran Daring</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#424242;"></div> Force Majeure</div>
 </div>
 
 {{-- Kalender Grid --}}
@@ -109,9 +112,13 @@
                         onclick="showDayModal('{{ $dateStr }}', '{{ $namaBulan[$bln] }} {{ $tgl }}, {{ $tahun }}')"
                         data-tanggal="{{ $dateStr }}">
                         {{ $tgl }}
-                        @foreach($eventsHari as $ev)
-                        <span class="kaldik-dot" style="background:{{ App\Models\Kaldik::warna($ev->tipe) }};"></span>
-                        @endforeach
+                        @if($eventsHari->count())
+                        <div class="kaldik-dots">
+                            @foreach($eventsHari as $ev)
+                            <span class="kaldik-dot" style="background:{{ App\Models\Kaldik::warna($ev->tipe) }};"></span>
+                            @endforeach
+                        </div>
+                        @endif
                     </td>
                     @if(($hariPertama + $tgl) % 7 == 0 && $tgl < $jumlahHari)
                     </tr><tr>
@@ -143,6 +150,8 @@
                     <option value="cuti_bersama">Cuti Bersama</option>
                     <option value="libur_semester">Libur Semester</option>
                     <option value="kegiatan">Kegiatan</option>
+                    <option value="daring">Pembelajaran Daring</option>
+                    <option value="force_majeure">Force Majeure</option>
                 </select>
             </div>
             <div class="form-group mb-2">

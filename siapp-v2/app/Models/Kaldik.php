@@ -41,6 +41,8 @@ class Kaldik extends Model
             'cuti_bersama'    => '#ff6f00',
             'libur_semester'  => '#7b1fa2',
             'kegiatan'        => '#1565c0',
+            'daring'          => '#00838f',
+            'force_majeure'   => '#424242',
             default           => '#607d8b',
         };
     }

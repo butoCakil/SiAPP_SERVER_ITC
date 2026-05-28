@@ -281,7 +281,7 @@ class PresensiViewController extends Controller
         // Kaldik libur bulan ini
         $kaldikLibur = DB::table('kaldik')
             ->where('tanggal', 'like', $bulan . '%')
-            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
             ->pluck('judul', 'tanggal');
 
         $kalender = [];
@@ -557,7 +557,7 @@ class PresensiViewController extends Controller
 
             $kaldikLibur = DB::table('kaldik')
                 ->where('tanggal', 'like', $bulan . '%')
-                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
                 ->pluck('judul', 'tanggal');
 
             $kalender = [];

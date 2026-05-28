@@ -52,12 +52,12 @@ class PresensiScheduler extends Command
         $tanggalHari = $now->format('Y-m-d');
         $isLiburKaldik = DB::table('kaldik')
             ->where('tanggal', $tanggalHari)
-            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
             ->exists();
         if ($isLiburKaldik) {
             $kaldikInfo = DB::table('kaldik')
                 ->where('tanggal', $tanggalHari)
-                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
                 ->value('judul');
             $this->line('[' . now() . '] Libur Kaldik: ' . $kaldikInfo . ' — presensi tutup.');
             $this->setMode(0, $setting);
