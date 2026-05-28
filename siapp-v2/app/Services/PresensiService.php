@@ -111,7 +111,7 @@ class PresensiService
 
         // ── Routing berdasarkan kode device ──
         if ($kodeDevice === 'MASJID') {
-            return $this->prosesMasjid($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice);
+            return $this->prosesMasjid($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice, $setting);
         }
 
         if ($kodeDevice === 'EVENT') {
@@ -284,13 +284,15 @@ class PresensiService
         string $nodevice,
         string $jam,
         string $tanggal,
-        string $kodeDevice
+        string $kodeDevice,
+        object $setting
     ): array {
-        $batasDzuhurMulai  = '11:45:00';
-        $batasDzuhurSelesai = '14:30:00';
-        $batasAsharMulai   = '14:30:01';
-        $batasAsharSelesai = '17:00:00';
-
+        $batasDhuhaStart   = $setting->dhuha_start  ?? '07:00:00';
+        $batasDhuhaEnd     = $setting->dhuha_end    ?? '11:00:00';
+        $batasDzuhurMulai  = $setting->dzuhur_start ?? '11:30:00';
+        $batasDzuhurSelesai = $setting->dzuhur_end  ?? '13:30:00';
+        $batasAsharMulai   = $setting->ashar_start  ?? '15:00:00';
+        $batasAsharSelesai = $setting->ashar_end    ?? '16:30:00';
         $now = strtotime($jam);
         $fase = null;
 
@@ -298,6 +300,8 @@ class PresensiService
             $fase = 'DZUHUR';
         } elseif ($now >= strtotime($batasAsharMulai) && $now <= strtotime($batasAsharSelesai)) {
             $fase = 'ASHAR';
+        } elseif ($now >= strtotime($batasDhuhaStart) && $now <= strtotime($batasDhuhaEnd)) {
+            $fase = 'DHUHA';
         }
 
         if (!$fase) {
