@@ -163,7 +163,7 @@
                     <div class="kal-hari {{ $k['tipe'] }} {{ $isToday ? 'today' : '' }}">
                         <span class="tgl-num">{{ $k['hari'] }}</span>
                         @if($k['tipe'] === 'libur')
-                            <span class="kal-badge bg-libur">Lib</span>
+                            <span class="kal-badge bg-libur" title="{{ $k['kaldik_judul'] ?? 'Libur' }}">Lib</span>
                         @elseif($p)
                             @if(in_array($p->ketmasuk, ['T','TL','TLT']))
                                 <span class="kal-badge bg-terlambat">Tel</span>

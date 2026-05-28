@@ -288,7 +288,23 @@ Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'g
 Route::post('/device/{id}/label', [DeviceViewController::class, 'updateLabel'])
     ->middleware('auth.admin')
     ->name('device.label');
-    
+
+// ── Kaldik ──
+Route::get('/kaldik', [App\Http\Controllers\KaldikController::class, 'index'])
+    ->middleware('auth.admin')->name('kaldik.index');
+Route::post('/kaldik', [App\Http\Controllers\KaldikController::class, 'store'])
+    ->middleware('auth.admin')->name('kaldik.store');
+Route::put('/kaldik/{id}', [App\Http\Controllers\KaldikController::class, 'update'])
+    ->middleware('auth.admin')->name('kaldik.update');
+Route::delete('/kaldik/{id}', [App\Http\Controllers\KaldikController::class, 'destroy'])
+    ->middleware('auth.admin')->name('kaldik.destroy');
+Route::get('/kaldik/api/events', [App\Http\Controllers\KaldikController::class, 'apiEvents'])
+    ->middleware('auth.admin')->name('kaldik.api.events');
+Route::get('/kaldik/template', [App\Http\Controllers\KaldikController::class, 'downloadTemplate'])
+    ->middleware('auth.admin')->name('kaldik.template');
+Route::post('/kaldik/upload', [App\Http\Controllers\KaldikController::class, 'upload'])
+    ->middleware('auth.admin')->name('kaldik.upload');
+
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET

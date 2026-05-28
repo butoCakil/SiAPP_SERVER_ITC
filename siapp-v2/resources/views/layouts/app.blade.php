@@ -131,6 +131,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('kaldik.index') }}" class="nav-link {{ request()->routeIs('kaldik*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>Kaldik</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('log') }}" class="nav-link {{ request()->routeIs('log*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-alt"></i>
                                 <p>Log</p>

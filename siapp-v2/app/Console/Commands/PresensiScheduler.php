@@ -48,6 +48,22 @@ class PresensiScheduler extends Command
             return;
         }
 
+        // Cek Kaldik — libur nasional/cuti/semester
+        $tanggalHari = $now->format('Y-m-d');
+        $isLiburKaldik = DB::table('kaldik')
+            ->where('tanggal', $tanggalHari)
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+            ->exists();
+        if ($isLiburKaldik) {
+            $kaldikInfo = DB::table('kaldik')
+                ->where('tanggal', $tanggalHari)
+                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+                ->value('judul');
+            $this->line('[' . now() . '] Libur Kaldik: ' . $kaldikInfo . ' — presensi tutup.');
+            $this->setMode(0, $setting);
+            return;
+        }
+
         // Tentukan batas waktu berdasarkan hari
         if ($isJumat) {
             $bukaMasuk  = $setting->wa;
@@ -75,7 +91,7 @@ class PresensiScheduler extends Command
 
         if ($modeBaru !== (int) $setting->mode) {
             $this->setMode($modeBaru, $setting);
-            $label = match($modeBaru) {
+            $label = match ($modeBaru) {
                 1 => 'MASUK DIBUKA',
                 2 => 'PULANG DIBUKA',
                 0 => 'DITUTUP',

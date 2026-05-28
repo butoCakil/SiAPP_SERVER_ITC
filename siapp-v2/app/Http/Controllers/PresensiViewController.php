@@ -278,6 +278,12 @@ class PresensiViewController extends Controller
             ->where('tanggalijin', 'like', $bulan . '%')
             ->get()->groupBy('tanggalijin');
 
+        // Kaldik libur bulan ini
+        $kaldikLibur = DB::table('kaldik')
+            ->where('tanggal', 'like', $bulan . '%')
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+            ->pluck('judul', 'tanggal');
+
         $kalender = [];
         $summary  = [
             'masuk' => 0,
@@ -299,6 +305,7 @@ class PresensiViewController extends Controller
             $isLibur = ($hariKerja == '5')
                 ? in_array($dayName, ['Saturday', 'Sunday'])
                 : $dayName === 'Sunday';
+            $isLibur = $isLibur || isset($kaldikLibur[$tgl]);
 
             $presensi = $presensiList[$tgl] ?? null;
             $events   = $eventList[$tgl] ?? collect();
@@ -338,8 +345,9 @@ class PresensiViewController extends Controller
                 'tgl'      => $tgl,
                 'hari'     => $hari,
                 'day'      => $dayName,
-                'is_libur' => $isLibur,
-                'tipe'     => $tipe,
+                'is_libur'     => $isLibur,
+                'kaldik_judul' => $kaldikLibur[$tgl] ?? null,
+                'tipe'         => $tipe,
                 'presensi' => $presensi,
                 'dhuha'    => $dhuha,
                 'dhuhur'   => $dhuhur,
@@ -363,7 +371,8 @@ class PresensiViewController extends Controller
             'kalender',
             'summary',
             'bulanSebelum',
-            'bulanBerikut'
+            'bulanBerikut',
+            'kaldikLibur'
         ));
     }
 
@@ -546,6 +555,11 @@ class PresensiViewController extends Controller
                 ->where('tanggalijin', 'like', $bulan . '%')
                 ->get()->groupBy('tanggalijin');
 
+            $kaldikLibur = DB::table('kaldik')
+                ->where('tanggal', 'like', $bulan . '%')
+                ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester'])
+                ->pluck('judul', 'tanggal');
+
             $kalender = [];
             for ($hari = 1; $hari <= $jumlahHari; $hari++) {
                 $tgl     = $thn . '-' . sprintf('%02d', $bln) . '-' . sprintf('%02d', $hari);
@@ -554,6 +568,7 @@ class PresensiViewController extends Controller
                 $isLibur = ($hariKerja == '5')
                     ? in_array($dayName, ['Saturday', 'Sunday'])
                     : $dayName === 'Sunday';
+                $isLibur = $isLibur || isset($kaldikLibur[$tgl]);
 
                 $presensi = $presensiList[$tgl] ?? null;
                 $events   = $eventList[$tgl] ?? collect();
@@ -590,11 +605,12 @@ class PresensiViewController extends Controller
                 $summaryTotal['izin'] += $izins->count();
 
                 $kalender[] = [
-                    'tgl'      => $tgl,
-                    'hari'     => $hari,
-                    'day'      => $dayName,
-                    'is_libur' => $isLibur,
-                    'tipe'     => $tipe,
+                    'tgl'         => $tgl,
+                    'hari'        => $hari,
+                    'day'         => $dayName,
+                    'is_libur'    => $isLibur,
+                    'kaldik_judul' => $kaldikLibur[$tgl] ?? null,
+                    'tipe'        => $tipe,
                     'presensi' => $presensi,
                     'dhuha'    => $dhuha,
                     'dhuhur'   => $dhuhur,
@@ -700,7 +716,7 @@ class PresensiViewController extends Controller
         $totalKeduanya      = $siswaList->filter(fn($s) => $s['dzuhur'] && $s['ashar'])->count();
         $totalTidakKeduanya = $siswaList->filter(fn($s) => !$s['dzuhur'] || !$s['ashar'])->count();
         $kelasList          = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
-        
+
         return view('presensi.event', compact(
             'siswaList',
             'tanggal',
