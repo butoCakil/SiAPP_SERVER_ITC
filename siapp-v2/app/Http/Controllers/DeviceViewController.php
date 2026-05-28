@@ -16,6 +16,18 @@ class DeviceViewController extends Controller
     public function cards()
     {
         [$devices, $regDevices] = $this->getData();
+        $onlineCount  = $devices->where('online', 1)->count();
+        $offlineCount = $devices->where('online', 0)->count();
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'html'    => view('device._cards', compact('devices', 'regDevices'))->render(),
+                'online'  => $onlineCount,
+                'offline' => $offlineCount,
+                'total'   => $onlineCount + $offlineCount,
+            ]);
+        }
+
         return view('device._cards', compact('devices', 'regDevices'));
     }
 
@@ -102,7 +114,14 @@ class DeviceViewController extends Controller
         rsort($logDates);
 
         return view('device.detail', compact(
-            'device', 'reg', 'metrics', 'status', 'setting', 'command', 'logDates', 'id'
+            'device',
+            'reg',
+            'metrics',
+            'status',
+            'setting',
+            'command',
+            'logDates',
+            'id'
         ));
     }
 
@@ -163,26 +182,38 @@ class DeviceViewController extends Controller
 
         // Simpan last_koneksi ke DB
         $wifiPresets = [
-            0=>'Instruktur-TE', 1=>'Instruktur-MM', 2=>'WIFI-RFID-13',
-            3=>'WIFI-RFID-14', 4=>'WIFI-RFID-152', 5=>'HOTSPOT-SKANEBA',
-            6=>'HOTSPOT-SISWA', 7=>'HOTSPOT-SKANEBA-ITC', 8=>'mqtt', 9=>'bumblebee',
+            0 => 'Instruktur-TE',
+            1 => 'Instruktur-MM',
+            2 => 'WIFI-RFID-13',
+            3 => 'WIFI-RFID-14',
+            4 => 'WIFI-RFID-152',
+            5 => 'HOTSPOT-SKANEBA',
+            6 => 'HOTSPOT-SISWA',
+            7 => 'HOTSPOT-SKANEBA-ITC',
+            8 => 'mqtt',
+            9 => 'bumblebee',
         ];
         $uploadPresets = [
-            0=>'upload Presensi', 1=>'upload Sholat',
-            2=>'upload Izin', 3=>'upload Izin Mens',
+            0 => 'upload Presensi',
+            1 => 'upload Sholat',
+            2 => 'upload Izin',
+            3 => 'upload Izin Mens',
         ];
 
         $dbPresets = [
-            0 => 'fakeRestApi', 1 => 'fakeRestApiMid',
-            2 => 'restAPI/datasiswa', 3 => 'restAPI/datagtk', 4 => 'restAPI/data',
+            0 => 'fakeRestApi',
+            1 => 'fakeRestApiMid',
+            2 => 'restAPI/datasiswa',
+            3 => 'restAPI/datagtk',
+            4 => 'restAPI/data',
         ];
 
         $modePresets = [
-            0 => 'Normal', 
-            1 => 'Sholat', 
+            0 => 'Normal',
+            1 => 'Sholat',
             2 => 'Full Online'
         ];
-        
+
         // Ambil data lama, merge dengan yang baru
         $existing = DB::table('devices')->where('device_id', $id)->value('last_koneksi');
         $koneksiLama = $existing ? json_decode($existing, true) : [];

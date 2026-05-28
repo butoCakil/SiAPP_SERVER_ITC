@@ -291,7 +291,7 @@
         Offline: <strong id="cnt-offline">{{ $offlineCount }}</strong>
     </div>
     <div class="summary-badge">
-        📊 Total: <strong>{{ $onlineCount + $offlineCount }}</strong>
+        📊 Total: <strong id="cnt-total">{{ $onlineCount + $offlineCount }}</strong>
     </div>
     <div class="summary-badge">
         🔄 Refresh: <strong><span id="countdown">30</span>s</strong>
@@ -435,9 +435,14 @@ const cdEl = document.getElementById('countdown');
 async function refreshGrid() {
     document.getElementById('loading-overlay').style.display = 'flex';
     try {
-        const res = await fetch('/device/cards');
-        const html = await res.text();
-        document.getElementById('device-grid').innerHTML = html;
+        const res = await fetch('/device/cards', {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const data = await res.json();
+        document.getElementById('device-grid').innerHTML = data.html;
+        document.getElementById('cnt-online').textContent = data.online;
+        document.getElementById('cnt-offline').textContent = data.offline;
+        document.getElementById('cnt-total').textContent = data.total;
         updateBars();
         updateLastRefresh();
         loadAllSparklines();
