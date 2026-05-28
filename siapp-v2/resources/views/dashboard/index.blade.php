@@ -450,7 +450,7 @@
                 <canvas id="chartSholat" height="80"></canvas>
             </div>
             <div class="card-footer text-muted" style="font-size:11px;">
-                🕛 Dzuhur &nbsp;|&nbsp; 🕓 Ashar &nbsp;|&nbsp; 🌸 Izin Mens
+                🌅 Dhuha &nbsp;|&nbsp; 🕛 Dzuhur &nbsp;|&nbsp; 🕓 Ashar &nbsp;|&nbsp; 🌸 Izin Mens
             </div>
         </div>
     </div>
