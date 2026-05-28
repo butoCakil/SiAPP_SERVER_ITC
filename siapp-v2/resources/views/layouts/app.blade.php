@@ -76,8 +76,12 @@
                         <li class="nav-item">
                             <a href="{{ route('device') }}" class="nav-link {{ request()->routeIs('device*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-mobile-alt"></i>
-                                <p>Device <span class="badge badge-pill right" id="badge-online"
-                                    style="background:#00c853; color:#fff; min-width:20px;">-</span></p>
+                                <p>Device
+                                    <span class="badge badge-pill right" id="badge-offline"
+                                        style="background:#f44336; color:#fff; min-width:20px; display:none;"></span>
+                                    <span class="badge badge-pill right mr-1" id="badge-online"
+                                        style="background:#00c853; color:#fff; min-width:20px; display:none;"></span>
+                                </p>
                             </a>
                         </li>
                         <li class="nav-item has-treeview {{ request()->routeIs('presensi*') ? 'menu-open' : '' }}">
@@ -223,10 +227,15 @@
             fetch('/api-internal/device-online')
                 .then(r => r.json())
                 .then(data => {
-                    const el = document.getElementById('badge-online');
-                    if (el) {
-                        el.textContent = data.online;
-                        el.style.background = data.online > 0 ? '#00c853' : '#f44336';
+                    const elOn  = document.getElementById('badge-online');
+                    const elOff = document.getElementById('badge-offline');
+                    if (elOn) {
+                        elOn.textContent    = data.online;
+                        elOn.style.display  = data.online > 0 ? 'inline-block' : 'none';
+                    }
+                    if (elOff) {
+                        elOff.textContent    = data.offline;
+                        elOff.style.display  = data.offline > 0 ? 'inline-block' : 'none';
                     }
                 })
                 .catch(() => {});

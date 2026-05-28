@@ -252,8 +252,11 @@ Route::put('/akun/{id}/password', [AkunController::class, 'resetPassword'])
 |--------------------------------------------------------------------------
 */
 Route::get('/api-internal/device-online', function () {
+    $online  = DB::table('devices')->where('hidden', 0)->where('online', 1)->count();
+    $offline = DB::table('devices')->where('hidden', 0)->where('online', 0)->count();
     return response()->json([
-        'online' => DB::table('devices')->where('online', 1)->count()
+        'online'  => $online,
+        'offline' => $offline,
     ]);
 })->middleware('auth.admin');
 
