@@ -17,12 +17,30 @@ class HomeController extends Controller
         $filterKelas = $request->input('kelas', '');
         $tab         = $request->input('tab', 'presensi');
 
+        // ── Cek Kaldik ──
+        $kaldikHariIni = DB::table('kaldik')
+            ->where('tanggal', $tanggal)
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
+            ->first();
+
         // ── Status presensi masuk/pulang ──
         $statusMasuk = match ((int)($setting->mode ?? 0)) {
             1 => ['label' => 'MASUK',  'color' => '#00c853', 'icon' => 'door-open',   'sub' => 'Presensi masuk sedang dibuka'],
             2 => ['label' => 'PULANG', 'color' => '#ff8800', 'icon' => 'door-closed', 'sub' => 'Presensi pulang sedang dibuka'],
             default => ['label' => 'TUTUP', 'color' => '#607d8b', 'icon' => 'ban',    'sub' => 'Presensi sedang ditutup'],
         };
+
+        if ($kaldikHariIni) {
+            $tipeLabel = match ($kaldikHariIni->tipe) {
+                'libur_nasional'  => '🔴 Libur Nasional',
+                'cuti_bersama'    => '🟠 Cuti Bersama',
+                'libur_semester'  => '🟣 Libur Semester',
+                'daring'          => '🔵 Pembelajaran Daring',
+                'force_majeure'   => '⚫ Force Majeure',
+                default           => 'Libur',
+            };
+            $statusMasuk['sub'] = $tipeLabel . ': ' . $kaldikHariIni->judul;
+        }
 
         // ── Status sholat ──
         $batasDhuhaStart  = $setting->dhuha_start  ?? '07:00:00';

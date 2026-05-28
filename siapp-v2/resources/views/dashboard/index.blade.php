@@ -201,6 +201,11 @@
                     <i class="fas fa-{{ $statusMasuk['icon'] }} mr-1"></i>
                     {{ $statusMasuk['label'] }}
                 </span>
+                @if(isset($statusMasuk['kaldik']))
+                <div class="mt-2" style="font-size:11px; color:#e53935; font-weight:600;">
+                    {{ $statusMasuk['kaldik'] }}
+                </div>
+                @endif
                 <div class="mt-2" style="font-size:11px; color:#888;">
                     <i class="fas fa-sign-in-alt mr-1"></i>{{ $setting->waktumasuk ?? '-' }}
                     &nbsp;|&nbsp;

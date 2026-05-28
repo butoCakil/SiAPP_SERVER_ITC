@@ -32,6 +32,24 @@ class DashboardController extends Controller
             default => ['label' => 'DITUTUP', 'color' => 'secondary', 'icon' => 'ban'],
         };
 
+        // ── Cek Kaldik ──
+        $tanggal = date('Y-m-d');
+        $kaldikHariIni = DB::table('kaldik')
+            ->where('tanggal', $tanggal)
+            ->whereIn('tipe', ['libur_nasional', 'cuti_bersama', 'libur_semester', 'daring', 'force_majeure'])
+            ->first();
+        if ($kaldikHariIni) {
+            $tipeLabel = match ($kaldikHariIni->tipe) {
+                'libur_nasional'  => '🔴 Libur Nasional',
+                'cuti_bersama'    => '🟠 Cuti Bersama',
+                'libur_semester'  => '🟣 Libur Semester',
+                'daring'          => '🔵 Pembelajaran Daring',
+                'force_majeure'   => '⚫ Force Majeure',
+                default           => 'Libur',
+            };
+            $statusMasuk['kaldik'] = $tipeLabel . ': ' . $kaldikHariIni->judul;
+        }
+
         // ── Status sholat ──
         $batasDhuhaStart  = $setting->dhuha_start  ?? '07:00:00';
         $batasDhuhaEnd    = $setting->dhuha_end    ?? '11:00:00';
