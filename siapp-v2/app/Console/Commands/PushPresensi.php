@@ -87,14 +87,37 @@ class PushPresensi extends Command
             ])->values(),
         ];
 
-        $ok = $this->kirim($url, $payload, 'Presensi Harian');
+        $batches = $data->chunk(10);
+        $allOk   = true;
+        $sentIds = collect();
 
-        if ($ok) {
-            $ids = $data->pluck('id');
-            DB::table('datapresensi')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        foreach ($batches as $batch) {
+            $batchPayload = [
+                'type'      => 'presensi_harian',
+                'timestamp' => now()->toIso8601String(),
+                'tanggal'   => $this->tanggal,
+                'total'     => $batch->count(),
+                'data'      => $batch->map(fn($p) => [
+                    'nis'          => $p->nis,
+                    'nama'         => $p->nama,
+                    'kelas'        => $p->kelas,
+                    'waktu_masuk'  => $p->waktumasuk,
+                    'ket_masuk'    => $p->ketmasuk,
+                    'waktu_pulang' => ($p->waktupulang && $p->waktupulang !== '00:00:00') ? $p->waktupulang : null,
+                    'ket_pulang'   => $p->ketpulang ?: null,
+                    'device'       => $p->device,
+                ])->values(),
+            ];
+            $ok = $this->kirim($url, $batchPayload, 'Presensi Harian');
+            if ($ok) $sentIds = $sentIds->concat($batch->pluck('id'));
+            else $allOk = false;
         }
 
-        return $ok ? 1 : 0;
+        if ($sentIds->isNotEmpty()) {
+            DB::table('datapresensi')->whereIn('id', $sentIds)->update(['pushed_at' => now()]);
+        }
+
+        return $allOk ? 1 : 0;
     }
 
     // ── 2. Sholat ──
@@ -160,14 +183,47 @@ class PushPresensi extends Command
             ])->values(),
         ];
 
-        $ok = $this->kirim($url, $payload, 'Presensi Sholat');
+        // Kirim per batch 50 records
+        $batches   = $dataList->chunk(10);
+        $allOk     = true;
+        $sentIds   = collect();
 
-        if ($ok) {
-            $ids = $events->pluck('id');
-            DB::table('presensiEvent')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        foreach ($batches as $batch) {
+            $batchPayload = [
+                'type'      => 'presensi_sholat',
+                'timestamp' => now()->toIso8601String(),
+                'tanggal'   => $this->tanggal,
+                'total'     => $batch->count(),
+                'data'      => $batch->map(fn($s) => [
+                    'nis'           => $s['nis'],
+                    'nama'          => $s['nama'],
+                    'kelas'         => $s['kelas'],
+                    'dzuhur'        => $s['dzuhur'],
+                    'ashar'         => $s['ashar'],
+                    'device_dzuhur' => $s['device_dzuhur'],
+                    'device_ashar'  => $s['device_ashar'],
+                ])->values(),
+            ];
+
+            $ok = $this->kirim($url, $batchPayload, 'Presensi Sholat');
+
+            if ($ok) {
+                // Kumpulkan ID dari siswa di batch ini
+                foreach ($batch as $s) {
+                    foreach ($s['ids'] as $id) {
+                        $sentIds->push($id);
+                    }
+                }
+            } else {
+                $allOk = false;
+            }
         }
 
-        return $ok ? 1 : 0;
+        if ($sentIds->isNotEmpty()) {
+            DB::table('presensiEvent')->whereIn('id', $sentIds)->update(['pushed_at' => now()]);
+        }
+
+        return $allOk ? 1 : 0;
     }
 
     // ── 3. Izin Menstruasi ──
@@ -225,14 +281,37 @@ class PushPresensi extends Command
             ])->values(),
         ];
 
-        $ok = $this->kirim($url, $payload, 'Izin Menstruasi');
+        $batches = $dataList->chunk(10);
+        $allOk   = true;
+        $sentIds = collect();
 
-        if ($ok) {
-            $ids = collect(array_merge(...array_column(array_values($siswaMap), 'ids')));
-            DB::table('presensiEvent')->whereIn('id', $ids)->update(['pushed_at' => now()]);
+        foreach ($batches as $batch) {
+            $batchPayload = [
+                'type'      => 'izin_mens',
+                'timestamp' => now()->toIso8601String(),
+                'tanggal'   => $this->tanggal,
+                'total'     => $batch->count(),
+                'data'      => $batch->map(fn($s) => [
+                    'nis'          => $s['nis'],
+                    'nama'         => $s['nama'],
+                    'kelas'        => $s['kelas'],
+                    'waktu_dzuhur' => $s['waktu_dzuhur'],
+                    'waktu_ashar'  => $s['waktu_ashar'],
+                ])->values(),
+            ];
+            $ok = $this->kirim($url, $batchPayload, 'Izin Menstruasi');
+            if ($ok) {
+                foreach ($batch as $s) {
+                    foreach ($s['ids'] as $id) $sentIds->push($id);
+                }
+            } else $allOk = false;
         }
 
-        return $ok ? 1 : 0;
+        if ($sentIds->isNotEmpty()) {
+            DB::table('presensiEvent')->whereIn('id', $sentIds)->update(['pushed_at' => now()]);
+        }
+
+        return $allOk ? 1 : 0;
     }
 
     // ── 4. Izin Keluar/Pulang ──
@@ -289,22 +368,41 @@ class PushPresensi extends Command
             ])->values(),
         ];
 
-        $ok = $this->kirim($url, $payload, 'Izin Keluar/Pulang');
+        $batches  = $gabungan->chunk(10);
+        $allOk    = true;
+        $sentIds  = collect();
 
-        if ($ok) {
-            // Update pushed_at untuk yang baru
-            $idsBaru = $queryBaru->pluck('id');
-            if ($idsBaru->isNotEmpty()) {
-                DB::table('daftarijin')->whereIn('id', $idsBaru)->update(['pushed_at' => now()]);
-            }
-            // Update kembali_pushed_at untuk yang sudah kembali
-            $idsKembali = $queryKembali->pluck('id');
-            if ($idsKembali->isNotEmpty()) {
-                DB::table('daftarijin')->whereIn('id', $idsKembali)->update(['kembali_pushed_at' => now()]);
-            }
+        foreach ($batches as $batch) {
+            $batchPayload = [
+                'type'      => 'izin_keluar',
+                'timestamp' => now()->toIso8601String(),
+                'tanggal'   => $this->tanggal,
+                'total'     => $batch->count(),
+                'data'      => $batch->map(fn($p) => [
+                    'nis'         => $p->nis,
+                    'nama'        => $p->nama,
+                    'kelas'       => $p->kelas ?? '-',
+                    'jam_keluar'  => $p->jam_keluar,
+                    'jam_kembali' => $p->jam_kembali,
+                    'keterangan'  => $p->info,
+                    'status'      => $p->jam_kembali ? 'kembali' : 'belum_kembali',
+                ])->values(),
+            ];
+            $ok = $this->kirim($url, $batchPayload, 'Izin Keluar/Pulang');
+            if ($ok) $sentIds = $sentIds->concat($batch->pluck('id'));
+            else $allOk = false;
         }
 
-        return $ok ? 1 : 0;
+        if ($sentIds->isNotEmpty()) {
+            $idsBaru = $queryBaru->pluck('id')->intersect($sentIds);
+            if ($idsBaru->isNotEmpty())
+                DB::table('daftarijin')->whereIn('id', $idsBaru)->update(['pushed_at' => now()]);
+            $idsKembali = $queryKembali->pluck('id')->intersect($sentIds);
+            if ($idsKembali->isNotEmpty())
+                DB::table('daftarijin')->whereIn('id', $idsKembali)->update(['kembali_pushed_at' => now()]);
+        }
+
+        return $allOk ? 1 : 0;
     }
 
     // ── Helper: kirim HTTP POST ──
@@ -317,7 +415,8 @@ private function kirim(string $url, array $payload, string $label): bool
         try {
             $response = Http::timeout(15)
                 ->withHeaders(['X-Api-Key' => DB::table('statusnya')->value('timid_api_key') ?? ''])
-                ->post($url, $payload);
+                // ->post($url, $payload);
+                ->get($url, ['payloadjson' => json_encode($payload, JSON_UNESCAPED_UNICODE)]);
 
             if ($response->successful()) {
                 $this->info('[' . now() . '] ✅ ' . $label . ' terkirim (' . $total . ' records)');
