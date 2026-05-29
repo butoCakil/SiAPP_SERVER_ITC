@@ -28,7 +28,92 @@ class SettingController extends Controller
             ->limit(20)
             ->get();
 
-        return view('setting.index', compact('setting', 'pushStatus', 'pushLog'));
+        // ── Rekap Sinkronisasi per tanggal (1 tahun ajaran) ──
+        $now         = now();
+        $bulan       = (int) $now->format('n');
+        $tahun       = (int) $now->format('Y');
+        $tahunAjaran = $bulan >= 7 ? $tahun : $tahun - 1;
+        $tglMulai    = $tahunAjaran . '-07-01';
+        $tglAkhir    = ($tahunAjaran + 1) . '-06-30';
+
+        // Presensi harian
+        $rekapPresensi = DB::table('datapresensi')
+            ->selectRaw("tanggal,
+                COUNT(*) as total,
+                SUM(CASE WHEN pushed_at IS NOT NULL THEN 1 ELSE 0 END) as sudah,
+                SUM(CASE WHEN pushed_at IS NULL THEN 1 ELSE 0 END) as belum")
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->groupBy('tanggal')
+            ->orderByDesc('tanggal')
+            ->get();
+
+        // Sholat Dzuhur
+        $rekapDzuhur = DB::table('presensiEvent')
+            ->selectRaw("tanggal,
+                COUNT(*) as total,
+                SUM(CASE WHEN pushed_at IS NOT NULL THEN 1 ELSE 0 END) as sudah,
+                SUM(CASE WHEN pushed_at IS NULL THEN 1 ELSE 0 END) as belum")
+            ->where('keterangan', 'DZUHUR')
+            ->where('ruang', '!=', 'Izin Mens')
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->groupBy('tanggal')
+            ->orderByDesc('tanggal')
+            ->get()
+            ->keyBy('tanggal');
+
+        // Sholat Ashar
+        $rekapAshar = DB::table('presensiEvent')
+            ->selectRaw("tanggal,
+                COUNT(*) as total,
+                SUM(CASE WHEN pushed_at IS NOT NULL THEN 1 ELSE 0 END) as sudah,
+                SUM(CASE WHEN pushed_at IS NULL THEN 1 ELSE 0 END) as belum")
+            ->where('keterangan', 'ASHAR')
+            ->where('ruang', '!=', 'Izin Mens')
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->groupBy('tanggal')
+            ->orderByDesc('tanggal')
+            ->get()
+            ->keyBy('tanggal');
+
+        // Izin Mens
+        $rekapIzinMens = DB::table('presensiEvent')
+            ->selectRaw("tanggal,
+                COUNT(DISTINCT nis) as total,
+                SUM(CASE WHEN pushed_at IS NOT NULL THEN 1 ELSE 0 END) as sudah,
+                SUM(CASE WHEN pushed_at IS NULL THEN 1 ELSE 0 END) as belum")
+            ->where('ruang', 'Izin Mens')
+            ->whereBetween('tanggal', [$tglMulai, $tglAkhir])
+            ->groupBy('tanggal')
+            ->orderByDesc('tanggal')
+            ->get()
+            ->keyBy('tanggal');
+
+        // Gabungkan semua tanggal yang ada data
+        $semuaTanggal = $rekapPresensi->pluck('tanggal')
+            ->concat($rekapDzuhur->keys())
+            ->concat($rekapAshar->keys())
+            ->concat($rekapIzinMens->keys())
+            ->unique()->sort()->reverse()->values();
+
+        $rekapSinkron = $semuaTanggal->map(function ($tgl) use ($rekapPresensi, $rekapDzuhur, $rekapAshar, $rekapIzinMens) {
+            $p = $rekapPresensi->firstWhere('tanggal', $tgl);
+            return [
+                'tanggal'    => $tgl,
+                'presensi'   => $p,
+                'dzuhur'     => $rekapDzuhur[$tgl] ?? null,
+                'ashar'      => $rekapAshar[$tgl] ?? null,
+                'izin_mens'  => $rekapIzinMens[$tgl] ?? null,
+            ];
+        });
+
+        return view('setting.index', compact(
+            'setting',
+            'pushStatus',
+            'pushLog',
+            'rekapSinkron',
+            'tglMulai',
+            'tglAkhir'
+        ));
     }
 
     public function update(Request $request)
@@ -37,6 +122,7 @@ class SettingController extends Controller
 
         DB::table('statusnya')->update([
             'mode'        => (int) $request->mode,
+            'push_auto'   => (int) $request->input('push_auto', 1),
             'wa'          => $request->wa,
             'wta'         => $request->wta,
             'wtp'         => $request->wtp,
@@ -78,5 +164,59 @@ class SettingController extends Controller
         ]);
 
         return back()->with('success', 'Setting berhasil disimpan.');
+    }
+
+    public function retryPush(Request $request)
+    {
+        $tanggal   = $request->input('tanggal');
+        $endpoints = $request->input('endpoints', ['all']);
+
+        if (!$tanggal) {
+            return response()->json(['status' => 'error', 'message' => 'Tanggal tidak valid'], 400);
+        }
+
+        // Jalankan push via artisan command
+        $flag = '--tanggal=' . $tanggal;
+
+        if (in_array('all', $endpoints)) {
+            \Illuminate\Support\Facades\Artisan::call('push:presensi', [
+                '--tanggal' => $tanggal,
+            ]);
+        } else {
+            // Reset pushed_at hanya untuk endpoint yang dipilih
+            if (in_array('presensi_harian', $endpoints)) {
+                DB::table('datapresensi')
+                    ->where('tanggal', $tanggal)
+                    ->whereNull('pushed_at')
+                    ->update(['pushed_at' => null]);
+            }
+            if (in_array('presensi_sholat', $endpoints) || in_array('izin_mens', $endpoints)) {
+                $query = DB::table('presensiEvent')->where('tanggal', $tanggal);
+                if (in_array('presensi_sholat', $endpoints) && !in_array('izin_mens', $endpoints)) {
+                    $query->where('ruang', '!=', 'Izin Mens');
+                } elseif (!in_array('presensi_sholat', $endpoints) && in_array('izin_mens', $endpoints)) {
+                    $query->where('ruang', 'Izin Mens');
+                }
+                $query->whereNull('pushed_at');
+            }
+            if (in_array('izin_keluar', $endpoints)) {
+                DB::table('daftarijin')
+                    ->where('tanggalijin', $tanggal)
+                    ->whereNull('pushed_at')
+                    ->update(['pushed_at' => null]);
+            }
+
+            \Illuminate\Support\Facades\Artisan::call('push:presensi', [
+                '--tanggal' => $tanggal,
+            ]);
+        }
+
+        $output = \Illuminate\Support\Facades\Artisan::output();
+
+        return response()->json([
+            'status'  => 'ok',
+            'message' => 'Push selesai',
+            'output'  => $output,
+        ]);
     }
 }

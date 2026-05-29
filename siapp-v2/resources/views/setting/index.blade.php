@@ -45,6 +45,9 @@
         <div class="setting-tab" onclick="switchTab('notifikasi', this)">
             <i class="fab fa-whatsapp"></i>Notifikasi
         </div>
+        <div class="setting-tab" onclick="switchTab('sinkronisasi', this)">
+            <i class="fas fa-sync-alt"></i>Sinkronisasi
+        </div>
     </div>
 
     {{-- ══════════════════════════════════════ --}}
@@ -405,7 +408,7 @@
             </button>
         </div>
 
-{{-- ══════════════════════════════════════ --}}
+        {{-- ══════════════════════════════════════ --}}
         {{-- TAB 5: INTEGRASI --}}
         {{-- ══════════════════════════════════════ --}}
         <div class="tab-pane" id="tab-integrasi">
@@ -522,6 +525,16 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3" style="gap:12px;">
+                        <div class="icheck-success">
+                            <input type="checkbox" name="push_auto" id="push_auto" value="1"
+                                {{ ($setting->push_auto ?? 1) ? 'checked' : '' }}>
+                            <label for="push_auto">
+                                <i class="fas fa-robot mr-1"></i>Push Otomatis Aktif
+                            </label>
+                        </div>
+                        <small class="text-muted">Jika dicentang, data akan otomatis dikirim ke TIM IT setiap hari jam 22:00 dan re-check mingguan setiap Sabtu jam 23:00</small>
                     </div>
                     <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal=2026-05-12 --force</small></p>
                 </div>
@@ -689,6 +702,82 @@
 
     </form>
 
+    {{-- ══════════════════════════════════════ --}}
+    {{-- TAB 7: SINKRONISASI --}}
+    {{-- ══════════════════════════════════════ --}}
+    <div class="tab-pane" id="tab-sinkronisasi">
+        <div class="card card-outline card-warning mb-3">
+            <div class="card-header py-2">
+                <h3 class="card-title"><i class="fas fa-sync-alt mr-2"></i>Status Sinkronisasi ke TIM IT</h3>
+                <div class="card-tools">
+                    <small class="text-muted">Tahun Ajaran {{ substr($tglMulai,0,4) }}/{{ substr($tglAkhir,0,4) }}</small>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm table-hover mb-0" style="font-size:12px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Tanggal</th>
+                            <th class="text-center">Presensi</th>
+                            <th class="text-center">Dzuhur</th>
+                            <th class="text-center">Ashar</th>
+                            <th class="text-center">Izin Mens</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($rekapSinkron as $row)
+                        @php
+                            $adaBelum = false;
+                            foreach (['presensi','dzuhur','ashar','izin_mens'] as $k) {
+                                if ($row[$k] && $row[$k]->belum > 0) { $adaBelum = true; break; }
+                            }
+                        @endphp
+                        <tr class="{{ $adaBelum ? 'table-warning' : '' }}">
+                            <td>
+                                <strong>{{ \Carbon\Carbon::parse($row['tanggal'])->translatedFormat('d M Y') }}</strong>
+                                <br><small class="text-muted">{{ \Carbon\Carbon::parse($row['tanggal'])->translatedFormat('l') }}</small>
+                            </td>
+                            @foreach(['presensi','dzuhur','ashar','izin_mens'] as $k)
+                            <td class="text-center">
+                                @if($row[$k])
+                                    @if($row[$k]->belum == 0)
+                                        <span class="badge badge-success">✅ {{ $row[$k]->total }}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{ $row[$k]->sudah }}/{{ $row[$k]->total }}</span>
+                                        <br><small class="text-danger">{{ $row[$k]->belum }} belum</small>
+                                    @endif
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
+                            @endforeach
+                            <td class="text-center">
+                                @if($adaBelum)
+                                <button class="btn btn-xs btn-warning btn-retry"
+                                    data-tanggal="{{ $row['tanggal'] }}"
+                                    data-endpoints="all"
+                                    title="Push semua yang belum">
+                                    <i class="fas fa-sync-alt"></i> Retry
+                                </button>
+                                @else
+                                <span class="text-success" style="font-size:11px;"><i class="fas fa-check"></i> Sinkron</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-3">
+                                <i class="fas fa-inbox mr-1"></i>Belum ada data tahun ajaran ini
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 </div>
 @endsection
@@ -714,6 +803,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const tab = document.querySelector(`.setting-tab[onclick*="${last}"]`);
         if (tab) switchTab(last, tab);
     }
+});
+
+// ── Retry Push ──
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-retry').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tanggal   = this.dataset.tanggal;
+            const endpoints = this.dataset.endpoints;
+            const btnEl     = this;
+
+            btnEl.disabled = true;
+            btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Proses...';
+
+            fetch('{{ route("setting.retry-push") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ tanggal, endpoints: [endpoints] })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    btnEl.innerHTML = '<i class="fas fa-check"></i> Selesai';
+                    btnEl.classList.replace('btn-warning', 'btn-success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    btnEl.disabled = false;
+                    btnEl.innerHTML = '<i class="fas fa-sync-alt"></i> Retry';
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(() => {
+                btnEl.disabled = false;
+                btnEl.innerHTML = '<i class="fas fa-sync-alt"></i> Retry';
+                alert('Gagal menghubungi server');
+            });
+        });
+    });
 });
 
 function addWaNumber() {

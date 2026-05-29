@@ -65,6 +65,10 @@ Route::post('/setting', [SettingController::class, 'update'])
     ->middleware('auth.admin')
     ->name('setting.update');
 
+Route::post('/setting/retry-push', [SettingController::class, 'retryPush'])
+    ->middleware('auth.admin')
+    ->name('setting.retry-push');
+
 // Device
 Route::get('/device', [DeviceViewController::class, 'index'])
     ->middleware('auth.admin')
