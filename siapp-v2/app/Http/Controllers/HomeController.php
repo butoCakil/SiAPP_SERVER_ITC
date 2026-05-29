@@ -61,7 +61,8 @@ class HomeController extends Controller
         }
 
         // ── Stat hari ini ──
-        $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
+        $totalHadir     = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
+        $totalTerlambat = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T','TLT'])->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
@@ -117,8 +118,12 @@ class HomeController extends Controller
         // $ivatun = $sholatList->firstWhere('nama', 'IVATUN CORRAEMA SENJA');
         // dd($ivatun);
 
+        $isLoggedIn = session()->has('admin_id');
+
         return view('home', compact(
             'totalHadir',
+            'totalTerlambat',
+            'isLoggedIn',
             'totalDzuhur',
             'totalAshar',
             'totalIzin',
@@ -161,7 +166,8 @@ class HomeController extends Controller
         }
 
         // ── Stat ──
-        $totalHadir  = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
+        $totalHadir      = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
+        $totalTerlambat  = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T','TLT'])->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
@@ -291,6 +297,7 @@ class HomeController extends Controller
         return response()->json([
             'stat' => [
                 'hadir'  => $totalHadir,
+                'terlambat'  => $totalTerlambat,
                 'dzuhur' => $totalDzuhur,
                 'ashar'  => $totalAshar,
                 'izin'   => $totalIzin,

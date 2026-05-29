@@ -180,7 +180,7 @@
     /* ── STAT MINI ── */
     .stat-row {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 10px;
         margin-bottom: 24px;
     }
@@ -423,6 +423,59 @@
         border-radius: 3px;
         padding: 1px 0;
     }
+
+    #chart-wrapper {
+        position: relative;
+        width: 100%;
+        height: 250px;
+    }
+
+    /* ── MOBILE OPTIMIZATIONS ── */
+    @media (max-width: 480px) {
+
+        /* Header: sembunyikan subtitle */
+        .brand-text p { display: none; }
+
+        /* Jam header lebih kecil */
+        .jam-header { font-size: 16px; letter-spacing: 1px; }
+
+        /* Header padding lebih rapat */
+        header { padding: 10px 14px; }
+
+        /* Status card: jadwal sholat pecah per baris */
+        .status-sub { line-height: 1.7; }
+
+        /* Stat mini: font lebih kecil & label dipersingkat */
+        .stat-mini .val { font-size: 22px; }
+        .stat-mini .lbl { font-size: 9px; }
+
+        /* Tabel sholat: sembunyikan kolom Status (#6) */
+        #main-table th:nth-child(6),
+        #main-table td:nth-child(6) { display: none; }
+
+        /* Tabel sholat: kompres kolom # dan Kelas */
+        #main-table th:nth-child(1),
+        #main-table td:nth-child(1) { padding: 8px 6px; width: 28px; font-size: 10px; }
+
+        #main-table th:nth-child(3),
+        #main-table td:nth-child(3) { font-size: 10px; white-space: nowrap; }
+
+        /* Badge waktu tidak wrap */
+        .badge { white-space: nowrap; }
+
+        /* Rekap nums: font sedikit lebih besar */
+        .rekap-num { font-size: 10px; width: 24px; }
+        .rekap-kelas { font-size: 9px; width: 58px; }
+
+        /* Rekap row lebih rapat */
+        .rekap-row { padding: 3px 8px; gap: 4px; }
+        .rekap-kelas { width: 52px; font-size: 9px; }
+
+        /* Chart lebih tinggi di mobile */
+        #section-chart > div { height: 260px; }
+
+        .btn-login-text { display: none; }
+    }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -443,9 +496,15 @@
     </div>
     <div class="header-right">
         <div class="jam-header" id="jam-live">{{ date('H:i:s') }}</div>
-        <a href="{{ route('login') }}" class="btn-login">
-            <i class="fas fa-lock mr-1"></i>&nbsp;Admin
+        @if($isLoggedIn)
+        <a href="{{ route('dashboard') }}" class="btn-login">
+            <i class="fas fa-tachometer-alt"></i><span class="btn-login-text">&nbsp;Dashboard</span>
         </a>
+        @else
+        <a href="{{ route('login') }}" class="btn-login">
+            <i class="fas fa-lock"></i><span class="btn-login-text">&nbsp;Admin</span>
+        </a>
+        @endif
     </div>
 </header>
 
@@ -468,7 +527,7 @@
                 <div class="status-sub mt-1">
                     🕐 Masuk: {{ $setting->wa }} – {{ $setting->wta }}
                     &nbsp;|&nbsp;
-                    🕓 Pulang: {{ $setting->wtp }} – {{ $setting->wp }}
+                    🕓 Pulang: {{ date('N') == 5 ? $setting->wtp_jumat : $setting->wtp }} – {{ date('N') == 5 ? $setting->wp_jumat : $setting->wp }}
                 </div>
                 @endif
             </div>
@@ -486,11 +545,9 @@
                 <div class="status-label" style="color: {{ $statusSholat['color'] }};">
                     {{ $statusSholat['aktif'] ? $statusSholat['label'].' AKTIF' : 'TUTUP' }}
                 </div>
-                <div class="status-sub">
-                    🌅 Dhuha: {{ substr($setting->dhuha_start, 0, 5) }} – {{ substr($setting->dhuha_end, 0, 5) }}
-                    &nbsp;|&nbsp;
-                    🕛 Dzuhur: {{ substr($setting->dzuhur_start, 0, 5) }} – {{ substr($setting->dzuhur_end, 0, 5) }}
-                    &nbsp;|&nbsp;
+                <div class="status-sub" style="line-height:1.8;">
+                    🌅 Dhuha: {{ substr($setting->dhuha_start, 0, 5) }} – {{ substr($setting->dhuha_end, 0, 5) }}<br>
+                    🕛 Dzuhur: {{ substr($setting->dzuhur_start, 0, 5) }} – {{ substr($setting->dzuhur_end, 0, 5) }}<br>
                     🕓 Ashar: {{ substr($setting->ashar_start, 0, 5) }} – {{ substr($setting->ashar_end, 0, 5) }}
                 </div>
             </div>
@@ -506,6 +563,10 @@
         <div class="stat-mini">
             <div class="val" id="stat-hadir"  style="color:#00c853;">{{ $totalHadir }}</div>
             <div class="lbl">Hadir Hari Ini</div>
+        </div>
+        <div class="stat-mini">
+            <div class="val" id="stat-terlambat" style="color:#f44336;">{{ $totalTerlambat }}</div>
+            <div class="lbl">Telat</div>
         </div>
         <div class="stat-mini">
             <div class="val" id="stat-dzuhur" style="color:#ff8800;">{{ $totalDzuhur }}</div>
@@ -699,7 +760,9 @@
 
     {{-- Chart 14 Hari --}}
     <div class="data-card" id="section-chart" style="margin-top:12px; padding:14px;">
-        <canvas id="chartHome" height="80"></canvas>
+        <div id="chart-wrapper">
+            <canvas id="chartHome"></canvas>
+        </div>
     </div>
 
 </main>
@@ -776,7 +839,7 @@ function renderSholat(list) {
                 <td>${s.kelas}</td>
                 <td>${dzuhurBadge}</td>
                 <td>${asharBadge}</td>
-                <td>${status}</td>
+                <td class="col-status">${status}</td>
             </tr>`;
     }).join('');
 }
@@ -786,73 +849,75 @@ let homeChart = null;
 
 function renderChart(data, tab) {
     if (!data || !data.length) return;
+        const hariKerja = typeof HARI_KERJA !== 'undefined' ? HARI_KERJA : 5;
+        const hariNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+        const workdays = data.filter(d => {
+            const dow = new Date(d.tanggal).getDay();
+            if (hariKerja === 5) return dow >= 1 && dow <= 5;
+            if (hariKerja === 6) return dow >= 1 && dow <= 6;
+            return true;
+        });
+        const filtered = workdays.slice(-15); // ambil 15 hari kerja terakhir
+        const isMobile = window.innerWidth <= 480;
+        const labels = filtered.map(d => {
+            const parts = d.tanggal.split('-');
+            const dow   = new Date(d.tanggal).getDay();
+            return isMobile
+                ? hariNames[dow]+' / '+parts[2]+'-'+parts[1]
+                : [parts[2]+'-'+parts[1]+'-'+parts[0].slice(2), hariNames[dow]];
+        });
+        const ctx    = document.getElementById('chartHome').getContext('2d');
 
-    const hariKerja = typeof HARI_KERJA !== 'undefined' ? HARI_KERJA : 5;
-    const hariNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
-    const workdays = data.filter(d => {
-        const dow = new Date(d.tanggal).getDay();
-        if (hariKerja === 5) return dow >= 1 && dow <= 5;
-        if (hariKerja === 6) return dow >= 1 && dow <= 6;
-        return true;
-    });
-    const filtered = workdays.slice(-15); // ambil 15 hari kerja terakhir
-    const labels = filtered.map(d => {
-        const parts = d.tanggal.split('-');
-        const dow   = new Date(d.tanggal).getDay();
-        return [parts[2]+'-'+parts[1]+'-'+parts[0].slice(2), hariNames[dow]];
-    });
-    const ctx    = document.getElementById('chartHome').getContext('2d');
-
-    let datasets;
-    if (tab === 'sholat') {
-        datasets = [
-            {
-                label: 'Dhuha',
-                data: filtered.map(d => d.dhuha),
-                backgroundColor: '#2196f3',
-                borderColor: '#2196f3',
-                borderRadius: 4,
-            },
-            {
-                label: 'Dzuhur',
-                data: filtered.map(d => d.dzuhur),
-                backgroundColor: '#ff8800',
-                borderColor: '#ff8800',
-                borderRadius: 4,
-            },
-            {
-                label: 'Ashar',
-                data: filtered.map(d => d.ashar),
-                backgroundColor: '#9c27b0',
-                borderColor: '#9c27b0',
-                borderRadius: 4,
-            },
-            {
-                label: 'Izin Mens',
-                data: filtered.map(d => d.izin),
-                backgroundColor: '#e91e8c',
-                borderColor: '#e91e8c',
-                borderRadius: 4,
-            },
-        ];
-    } else {
-        datasets = [
-            {
-                label: 'Tepat',
-                data: filtered.map(d => d.tepat),
-                backgroundColor: '#00c853',
-                borderColor: '#00c853',
-                borderRadius: 4,
-            },
-            {
-                label: 'Terlambat',
-                data: filtered.map(d => d.terlambat),
-                backgroundColor: '#f44336',
-                borderColor: '#f44336',
-                borderRadius: 4,
-            },
-        ];
-    }
+        let datasets;
+        if (tab === 'sholat') {
+            datasets = [
+                {
+                    label: 'Dhuha',
+                    data: filtered.map(d => d.dhuha),
+                    backgroundColor: '#2196f3',
+                    borderColor: '#2196f3',
+                    borderRadius: 4,
+                },
+                {
+                    label: 'Dzuhur',
+                    data: filtered.map(d => d.dzuhur),
+                    backgroundColor: '#ff8800',
+                    borderColor: '#ff8800',
+                    borderRadius: 4,
+                },
+                {
+                    label: 'Ashar',
+                    data: filtered.map(d => d.ashar),
+                    backgroundColor: '#9c27b0',
+                    borderColor: '#9c27b0',
+                    borderRadius: 4,
+                },
+                {
+                    label: 'Izin Mens',
+                    data: filtered.map(d => d.izin),
+                    backgroundColor: '#e91e8c',
+                    borderColor: '#e91e8c',
+                    borderRadius: 4,
+                },
+            ];
+        } else {
+            datasets = [
+                {
+                    label: 'Tepat',
+                    data: filtered.map(d => d.tepat),
+                    backgroundColor: '#00c853',
+                    borderColor: '#00c853',
+                    borderRadius: 4,
+                },
+                {
+                    label: 'Terlambat',
+                    data: filtered.map(d => d.terlambat),
+                    backgroundColor: '#f44336',
+                    borderColor: '#f44336',
+                    borderRadius: 4,
+                },
+            ];
+        }
 
     if (homeChart) {
         homeChart.data.labels   = labels;
@@ -860,16 +925,22 @@ function renderChart(data, tab) {
         homeChart.update('none'); // tanpa animasi saat polling
     } else {
         Chart.register(ChartDataLabels);
+        const wrapper = document.getElementById('chart-wrapper');
+        wrapper.style.height = window.innerWidth <= 480 ? '260px' : '250px';
+        Chart.register(ChartDataLabels);
+        const isMobile = window.innerWidth <= 480;
         homeChart = new Chart(ctx, {
             type: 'bar',
             data: { labels, datasets },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         labels: { color: '#aaa', boxWidth: 14, font: { size: 11 } }
                     },
                     datalabels: {
+                        display: !isMobile,
                         anchor: 'end',
                         align: 'end',
                         color: '#ccc',
@@ -879,7 +950,12 @@ function renderChart(data, tab) {
                 },
                 scales: {
                     x: {
-                        ticks: { color: '#888', font: { size: 10 }, maxRotation: 0 },
+                        ticks: { 
+                            color: '#888', 
+                            font: { size: 9 }, 
+                            maxRotation: isMobile ? 90 : 0,
+                            minRotation: isMobile ? 90 : 0,
+                        },
                         grid:  { color: 'rgba(255,255,255,0.04)' },
                     },
                     y: {
@@ -899,7 +975,8 @@ function doPoll() {
         .then(r => r.json())
         .then(data => {
             // Update stat
-            document.getElementById('stat-hadir').textContent  = data.stat.hadir;
+            document.getElementById('stat-hadir').textContent      = data.stat.hadir;
+            document.getElementById('stat-terlambat').textContent  = data.stat.terlambat;
             document.getElementById('stat-dzuhur').textContent = data.stat.dzuhur;
             document.getElementById('stat-ashar').textContent  = data.stat.ashar;
             document.getElementById('stat-izin').textContent   = data.stat.izin;
@@ -941,6 +1018,7 @@ function doPoll() {
 
 // ── Render bar rekap ──
 function renderRekap(data, tab) {
+    const isMobile  = window.innerWidth <= 480;
     const container = document.getElementById('rekap-bars');
     const legend    = document.getElementById('rekap-legend');
     const title     = document.getElementById('rekap-title');
@@ -980,12 +1058,14 @@ function renderRekap(data, tab) {
                 <div class="rekap-kelas">${row.kelas}</div>
                 <div class="rekap-track">${segHtml}${alpaHtml}</div>
                 <div class="rekap-nums">
+                    ${isMobile ? '' : `
                     <span class="rekap-num" style="background:rgba(0,200,83,0.15);color:#00c853;">${row.tepat}</span>
                     <span class="rekap-num" style="background:rgba(244,67,54,0.15);color:#f44336;">${row.terlambat}</span>
                     <span class="rekap-num" style="background:rgba(59,130,246,0.15);color:#3b82f6;">${row.pulang_normal}</span>
                     <span class="rekap-num" style="background:rgba(124,58,237,0.15);color:#7c3aed;">${row.pulang_cepat}</span>
                     <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${belumHadir}</span>
-                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
+                    `}
+                    <span class="rekap-num rekap-total" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
                 </div>
             </div>`;
         }).join('');
@@ -1023,12 +1103,14 @@ function renderRekap(data, tab) {
                 <div class="rekap-kelas">${row.kelas}</div>
                 <div class="rekap-track">${segHtml}</div>
                 <div class="rekap-nums">
+                    ${isMobile ? '' : `
                     <span class="rekap-num" style="background:rgba(0,200,83,0.15);color:#00c853;">${keduanya}</span>
                     <span class="rekap-num" style="background:rgba(59,130,246,0.15);color:#3b82f6;">${row.dzuhur}</span>
                     <span class="rekap-num" style="background:rgba(156,39,176,0.15);color:#9c27b0;">${row.ashar}</span>
                     <span class="rekap-num" style="background:rgba(233,30,140,0.15);color:#e91e8c;">${row.izin}</span>
                     <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${alpa}</span>
-                    <span class="rekap-num" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
+                    `}
+                    <span class="rekap-num rekap-total" style="background:rgba(255,255,255,0.05);color:var(--muted);">${total}</span>
                 </div>
             </div>`;
         }).join('');

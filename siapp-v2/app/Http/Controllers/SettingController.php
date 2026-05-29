@@ -10,7 +10,25 @@ class SettingController extends Controller
     public function index()
     {
         $setting = DB::table('statusnya')->first();
-        return view('setting.index', compact('setting'));
+
+        // Status per endpoint — ambil log terakhir per endpoint
+        $endpointKeys = ['presensi_harian', 'presensi_sholat', 'izin_mens', 'izin_keluar'];
+        $pushStatus = [];
+        foreach ($endpointKeys as $ep) {
+            $last = DB::table('push_log')
+                ->where('endpoint', $ep)
+                ->orderBy('created_at', 'desc')
+                ->first();
+            $pushStatus[$ep] = $last;
+        }
+
+        // Riwayat push — 20 terakhir
+        $pushLog = DB::table('push_log')
+            ->orderBy('created_at', 'desc')
+            ->limit(20)
+            ->get();
+
+        return view('setting.index', compact('setting', 'pushStatus', 'pushLog'));
     }
 
     public function update(Request $request)

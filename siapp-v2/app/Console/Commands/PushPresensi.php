@@ -55,10 +55,6 @@ class PushPresensi extends Command
             ->where('dp.tanggal', $this->tanggal)
             ->whereNull('dp.pushed_at');
 
-        if (!$this->force) {
-            $query->whereNull('dp.pushed_at');
-        }
-
         $data = $query->select(
             'dp.id',
             'dp.nomorinduk as nis',
@@ -108,10 +104,6 @@ class PushPresensi extends Command
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $this->tanggal)
             ->where('pe.ruang', '!=', 'Izin Mens');
-
-        if (!$this->force) {
-            $query->whereNull('pe.pushed_at');
-        }
 
         $events = $query->select(
             'pe.id',
@@ -185,10 +177,6 @@ class PushPresensi extends Command
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $this->tanggal)
             ->where('pe.ruang', 'Izin Mens');
-
-        if (!$this->force) {
-            $query->whereNull('pe.pushed_at');
-        }
 
         $data = $query->select(
             'pe.id',
@@ -283,24 +271,6 @@ class PushPresensi extends Command
 
         $gabungan = $queryBaru->concat($queryKembali)->unique('id');
 
-        if (!$this->force && $gabungan->isEmpty()) return 0;
-
-        if ($this->force) {
-            $gabungan = DB::table('daftarijin as di')
-                ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'di.nis')
-                ->where('di.tanggalijin', $this->tanggal)
-                ->select(
-                    'di.id',
-                    'di.nis',
-                    'di.nama',
-                    'ds.kelas',
-                    'di.jam_keluar',
-                    'di.jam_kembali',
-                    'di.info'
-                )
-                ->get();
-        }
-
         if ($gabungan->isEmpty()) return 0;
 
         $payload = [
@@ -338,18 +308,31 @@ class PushPresensi extends Command
     }
 
     // ── Helper: kirim HTTP POST ──
-    private function kirim(string $url, array $payload, string $label): bool
+private function kirim(string $url, array $payload, string $label): bool
     {
+        $endpoint = $payload['type'] ?? $label;
+        $tanggal  = $payload['tanggal'] ?? $this->tanggal;
+        $total    = $payload['total'] ?? 0;
+
         try {
             $response = Http::timeout(15)
                 ->withHeaders(['X-Api-Key' => DB::table('statusnya')->value('timid_api_key') ?? ''])
                 ->post($url, $payload);
 
             if ($response->successful()) {
-                $this->info('[' . now() . '] ✅ ' . $label . ' terkirim (' . $payload['total'] . ' records)');
+                $this->info('[' . now() . '] ✅ ' . $label . ' terkirim (' . $total . ' records)');
                 Log::info('push:presensi ' . $label . ' OK', [
-                    'total'  => $payload['total'],
+                    'total'  => $total,
                     'status' => $response->status(),
+                ]);
+                DB::table('push_log')->insert([
+                    'endpoint'    => $endpoint,
+                    'tanggal'     => $tanggal,
+                    'status'      => 1,
+                    'total'       => $total,
+                    'http_status' => $response->status(),
+                    'pesan'       => $this->ringkasRespon($response->body(), $response->status()),
+                    'created_at'  => now(),
                 ]);
                 return true;
             } else {
@@ -358,12 +341,49 @@ class PushPresensi extends Command
                     'status' => $response->status(),
                     'body'   => $response->body(),
                 ]);
+                DB::table('push_log')->insert([
+                    'endpoint'    => $endpoint,
+                    'tanggal'     => $tanggal,
+                    'status'      => 0,
+                    'total'       => $total,
+                    'http_status' => $response->status(),
+                    'pesan'       => $this->ringkasRespon($response->body(), $response->status()),
+                    'created_at'  => now(),
+                ]);
                 return false;
             }
         } catch (\Exception $e) {
             $this->error('[' . now() . '] ❌ ' . $label . ' error: ' . $e->getMessage());
             Log::error('push:presensi exception', ['label' => $label, 'message' => $e->getMessage()]);
+            DB::table('push_log')->insert([
+                'endpoint'    => $endpoint,
+                'tanggal'     => $tanggal,
+                'status'      => 0,
+                'total'       => $total,
+                'http_status' => null,
+                'pesan'       => substr($e->getMessage(), 0, 500),
+                'created_at'  => now(),
+            ]);
             return false;
         }
+    }
+
+    private function ringkasRespon(string $body, int $httpStatus): string
+    {
+        $trimmed = trim($body);
+
+        // Coba parse JSON
+        $json = json_decode($trimmed, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return substr(json_encode($json, JSON_UNESCAPED_UNICODE), 0, 300);
+        }
+
+        // Jika HTML, anggap terkirim tapi response non-JSON
+        if (stripos($trimmed, '<!DOCTYPE') !== false || stripos($trimmed, '<html') !== false) {
+            return 'Terkirim (response non-JSON)';
+        }
+
+        // Plain text
+        return substr($trimmed, 0, 300);
     }
 }

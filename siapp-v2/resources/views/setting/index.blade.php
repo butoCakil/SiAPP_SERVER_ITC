@@ -405,23 +405,59 @@
             </button>
         </div>
 
-        {{-- ══════════════════════════════════════ --}}
+{{-- ══════════════════════════════════════ --}}
         {{-- TAB 5: INTEGRASI --}}
         {{-- ══════════════════════════════════════ --}}
         <div class="tab-pane" id="tab-integrasi">
             <div class="card card-outline card-info mb-3">
                 <div class="card-header py-2">
                     <h3 class="card-title"><i class="fas fa-exchange-alt mr-2"></i>Integrasi TIM IT</h3>
-                    <div class="card-tools">
-                        @php $sudahDiatur = $setting->timid_presensi_url || $setting->timid_sholat_url; @endphp
-                        @if($sudahDiatur)
-                            <span class="badge badge-success"><i class="fas fa-check-circle mr-1"></i>Terhubung</span>
-                        @else
-                            <span class="badge badge-warning"><i class="fas fa-exclamation-triangle mr-1"></i>Belum dikonfigurasi</span>
-                        @endif
-                    </div>
                 </div>
                 <div class="card-body">
+
+                    {{-- Status per URL --}}
+                    @php
+                        $urlMap = [
+                            'presensi_harian' => ['label' => '🔵 Presensi Masuk/Pulang', 'url' => $setting->timid_presensi_url],
+                            'presensi_sholat' => ['label' => '🟠 Presensi Sholat',        'url' => $setting->timid_sholat_url],
+                            'izin_mens'       => ['label' => '🌸 Izin Menstruasi',         'url' => $setting->timid_izin_mens_url],
+                            'izin_keluar'     => ['label' => '🚪 Izin Keluar/Pulang',      'url' => $setting->timid_ijin_url],
+                        ];
+                    @endphp
+                    <div class="row mb-3">
+                        @foreach($urlMap as $ep => $info)
+                        @php
+                            $last = $pushStatus[$ep] ?? null;
+                            if (!$info['url']) {
+                                $badgeClass = 'badge-secondary';
+                                $badgeIcon  = 'fa-minus-circle';
+                                $badgeText  = 'Belum diisi';
+                            } elseif ($last && $last->status == 1) {
+                                $badgeClass = 'badge-success';
+                                $badgeIcon  = 'fa-check-circle';
+                                $badgeText  = 'OK · ' . \Carbon\Carbon::parse($last->created_at)->format('d/m H:i');
+                            } elseif ($last && $last->status == 0) {
+                                $badgeClass = 'badge-danger';
+                                $badgeIcon  = 'fa-times-circle';
+                                $badgeText  = 'Gagal · ' . \Carbon\Carbon::parse($last->created_at)->format('d/m H:i');
+                            } else {
+                                $badgeClass = 'badge-warning';
+                                $badgeIcon  = 'fa-clock';
+                                $badgeText  = 'Belum pernah kirim';
+                            }
+                        @endphp
+                        <div class="col-md-3 col-6 mb-2">
+                            <div class="p-2 rounded" style="background:rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.08);">
+                                <div style="font-size:11px; font-weight:600; margin-bottom:4px;">{{ $info['label'] }}</div>
+                                <span class="badge {{ $badgeClass }}">
+                                    <i class="fas {{ $badgeIcon }} mr-1"></i>{{ $badgeText }}
+                                </span>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    {{-- Form URL --}}
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -490,6 +526,60 @@
                     <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal=2026-05-12 --force</small></p>
                 </div>
             </div>
+
+            {{-- Riwayat Push --}}
+            <div class="card card-outline card-secondary mb-3">
+                <div class="card-header py-2">
+                    <h3 class="card-title"><i class="fas fa-history mr-2"></i>Riwayat Push ke TIM IT</h3>
+                    <div class="card-tools">
+                        <small class="text-muted">20 terakhir</small>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-sm table-hover mb-0" style="font-size:12px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Waktu</th>
+                                <th>Endpoint</th>
+                                <th>Tanggal Data</th>
+                                <th>Total</th>
+                                <th>HTTP</th>
+                                <th>Status</th>
+                                <th>Pesan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($pushLog as $log)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($log->created_at)->format('d/m H:i:s') }}</td>
+                                <td><span class="badge badge-info">{{ $log->endpoint }}</span></td>
+                                <td>{{ $log->tanggal }}</td>
+                                <td>{{ $log->total }}</td>
+                                <td>{{ $log->http_status ?? '-' }}</td>
+                                <td>
+                                    @if($log->status)
+                                        <span class="badge badge-success">✅ OK</span>
+                                    @else
+                                        <span class="badge badge-danger">❌ Gagal</span>
+                                    @endif
+                                </td>
+                                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"
+                                    title="{{ $log->pesan }}">
+                                    {{ $log->pesan ? substr($log->pesan, 0, 60) : '-' }}
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-3">
+                                    <i class="fas fa-inbox mr-1"></i>Belum ada riwayat push
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary btn-block mb-4">
                 <i class="fas fa-save mr-2"></i>Simpan Setting
             </button>
