@@ -536,7 +536,7 @@
                         </div>
                         <small class="text-muted">Jika dicentang, data akan otomatis dikirim ke TIM IT setiap hari jam 22:00 dan re-check mingguan setiap Sabtu jam 23:00</small>
                     </div>
-                    <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal=2026-05-12 --force</small></p>
+                    <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal={{ date('Y-m-d') }} --force</small></p>
                 </div>
             </div>
 
@@ -544,8 +544,14 @@
             <div class="card card-outline card-secondary mb-3">
                 <div class="card-header py-2">
                     <h3 class="card-title"><i class="fas fa-history mr-2"></i>Riwayat Push ke TIM IT</h3>
-                    <div class="card-tools">
-                        <small class="text-muted">20 terakhir</small>
+                    <div class="card-tools d-flex align-items-center" style="gap:8px;">
+                        <small class="text-muted">Tampilkan:</small>
+                        @foreach([20, 50, 100, 500] as $limit)
+                        <a href="{{ request()->fullUrlWithQuery(['push_log_limit' => $limit, 'tab' => 'integrasi']) }}"
+                            class="badge {{ ($pushLogLimit ?? 20) == $limit ? 'badge-primary' : 'badge-secondary' }}">
+                            {{ $limit }}
+                        </a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card-body p-0">

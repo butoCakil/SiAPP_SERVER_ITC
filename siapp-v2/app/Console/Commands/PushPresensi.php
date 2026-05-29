@@ -126,7 +126,8 @@ class PushPresensi extends Command
         $query = DB::table('presensiEvent as pe')
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $this->tanggal)
-            ->where('pe.ruang', '!=', 'Izin Mens');
+            ->where('pe.ruang', '!=', 'Izin Mens')
+            ->whereNull('pe.pushed_at');
 
         $events = $query->select(
             'pe.id',
@@ -232,7 +233,8 @@ class PushPresensi extends Command
         $query = DB::table('presensiEvent as pe')
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $this->tanggal)
-            ->where('pe.ruang', 'Izin Mens');
+            ->where('pe.ruang', 'Izin Mens')
+            ->whereNull('pe.pushed_at');
 
         $data = $query->select(
             'pe.id',
@@ -406,7 +408,7 @@ class PushPresensi extends Command
     }
 
     // ── Helper: kirim HTTP POST ──
-private function kirim(string $url, array $payload, string $label): bool
+    private function kirim(string $url, array $payload, string $label): bool
     {
         $endpoint = $payload['type'] ?? $label;
         $tanggal  = $payload['tanggal'] ?? $this->tanggal;

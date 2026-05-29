@@ -22,10 +22,12 @@ class SettingController extends Controller
             $pushStatus[$ep] = $last;
         }
 
-        // Riwayat push — 20 terakhir
+        // Riwayat push
+        $pushLogLimit = in_array((int) request('push_log_limit'), [20, 50, 100, 500])
+            ? (int) request('push_log_limit') : 20;
         $pushLog = DB::table('push_log')
             ->orderBy('created_at', 'desc')
-            ->limit(20)
+            ->limit($pushLogLimit)
             ->get();
 
         // ── Rekap Sinkronisasi per tanggal (1 tahun ajaran) ──
@@ -110,6 +112,7 @@ class SettingController extends Controller
             'setting',
             'pushStatus',
             'pushLog',
+            'pushLogLimit',
             'rekapSinkron',
             'tglMulai',
             'tglAkhir'
@@ -122,7 +125,7 @@ class SettingController extends Controller
 
         DB::table('statusnya')->update([
             'mode'        => (int) $request->mode,
-            'push_auto'   => (int) $request->input('push_auto', 1),
+            'push_auto'   => $request->has('push_auto') ? 1 : 0,
             'wa'          => $request->wa,
             'wta'         => $request->wta,
             'wtp'         => $request->wtp,
