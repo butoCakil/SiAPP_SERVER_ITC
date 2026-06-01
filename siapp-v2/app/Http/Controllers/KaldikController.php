@@ -12,14 +12,24 @@ class KaldikController extends Controller
     // ── Halaman utama kalender ──
     public function index(Request $request)
     {
-        $tahun = (int) $request->input('tahun', date('Y'));
+        // Tahun ajaran default: jika bulan >= 7 → tahun ini, else tahun lalu
+        $currentYear = (int) date('Y');
+        $defaultTa   = date('m') >= 7 ? $currentYear : $currentYear - 1;
+        $ta          = $request->input('ta', $defaultTa . '-' . ($defaultTa + 1));
 
-        $events = Kaldik::whereYear('tanggal', $tahun)
+        // Parse tahun ajaran
+        $parts    = explode('-', $ta);
+        $tahunMulai = (int) ($parts[0] ?? $defaultTa);
+        $tahunAkhir = (int) ($parts[1] ?? $tahunMulai + 1);
+
+        // Ambil events Juli tahun mulai - Juni tahun akhir
+        $events = Kaldik::where('tanggal', '>=', $tahunMulai . '-07-01')
+            ->where('tanggal', '<=', $tahunAkhir . '-06-30')
             ->orderBy('tanggal')
             ->get()
             ->groupBy(fn($e) => $e->tanggal->format('Y-m-d'));
 
-        return view('kaldik.index', compact('tahun', 'events'));
+        return view('kaldik.index', compact('ta', 'tahunMulai', 'tahunAkhir', 'events'));
     }
 
     // ── Simpan event baru ──

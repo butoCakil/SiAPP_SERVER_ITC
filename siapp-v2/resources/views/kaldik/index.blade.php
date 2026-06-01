@@ -35,20 +35,24 @@
 .event-item .ev-label { flex:1; }
 .event-item .ev-actions { display:flex; gap:4px; }
 @media print { .no-print { display:none !important; } }
+
+.kaldik-separator { border-top: 3px solid #1a73e8; margin: 16px 0 8px; display:flex; align-items:center; gap:12px; }
+.kaldik-separator-label { background:#1a73e8; color:#fff; padding:4px 14px; border-radius:4px; font-size:12px; font-weight:700; letter-spacing:0.5px; }
 </style>
 @endpush
 @section('content')
 
 {{-- Toolbar --}}
 <div class="kaldik-toolbar no-print">
-    <a href="{{ route('kaldik.index', ['tahun'=>$tahun-1]) }}" class="btn btn-sm btn-outline-secondary">
-        <i class="fas fa-chevron-left"></i>
+    <a href="{{ route('kaldik.index', ['ta'=>($tahunMulai-1).'-'.$tahunMulai]) }}" class="btn btn-sm btn-outline-secondary">
+    <i class="fas fa-chevron-left"></i>
     </a>
-    <span class="kaldik-year">{{ $tahun }}</span>
-    <a href="{{ route('kaldik.index', ['tahun'=>$tahun+1]) }}" class="btn btn-sm btn-outline-secondary">
+    <span class="kaldik-year">{{ $tahunMulai }}/{{ $tahunAkhir }}</span>
+    <a href="{{ route('kaldik.index', ['ta'=>($tahunMulai+1).'-'.($tahunAkhir+1)]) }}" class="btn btn-sm btn-outline-secondary">
         <i class="fas fa-chevron-right"></i>
     </a>
-    <a href="{{ route('kaldik.index', ['tahun'=>date('Y')]) }}" class="btn btn-sm btn-outline-secondary">Hari Ini</a>
+    @php $defaultTa = (date('m') >= 7 ? date('Y') : date('Y')-1) . '-' . (date('m') >= 7 ? date('Y')+1 : date('Y')); @endphp
+    <a href="{{ route('kaldik.index', ['ta'=>$defaultTa]) }}" class="btn btn-sm btn-outline-secondary">Tahun Ini</a>
     <div style="margin-left:auto; display:flex; gap:8px;">
         <button class="btn btn-sm btn-outline-success" onclick="showUploadModal()">
             <i class="fas fa-upload mr-1"></i>Upload Excel
@@ -73,17 +77,23 @@
 </div>
 
 {{-- Kalender Grid --}}
-<div class="kaldik-grid" id="kaldik-grid">
-    {{-- Render 12 bulan --}}
+@php
+    $today = date('Y-m-d');
+    $namaBulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    $namaHari  = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+    $bulanGasal = [[$tahunMulai,7],[$tahunMulai,8],[$tahunMulai,9],[$tahunMulai,10],[$tahunMulai,11],[$tahunMulai,12]];
+    $bulanGenap = [[$tahunAkhir,1],[$tahunAkhir,2],[$tahunAkhir,3],[$tahunAkhir,4],[$tahunAkhir,5],[$tahunAkhir,6]];
+@endphp
+
+{{-- Semester Gasal --}}
+<div class="kaldik-separator">
+    <span class="kaldik-separator-label">📚 Semester Gasal {{ $tahunMulai }}/{{ $tahunAkhir }}</span>
+</div>
+<div class="kaldik-grid">
+    @foreach($bulanGasal as [$tahun, $bln])
     @php
-        $today = date('Y-m-d');
-        $namaBulan = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-        $namaHari  = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-    @endphp
-    @for($bln = 1; $bln <= 12; $bln++)
-    @php
-        $jumlahHari = cal_days_in_month(CAL_GREGORIAN, $bln, $tahun);
-        $hariPertama = date('w', mktime(0,0,0,$bln,1,$tahun)); // 0=Min
+        $jumlahHari  = cal_days_in_month(CAL_GREGORIAN, $bln, $tahun);
+        $hariPertama = date('w', mktime(0,0,0,$bln,1,$tahun));
     @endphp
     <div class="kaldik-month">
         <div class="kaldik-month-title">{{ $namaBulan[$bln] }} {{ $tahun }}</div>
@@ -100,13 +110,12 @@
                     @for($i = 0; $i < $hariPertama; $i++)<td></td>@endfor
                     @for($tgl = 1; $tgl <= $jumlahHari; $tgl++)
                     @php
-                        $dateStr   = sprintf('%04d-%02d-%02d', $tahun, $bln, $tgl);
-                        $dow       = date('w', mktime(0,0,0,$bln,$tgl,$tahun));
+                        $dateStr    = sprintf('%04d-%02d-%02d', $tahun, $bln, $tgl);
+                        $dow        = date('w', mktime(0,0,0,$bln,$tgl,$tahun));
                         $eventsHari = $events[$dateStr] ?? collect();
-                        $isLibur   = $eventsHari->whereIn('tipe', ['libur_nasional','cuti_bersama','libur_semester'])->count() > 0;
+                        $isLibur    = $eventsHari->whereIn('tipe', ['libur_nasional','cuti_bersama','libur_semester'])->count() > 0;
                         $isKegiatan = !$isLibur && $eventsHari->where('tipe','kegiatan')->count() > 0;
-                        $isToday   = $dateStr === $today;
-                        $col = ($hariPertama + $tgl - 1) % 7;
+                        $isToday    = $dateStr === $today;
                     @endphp
                     <td class="{{ $dow==0 ? 'minggu' : ($dow==6 ? 'sabtu' : '') }} {{ $isLibur ? 'libur' : ($isKegiatan ? 'kegiatan' : '') }} {{ $isToday ? 'today' : '' }}"
                         onclick="showDayModal('{{ $dateStr }}', '{{ $namaBulan[$bln] }} {{ $tgl }}, {{ $tahun }}')"
@@ -128,7 +137,62 @@
             </tbody>
         </table>
     </div>
-    @endfor
+    @endforeach
+</div>
+
+{{-- Semester Genap --}}
+<div class="kaldik-separator">
+    <span class="kaldik-separator-label">📖 Semester Genap {{ $tahunMulai }}/{{ $tahunAkhir }}</span>
+</div>
+<div class="kaldik-grid">
+    @foreach($bulanGenap as [$tahun, $bln])
+    @php
+        $jumlahHari  = cal_days_in_month(CAL_GREGORIAN, $bln, $tahun);
+        $hariPertama = date('w', mktime(0,0,0,$bln,1,$tahun));
+    @endphp
+    <div class="kaldik-month">
+        <div class="kaldik-month-title">{{ $namaBulan[$bln] }} {{ $tahun }}</div>
+        <table class="kaldik-cal">
+            <thead>
+                <tr>
+                    @foreach($namaHari as $h)
+                    <th>{{ $h }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @for($i = 0; $i < $hariPertama; $i++)<td></td>@endfor
+                    @for($tgl = 1; $tgl <= $jumlahHari; $tgl++)
+                    @php
+                        $dateStr    = sprintf('%04d-%02d-%02d', $tahun, $bln, $tgl);
+                        $dow        = date('w', mktime(0,0,0,$bln,$tgl,$tahun));
+                        $eventsHari = $events[$dateStr] ?? collect();
+                        $isLibur    = $eventsHari->whereIn('tipe', ['libur_nasional','cuti_bersama','libur_semester'])->count() > 0;
+                        $isKegiatan = !$isLibur && $eventsHari->where('tipe','kegiatan')->count() > 0;
+                        $isToday    = $dateStr === $today;
+                    @endphp
+                    <td class="{{ $dow==0 ? 'minggu' : ($dow==6 ? 'sabtu' : '') }} {{ $isLibur ? 'libur' : ($isKegiatan ? 'kegiatan' : '') }} {{ $isToday ? 'today' : '' }}"
+                        onclick="showDayModal('{{ $dateStr }}', '{{ $namaBulan[$bln] }} {{ $tgl }}, {{ $tahun }}')"
+                        data-tanggal="{{ $dateStr }}">
+                        {{ $tgl }}
+                        @if($eventsHari->count())
+                        <div class="kaldik-dots">
+                            @foreach($eventsHari as $ev)
+                            <span class="kaldik-dot" style="background:{{ App\Models\Kaldik::warna($ev->tipe) }};"></span>
+                            @endforeach
+                        </div>
+                        @endif
+                    </td>
+                    @if(($hariPertama + $tgl) % 7 == 0 && $tgl < $jumlahHari)
+                    </tr><tr>
+                    @endif
+                    @endfor
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    @endforeach
 </div>
 
 {{-- Modal Hari --}}
