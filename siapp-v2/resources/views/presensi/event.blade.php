@@ -200,7 +200,7 @@
                         $hasAshar   = !is_null($s['ashar']) && !$s['ashar_izin'];
                         $hasKeduanya = $hasDzuhur && $hasAshar;
                         $hasIzin    = $s['dzuhur_izin'] || $s['ashar_izin'] || $s['dhuha_izin'];
-                        $belum      = !$hasKeduanya;
+                        $belum      = !$hasKeduanya && !$hasIzin;
 
                         $rowFilter = 'semua ';
                         if ($hasDhuha) $rowFilter .= 'dhuha ';
