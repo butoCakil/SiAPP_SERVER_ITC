@@ -1,0 +1,341 @@
+[2026-06-01 17:00:04] Delete File Berhasil: /log_IM0003.txt
+[2026-06-01 17:00:05] telah diJadwalkan Restart!
+[2026-06-01 17:00:06] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-06-02 05:00:00] Upload Data Presensi - Sebelum Restart
+[2026-06-02 05:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 05:00:01] Upload # gagal!
+[2026-06-02 05:00:07] sync_remote_to_sdcard: update DBlite=> jumlah_data=1031, berhasil diperbarui.
+[2026-06-02 05:00:07] Update DB Harian Berhasil!
+[2026-06-02 05:00:08] telah diJadwalkan Restart!
+[2026-06-02 05:00:09] [WDT] Task watchdog got triggered. The following tasks/users did not reset the watchdog in time!
+[2026-06-02 07:30:00] Saatnya upload data #1!
+[2026-06-02 07:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 07:30:01] Upload #1 gagal, dijadwalkan ulang pada 7:45
+[2026-06-02 07:45:00] Saatnya upload data #1!
+[2026-06-02 07:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 07:45:01] Upload #1 gagal, dijadwalkan ulang pada 8:0
+[2026-06-02 08:00:00] Saatnya upload data #1!
+[2026-06-02 08:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 08:00:01] Upload #1 gagal, dijadwalkan ulang pada 8:15
+[2026-06-02 08:15:00] Saatnya upload data #1!
+[2026-06-02 08:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 08:15:01] Upload #1 gagal, dijadwalkan ulang pada 8:30
+[2026-06-02 08:30:00] Saatnya upload data #1!
+[2026-06-02 08:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 08:30:01] Upload #1 gagal, dijadwalkan ulang pada 8:45
+[2026-06-02 08:45:00] Saatnya upload data #1!
+[2026-06-02 08:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 08:45:01] Upload #1 gagal, dijadwalkan ulang pada 9:0
+[2026-06-02 09:00:00] Saatnya upload data #1!
+[2026-06-02 09:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 09:00:01] Upload #1 gagal, dijadwalkan ulang pada 9:15
+[2026-06-02 09:15:00] Saatnya upload data #1!
+[2026-06-02 09:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 09:15:01] Upload #1 gagal, dijadwalkan ulang pada 9:30
+[2026-06-02 09:30:00] Saatnya upload data #1!
+[2026-06-02 09:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 09:30:01] Upload #1 gagal, dijadwalkan ulang pada 9:45
+[2026-06-02 09:38:12] Order dari server:
+[2026-06-02 09:38:12] devices/IM0003/settings
+[2026-06-02 09:38:12] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 09:38:12] List dir: /
+[2026-06-02 09:38:12] Dir list terkirim: /
+[2026-06-02 09:38:18] Order dari server:
+[2026-06-02 09:38:18] devices/IM0003/settings
+[2026-06-02 09:38:18] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiizinsholat"}}
+[2026-06-02 09:38:18] List dir: /presensiizinsholat
+[2026-06-02 09:38:18] Dir list terkirim: /presensiizinsholat
+[2026-06-02 09:38:21] Order dari server:
+[2026-06-02 09:38:21] devices/IM0003/settings
+[2026-06-02 09:38:21] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiizinsholat\/2026-05"}}
+[2026-06-02 09:38:21] List dir: /presensiizinsholat/2026-05
+[2026-06-02 09:38:21] Dir list terkirim: /presensiizinsholat/2026-05
+[2026-06-02 09:38:25] Order dari server:
+[2026-06-02 09:38:25] devices/IM0003/settings
+[2026-06-02 09:38:25] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiizinsholat"}}
+[2026-06-02 09:38:25] List dir: /presensiizinsholat
+[2026-06-02 09:38:25] Dir list terkirim: /presensiizinsholat
+[2026-06-02 09:38:27] Order dari server:
+[2026-06-02 09:38:27] devices/IM0003/settings
+[2026-06-02 09:38:27] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 09:38:27] List dir: /
+[2026-06-02 09:38:27] Dir list terkirim: /
+[2026-06-02 09:38:31] Order dari server:
+[2026-06-02 09:38:31] devices/IM0003/settings
+[2026-06-02 09:38:31] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 09:38:32] List dir: /presensiUploaded
+[2026-06-02 09:38:32] Dir list terkirim: /presensiUploaded
+[2026-06-02 09:38:36] Order dari server:
+[2026-06-02 09:38:36] devices/IM0003/settings
+[2026-06-02 09:38:36] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-06"}}
+[2026-06-02 09:38:37] List dir: /presensiUploaded/2026-06
+[2026-06-02 09:38:37] Dir list terkirim: /presensiUploaded/2026-06
+[2026-06-02 09:38:39] Order dari server:
+[2026-06-02 09:38:39] devices/IM0003/settings
+[2026-06-02 09:38:39] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 09:38:39] List dir: /presensiUploaded
+[2026-06-02 09:38:39] Dir list terkirim: /presensiUploaded
+[2026-06-02 09:38:42] Order dari server:
+[2026-06-02 09:38:42] devices/IM0003/settings
+[2026-06-02 09:38:42] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 09:38:42] List dir: /presensiUploaded/2026-05
+[2026-06-02 09:38:42] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 09:38:56] Order dari server:
+[2026-06-02 09:38:56] devices/IM0003/settings
+[2026-06-02 09:38:56] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 09:38:56] List dir: /presensiUploaded
+[2026-06-02 09:38:56] Dir list terkirim: /presensiUploaded
+[2026-06-02 09:42:32] Order dari server:
+[2026-06-02 09:42:32] devices/IM0003/settings
+[2026-06-02 09:42:32] Pesan: {"device_id":"IM0003","koneksi":{"wifi_index":7,"upload_index":3,"db_index":2,"mode_device":1}}
+[2026-06-02 09:42:32] WiFi -> HOTSPOT-ITC
+[2026-06-02 09:42:32] Upload -> upload Izin M
+[2026-06-02 09:42:32] DB -> restAPI/datasiswa
+[2026-06-02 09:42:32] Mode -> Sholat
+[2026-06-02 09:50:42] Order dari server:
+[2026-06-02 09:50:42] devices/IM0003/settings
+[2026-06-02 09:50:42] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 09:50:43] List dir: /
+[2026-06-02 09:50:43] Dir list terkirim: /
+[2026-06-02 09:50:47] Order dari server:
+[2026-06-02 09:50:47] devices/IM0003/settings
+[2026-06-02 09:50:47] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 09:50:47] List dir: /presensiUploaded
+[2026-06-02 09:50:47] Dir list terkirim: /presensiUploaded
+[2026-06-02 09:50:49] Order dari server:
+[2026-06-02 09:50:49] devices/IM0003/settings
+[2026-06-02 09:50:49] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 09:50:49] List dir: /presensiUploaded/2026-05
+[2026-06-02 09:50:49] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 09:51:30] Order dari server:
+[2026-06-02 09:51:30] devices/IM0003/settings
+[2026-06-02 09:51:30] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 09:51:30] List dir: /
+[2026-06-02 09:51:30] Dir list terkirim: /
+[2026-06-02 09:51:42] Order dari server:
+[2026-06-02 09:51:42] devices/IM0003/settings
+[2026-06-02 09:51:42] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 09:51:42] List dir: /presensiUploaded
+[2026-06-02 09:51:42] Dir list terkirim: /presensiUploaded
+[2026-06-02 09:51:56] Order dari server:
+[2026-06-02 09:51:56] devices/IM0003/settings
+[2026-06-02 09:51:56] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 09:51:56] List dir: /presensiUploaded/2026-05
+[2026-06-02 09:51:56] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 09:52:12] Order dari server:
+[2026-06-02 09:52:12] devices/IM0003/settings
+[2026-06-02 09:52:12] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/13-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 09:52:12] Upload file: /presensiUploaded/2026-05/13-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 09:52:13] Upload file sukses: /presensiUploaded/2026-05/13-05-2026.json
+[2026-06-02 10:13:19] Order dari server:
+[2026-06-02 10:13:20] devices/IM0003/settings
+[2026-06-02 10:13:20] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 10:13:20] List dir: /
+[2026-06-02 10:13:20] Dir list terkirim: /
+[2026-06-02 10:13:24] Order dari server:
+[2026-06-02 10:13:24] devices/IM0003/settings
+[2026-06-02 10:13:24] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:13:24] List dir: /presensiUploaded
+[2026-06-02 10:13:24] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:13:29] Order dari server:
+[2026-06-02 10:13:29] devices/IM0003/settings
+[2026-06-02 10:13:29] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 10:13:29] List dir: /presensiUploaded/2026-05
+[2026-06-02 10:13:29] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 10:17:18] Order dari server:
+[2026-06-02 10:17:18] devices/IM0003/settings
+[2026-06-02 10:17:18] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 10:17:18] List dir: /
+[2026-06-02 10:17:18] Dir list terkirim: /
+[2026-06-02 10:17:21] Order dari server:
+[2026-06-02 10:17:21] devices/IM0003/settings
+[2026-06-02 10:17:21] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:17:21] List dir: /presensiUploaded
+[2026-06-02 10:17:21] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:17:25] Order dari server:
+[2026-06-02 10:17:25] devices/IM0003/settings
+[2026-06-02 10:17:25] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 10:17:25] List dir: /presensiUploaded/2026-05
+[2026-06-02 10:17:25] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 10:17:38] Order dari server:
+[2026-06-02 10:17:39] devices/IM0003/settings
+[2026-06-02 10:17:39] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/13-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 10:17:39] Upload file: /presensiUploaded/2026-05/13-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 10:17:40] Upload file sukses: /presensiUploaded/2026-05/13-05-2026.json
+[2026-06-02 10:18:19] Order dari server:
+[2026-06-02 10:18:19] devices/IM0003/settings
+[2026-06-02 10:18:19] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/13-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-06-02 10:18:19] Upload file: /presensiUploaded/2026-05/13-05-2026.json -> http://172.16.80.123/data/upload.php
+[2026-06-02 10:18:20] Upload file sukses: /presensiUploaded/2026-05/13-05-2026.json
+[2026-06-02 10:24:00] Order dari server:
+[2026-06-02 10:24:00] devices/IM0003/settings
+[2026-06-02 10:24:00] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:24:00] List dir: /presensiUploaded
+[2026-06-02 10:24:00] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:24:04] Order dari server:
+[2026-06-02 10:24:04] devices/IM0003/settings
+[2026-06-02 10:24:04] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-04"}}
+[2026-06-02 10:24:04] List dir: /presensiUploaded/2026-04
+[2026-06-02 10:24:04] Dir list terkirim: /presensiUploaded/2026-04
+[2026-06-02 10:24:07] Order dari server:
+[2026-06-02 10:24:07] devices/IM0003/settings
+[2026-06-02 10:24:07] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:24:07] List dir: /presensiUploaded
+[2026-06-02 10:24:07] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:24:12] Order dari server:
+[2026-06-02 10:24:12] devices/IM0003/settings
+[2026-06-02 10:24:12] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 10:24:12] List dir: /presensiUploaded/2026-05
+[2026-06-02 10:24:12] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 10:24:32] Order dari server:
+[2026-06-02 10:24:32] devices/IM0003/settings
+[2026-06-02 10:24:32] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/19-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 10:24:32] Upload file: /presensiUploaded/2026-05/19-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 10:24:33] Upload file sukses: /presensiUploaded/2026-05/19-05-2026.json
+[2026-06-02 10:29:14] Order dari server:
+[2026-06-02 10:29:14] devices/IM0003/settings
+[2026-06-02 10:29:14] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 10:29:14] List dir: /
+[2026-06-02 10:29:14] Dir list terkirim: /
+[2026-06-02 10:29:18] Order dari server:
+[2026-06-02 10:29:18] devices/IM0003/settings
+[2026-06-02 10:29:18] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:29:18] List dir: /presensiUploaded
+[2026-06-02 10:29:18] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:29:23] Order dari server:
+[2026-06-02 10:29:23] devices/IM0003/settings
+[2026-06-02 10:29:23] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 10:29:23] List dir: /presensiUploaded/2026-05
+[2026-06-02 10:29:23] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 10:29:33] Order dari server:
+[2026-06-02 10:29:33] devices/IM0003/settings
+[2026-06-02 10:29:33] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/19-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-06-02 10:29:33] Upload file: /presensiUploaded/2026-05/19-05-2026.json -> http://172.16.80.123/data/upload.php
+[2026-06-02 10:29:34] Upload file sukses: /presensiUploaded/2026-05/19-05-2026.json
+[2026-06-02 10:45:17] Order dari server:
+[2026-06-02 10:45:17] devices/IM0003/settings
+[2026-06-02 10:45:17] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/29-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-06-02 10:45:17] Upload file: /presensiUploaded/2026-05/29-05-2026.json -> http://172.16.80.123/data/upload.php
+[2026-06-02 10:45:19] Upload file sukses: /presensiUploaded/2026-05/29-05-2026.json
+[2026-06-02 10:46:43] Order dari server:
+[2026-06-02 10:46:43] devices/IM0003/settings
+[2026-06-02 10:46:43] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/20-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-06-02 10:46:43] Upload file: /presensiUploaded/2026-05/20-05-2026.json -> http://172.16.80.123/data/upload.php
+[2026-06-02 10:46:44] Upload file sukses: /presensiUploaded/2026-05/20-05-2026.json
+[2026-06-02 10:46:49] Order dari server:
+[2026-06-02 10:46:49] devices/IM0003/settings
+[2026-06-02 10:46:49] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/21-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/upload.php"}}
+[2026-06-02 10:46:49] Upload file: /presensiUploaded/2026-05/21-05-2026.json -> http://172.16.80.123/data/upload.php
+[2026-06-02 10:46:50] Upload file sukses: /presensiUploaded/2026-05/21-05-2026.json
+[2026-06-02 10:52:25] Order dari server:
+[2026-06-02 10:52:25] devices/IM0003/settings
+[2026-06-02 10:52:25] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 10:52:25] List dir: /
+[2026-06-02 10:52:25] Dir list terkirim: /
+[2026-06-02 10:59:14] Order dari server:
+[2026-06-02 10:59:14] devices/IM0003/settings
+[2026-06-02 10:59:14] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 10:59:14] List dir: /
+[2026-06-02 10:59:14] Dir list terkirim: /
+[2026-06-02 10:59:24] Order dari server:
+[2026-06-02 10:59:24] devices/IM0003/settings
+[2026-06-02 10:59:24] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded"}}
+[2026-06-02 10:59:24] List dir: /presensiUploaded
+[2026-06-02 10:59:24] Dir list terkirim: /presensiUploaded
+[2026-06-02 10:59:28] Order dari server:
+[2026-06-02 10:59:28] devices/IM0003/settings
+[2026-06-02 10:59:28] Pesan: {"device_id":"IM0003","command":{"listDir":"\/presensiUploaded\/2026-05"}}
+[2026-06-02 10:59:28] List dir: /presensiUploaded/2026-05
+[2026-06-02 10:59:28] Dir list terkirim: /presensiUploaded/2026-05
+[2026-06-02 10:59:42] Order dari server:
+[2026-06-02 10:59:42] devices/IM0003/settings
+[2026-06-02 10:59:42] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/20-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 10:59:42] Upload file: /presensiUploaded/2026-05/20-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 10:59:45] Upload file sukses: /presensiUploaded/2026-05/20-05-2026.json
+[2026-06-02 11:01:12] Order dari server:
+[2026-06-02 11:01:12] devices/IM0003/settings
+[2026-06-02 11:01:12] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/20-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 11:01:12] Upload file: /presensiUploaded/2026-05/20-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 11:01:15] Upload file sukses: /presensiUploaded/2026-05/20-05-2026.json
+[2026-06-02 11:02:38] Order dari server:
+[2026-06-02 11:02:38] devices/IM0003/settings
+[2026-06-02 11:02:38] Pesan: {"device_id":"IM0003","command":{"uploadFile":"\/presensiUploaded\/2026-05\/20-05-2026.json","uploadUrl":"http:\/\/172.16.80.123\/data\/uploadIzinSholat.php"}}
+[2026-06-02 11:02:38] Upload file: /presensiUploaded/2026-05/20-05-2026.json -> http://172.16.80.123/data/uploadIzinSholat.php
+[2026-06-02 11:02:41] Upload file sukses: /presensiUploaded/2026-05/20-05-2026.json
+[2026-06-02 12:03:24] Order dari server:
+[2026-06-02 12:03:24] devices/IM0003/settings
+[2026-06-02 12:03:24] Pesan: {"device_id":"IM0003","command":{"listDir":"\/"}}
+[2026-06-02 12:03:24] List dir: /
+[2026-06-02 12:03:24] Dir list terkirim: /
+[2026-06-02 12:50:14] Order dari server:
+[2026-06-02 12:50:14] devices/IM0003/settings
+[2026-06-02 12:50:14] Pesan: {"device_id":"IM0003","command":{"upload":true}}
+[2026-06-02 12:50:14] Perintah Server: Upload presensi
+[2026-06-02 12:50:19] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-06-02 12:50:19] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-06-02 12:59:52] Order dari server:
+[2026-06-02 12:59:52] devices/IM0003/settings
+[2026-06-02 12:59:53] Pesan: {"device_id":"IM0003","command":{"upload":true}}
+[2026-06-02 12:59:53] Perintah Server: Upload presensi
+[2026-06-02 12:59:57] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-06-02 12:59:58] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-06-02 13:00:00] Saatnya upload data #2!
+[2026-06-02 13:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 13:00:01] Upload #2 gagal, dijadwalkan ulang pada 13:15
+[2026-06-02 13:10:38] Order dari server:
+[2026-06-02 13:10:38] devices/IM0003/settings
+[2026-06-02 13:10:38] Pesan: {"device_id":"IM0003","command":{"upload":true}}
+[2026-06-02 13:10:38] Perintah Server: Upload presensi
+[2026-06-02 13:10:42] [CLEANUP] RAM: presensiHariIni dibersihkan
+[2026-06-02 13:10:42] [CLEANUP] File backup harian dihapus setelah upload sukses
+[2026-06-02 13:15:00] Saatnya upload data #2!
+[2026-06-02 13:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 13:15:01] Upload #2 gagal, dijadwalkan ulang pada 13:30
+[2026-06-02 13:30:00] Saatnya upload data #2!
+[2026-06-02 13:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 13:30:01] Upload #2 gagal, dijadwalkan ulang pada 13:45
+[2026-06-02 13:45:00] Saatnya upload data #2!
+[2026-06-02 13:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 13:45:01] Upload #2 gagal, dijadwalkan ulang pada 14:0
+[2026-06-02 14:00:00] Saatnya upload data #2!
+[2026-06-02 14:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 14:00:01] Upload #2 gagal, dijadwalkan ulang pada 14:15
+[2026-06-02 14:15:00] Saatnya upload data #2!
+[2026-06-02 14:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 14:15:01] Upload #2 gagal, dijadwalkan ulang pada 14:30
+[2026-06-02 14:30:00] Saatnya upload data #2!
+[2026-06-02 14:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 14:30:01] Upload #2 gagal, dijadwalkan ulang pada 14:45
+[2026-06-02 14:45:00] Saatnya upload data #2!
+[2026-06-02 14:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 14:45:01] Upload #2 gagal, dijadwalkan ulang pada 15:0
+[2026-06-02 15:00:00] Saatnya upload data #2!
+[2026-06-02 15:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 15:00:01] Upload #2 gagal, dijadwalkan ulang pada 15:15
+[2026-06-02 15:15:00] Saatnya upload data #2!
+[2026-06-02 15:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 15:15:01] Upload #2 gagal, dijadwalkan ulang pada 15:30
+[2026-06-02 15:30:00] Saatnya upload data #2!
+[2026-06-02 15:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 15:30:01] Upload #2 gagal, dijadwalkan ulang pada 15:45
+[2026-06-02 15:45:00] Saatnya upload data #2!
+[2026-06-02 15:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 15:45:01] Upload #2 gagal, dijadwalkan ulang pada 16:0
+[2026-06-02 16:00:00] Saatnya upload data #2!
+[2026-06-02 16:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 16:00:01] Upload #2 gagal, dijadwalkan ulang pada 16:15
+[2026-06-02 16:15:00] Saatnya upload data #2!
+[2026-06-02 16:15:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 16:15:01] Upload #2 gagal, dijadwalkan ulang pada 16:30
+[2026-06-02 16:30:00] Saatnya upload data #2!
+[2026-06-02 16:30:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 16:30:01] Upload #2 gagal, dijadwalkan ulang pada 16:45
+[2026-06-02 16:45:00] Saatnya upload data #2!
+[2026-06-02 16:45:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 16:45:01] Upload #2 gagal, dijadwalkan ulang pada 17:0
+[2026-06-02 17:00:00] Saatnya upload data #2!
+[2026-06-02 17:00:00] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 17:00:01] Upload #2 gagal, dijadwalkan ulang pada 17:15
+[2026-06-02 17:00:01] Upload Data Presensi - Sebelum Restart
+[2026-06-02 17:00:01] Upload # Gagal Proses File Presensi - Tidak Ada File Presensi!
+[2026-06-02 17:00:02] Upload # gagal!

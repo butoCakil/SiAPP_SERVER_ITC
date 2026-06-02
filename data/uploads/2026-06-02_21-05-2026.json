@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "i": "B3C6F2E4",
+      "n": "3271",
+      "t": "2026-05-21 15:20:21",
+      "tm": null,
+      "tp": null,
+      "s": "A"
+    },
+    {
+      "i": "F314E0E4",
+      "n": "3289",
+      "t": "2026-05-21 15:20:24",
+      "tm": null,
+      "tp": null,
+      "s": "A"
+    }
+  ],
+  "chipID": "AC12F332A7B0",
+  "macAddress": "B0:A7:32:F3:12:AC",
+  "nodevice": "IM0003",
+  "ipAddress": "10.10.11.10",
+  "status": "uploaded",
+  "timestamp": "2026-05-21 17:00:00"
+}

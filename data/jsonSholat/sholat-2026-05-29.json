@@ -1,0 +1,932 @@
+{
+    "data": [
+        {
+            "nokartu": "968822AA",
+            "nis": "3663",
+            "tanggal": "2026-05-29",
+            "jam": "11:52:35",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "A51174BE",
+            "nis": "3683",
+            "tanggal": "2026-05-29",
+            "jam": "11:52:40",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "15487DBF",
+            "nis": "3674",
+            "tanggal": "2026-05-29",
+            "jam": "11:52:46",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "33F8F5E4",
+            "nis": "3270",
+            "tanggal": "2026-05-29",
+            "jam": "11:56:48",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "73A371E4",
+            "nis": "3604",
+            "tanggal": "2026-05-29",
+            "jam": "11:58:38",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "A38155E4",
+            "nis": "3589",
+            "tanggal": "2026-05-29",
+            "jam": "11:58:47",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "23C5C3E2",
+            "nis": "3617",
+            "tanggal": "2026-05-29",
+            "jam": "11:58:49",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "33A260E4",
+            "nis": "3601",
+            "tanggal": "2026-05-29",
+            "jam": "11:59:14",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "6389A2E2",
+            "nis": "3600",
+            "tanggal": "2026-05-29",
+            "jam": "11:59:17",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "EB27A8B7",
+            "nis": "3667",
+            "tanggal": "2026-05-29",
+            "jam": "11:52:35",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "542CE4CB",
+            "nis": "3751",
+            "tanggal": "2026-05-29",
+            "jam": "11:56:26",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "F311F4E4",
+            "nis": "3285",
+            "tanggal": "2026-05-29",
+            "jam": "11:56:38",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "03D5A6E2",
+            "nis": "3286",
+            "tanggal": "2026-05-29",
+            "jam": "11:56:46",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "131701E3",
+            "nis": "3413",
+            "tanggal": "2026-05-29",
+            "jam": "11:58:53",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "132FB5E2",
+            "nis": "3607",
+            "tanggal": "2026-05-29",
+            "jam": "11:59:15",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0009"
+        },
+        {
+            "nokartu": "438C4954",
+            "nis": "3191",
+            "tanggal": "2026-05-29",
+            "jam": "12:00:16",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "E3589FE2",
+            "nis": "3412",
+            "tanggal": "2026-05-29",
+            "jam": "12:02:00",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "D307C5E2",
+            "nis": "3430",
+            "tanggal": "2026-05-29",
+            "jam": "12:02:08",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "758563BF",
+            "nis": "3531",
+            "tanggal": "2026-05-29",
+            "jam": "12:03:10",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "E412FBCB",
+            "nis": "3519",
+            "tanggal": "2026-05-29",
+            "jam": "12:03:25",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "D3BDA2E2",
+            "nis": "3627",
+            "tanggal": "2026-05-29",
+            "jam": "12:04:19",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "D69388A9",
+            "nis": "3640",
+            "tanggal": "2026-05-29",
+            "jam": "12:04:25",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "F48310BB",
+            "nis": "3696",
+            "tanggal": "2026-05-29",
+            "jam": "12:06:27",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "E33B9DE2",
+            "nis": "3425",
+            "tanggal": "2026-05-29",
+            "jam": "12:09:21",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "C3C663E4",
+            "nis": "3332",
+            "tanggal": "2026-05-29",
+            "jam": "12:26:05",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "45F327BF",
+            "nis": "3538",
+            "tanggal": "2026-05-29",
+            "jam": "12:26:25",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "858009CA",
+            "nis": "3523",
+            "tanggal": "2026-05-29",
+            "jam": "12:26:37",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "79DC87A6",
+            "nis": "3552",
+            "tanggal": "2026-05-29",
+            "jam": "12:26:42",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "44DF5ECB",
+            "nis": "3463",
+            "tanggal": "2026-05-29",
+            "jam": "12:06:58",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0002"
+        },
+        {
+            "nokartu": "D97E62A5",
+            "nis": "3789",
+            "tanggal": "2026-05-29",
+            "jam": "12:26:54",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "F9116BB1",
+            "nis": "3748",
+            "tanggal": "2026-05-29",
+            "jam": "12:00:28",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "94F033BC",
+            "nis": "3735",
+            "tanggal": "2026-05-29",
+            "jam": "12:00:44",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "B51EE0BE",
+            "nis": "3799",
+            "tanggal": "2026-05-29",
+            "jam": "12:02:03",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C1CC8950",
+            "nis": "3130",
+            "tanggal": "2026-05-29",
+            "jam": "12:02:12",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "33840854",
+            "nis": "3238",
+            "tanggal": "2026-05-29",
+            "jam": "12:03:14",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "44B6FBBC",
+            "nis": "3775",
+            "tanggal": "2026-05-29",
+            "jam": "12:04:24",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "94CB0DBC",
+            "nis": "3778",
+            "tanggal": "2026-05-29",
+            "jam": "12:04:30",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "7321D7E2",
+            "nis": "3404",
+            "tanggal": "2026-05-29",
+            "jam": "12:06:09",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "CB3CDFA9",
+            "nis": "3639",
+            "tanggal": "2026-05-29",
+            "jam": "12:06:48",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E4D634C6",
+            "nis": "3655",
+            "tanggal": "2026-05-29",
+            "jam": "12:06:50",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E4E84BBB",
+            "nis": "3558",
+            "tanggal": "2026-05-29",
+            "jam": "12:07:13",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "58531FCF",
+            "nis": "3364",
+            "tanggal": "2026-05-29",
+            "jam": "12:07:45",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "2304ECE4",
+            "nis": "3348",
+            "tanggal": "2026-05-29",
+            "jam": "12:07:52",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "1B9A88AA",
+            "nis": "3659",
+            "tanggal": "2026-05-29",
+            "jam": "12:08:09",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A31CE5E4",
+            "nis": "3426",
+            "tanggal": "2026-05-29",
+            "jam": "12:09:50",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "83A3ACE2",
+            "nis": "3431",
+            "tanggal": "2026-05-29",
+            "jam": "12:09:55",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "D389DFE4",
+            "nis": "3327",
+            "tanggal": "2026-05-29",
+            "jam": "12:10:45",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A5015CCA",
+            "nis": "3497",
+            "tanggal": "2026-05-29",
+            "jam": "12:11:20",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F0AC645C",
+            "nis": "3118",
+            "tanggal": "2026-05-29",
+            "jam": "12:12:13",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "337CE154",
+            "nis": "3093",
+            "tanggal": "2026-05-29",
+            "jam": "12:12:25",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E12C1650",
+            "nis": "3098",
+            "tanggal": "2026-05-29",
+            "jam": "12:12:29",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "73BBEEE4",
+            "nis": "3444",
+            "tanggal": "2026-05-29",
+            "jam": "12:29:00",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A3DD9FE2",
+            "nis": "3435",
+            "tanggal": "2026-05-29",
+            "jam": "12:29:11",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "24E856BC",
+            "nis": "3532",
+            "tanggal": "2026-05-29",
+            "jam": "12:03:03",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0010"
+        },
+        {
+            "nokartu": "73E2A5E2",
+            "nis": "3434",
+            "tanggal": "2026-05-29",
+            "jam": "12:29:04",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0010"
+        },
+        {
+            "nokartu": "58EB07D3",
+            "nis": "3547",
+            "tanggal": "2026-05-29",
+            "jam": "12:41:17",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "148266BC",
+            "nis": "3539",
+            "tanggal": "2026-05-29",
+            "jam": "12:41:33",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "55EB65BF",
+            "nis": "3542",
+            "tanggal": "2026-05-29",
+            "jam": "12:42:10",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "658939BF",
+            "nis": "3534",
+            "tanggal": "2026-05-29",
+            "jam": "12:47:47",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "749D5FBB",
+            "nis": "3505",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:21",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "758572BF",
+            "nis": "3416",
+            "tanggal": "2026-05-29",
+            "jam": "12:30:17",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "833EFDE2",
+            "nis": "3598",
+            "tanggal": "2026-05-29",
+            "jam": "12:32:44",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "23B3E8E4",
+            "nis": "3618",
+            "tanggal": "2026-05-29",
+            "jam": "12:32:47",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "54A89BCB",
+            "nis": "3526",
+            "tanggal": "2026-05-29",
+            "jam": "12:33:41",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "05598ABF",
+            "nis": "3780",
+            "tanggal": "2026-05-29",
+            "jam": "12:34:50",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A5DDEABE",
+            "nis": "3544",
+            "tanggal": "2026-05-29",
+            "jam": "12:35:00",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "646498BC",
+            "nis": "3535",
+            "tanggal": "2026-05-29",
+            "jam": "12:35:06",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "13C36BE4",
+            "nis": "3603",
+            "tanggal": "2026-05-29",
+            "jam": "12:35:26",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "459BFACA",
+            "nis": "3763",
+            "tanggal": "2026-05-29",
+            "jam": "12:35:36",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E91AE2B1",
+            "nis": "3746",
+            "tanggal": "2026-05-29",
+            "jam": "12:36:06",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "741EE1CB",
+            "nis": "3764",
+            "tanggal": "2026-05-29",
+            "jam": "12:36:12",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E4B0BBCB",
+            "nis": "3766",
+            "tanggal": "2026-05-29",
+            "jam": "12:36:19",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "03ACA1E2",
+            "nis": "3593",
+            "tanggal": "2026-05-29",
+            "jam": "12:38:31",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "5359F5E2",
+            "nis": "3602",
+            "tanggal": "2026-05-29",
+            "jam": "12:43:00",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "29A8B9A6",
+            "nis": "3691",
+            "tanggal": "2026-05-29",
+            "jam": "12:47:18",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "B8F11CCF",
+            "nis": "3545",
+            "tanggal": "2026-05-29",
+            "jam": "12:51:25",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C9ACD1A5",
+            "nis": "3528",
+            "tanggal": "2026-05-29",
+            "jam": "12:51:48",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "9412D7CB",
+            "nis": "3518",
+            "tanggal": "2026-05-29",
+            "jam": "12:52:31",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "D37664E4",
+            "nis": "3211",
+            "tanggal": "2026-05-29",
+            "jam": "12:54:21",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F3EFF4E4",
+            "nis": "3204",
+            "tanggal": "2026-05-29",
+            "jam": "12:54:57",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E360DFE4",
+            "nis": "3223",
+            "tanggal": "2026-05-29",
+            "jam": "12:55:16",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "936465E4",
+            "nis": "3202",
+            "tanggal": "2026-05-29",
+            "jam": "12:55:22",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C4F997CB",
+            "nis": "3496",
+            "tanggal": "2026-05-29",
+            "jam": "12:55:26",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A5D3D6CA",
+            "nis": "3498",
+            "tanggal": "2026-05-29",
+            "jam": "12:55:31",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "B599E6BE",
+            "nis": "3720",
+            "tanggal": "2026-05-29",
+            "jam": "12:56:33",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "94C89CCB",
+            "nis": "3502",
+            "tanggal": "2026-05-29",
+            "jam": "12:57:02",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "55AFECCA",
+            "nis": "3486",
+            "tanggal": "2026-05-29",
+            "jam": "12:57:09",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "00627C5D",
+            "nis": "3099",
+            "tanggal": "2026-05-29",
+            "jam": "12:57:42",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F35CB1E2",
+            "nis": "3126",
+            "tanggal": "2026-05-29",
+            "jam": "12:57:46",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C1F0EB50",
+            "nis": "3120",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:06",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F314E0E4",
+            "nis": "3289",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:33",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "03B866E4",
+            "nis": "3300",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:37",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "6398FBE4",
+            "nis": "3294",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:42",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "54E566CB",
+            "nis": "3686",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:45",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "73E269E4",
+            "nis": "3272",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:53",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C320D6E2",
+            "nis": "3273",
+            "tanggal": "2026-05-29",
+            "jam": "12:58:57",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "B38155E4",
+            "nis": "3263",
+            "tanggal": "2026-05-29",
+            "jam": "13:06:15",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "433BB7E2",
+            "nis": "3251",
+            "tanggal": "2026-05-29",
+            "jam": "13:06:19",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "A8EE5EAD",
+            "nis": "3234",
+            "tanggal": "2026-05-29",
+            "jam": "13:12:10",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0007"
+        },
+        {
+            "nokartu": "1486D4C7",
+            "nis": "3653",
+            "tanggal": "2026-05-29",
+            "jam": "13:03:31",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "4B7B75A9",
+            "nis": "3633",
+            "tanggal": "2026-05-29",
+            "jam": "13:03:38",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0004"
+        },
+        {
+            "nokartu": "945091CB",
+            "nis": "3517",
+            "tanggal": "2026-05-29",
+            "jam": "13:00:49",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "C344B7E2",
+            "nis": "3260",
+            "tanggal": "2026-05-29",
+            "jam": "13:01:11",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "637AFAE4",
+            "nis": "3301",
+            "tanggal": "2026-05-29",
+            "jam": "13:01:21",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F313E4E4",
+            "nis": "3288",
+            "tanggal": "2026-05-29",
+            "jam": "13:01:24",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "03E7B6E2",
+            "nis": "3274",
+            "tanggal": "2026-05-29",
+            "jam": "13:01:42",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "3326B654",
+            "nis": "3241",
+            "tanggal": "2026-05-29",
+            "jam": "13:06:00",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "53945654",
+            "nis": "3245",
+            "tanggal": "2026-05-29",
+            "jam": "13:09:28",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "A344DDE4",
+            "nis": "3257",
+            "tanggal": "2026-05-29",
+            "jam": "13:09:34",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "930CE6E4",
+            "nis": "3269",
+            "tanggal": "2026-05-29",
+            "jam": "13:17:15",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "0011D25D",
+            "nis": "3242",
+            "tanggal": "2026-05-29",
+            "jam": "13:17:21",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "84C2BBCB",
+            "nis": "3237",
+            "tanggal": "2026-05-29",
+            "jam": "13:17:24",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "F35DE6E4",
+            "nis": "3308",
+            "tanggal": "2026-05-29",
+            "jam": "13:17:48",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "9319AAE2",
+            "nis": "3266",
+            "tanggal": "2026-05-29",
+            "jam": "13:17:57",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "E0FF995C",
+            "nis": "3244",
+            "tanggal": "2026-05-29",
+            "jam": "13:18:11",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0008"
+        },
+        {
+            "nokartu": "006DFC5D",
+            "nis": "3236",
+            "tanggal": "2026-05-29",
+            "jam": "13:26:29",
+            "keterangan": "DZUHUR",
+            "nodevice": "M0010"
+        }
+    ]
+}
