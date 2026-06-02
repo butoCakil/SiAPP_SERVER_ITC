@@ -248,6 +248,18 @@ Route::delete('/apikey/{id}', [ApiKeyController::class, 'destroy'])
     ->middleware('auth.admin')
     ->name('apikey.destroy');
 
+/*
+|--------------------------------------------------------------------------
+| INTERNAL UPLOAD API (dari legacy PHP forwarder)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['local.only'])->prefix('api/upload')->group(function () {
+    Route::post('/presensi',   [\App\Http\Controllers\UploadController::class, 'presensi']);
+    Route::post('/sholat',     [\App\Http\Controllers\UploadController::class, 'sholat']);
+    Route::post('/izinsholat', [\App\Http\Controllers\UploadController::class, 'izinSholat']);
+    Route::post('/file',       [\App\Http\Controllers\UploadController::class, 'file']);
+});
+
 // Akun Management
 Route::get('/akun', [AkunController::class, 'index'])
     ->middleware('auth.admin')->name('akun');
