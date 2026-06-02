@@ -123,21 +123,25 @@ class PushPresensi extends Command
     // ── 2. Sholat ──
     private function pushSholat(string $url): int
     {
-        $query = DB::table('presensiEvent as pe')
+        // 1. Cari NIS yang punya record sholat pada tanggal ini.
+        //    Normal: hanya yang belum push. Force: semua.
+        $nisList = DB::table('presensiEvent')
+            ->where('tanggal', $this->tanggal)
+            ->where('ruang', '!=', 'Izin Mens')
+            ->when(!$this->force, fn($q) => $q->whereNull('pushed_at'))
+            ->distinct()
+            ->pluck('nis');
+
+        if ($nisList->isEmpty()) return 0;
+
+        // 2. Ambil SEMUA record sholat hari itu untuk NIS tsb (payload selalu lengkap)
+        $events = DB::table('presensiEvent as pe')
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $this->tanggal)
             ->where('pe.ruang', '!=', 'Izin Mens')
-            ->whereNull('pe.pushed_at');
-
-        $events = $query->select(
-            'pe.id',
-            'pe.nis',
-            'ds.nama',
-            'ds.kelas',
-            'pe.keterangan',
-            'pe.ruang',
-            'pe.mulai'
-        )->get();
+            ->whereIn('pe.nis', $nisList)
+            ->select('pe.id', 'pe.nis', 'ds.nama', 'ds.kelas', 'pe.keterangan', 'pe.ruang', 'pe.mulai', 'pe.pushed_at')
+            ->get();
 
         if ($events->isEmpty()) return 0;
 
@@ -147,17 +151,20 @@ class PushPresensi extends Command
             $nis = $e->nis;
             if (!isset($siswaMap[$nis])) {
                 $siswaMap[$nis] = [
-                    'ids'          => [],
-                    'nis'          => $nis,
-                    'nama'         => $e->nama ?? '-',
-                    'kelas'        => $e->kelas ?? '-',
-                    'dzuhur'       => null,
-                    'ashar'        => null,
+                    'ids'           => [],
+                    'nis'           => $nis,
+                    'nama'          => $e->nama ?? '-',
+                    'kelas'         => $e->kelas ?? '-',
+                    'dzuhur'        => null,
+                    'ashar'         => null,
                     'device_dzuhur' => null,
-                    'device_ashar' => null,
+                    'device_ashar'  => null,
                 ];
             }
-            $siswaMap[$nis]['ids'][] = $e->id;
+            // tandai id yang perlu di-update pushed_at (yang masih null, atau semua jika force)
+            if (is_null($e->pushed_at) || $this->force) {
+                $siswaMap[$nis]['ids'][] = $e->id;
+            }
             if ($e->keterangan === 'DZUHUR') {
                 $siswaMap[$nis]['dzuhur']        = $e->mulai;
                 $siswaMap[$nis]['device_dzuhur'] = $e->ruang;
@@ -168,26 +175,11 @@ class PushPresensi extends Command
         }
 
         $dataList = collect(array_values($siswaMap));
-        $payload = [
-            'type'      => 'presensi_sholat',
-            'timestamp' => now()->toIso8601String(),
-            'tanggal'   => $this->tanggal,
-            'total'     => $dataList->count(),
-            'data'      => $dataList->map(fn($s) => [
-                'nis'          => $s['nis'],
-                'nama'         => $s['nama'],
-                'kelas'        => $s['kelas'],
-                'dzuhur'       => $s['dzuhur'],
-                'ashar'        => $s['ashar'],
-                'device_dzuhur' => $s['device_dzuhur'],
-                'device_ashar' => $s['device_ashar'],
-            ])->values(),
-        ];
 
-        // Kirim per batch 50 records
-        $batches   = $dataList->chunk(10);
-        $allOk     = true;
-        $sentIds   = collect();
+        // Kirim per batch 10
+        $batches = $dataList->chunk(10);
+        $allOk   = true;
+        $sentIds = collect();
 
         foreach ($batches as $batch) {
             $batchPayload = [
@@ -209,11 +201,8 @@ class PushPresensi extends Command
             $ok = $this->kirim($url, $batchPayload, 'Presensi Sholat');
 
             if ($ok) {
-                // Kumpulkan ID dari siswa di batch ini
                 foreach ($batch as $s) {
-                    foreach ($s['ids'] as $id) {
-                        $sentIds->push($id);
-                    }
+                    foreach ($s['ids'] as $id) $sentIds->push($id);
                 }
             } else {
                 $allOk = false;

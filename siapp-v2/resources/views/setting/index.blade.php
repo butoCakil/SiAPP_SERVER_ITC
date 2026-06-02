@@ -536,7 +536,7 @@
                         </div>
                         <small class="text-muted">Jika dicentang, data akan otomatis dikirim ke TIM IT setiap hari jam 22:00 dan re-check mingguan setiap Sabtu jam 23:00</small>
                     </div>
-                    <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php artisan push:presensi --tanggal={{ date('Y-m-d') }} --force</small></p>
+                    <p class="mt-2 mb-0"><small class="text-muted"><i class="fas fa-info-circle mr-1"></i>test push: /opt/lampp/bin/php /opt/lampp/htdocs/siapp-v2/artisan push:presensi --tanggal=2026-06-02 --force</small></p>
                 </div>
             </div>
 
