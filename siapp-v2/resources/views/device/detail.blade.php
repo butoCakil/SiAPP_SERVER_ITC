@@ -590,7 +590,7 @@ function renderSdResult(data) {
             const filePath = (data.path.endsWith('/') ? data.path : data.path + '/') + f.n;
             const size = f.s > 1024 ? (f.s / 1024).toFixed(1) + ' KB' : f.s + ' B';
 
-            let selectHtml = '<select class="form-control form-control-sm" id="upload-url-' + i + '" style="font-size:11px;" onclick="event.stopPropagation();">';
+            let selectHtml = '<select class="sd-upload-select form-control form-control-sm" style="font-size:11px;" onclick="event.stopPropagation();">';
             Object.entries(uploadPresets).forEach(([k, v]) => {
                 selectHtml += `<option value="${v.url}">${v.name}</option>`;
             });
@@ -602,7 +602,7 @@ function renderSdResult(data) {
                 <td>${size}</td>
                 <td>${selectHtml}</td>
                 <td>
-                    <button class="btn btn-xs btn-success" onclick="sdUploadFile('${filePath}', document.getElementById('upload-url-${i}').value)" style="font-size:11px;">
+                    <button class="btn btn-xs btn-success" data-path="${filePath}" onclick="sdUploadFile(this.dataset.path, this.closest('tr').querySelector('.sd-upload-select').value)" style="font-size:11px;">
                         <i class="fas fa-upload"></i>
                     </button>
                 </td>

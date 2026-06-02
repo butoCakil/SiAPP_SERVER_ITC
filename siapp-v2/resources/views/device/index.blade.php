@@ -298,7 +298,7 @@
         📊 Total: <strong id="cnt-total">{{ $onlineCount + $offlineCount }}</strong>
     </div>
     <div class="summary-badge">
-        🔄 Refresh: <strong><span id="countdown">30</span>s</strong>
+        🔄 Refresh: <strong><span id="countdown">60</span>s</strong>
     </div>
     <div class="summary-badge text-muted" style="font-size:11px;">
         Terakhir: <span id="last-refresh">--:--:--</span>
@@ -433,7 +433,7 @@ async function confirmAll(cmdKey) {
 }
 
 // ── Auto refresh ──
-let countdown = 30;
+let countdown = 60;
 const cdEl = document.getElementById('countdown');
 
 async function refreshGrid() {
@@ -454,7 +454,7 @@ async function refreshGrid() {
         console.error('Refresh gagal:', e);
     } finally {
         document.getElementById('loading-overlay').style.display = 'none';
-        countdown = 30;
+        countdown = 60;
     }
 }
 
