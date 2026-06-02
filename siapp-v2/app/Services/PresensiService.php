@@ -99,23 +99,20 @@ class PresensiService
             return $this->buatRespon('IDTT', $idchip, $nodevice, $nokartu);
         }
 
-        // ── Mode 0 = presensi ditutup ──
-        if ($mode === 0) {
-            return $this->buatResponNama('TBPS', $siswa->nama, $idchip, $nodevice, $nokartu);
-        }
-
         $nama        = $siswa->nama;
         $noReg       = $siswa->nis;
         $kode        = $siswa->kode;
         $keterangan  = $siswa->keterangan ?? '';
-
-        // ── Routing berdasarkan kode device ──
+        // ── Routing berdasarkan kode device (MASJID/EVENT mengikuti rule sendiri, tidak terpengaruh mode presensi gerbang) ──
         if ($kodeDevice === 'MASJID') {
             return $this->prosesMasjid($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice, $setting);
         }
-
         if ($kodeDevice === 'EVENT') {
             return $this->prosesEvent($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice);
+        }
+        // ── Mode 0 = presensi gerbang ditutup (hanya berlaku untuk device gerbang) ──
+        if ($mode === 0) {
+            return $this->buatResponNama('TBPS', $nama, $idchip, $nodevice, $nokartu);
         }
 
         if ($kodeDevice === 'IJIN') {
