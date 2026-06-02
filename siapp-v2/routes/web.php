@@ -321,6 +321,9 @@ Route::get('/kaldik/template', [App\Http\Controllers\KaldikController::class, 'd
 Route::post('/kaldik/upload', [App\Http\Controllers\KaldikController::class, 'upload'])
     ->middleware('auth.admin')->name('kaldik.upload');
 
+Route::get('/presensi/siswa/cari', [PresensiViewController::class, 'cariSiswa'])
+    ->name('presensi.siswa.cari');
+
 /*
 |--------------------------------------------------------------------------
 | PASSWORD RESET

@@ -731,6 +731,25 @@ class PresensiViewController extends Controller
         ));
     }
 
+    public function cariSiswa(Request $request)
+    {
+        $q = trim($request->input('q', ''));
+        if (mb_strlen($q) < 2) {
+            return response()->json([]);
+        }
+
+        $siswa = DB::table('datasiswa')
+            ->where(function ($w) use ($q) {
+                $w->where('nis', 'like', "%{$q}%")
+                    ->orWhere('nama', 'like', "%{$q}%");
+            })
+            ->orderBy('nama')
+            ->limit(15)
+            ->get(['nis', 'nama', 'kelas']);
+
+        return response()->json($siswa);
+    }
+
     public function storeEvent(Request $request)
     {
         $request->validate([
