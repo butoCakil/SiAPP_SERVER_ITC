@@ -1,22 +1,15 @@
 <?php
-date_default_timezone_set("Asia/Jakarta");
-$date = date("Y-m-d");
-$time = date("H:i");
+date_default_timezone_set('Asia/Jakarta');
 
-$targetDir = "uploads/";
-if (!file_exists($targetDir)) {
-    mkdir($targetDir, 0777, true);
-}
+$ch = curl_init('http://127.0.0.1:8080/api/upload/file');
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => $_FILES ? ['file' => new CURLFile($_FILES['file']['tmp_name'], $_FILES['file']['type'], $_FILES['file']['name'])] : [],
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT        => 30,
+]);
+$response = curl_exec($ch);
+$err      = curl_error($ch);
+curl_close($ch);
 
-if (isset($_FILES['file'])) {
-    $fileName = $date . "_" . basename($_FILES['file']['name']);
-    $targetFile = $targetDir . $fileName;
-
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-        echo "File berhasil diunggah: " . $fileName;
-    } else {
-        echo "Gagal mengunggah file.";
-    }
-} else {
-    echo "Tidak ada file yang diterima.";
-}
+echo $response ?: 'Forward gagal: ' . $err;
