@@ -329,10 +329,13 @@
             <form action="{{ route('presensi.event.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>NIS Siswa <span class="text-danger">*</span></label>
-                        <input type="text" name="nis" class="form-control"
-                            placeholder="Ketik NIS siswa..." required>
+                    <div class="form-group" style="position:relative;">
+                        <label>NIS / Nama Siswa <span class="text-danger">*</span></label>
+                        <input type="text" name="nis" id="inputNisCari" class="form-control"
+                            placeholder="Ketik NIS atau nama siswa..." autocomplete="off" required>
+                        <div id="dropdownSiswa" class="list-group"
+                            style="position:absolute; z-index:1060; width:100%; max-height:220px;
+                                   overflow-y:auto; display:none; box-shadow:0 2px 8px rgba(0,0,0,.15);"></div>
                     </div>
                     <div class="form-group">
                         <label>Tanggal <span class="text-danger">*</span></label>
@@ -353,8 +356,14 @@
                     </div>
                     <div class="form-group">
                         <label>Ruang</label>
-                        <input type="text" name="ruang" class="form-control"
-                            placeholder="Masjid 1 / Izin Mens / Manual..." value="Manual">
+                        <div class="custom-control custom-checkbox mb-2">
+                            <input type="checkbox" class="custom-control-input" id="chkIzinMens">
+                            <label class="custom-control-label" for="chkIzinMens">
+                                Tandai sebagai <strong>Izin Mens</strong>
+                            </label>
+                        </div>
+                        <input type="text" name="ruang" id="inputRuang" class="form-control"
+                            placeholder="Masjid 1 / Manual..." value="Manual">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -395,6 +404,78 @@ function applyFilter() {
 }
 
 document.getElementById('searchInput').addEventListener('input', applyFilter);
+
+// ── Autocomplete pencarian siswa di modal Tambah Presensi Sholat ──
+(function () {
+    const input    = document.getElementById('inputNisCari');
+    const dropdown = document.getElementById('dropdownSiswa');
+    if (!input || !dropdown) return;
+
+    const urlCari = "{{ route('presensi.siswa.cari') }}";
+    let timer = null;
+
+    function tutup() { dropdown.style.display = 'none'; dropdown.innerHTML = ''; }
+
+    input.addEventListener('input', function () {
+        const q = input.value.trim();
+        clearTimeout(timer);
+        if (q.length < 2) { tutup(); return; }
+
+        timer = setTimeout(() => {
+            fetch(urlCari + '?q=' + encodeURIComponent(q))
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.length) {
+                        dropdown.innerHTML =
+                            '<div class="list-group-item text-muted small">Tidak ada hasil</div>';
+                        dropdown.style.display = 'block';
+                        return;
+                    }
+                    dropdown.innerHTML = data.map(s =>
+                        `<button type="button" class="list-group-item list-group-item-action py-2"
+                                 data-nis="${s.nis}">
+                            <strong>${s.nis}</strong> — ${s.nama}
+                            <span class="text-muted small">(${s.kelas ?? '-'})</span>
+                         </button>`
+                    ).join('');
+                    dropdown.style.display = 'block';
+                })
+                .catch(() => tutup());
+        }, 250);
+    });
+
+    dropdown.addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-nis]');
+        if (!btn) return;
+        input.value = btn.dataset.nis;   // isi field NIS dengan NIS terpilih
+        tutup();
+    });
+
+    // tutup dropdown saat klik di luar
+    document.addEventListener('click', function (e) {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) tutup();
+    });
+})();
+
+// ── Checkbox Izin Mens: set Ruang ke nilai persis 'Izin Mens' ──
+(function () {
+    const chk   = document.getElementById('chkIzinMens');
+    const ruang = document.getElementById('inputRuang');
+    if (!chk || !ruang) return;
+
+    let ruangSebelumnya = ruang.value;
+
+    chk.addEventListener('change', function () {
+        if (chk.checked) {
+            ruangSebelumnya = ruang.value;
+            ruang.value = 'Izin Mens';   // string persis, dibaca rekap
+            ruang.readOnly = true;
+        } else {
+            ruang.value = ruangSebelumnya || 'Manual';
+            ruang.readOnly = false;
+        }
+    });
+})();
 </script>
 </div>
 @endpush
