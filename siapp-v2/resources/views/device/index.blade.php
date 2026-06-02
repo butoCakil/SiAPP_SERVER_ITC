@@ -84,8 +84,12 @@
     flex-shrink: 0;
     margin-top: 2px;
 }
-.dc-dot.online  { background: #06de72; box-shadow: 0 0 14px #00d26a; }
+.dc-dot.online  { background: #06de72; box-shadow: 0 0 14px #00d26a; animation: pulse-online 2s infinite; }
 .dc-dot.offline { background: #ff3b3b; box-shadow: 0 0 14px #ff3b3b; }
+@keyframes pulse-online {
+    0%, 100% { box-shadow: 0 0 8px #00d26a; }
+    50%       { box-shadow: 0 0 22px #00ff88, 0 0 40px #00d26a55; }
+}
 .dc-status-label { font-size: 10px; text-align: center; margin-top: 3px; font-family: monospace; }
 
 /* Bars */
@@ -94,10 +98,10 @@
     color: #444;
     margin: 7px 0 2px;
 }
-.dc-buf-unknown { color: #888; }
-.dc-buf-empty   { color: #00c853; font-weight: 600; }
-.dc-buf-warn    { color: #ff8800; font-weight: 600; }
-.dc-buf-danger  { color: #f44336; font-weight: 700; }
+.dc-buf-unknown { color: #888; font-size:11px; }
+.dc-buf-empty   { display:inline-block; background:#e8f5e9; color:#2e7d32; font-weight:700; font-size:11px; padding:1px 8px; border-radius:20px; }
+.dc-buf-warn    { display:inline-block; background:#fff3e0; color:#e65100; font-weight:700; font-size:11px; padding:1px 8px; border-radius:20px; }
+.dc-buf-danger  { display:inline-block; background:#ffebee; color:#c62828; font-weight:700; font-size:11px; padding:1px 8px; border-radius:20px; }
 .ram-bar {
     width: 100%; height: 9px;
     border-radius: 8px;
@@ -119,7 +123,7 @@
 .rssi-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 8px; transition: width 0.5s ease, background-color 0.5s ease; }
 
 /* Detail info */
-.dc-detail { font-size: 11px; color: #555; margin-top: 6px; }
+.dc-detail { font-size: 11px; color: #555; margin-top: 6px; background:#f5f7fa; border-radius:8px; padding:5px 8px; }
 .dc-detail div { margin-top: 3px; }
 
 /* Buttons */

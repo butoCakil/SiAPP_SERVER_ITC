@@ -94,8 +94,8 @@
 
     {{-- Sparkline --}}
     <div style="margin: 6px 0;">
-        <canvas id="spark-{{ $device->device_id }}" height="40"
-            style="width:100%; border-radius:6px; background:#f8f9fa;"></canvas>
+        <canvas id="spark-{{ $device->device_id }}" height="70"
+            style="width:100%; border-radius:6px; background:transparent;"></canvas>
     </div>
 
     {{-- Detail Info --}}

@@ -28,20 +28,24 @@
 @section('content')
 
 {{-- Header --}}
-<div class="d-flex align-items-center mb-3 flex-wrap" style="gap:8px;">
-    <a href="{{ route('device') }}" class="btn btn-sm btn-outline-secondary">
-        <i class="fas fa-arrow-left mr-1"></i>Kembali
-    </a>
-    <h5 class="mb-0 ml-2">
-        <i class="fas fa-microchip mr-1"></i>{{ $id }}
-        @if($device->fw_version)
-            <span class="badge badge-warning ml-1">{{ $device->fw_version }}</span>
-        @endif
-        <span class="ml-2 {{ $device->online ? 'badge-online' : 'badge-offline' }}">
-            {{ $device->online ? 'Online' : 'Offline' }}
-        </span>
-    </h5>
-    <div class="ml-auto d-flex" style="gap:6px;">
+<div class="mb-3">
+    {{-- Baris 1: Kembali + Nama + Status --}}
+    <div class="d-flex align-items-center flex-wrap" style="gap:8px; margin-bottom:8px;">
+        <a href="{{ route('device') }}" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
+        </a>
+        <h5 class="mb-0 ml-1">
+            <i class="fas fa-microchip mr-1"></i>{{ $id }}
+            @if($device->fw_version)
+                <span class="badge badge-warning ml-1">{{ $device->fw_version }}</span>
+            @endif
+            <span class="ml-1 {{ $device->online ? 'badge-online' : 'badge-offline' }}">
+                {{ $device->online ? 'Online' : 'Offline' }}
+            </span>
+        </h5>
+    </div>
+    {{-- Baris 2: Tombol aksi --}}
+    <div class="d-flex flex-wrap" style="gap:6px;">
         <button class="btn btn-sm btn-primary" onclick="kirimPerintah('setSetting')" {{ !$device->online ? 'disabled' : '' }}>
             <i class="fas fa-cog mr-1"></i>Set
         </button>
@@ -95,7 +99,9 @@
 {{-- Chart --}}
 <div class="card mb-3">
     <div class="card-body py-2">
-        <canvas id="chart-metrics" height="80"></canvas>
+        <div style="position:relative; height:220px;">
+            <canvas id="chart-metrics"></canvas>
+        </div>
     </div>
 </div>
 
@@ -451,20 +457,21 @@ new Chart(document.getElementById('chart-metrics'), {
     data: {
         labels: {!! $labels !!},
         datasets: [
-            { label: 'RAM%',  data: {!! $ramData !!},  borderColor:'#2196f3', backgroundColor:'rgba(33,150,243,0.08)', borderWidth:2, pointRadius:2, tension:0.3, fill:true },
-            { label: 'RSSI%', data: {!! $rssiData !!}, borderColor:'#ff9800', backgroundColor:'rgba(255,152,0,0.08)',   borderWidth:2, pointRadius:2, tension:0.3, fill:false },
-            { label: 'Ping%', data: {!! $pingData !!}, borderColor:'#4caf50', backgroundColor:'rgba(76,175,80,0.08)',   borderWidth:2, pointRadius:2, tension:0.3, fill:false },
-            { label: 'Buf',   data: {!! $bufData !!},  borderColor:'#9c27b0', backgroundColor:'rgba(156,39,176,0.08)',  borderWidth:2, pointRadius:2, tension:0.3, fill:false },
+            { label: 'RAM%',  data: {!! $ramData !!},  borderColor:'#2196f3', backgroundColor:'rgba(33,150,243,0.08)', borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:0.3, fill:true },
+            { label: 'RSSI%', data: {!! $rssiData !!}, borderColor:'#ff9800', backgroundColor:'rgba(255,152,0,0.08)',   borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:0.3, fill:false },
+            { label: 'Ping%', data: {!! $pingData !!}, borderColor:'#4caf50', backgroundColor:'rgba(76,175,80,0.08)',   borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:0.3, fill:false },
+            { label: 'Buf',   data: {!! $bufData !!},  borderColor:'#9c27b0', backgroundColor:'rgba(156,39,176,0.08)',  borderWidth:1.5, pointRadius:0, pointHoverRadius:3, tension:0.3, fill:false },
         ]
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: { position:'top', labels:{ font:{size:11}, boxWidth:14 } },
             datalabels: { display: false }
         },
         scales: {
-            x: { ticks:{ font:{size:10}, maxTicksLimit:10 }, grid:{display:false} },
+            x: { ticks:{ font:{size:10}, maxTicksLimit:6, maxRotation:0, autoSkip:true }, grid:{display:false} },
             y: { min:0, max:100, ticks:{ font:{size:10} }, grid:{ color:'rgba(0,0,0,0.05)' } }
         }
     }
