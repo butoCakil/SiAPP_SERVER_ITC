@@ -18,7 +18,11 @@ if (!isset($konek) || !$konek instanceof mysqli) {
     exit;
 }
 
-$json = file_get_contents("php://input");
+if (isset($_FILES['file'])) {
+    $json = file_get_contents($_FILES['file']['tmp_name']);
+} else {
+    $json = file_get_contents("php://input");
+}
 $data = json_decode($json, true);
 
 // ✅ safety check JSON
