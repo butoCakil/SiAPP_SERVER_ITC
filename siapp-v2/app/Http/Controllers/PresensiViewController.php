@@ -709,12 +709,12 @@ class PresensiViewController extends Controller
         }
 
         $siswaList          = collect(array_values($siswaMap));
-        $totalDhuha         = $siswaList->filter(fn($s) => $s['dhuha'])->count();
-        $totalDzuhur        = $siswaList->filter(fn($s) => $s['dzuhur'])->count();
-        $totalAshar         = $siswaList->filter(fn($s) => $s['ashar'])->count();
+        $totalDhuha         = $siswaList->filter(fn($s) => $s['dhuha'] && !$s['dhuha_izin'])->count();
+        $totalDzuhur        = $siswaList->filter(fn($s) => $s['dzuhur'] && !$s['dzuhur_izin'])->count();
+        $totalAshar         = $siswaList->filter(fn($s) => $s['ashar'] && !$s['ashar_izin'])->count();
         $totalIzin          = $siswaList->filter(fn($s) => $s['dzuhur_izin'] || $s['ashar_izin'] || $s['dhuha_izin'])->count();
-        $totalKeduanya      = $siswaList->filter(fn($s) => $s['dzuhur'] && $s['ashar'])->count();
-        $totalTidakKeduanya = $siswaList->filter(fn($s) => !$s['dzuhur'] || !$s['ashar'])->count();
+        $totalKeduanya      = $siswaList->filter(fn($s) => ($s['dzuhur'] && !$s['dzuhur_izin']) && ($s['ashar'] && !$s['ashar_izin']))->count();
+        $totalTidakKeduanya = $siswaList->filter(fn($s) => !($s['dzuhur'] && !$s['dzuhur_izin']) || !($s['ashar'] && !$s['ashar_izin']))->count();
         $kelasList          = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
 
         return view('presensi.event', compact(

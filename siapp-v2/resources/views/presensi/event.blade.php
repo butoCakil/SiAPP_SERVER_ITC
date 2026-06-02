@@ -195,9 +195,9 @@
                 <tbody>
                     @forelse($siswaList as $i => $s)
                     @php
-                        $hasDhuha   = !is_null($s['dhuha']);
-                        $hasDzuhur  = !is_null($s['dzuhur']);
-                        $hasAshar   = !is_null($s['ashar']);
+                        $hasDhuha   = !is_null($s['dhuha']) && !$s['dhuha_izin'];
+                        $hasDzuhur  = !is_null($s['dzuhur']) && !$s['dzuhur_izin'];
+                        $hasAshar   = !is_null($s['ashar']) && !$s['ashar_izin'];
                         $hasKeduanya = $hasDzuhur && $hasAshar;
                         $hasIzin    = $s['dzuhur_izin'] || $s['ashar_izin'] || $s['dhuha_izin'];
                         $belum      = !$hasKeduanya;
