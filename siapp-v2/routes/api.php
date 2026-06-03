@@ -34,8 +34,14 @@ Route::middleware('sim.token')->prefix('sim')->group(function () {
 });
 
 // DB API (device sync)
-Route::middleware(['db.token'])->prefix('db')->group(function () {
+Route::prefix('db')->group(function () {
     Route::get('/fake',     [\App\Http\Controllers\DbController::class, 'fake']);
     Route::get('/fake-mid', [\App\Http\Controllers\DbController::class, 'fakeMid']);
+});
+Route::middleware(['db.token'])->prefix('db')->group(function () {
     Route::get('/query',    [\App\Http\Controllers\DbController::class, 'query']);
+});
+
+Route::get('/test-open', function () {
+    return response()->json(['ok' => true]);
 });
