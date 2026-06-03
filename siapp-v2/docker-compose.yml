@@ -1,0 +1,65 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: siapp_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    env_file:
+      - .env.docker
+    depends_on:
+      db:
+        condition: service_healthy
+      mqtt:
+        condition: service_started
+    volumes:
+      - siapp_storage:/var/www/siapp/storage
+    networks:
+      - siapp_net
+
+  db:
+    image: mariadb:10.4
+    container_name: siapp_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-siapprootpass}
+      MYSQL_DATABASE: ${DB_DATABASE:-siap}
+      MYSQL_USER: ${DB_USERNAME:-siap}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-skanebaSMKBOS$}
+    volumes:
+      - siapp_db:/var/lib/mysql
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - siapp_net
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: siapp_mqtt
+    restart: unless-stopped
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+    volumes:
+      - ./docker/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./docker/mqtt/passwd:/mosquitto/config/passwd:ro
+      - siapp_mqtt_data:/mosquitto/data
+      - siapp_mqtt_log:/mosquitto/log
+    networks:
+      - siapp_net
+
+volumes:
+  siapp_db:
+  siapp_storage:
+  siapp_mqtt_data:
+  siapp_mqtt_log:
+
+networks:
+  siapp_net:
+    driver: bridge

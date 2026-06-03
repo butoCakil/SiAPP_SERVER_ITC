@@ -1,0 +1,14 @@
+.env
+.env.*
+vendor/
+node_modules/
+.git/
+docker/mqtt/
+docker/db/
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+*.log
+beranda.off/
+legacy.off/
