@@ -1,4 +1,0 @@
-<FilesMatch "tag_.*\.log">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
