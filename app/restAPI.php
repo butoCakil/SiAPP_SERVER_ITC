@@ -52,6 +52,7 @@ if (!empty($token)) {
     // Route the request to the appropriate endpoint
     if ($token && $key) {
         if ($akses == "list") {
+            $tables = array();
             if ($fulltabel == "bosmintasemuatabel") {
                 // Query untuk mendapatkan daftar tabel
                 $query = "SHOW TABLES";
@@ -109,18 +110,18 @@ if (!empty($token)) {
                         $allowed = true;
                         break;
                     case 'datasiswa':
-                        if($akses == "lite")
+                        if ($akses == "lite")
                             $query = "SELECT nokartu, nis FROM datasiswa";
-                        else if($akses == "mid")
+                        else if ($akses == "mid")
                             $query = "SELECT nokartu, nis, nama, kelas FROM datasiswa";
                         else
                             $query = "SELECT nis, nama, kelas, t_waktu_telat, poin, tingkat, jur, email FROM $db_tbl";
-                        
+
                         $query = fullakses($akses, $redemcode, $db_tbl, $query);
                         $allowed = true;
                         break;
                     case 'daftarijin':
-                        if($akses == 'hariini'){
+                        if ($akses == 'hariini') {
                             $query = "SELECT * FROM $db_tbl WHERE tanggalijin LIKE '%$tanggal%' ORDER BY timestamp DESC";
                         } else {
                             $query = "SELECT * FROM $db_tbl ORDER BY timestamp DESC";
@@ -129,8 +130,8 @@ if (!empty($token)) {
                         $allowed = true;
                         break;
                     case 'datapresensi':
-                        if($akses == 'hariini'){
-                           $query = "SELECT nama, nomorinduk, info, waktumasuk, ketmasuk, a_time, waktupulang, ketpulang, b_time, updated_at, infodevice, infodevice2 FROM $db_tbl WHERE tanggal LIKE '%$tanggal%' ORDER BY updated_at DESC";
+                        if ($akses == 'hariini') {
+                            $query = "SELECT nama, nomorinduk, info, waktumasuk, ketmasuk, a_time, waktupulang, ketpulang, b_time, updated_at, infodevice, infodevice2 FROM $db_tbl WHERE tanggal LIKE '%$tanggal%' ORDER BY updated_at DESC";
                         } else {
                             $query = "SELECT nama, nomorinduk, info, waktumasuk, ketmasuk, a_time, waktupulang, ketpulang, b_time, updated_at, infodevice, infodevice2 FROM $db_tbl";
                         }
@@ -143,7 +144,7 @@ if (!empty($token)) {
                         $allowed = true;
                         break;
                     case 'presensiEvent':
-                        if($akses == 'hariini'){
+                        if ($akses == 'hariini') {
                             $query = "SELECT `nis`, `ruang`, `mulai`, `selesai`, `jam`, `tanggal`, `timestamp`, `keterangan` FROM $db_tbl WHERE tanggal LIKE '%$tanggal%' ORDER BY timestamp DESC";
                         } else {
                             $query = "SELECT `nis`, `ruang`, `mulai`, `selesai`, `jam`, `tanggal`, `timestamp`, `keterangan` FROM $db_tbl ORDER BY timestamp DESC";
@@ -196,7 +197,7 @@ if (!empty($token)) {
                         $query = fullakses($akses, $redemcode, $db_tbl, $query);
                         $allowed = true;
                         break;
-                        // Add more endpoints as needed
+                    // Add more endpoints as needed
                     default:
                         http_response_code(404);
                         $message = "Akses ke Tabel `$db_tbl` tidak di-ijinkan";
@@ -220,8 +221,8 @@ if (!empty($token)) {
                             $data[] = $row;
                         }
 
-                        if($akses == "lite" || $akses == "mid"){
-                           // Buat metadata
+                        if ($akses == "lite" || $akses == "mid") {
+                            // Buat metadata
                             $metadata = array(
                                 "jumlah_data" => count($data),
                                 "timestamp"   => date("c"), // ISO 8601 format, contoh: 2025-08-28T14:30:00+07:00
@@ -232,9 +233,9 @@ if (!empty($token)) {
                             $response = array(
                                 "metadata" => $metadata,
                                 "data"     => $data
-                            ); 
+                            );
 
-                             // Encode jadi JSON
+                            // Encode jadi JSON
                             $json_data = json_encode($response, JSON_UNESCAPED_UNICODE);
                         } else {
                             $json_data = json_encode($data);
