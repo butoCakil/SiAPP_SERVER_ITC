@@ -14,14 +14,17 @@ RUN a2enmod rewrite
 WORKDIR /var/www/siapp
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+RUN rm -f bootstrap/cache/services.php bootstrap/cache/packages.php bootstrap/cache/config.php && APP_KEY=base64:dummy= php artisan package:discover --ansi || true
 
 RUN chown -R www-data:www-data /var/www/siapp \
     && chmod -R 755 /var/www/siapp/storage \
     && chmod -R 755 /var/www/siapp/bootstrap/cache
 
+COPY docker-config/app/entrypoint.sh /entrypoint.sh
 COPY docker-config/app/apache.conf /etc/apache2/sites-available/000-default.conf
 COPY docker-config/app/supervisord.conf /etc/supervisor/conf.d/siapp.conf
 
 EXPOSE 80
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
