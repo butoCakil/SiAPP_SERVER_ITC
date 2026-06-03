@@ -260,6 +260,17 @@ Route::middleware(['local.only'])->prefix('api/upload')->group(function () {
     Route::post('/file',       [\App\Http\Controllers\UploadController::class, 'file']);
 });
 
+/*
+|--------------------------------------------------------------------------
+| DB API (dari legacy app/ forwarder, diakses device untuk sync DB)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['db.token'])->prefix('api/db')->group(function () {
+    Route::get('/fake',     [\App\Http\Controllers\DbController::class, 'fake']);
+    Route::get('/fake-mid', [\App\Http\Controllers\DbController::class, 'fakeMid']);
+    Route::get('/query',    [\App\Http\Controllers\DbController::class, 'query']);
+});
+
 // Akun Management
 Route::get('/akun', [AkunController::class, 'index'])
     ->middleware('auth.admin')->name('akun');

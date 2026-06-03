@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'log.req'    => \App\Http\Middleware\LogRequest::class,
             'auth.admin' => \App\Http\Middleware\CheckAuth::class,
             'local.only' => \App\Http\Middleware\LocalOnlyMiddleware::class,
+            'db.token'   => \App\Http\Middleware\CheckDbToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
