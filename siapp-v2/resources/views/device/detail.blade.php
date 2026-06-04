@@ -403,6 +403,43 @@
     </div>
 </div>
 
+
+{{-- ── OTA Firmware ── --}}
+<div class="card mt-3">
+    <div class="card-header py-2" style="background:#fff3cd;">
+        <strong><i class="fas fa-microchip mr-1"></i>OTA Firmware Update</strong>
+        <span class="badge badge-secondary ml-2" style="font-size:11px;">
+            Versi saat ini: <strong>{{ $device->fw_version ?? '-' }}</strong>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="ctrl-section">
+            <h6>Upload File Firmware (.bin)</h6>
+            <div class="input-group mb-2">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ota-file" accept=".bin">
+                    <label class="custom-file-label" for="ota-file">Pilih file .bin...</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-warning" id="ota-upload-btn" onclick="otaUpload()">
+                        <i class="fas fa-upload mr-1"></i>Upload
+                    </button>
+                </div>
+            </div>
+            <small class="text-muted">Maksimal 2MB. File akan disimpan di server.</small>
+        </div>
+        <div class="ctrl-section" id="ota-send-section" style="display:none;">
+            <h6>Kirim OTA ke Device</h6>
+            <div class="alert alert-info py-2 mb-2" id="ota-url-info" style="font-size:12px;word-break:break-all;"></div>
+            <button class="btn btn-danger" id="ota-send-btn" onclick="otaSend()">
+                <i class="fas fa-bolt mr-1"></i>Kirim OTA ke Device
+            </button>
+            <small class="d-block mt-1 text-muted">Device akan download dan flash firmware secara otomatis.</small>
+        </div>
+        <div id="ota-status" class="mt-2"></div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -633,6 +670,71 @@ async function sdUploadFile(path, url) {
     });
     const json = await res.json();
     document.getElementById('sd-status').textContent = json.message ?? 'Perintah terkirim';
+}
+
+let otaFilename = null;
+
+async function otaUpload() {
+    const fileInput = document.getElementById('ota-file');
+    if (!fileInput.files.length) {
+        alert('Pilih file .bin terlebih dahulu.');
+        return;
+    }
+    const file = fileInput.files[0];
+    if (!file.name.endsWith('.bin')) {
+        alert('File harus berekstensi .bin');
+        return;
+    }
+
+    document.getElementById('ota-upload-btn').disabled = true;
+    document.getElementById('ota-status').innerHTML = '<span class="text-muted"><i class="fas fa-spinner fa-spin mr-1"></i>Mengupload firmware...</span>';
+
+    const formData = new FormData();
+    formData.append('firmware', file);
+    formData.append('_token', '{{ csrf_token() }}');
+
+    const res = await fetch('{{ route("device.ota", $id) }}', {
+        method: 'POST',
+        body: formData
+    });
+    const json = await res.json();
+
+    document.getElementById('ota-upload-btn').disabled = false;
+
+    if (json.status === 'ok') {
+        otaFilename = json.filename;
+        document.getElementById('ota-url-info').textContent = 'URL: ' + json.url;
+        document.getElementById('ota-send-section').style.display = 'block';
+        document.getElementById('ota-status').innerHTML = '<span class="text-success"><i class="fas fa-check mr-1"></i>Upload berhasil: ' + json.filename + '</span>';
+    } else {
+        document.getElementById('ota-status').innerHTML = '<span class="text-danger">Upload gagal.</span>';
+    }
+}
+
+async function otaSend() {
+    if (!otaFilename) return;
+    if (!confirm('Kirim OTA ke device {{ $id }}? Device akan restart dan flash firmware baru.')) return;
+
+    document.getElementById('ota-send-btn').disabled = true;
+    document.getElementById('ota-status').innerHTML = '<span class="text-muted"><i class="fas fa-spinner fa-spin mr-1"></i>Mengirim perintah OTA...</span>';
+
+    const res = await fetch('{{ route("device.ota.send", $id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ filename: otaFilename })
+    });
+    const json = await res.json();
+
+    document.getElementById('ota-send-btn').disabled = false;
+
+    if (json.status === 'ok') {
+        document.getElementById('ota-status').innerHTML = '<span class="text-success"><i class="fas fa-bolt mr-1"></i>Perintah OTA terkirim. Tunggu device restart...</span>';
+    } else {
+        document.getElementById('ota-status').innerHTML = '<span class="text-danger">Gagal: ' + (json.message ?? 'error') + '</span>';
+    }
 }
 </script>
 @endpush

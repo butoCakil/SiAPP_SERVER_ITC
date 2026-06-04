@@ -310,6 +310,12 @@ Route::post('/device/{id}/listdir', [DeviceViewController::class, 'listDir'])
     ->middleware('auth.admin')->name('device.listdir');
 Route::post('/device/{id}/uploadfile', [DeviceViewController::class, 'uploadFileSd'])
     ->middleware('auth.admin')->name('device.uploadfile');
+Route::post('/device/{id}/ota', [DeviceViewController::class, 'uploadOta'])
+    ->middleware('auth.admin')->name('device.ota');
+Route::post('/device/{id}/ota-send', [DeviceViewController::class, 'kirimOta'])
+    ->middleware('auth.admin')->name('device.ota.send');
+Route::get('/firmware/{filename}', [DeviceViewController::class, 'downloadFirmware'])
+    ->middleware('auth.admin')->name('firmware.download');
 Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
     ->middleware('auth.admin')->name('device.dirlist');
 

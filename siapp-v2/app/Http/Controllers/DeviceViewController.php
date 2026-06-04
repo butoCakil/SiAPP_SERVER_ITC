@@ -276,6 +276,57 @@ class DeviceViewController extends Controller
         return response()->json(['status' => 'ok', 'message' => 'Perintah uploadFile terkirim']);
     }
 
+
+    public function uploadOta(Request $request, string $id)
+    {
+        $request->validate([
+            'firmware' => 'required|file|max:2048',
+        ]);
+
+        $file     = $request->file('firmware');
+        $filename = $id . '_' . now()->format('Ymd_His') . '.bin';
+        $file->storeAs('firmware', $filename);
+
+        return response()->json([
+            'status'   => 'ok',
+            'filename' => $filename,
+            'url'      => route('firmware.download', $filename),
+        ]);
+    }
+
+    public function kirimOta(Request $request, string $id)
+    {
+        $filename = $request->input('filename');
+        if (!$filename) {
+            return response()->json(['status' => 'error', 'message' => 'filename wajib diisi']);
+        }
+
+        $url     = route('firmware.download', $filename);
+        $service = new \App\Services\DeviceService();
+        $service->kirimCommand($id, ['ota' => $url]);
+
+        DB::table('devices')->where('device_id', $id)->update([
+            'last_command' => json_encode([
+                'status'    => 'ota_sent',
+                'detail'    => ['url' => $url, 'filename' => $filename],
+                'device_id' => $id,
+                'timestamp' => now()->format('Y-m-d H:i:s'),
+            ], JSON_UNESCAPED_UNICODE),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['status' => 'ok', 'message' => 'Perintah OTA terkirim', 'url' => $url]);
+    }
+
+    public function downloadFirmware(string $filename)
+    {
+        $path = storage_path('app/firmware/' . $filename);
+        if (!file_exists($path)) abort(404);
+        return response()->download($path, $filename, [
+            'Content-Type' => 'application/octet-stream',
+        ]);
+    }
+
     public function updateLabel(Request $request, string $id)
     {
         $label = $request->input('label', '');
