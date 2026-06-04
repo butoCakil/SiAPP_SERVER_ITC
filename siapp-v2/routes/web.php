@@ -316,6 +316,12 @@ Route::post('/device/{id}/ota-send', [DeviceViewController::class, 'kirimOta'])
     ->middleware('auth.admin')->name('device.ota.send');
 Route::get('/firmware/{filename}', [DeviceViewController::class, 'downloadFirmware'])
     ->middleware('auth.admin')->name('firmware.download');
+Route::post('/device-ota/upload', [DeviceViewController::class, 'uploadOtaBulk'])
+    ->middleware('auth.admin')->name('device.ota.bulk.upload');
+Route::get('/device-ota', [DeviceViewController::class, 'otaBulkIndex'])
+    ->middleware('auth.admin')->name('device.ota.bulk');
+Route::post('/device-ota/send', [DeviceViewController::class, 'otaBulkSend'])
+    ->middleware('auth.admin')->name('device.ota.bulk.send');
 Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
     ->middleware('auth.admin')->name('device.dirlist');
 

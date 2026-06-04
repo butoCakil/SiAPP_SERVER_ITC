@@ -327,6 +327,91 @@ class DeviceViewController extends Controller
         ]);
     }
 
+
+
+    public function uploadOtaBulk(Request $request)
+    {
+        $request->validate([
+            'firmware' => 'required|file|max:2048',
+        ]);
+
+        $file     = $request->file('firmware');
+        $filename = now()->format('Ymd_His') . '_' . $file->getClientOriginalName();
+        $file->storeAs('firmware', $filename);
+
+        return response()->json([
+            'status'   => 'ok',
+            'filename' => $filename,
+            'url'      => route('firmware.download', $filename),
+            'size'     => round($file->getSize() / 1024, 1) . ' KB',
+        ]);
+    }
+
+    public function otaBulkIndex()
+    {
+        $devices = DB::table('devices')
+            ->where('hidden', 0)
+            ->orderByRaw('online DESC, device_id ASC')
+            ->get(['device_id', 'online', 'fw_version']);
+
+        $firmwareDir = storage_path('app/firmware/');
+        $firmwareList = [];
+        if (is_dir($firmwareDir)) {
+            foreach (glob($firmwareDir . '*.bin') as $file) {
+                $name = basename($file);
+                $firmwareList[] = [
+                    'filename' => $name,
+                    'url'      => route('firmware.download', $name),
+                    'size'     => round(filesize($file) / 1024, 1) . ' KB',
+                    'time'     => date('Y-m-d H:i', filemtime($file)),
+                ];
+            }
+            usort($firmwareList, fn($a, $b) => $b['time'] <=> $a['time']);
+        }
+
+        return view('device.ota_bulk', compact('devices', 'firmwareList'));
+    }
+
+    public function otaBulkSend(Request $request)
+    {
+        $filename  = $request->input('filename');
+        $deviceIds = $request->input('device_ids', []);
+
+        if (!$filename || empty($deviceIds)) {
+            return response()->json(['status' => 'error', 'message' => 'filename dan device_ids wajib diisi']);
+        }
+
+        $url     = route('firmware.download', $filename);
+        $service = new \App\Services\DeviceService();
+        $sent    = [];
+        $failed  = [];
+
+        foreach ($deviceIds as $deviceId) {
+            try {
+                $service->kirimCommand($deviceId, ['ota' => $url]);
+                DB::table('devices')->where('device_id', $deviceId)->update([
+                    'last_command' => json_encode([
+                        'status'    => 'ota_sent',
+                        'detail'    => ['url' => $url, 'filename' => $filename],
+                        'device_id' => $deviceId,
+                        'timestamp' => now()->format('Y-m-d H:i:s'),
+                    ], JSON_UNESCAPED_UNICODE),
+                    'updated_at' => now(),
+                ]);
+                $sent[] = $deviceId;
+            } catch (\Exception $e) {
+                $failed[] = $deviceId;
+            }
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'sent'   => $sent,
+            'failed' => $failed,
+            'url'    => $url,
+        ]);
+    }
+
     public function updateLabel(Request $request, string $id)
     {
         $label = $request->input('label', '');

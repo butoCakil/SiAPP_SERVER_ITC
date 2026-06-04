@@ -73,16 +73,31 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('device') }}" class="nav-link {{ request()->routeIs('device*') ? 'active' : '' }}">
+                        <li class="nav-item has-treeview {{ request()->routeIs('device*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ request()->routeIs('device*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-mobile-alt"></i>
                                 <p>Device
                                     <span class="badge badge-pill right" id="badge-offline"
                                         style="background:#f44336; color:#fff; min-width:20px; display:none;"></span>
                                     <span class="badge badge-pill right mr-1" id="badge-online"
                                         style="background:#00c853; color:#fff; min-width:20px; display:none;"></span>
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('device') }}" class="nav-link {{ request()->routeIs('device') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Daftar Device</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('device.ota.bulk') }}" class="nav-link {{ request()->routeIs('device.ota*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>OTA Firmware</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item has-treeview {{ request()->routeIs('presensi*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->routeIs('presensi*') ? 'active' : '' }}">
