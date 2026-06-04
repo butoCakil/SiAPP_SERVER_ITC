@@ -315,7 +315,7 @@ Route::post('/device/{id}/ota', [DeviceViewController::class, 'uploadOta'])
 Route::post('/device/{id}/ota-send', [DeviceViewController::class, 'kirimOta'])
     ->middleware('auth.admin')->name('device.ota.send');
 Route::get('/firmware/{filename}', [DeviceViewController::class, 'downloadFirmware'])
-    ->middleware('auth.admin')->name('firmware.download');
+    ->name('firmware.download');
 Route::post('/device-ota/upload', [DeviceViewController::class, 'uploadOtaBulk'])
     ->middleware('auth.admin')->name('device.ota.bulk.upload');
 Route::get('/device-ota', [DeviceViewController::class, 'otaBulkIndex'])

@@ -320,7 +320,7 @@ class DeviceViewController extends Controller
 
     public function downloadFirmware(string $filename)
     {
-        $path = storage_path('app/firmware/' . $filename);
+        $path = storage_path('app/private/firmware/' . $filename);
         if (!file_exists($path)) abort(404);
         return response()->download($path, $filename, [
             'Content-Type' => 'application/octet-stream',
@@ -354,7 +354,7 @@ class DeviceViewController extends Controller
             ->orderByRaw('online DESC, device_id ASC')
             ->get(['device_id', 'online', 'fw_version']);
 
-        $firmwareDir = storage_path('app/firmware/');
+        $firmwareDir = storage_path('app/private/firmware/');
         $firmwareList = [];
         if (is_dir($firmwareDir)) {
             foreach (glob($firmwareDir . '*.bin') as $file) {

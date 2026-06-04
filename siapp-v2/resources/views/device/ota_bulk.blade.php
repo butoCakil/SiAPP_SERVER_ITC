@@ -134,6 +134,11 @@
 
 @push('scripts')
 <script>
+document.getElementById('ota-file').addEventListener('change', function() {
+    const label = this.nextElementSibling;
+    label.textContent = this.files.length ? this.files[0].name : 'Pilih file .bin...';
+});
+
 let selectedFilename = null;
 let selectedUrl      = null;
 
