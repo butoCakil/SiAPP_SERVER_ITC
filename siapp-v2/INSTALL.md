@@ -1,6 +1,6 @@
 # SiAPP — Panduan Instalasi
 
-**SiAPP** (Sistem Informasi Absensi Pintar dan Pembiasaan) adalah sistem presensi siswa berbasis RFID-IoT yang dibangun di atas Laravel 11. Dokumen ini menjelaskan cara menjalankan SiAPP di server atau PC baru menggunakan Docker.
+**SiAPP** (Sistem Informasi Absensi Pintar dan Pembiasaan) adalah sistem presensi siswa berbasis RFID-IoT yang dibangun di atas Laravel 12. Dokumen ini menjelaskan cara menjalankan SiAPP di server atau PC baru menggunakan Docker.
 
 ---
 
@@ -41,67 +41,52 @@ git clone https://github.com/butoCakil/SiAPP_SERVER_ITC.git
 cd SiAPP_SERVER_ITC/siapp-v2
 ```
 
-### 2. Buat File Konfigurasi
+### 2. Sesuaikan Konfigurasi (Opsional)
 
-Salin file contoh konfigurasi:
+Secara default SiAPP berjalan di port `8080` (web) dan `1883` (MQTT). Jika port tersebut sudah dipakai, salin file konfigurasi dan sesuaikan:
 
 ```bash
-cp .env.example.docker .env.docker
+cp .env.example.docker .env
 ```
 
-Buka `.env.docker` dengan teks editor, lalu sesuaikan nilai berikut:
+Buka `.env` dan ubah nilai yang diperlukan:
 
 ```env
-# Nama aplikasi
-APP_NAME=SiAPP
-
-# Kunci enkripsi — WAJIB diisi, generate dengan perintah di bawah
-APP_KEY=
-
 # Port akses aplikasi di browser (default: 8080)
 APP_PORT=8080
-
-# Kata sandi database
-DB_PASSWORD=ganti_dengan_password_anda
-DB_ROOT_PASSWORD=ganti_dengan_root_password_anda
 
 # Kredensial MQTT broker
 MQTT_USERNAME=ben
 MQTT_PASSWORD=1234
+
+# Kata sandi database
+DB_PASSWORD=ganti_dengan_password_anda
+DB_ROOT_PASSWORD=ganti_dengan_root_password_anda
 ```
 
-Generate `APP_KEY`:
-```bash
-# Linux
-cat /dev/urandom | base64 | head -c 32 | xargs -I{} echo "base64:{}"
+> Jika tidak ada konflik port, langkah ini bisa dilewati — `setup.sh` akan membuat file `.env` otomatis dari template.
 
-# Atau jika sudah ada PHP:
-php -r "echo 'base64:' . base64_encode(random_bytes(32)) . PHP_EOL;"
-```
-
-### 3. Buat File Password MQTT
+### 3. Jalankan Setup Otomatis
 
 ```bash
-docker run --rm -v $(pwd)/docker/mqtt:/output \
-  eclipse-mosquitto:2 \
-  mosquitto_passwd -c -b /output/passwd ben 1234
+./setup.sh
 ```
 
-> Ganti `ben` dan `1234` sesuai dengan nilai `MQTT_USERNAME` dan `MQTT_PASSWORD` di `.env.docker`.
+Script ini akan otomatis:
+- Membuat file `.env` dari template (jika belum ada)
+- Generate `APP_KEY` secara acak
+- Membuat file password MQTT
+- Menjalankan semua container Docker
 
-### 4. Jalankan SiAPP
-
-```bash
-docker compose up -d
+Jika berhasil, output akhir akan menampilkan:
+```
+======================================
+  SiAPP siap diakses!
+  URL: http://localhost:8080
+======================================
 ```
 
-Perintah ini akan:
-- Mengunduh image Docker yang diperlukan (pertama kali butuh beberapa menit)
-- Membangun container aplikasi
-- Menjalankan migrasi database otomatis
-- Menjalankan semua service (web, database, MQTT broker)
-
-### 5. Verifikasi
+### 4. Verifikasi
 
 Cek status container:
 ```bash
@@ -138,7 +123,7 @@ Login menggunakan akun administrator default yang sudah dikonfigurasi saat insta
 
 | Port | Service | Keterangan |
 |---|---|---|
-| 8080 | Aplikasi Web | Dapat diubah via `APP_PORT` di `.env.docker` |
+| 8080 | Aplikasi Web | Dapat diubah via `APP_PORT` di `.env` |
 | 1883 | MQTT Broker | Digunakan device ESP32/ESP8266 |
 | 3306 | MariaDB | Hanya internal container, tidak terbuka ke luar |
 
@@ -177,31 +162,49 @@ Device RFID perlu dikonfigurasi agar terhubung ke server SiAPP:
 
 | Parameter | Nilai |
 |---|---|
-| MQTT Host | IP address server SiAPP |
+| MQTT Host | IP address server SiAPP di jaringan lokal |
 | MQTT Port | 1883 |
-| MQTT Username | Sesuai `MQTT_USERNAME` di `.env.docker` |
-| MQTT Password | Sesuai `MQTT_PASSWORD` di `.env.docker` |
-| Upload URL | `http://<IP_SERVER>:8080/api/upload/...` |
+| MQTT Username | Sesuai `MQTT_USERNAME` di `.env` |
+| MQTT Password | Sesuai `MQTT_PASSWORD` di `.env` |
+| Upload URL | `http://<IP_SERVER>:8080/data/uploadPresensi.php` |
 
 ---
 
 ## Troubleshooting
+
+### Port sudah dipakai
+Jika `setup.sh` menampilkan peringatan port, buka file `.env` dan ubah port yang konflik:
+
+```env
+# Jika port 8080 sudah dipakai
+APP_PORT=9080
+
+# Jika port 1883 sudah dipakai
+MQTT_PORT=1884
+```
+
+Kemudian jalankan ulang:
+```bash
+docker compose up -d
+```
 
 ### Container tidak mau start
 ```bash
 docker compose logs siapp_app
 ```
 
-### Port sudah dipakai
-Ubah `APP_PORT` di `.env.docker` ke port lain, misalnya `9080`.
-
-### Database error
+### Database error saat pertama kali
 ```bash
 docker compose down -v  # hapus data lama
 docker compose up -d    # mulai ulang
 ```
 
-> **Peringatan:** `down -v` akan menghapus semua data database.
+> **Peringatan:** `down -v` akan menghapus semua data database. Gunakan hanya saat setup awal.
+
+### Device tidak bisa konek MQTT
+- Pastikan IP server benar dan bisa dijangkau dari jaringan device
+- Pastikan port 1883 tidak diblokir firewall
+- Cek username/password MQTT sesuai dengan `.env`
 
 ---
 
@@ -209,12 +212,12 @@ docker compose up -d    # mulai ulang
 
 ```
 siapp-v2/
+├── setup.sh                    # Script setup otomatis (jalankan ini pertama kali)
 ├── Dockerfile                  # Resep build container aplikasi
 ├── docker-compose.yml          # Konfigurasi semua service
-├── .env.docker                 # Konfigurasi lokal (tidak masuk repo)
+├── .env                        # Konfigurasi lokal (tidak masuk repo)
 ├── .env.example.docker         # Template konfigurasi
 ├── docker/
-│   ├── app/                    # Config Apache & Supervisor
 │   ├── db/
 │   │   └── init.sql            # Skema database awal
 │   └── mqtt/
