@@ -113,6 +113,22 @@ class DeviceViewController extends Controller
         }
         rsort($logDates);
 
+        // Daftar firmware tersedia
+        $firmwareDir  = storage_path('app/private/firmware/');
+        $firmwareList = [];
+        if (is_dir($firmwareDir)) {
+            foreach (glob($firmwareDir . '*.bin') as $file) {
+                $name = basename($file);
+                $firmwareList[] = [
+                    'filename' => $name,
+                    'url'      => route('firmware.download', $name),
+                    'size'     => round(filesize($file) / 1024, 1) . ' KB',
+                    'time'     => date('Y-m-d H:i', filemtime($file)),
+                ];
+            }
+            usort($firmwareList, fn($a, $b) => $b['time'] <=> $a['time']);
+        }
+
         return view('device.detail', compact(
             'device',
             'reg',
@@ -121,6 +137,7 @@ class DeviceViewController extends Controller
             'setting',
             'command',
             'logDates',
+            'firmwareList',
             'id'
         ));
     }
@@ -280,12 +297,20 @@ class DeviceViewController extends Controller
     public function uploadOta(Request $request, string $id)
     {
         $request->validate([
-            'firmware' => 'required|file|max:2048',
+            'firmware' => 'required|file|max:4096',
         ]);
 
         $file     = $request->file('firmware');
         $filename = $id . '_' . now()->format('Ymd_His') . '.bin';
         $file->storeAs('firmware', $filename);
+
+        // Hapus firmware lama, keep 5 terbaru
+        $allFiles = glob(storage_path('app/private/firmware/*.bin'));
+        if ($allFiles && count($allFiles) > 5) {
+            usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
+            $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
+            foreach ($toDelete as $old) { @unlink($old); }
+        }
 
         return response()->json([
             'status'   => 'ok',
@@ -332,12 +357,20 @@ class DeviceViewController extends Controller
     public function uploadOtaBulk(Request $request)
     {
         $request->validate([
-            'firmware' => 'required|file|max:2048',
+            'firmware' => 'required|file|max:4096',
         ]);
 
         $file     = $request->file('firmware');
         $filename = now()->format('Ymd_His') . '_' . $file->getClientOriginalName();
         $file->storeAs('firmware', $filename);
+
+        // Hapus firmware lama, keep 5 terbaru
+        $allFiles = glob(storage_path('app/private/firmware/*.bin'));
+        if ($allFiles && count($allFiles) > 5) {
+            usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
+            $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
+            foreach ($toDelete as $old) { @unlink($old); }
+        }
 
         return response()->json([
             'status'   => 'ok',

@@ -139,9 +139,32 @@
                 <div class="card-header py-2"><strong>💻 Command Terakhir</strong></div>
                 <div class="card-body">
                     @if(!empty($command))
-                        <div class="info-row"><span class="info-label">Status</span><span>{{ $command['status'] ?? '-' }}</span></div>
-                        <div class="info-row"><span class="info-label">Detail</span><span>{{ $command['detail'] ?? '-' }}</span></div>
-                        <div class="info-row"><span class="info-label">Timestamp</span><span>{{ $command['timestamp'] ?? '-' }}</span></div>
+                    @php
+                        $otaStatus = $command['status'] ?? '-';
+                        $otaBadge = match($otaStatus) {
+                            'ota_ok'     => 'badge-success',
+                            'ota_failed' => 'badge-danger',
+                            'ota_start'  => 'badge-warning',
+                            'ota_sent'   => 'badge-info',
+                            default      => 'badge-secondary',
+                        };
+                    @endphp
+                        <div class="info-row">
+                            <span class="info-label">Status</span>
+                            <span class="badge {{ $otaBadge }}">{{ $otaStatus }}</span>
+                        </div>
+                        @if(!empty($command['detail']))
+                        <div class="info-row">
+                            <span class="info-label">Detail</span>
+                            <span style="font-size:12px;word-break:break-all;">
+                                {{ is_array($command['detail']) ? json_encode($command['detail']) : $command['detail'] }}
+                            </span>
+                        </div>
+                        @endif
+                        @if(!empty($command['version']))
+                        <div class="info-row"><span class="info-label">Versi FW</span><span>{{ $command['version'] }}</span></div>
+                        @endif
+                        <div class="info-row"><span class="info-label">Waktu</span><span>{{ $command['timestamp'] ?? '-' }}</span></div>
                     @else
                         <p class="text-muted">Belum ada command terkirim.</p>
                     @endif
@@ -426,8 +449,23 @@
                     </button>
                 </div>
             </div>
-            <small class="text-muted">Maksimal 2MB. File akan disimpan di server.</small>
+            <small class="text-muted">Maksimal 4MB. File akan disimpan di server.</small>
         </div>
+        @if(!empty($firmwareList))
+        <div class="ctrl-section">
+            <h6>Atau Pilih Firmware yang Sudah Ada</h6>
+            <div class="input-group">
+                <select class="form-control form-control-sm" id="ota-existing" onchange="pilihFirmwareAda(this)">
+                    <option value="">— Pilih firmware —</option>
+                    @foreach($firmwareList as $fw)
+                    <option value="{{ $fw['filename'] }}" data-url="{{ $fw['url'] }}">
+                        {{ $fw['filename'] }} ({{ $fw['size'] }}, {{ $fw['time'] }})
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        @endif
         <div class="ctrl-section" id="ota-send-section" style="display:none;">
             <h6>Kirim OTA ke Device</h6>
             <div class="alert alert-info py-2 mb-2" id="ota-url-info" style="font-size:12px;word-break:break-all;"></div>
@@ -673,6 +711,25 @@ async function sdUploadFile(path, url) {
 }
 
 let otaFilename = null;
+
+// Update label custom file input
+document.getElementById('ota-file').addEventListener('change', function() {
+    const label = this.nextElementSibling;
+    label.textContent = this.files.length ? this.files[0].name : 'Pilih file .bin...';
+    // Reset pilihan firmware existing
+    document.getElementById('ota-existing') && (document.getElementById('ota-existing').value = '');
+});
+
+function pilihFirmwareAda(select) {
+    const filename = select.value;
+    const url      = select.options[select.selectedIndex]?.dataset?.url;
+    if (!filename) return;
+    otaFilename = filename;
+    document.getElementById('ota-url-info').textContent = 'URL: ' + url;
+    document.getElementById('ota-send-section').style.display = 'block';
+    document.getElementById('ota-status').innerHTML =
+        '<span class="text-info"><i class="fas fa-check mr-1"></i>Firmware dipilih: ' + filename + '</span>';
+}
 
 async function otaUpload() {
     const fileInput = document.getElementById('ota-file');
