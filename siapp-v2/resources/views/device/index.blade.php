@@ -582,12 +582,75 @@ async function sendCmd(deviceId, cmdKey, value=1) {
 
 // ── Wrapper dengan feedback tombol ──
 async function handleCmd(btn, deviceId, cmdKey, value=1) {
-    const orig = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '⏳';
-    const ok = await sendCmd(deviceId, cmdKey, value);
-    btn.innerHTML = ok ? '✅' : '❌';
-    setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 2500);
+    // Ambil snapshot timestamp sebelum kirim
+    let pollData = {};
+    try {
+        const res  = await fetch('/api-internal/device-poll-status');
+        const data = await res.json();
+        data.forEach(d => { pollData[d.device_id] = d; });
+    } catch(e) {
+        // Fallback ke behavior lama jika poll gagal
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '⏳';
+        const ok = await sendCmd(deviceId, cmdKey, value);
+        btn.innerHTML = ok ? '✅' : '❌';
+        setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 2500);
+        return;
+    }
+
+    const fbKey  = CMD_FEEDBACK_KEY[cmdKey] ?? 'cmd_ts';
+    const poll   = pollData[deviceId] ?? {};
+    const infoEl = document.querySelector(`[data-device-id="${deviceId}"] .dc-info`);
+
+    const deviceStates = [{
+        device_id : deviceId,
+        online    : 1,
+        skip      : false,
+        state     : 'sending',
+        ts_before : poll[fbKey] ?? null,
+        fb_key    : fbKey,
+        info      : infoEl ? infoEl.textContent.trim() : '',
+        deadline  : Date.now() + CMD_TIMEOUT_MS,
+    }];
+
+    openCmdModal(cmdKey, deviceStates);
+
+    await sendCmd(deviceId, cmdKey, value);
+
+    deviceStates[0].state = 'pending';
+    updateCmdRow(deviceId, 'pending', '⏳ Menunggu feedback...');
+    updateCmdSummary(deviceStates);
+
+    // Polling feedback
+    cmdModalTimer = setInterval(async () => {
+        if (!cmdModalActive) { clearInterval(cmdModalTimer); return; }
+
+        let pollNow = {};
+        try {
+            const res  = await fetch('/api-internal/device-poll-status');
+            const data = await res.json();
+            data.forEach(d => { pollNow[d.device_id] = d; });
+        } catch(e) { return; }
+
+        const now     = Date.now();
+        const d       = deviceStates[0];
+        const current = pollNow[d.device_id];
+        if (!current) return;
+
+        const tsNow = current[d.fb_key] ?? null;
+        if (tsNow && tsNow !== d.ts_before) {
+            d.state = 'ok';
+            updateCmdRow(d.device_id, 'ok', '✅ Berhasil');
+            clearInterval(cmdModalTimer);
+        } else if (now > d.deadline) {
+            d.state = 'fail';
+            updateCmdRow(d.device_id, 'fail', '❌ Timeout');
+            clearInterval(cmdModalTimer);
+        }
+
+        updateCmdSummary(deviceStates);
+    }, CMD_POLL_MS);
 }
 
 // ── CMD Modal ──
@@ -598,6 +661,7 @@ const CMD_LABELS = {
     reboot     : '🔁 Reboot',
     koneksi    : '🔌 Koneksi',
     ota        : '🛠️ OTA',
+    toggleSerial : '🔍 Toggle Serial',
 };
 const CMD_FEEDBACK_KEY = {
     setSetting : 'set_ts',
