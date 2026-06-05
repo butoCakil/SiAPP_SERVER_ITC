@@ -18,9 +18,10 @@
 .stat-sholat .s-icon { font-size: 1.6em; }
 .stat-sholat .s-val  { font-size: 1.5em; font-weight: 700; line-height: 1; }
 .stat-sholat .s-lbl  { font-size: 11px; opacity: 0.85; }
-.sc-dzuhur { background: linear-gradient(135deg,#ff8800,#cc5500); }
-.sc-ashar  { background: linear-gradient(135deg,#9c27b0,#6a0080); }
-.sc-izin   { background: linear-gradient(135deg,#e91e8c,#ad1457); }
+.sc-dhuha  { background: linear-gradient(135deg, #ff9800, #e65100); }
+.sc-dzuhur { background: linear-gradient(135deg, #ff8800, #cc5500); }
+.sc-ashar  { background: linear-gradient(135deg, #9c27b0, #6a0080); }
+.sc-izin   { background: linear-gradient(135deg, #e91e8c, #ad1457); }
 
 .status-card {
     border-radius: 10px;
@@ -124,9 +125,22 @@
 
 {{-- Row 2: Sholat Cards --}}
 <div class="row">
-    <div class="col-md-4 col-6 mb-3">
-        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
-            style="text-decoration:none;">
+    <div class="col-md-3 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}" style="text-decoration:none;">
+        <div class="stat-sholat sc-dhuha">
+            <div class="s-icon">🌅</div>
+            <div>
+                <div class="s-val">{{ $totalDhuha }}</div>
+                <div class="s-lbl">Sholat Dhuha</div>
+                <div style="font-size:10px; opacity:0.8; margin-top:2px;">
+                    <i class="fas fa-arrow-right mr-1"></i>Lihat Rekap
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}" style="text-decoration:none;">
         <div class="stat-sholat sc-dzuhur">
             <div class="s-icon">🕛</div>
             <div>
@@ -139,9 +153,8 @@
         </div>
         </a>
     </div>
-    <div class="col-md-4 col-6 mb-3">
-        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
-            style="text-decoration:none;">
+    <div class="col-md-3 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}" style="text-decoration:none;">
         <div class="stat-sholat sc-ashar">
             <div class="s-icon">🕓</div>
             <div>
@@ -154,9 +167,8 @@
         </div>
         </a>
     </div>
-    <div class="col-md-4 col-6 mb-3">
-        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}"
-            style="text-decoration:none;">
+    <div class="col-md-3 col-6 mb-3">
+        <a href="{{ route('presensi.event', ['tanggal'=>$tanggal]) }}" style="text-decoration:none;">
         <div class="stat-sholat sc-izin">
             <div class="s-icon">🌸</div>
             <div>
@@ -172,10 +184,10 @@
 </div>
 
 {{-- Row 3: Status + Jam + Recent --}}
-<div class="row">
+<div style="display:grid; grid-template-columns:1fr 2fr; gap:15px; margin-bottom:15px;">
 
     {{-- Status & Jam --}}
-    <div class="col-md-4">
+    <div style="display:flex; flex-direction:column; gap:15px;">
 
         @if($isToday)
         {{-- Jam --}}
@@ -218,7 +230,7 @@
         </div>
 
         {{-- Status Sholat --}}
-        <div class="card card-outline card-{{ $statusSholat['color'] === 'purple' ? 'secondary' : $statusSholat['color'] }} mb-3">
+        <div class="card card-outline card-{{ $statusSholat['color'] === 'purple' ? 'secondary' : $statusSholat['color'] }}" style="flex:1; margin-bottom:0;">
             <div class="card-header py-2">
                 <h3 class="card-title" style="font-size:12px;">
                     <i class="fas fa-mosque mr-1"></i>Presensi Sholat
@@ -249,8 +261,8 @@
 
     {{-- Recent Presensi --}}
     @if($isToday)
-    <div class="col-md-8">
-        <div class="card card-outline card-primary h-100">
+    <div>
+        <div class="card card-outline card-primary" style="height:100%;">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fas fa-list mr-2"></i>Aktivitas Terbaru
@@ -364,8 +376,6 @@
                     $hanyaD    = $r->dzuhur - $keduanya;
                     $hanyaA    = $r->ashar  - $keduanya;
                     $alpa      = max(0, $r->total - $r->dzuhur - $hanyaA - $r->izin);
-
-                    // Lebar bar (persen dari total)
                     $wKeduanya = $r->total > 0 ? round($keduanya / $r->total * 100, 1) : 0;
                     $wHanyaD   = $r->total > 0 ? round($hanyaD   / $r->total * 100, 1) : 0;
                     $wHanyaA   = $r->total > 0 ? round($hanyaA   / $r->total * 100, 1) : 0;
@@ -373,52 +383,26 @@
                     $wAlpa     = $r->total > 0 ? round($alpa     / $r->total * 100, 1) : 0;
                 @endphp
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-
-                    {{-- Label kelas --}}
                     <div style="width:80px; font-size:11px; font-weight:700; flex-shrink:0; text-align:right; color:#333;">
                         {{ $r->kelas }}
                     </div>
-
-                    {{-- Horizontal stacked bar --}}
                     <div style="flex:1; height:22px; border-radius:6px; overflow:hidden; background:#eee; display:flex; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
                         @if($wKeduanya > 0)
-                        <div style="width:{{ $wKeduanya }}%; background:linear-gradient(90deg,#00c853,#69f0ae);
-                            display:flex; align-items:center; justify-content:center;
-                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
-                            {{ $keduanya > 0 ? $keduanya : '' }}
-                        </div>
+                        <div style="width:{{ $wKeduanya }}%; background:linear-gradient(90deg,#00c853,#69f0ae); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">{{ $keduanya > 0 ? $keduanya : '' }}</div>
                         @endif
                         @if($wHanyaD > 0)
-                        <div style="width:{{ $wHanyaD }}%; background:linear-gradient(90deg,#00b0ff,#40c4ff);
-                            display:flex; align-items:center; justify-content:center;
-                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
-                            {{ $hanyaD > 0 ? $hanyaD : '' }}
-                        </div>
+                        <div style="width:{{ $wHanyaD }}%; background:linear-gradient(90deg,#00b0ff,#40c4ff); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">{{ $hanyaD > 0 ? $hanyaD : '' }}</div>
                         @endif
                         @if($wHanyaA > 0)
-                        <div style="width:{{ $wHanyaA }}%; background:linear-gradient(90deg,#9c27b0,#ce93d8);
-                            display:flex; align-items:center; justify-content:center;
-                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
-                            {{ $hanyaA > 0 ? $hanyaA : '' }}
-                        </div>
+                        <div style="width:{{ $wHanyaA }}%; background:linear-gradient(90deg,#9c27b0,#ce93d8); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">{{ $hanyaA > 0 ? $hanyaA : '' }}</div>
                         @endif
                         @if($wIzin > 0)
-                        <div style="width:{{ $wIzin }}%; background:linear-gradient(90deg,#e91e8c,#f48fb1);
-                            display:flex; align-items:center; justify-content:center;
-                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
-                            {{ $r->izin > 0 ? $r->izin : '' }}
-                        </div>
+                        <div style="width:{{ $wIzin }}%; background:linear-gradient(90deg,#e91e8c,#f48fb1); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">{{ $r->izin > 0 ? $r->izin : '' }}</div>
                         @endif
                         @if($wAlpa > 0)
-                        <div style="width:{{ $wAlpa }}%; background:linear-gradient(90deg,#f44336,#ef9a9a);
-                            display:flex; align-items:center; justify-content:center;
-                            font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">
-                            {{ $alpa > 0 ? $alpa : '' }}
-                        </div>
+                        <div style="width:{{ $wAlpa }}%; background:linear-gradient(90deg,#f44336,#ef9a9a); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; overflow:hidden; white-space:nowrap;">{{ $alpa > 0 ? $alpa : '' }}</div>
                         @endif
                     </div>
-
-                    {{-- Badge ringkasan --}}
                     <div style="display:flex; gap:3px; flex-shrink:0; font-size:10px;">
                         <span style="background:#00c853;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Keduanya">{{ $keduanya }}</span>
                         <span style="background:#00b0ff;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Dzuhur">{{ $r->dzuhur }}</span>
@@ -427,7 +411,6 @@
                         <span style="background:#f44336;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Alpa">{{ $alpa }}</span>
                         <span style="background:#1565c0;color:#fff;border-radius:4px;padding:1px 5px;min-width:22px;text-align:center;" title="Total">{{ $r->total }}</span>
                     </div>
-
                 </div>
                 @endforeach
             </div>
@@ -507,38 +490,10 @@ let myChart = new Chart(ctx, {
     data: {
         labels: labels,
         datasets: [
-            {
-                label: 'Dhuha',
-                data: dhuha,
-                backgroundColor: 'rgba(33,150,243,0.75)',
-                borderColor: '#2196f3',
-                borderWidth: 2,
-                borderRadius: 4,
-            },
-            {
-                label: 'Dzuhur',
-                data: dzuhur,
-                backgroundColor: 'rgba(255,136,0,0.75)',
-                borderColor: '#ff8800',
-                borderWidth: 2,
-                borderRadius: 4,
-            },
-            {
-                label: 'Ashar',
-                data: ashar,
-                backgroundColor: 'rgba(156,39,176,0.75)',
-                borderColor: '#9c27b0',
-                borderWidth: 2,
-                borderRadius: 4,
-            },
-            {
-                label: 'Izin Mens',
-                data: izin,
-                backgroundColor: 'rgba(233,30,140,0.6)',
-                borderColor: '#e91e8c',
-                borderWidth: 2,
-                borderRadius: 4,
-            }
+            { label: 'Dhuha',     data: dhuha,  backgroundColor: 'rgba(33,150,243,0.75)',  borderColor: '#2196f3', borderWidth: 2, borderRadius: 4 },
+            { label: 'Dzuhur',    data: dzuhur, backgroundColor: 'rgba(255,136,0,0.75)',   borderColor: '#ff8800', borderWidth: 2, borderRadius: 4 },
+            { label: 'Ashar',     data: ashar,  backgroundColor: 'rgba(156,39,176,0.75)',  borderColor: '#9c27b0', borderWidth: 2, borderRadius: 4 },
+            { label: 'Izin Mens', data: izin,   backgroundColor: 'rgba(233,30,140,0.6)',   borderColor: '#e91e8c', borderWidth: 2, borderRadius: 4 },
         ]
     },
     options: {
@@ -546,9 +501,7 @@ let myChart = new Chart(ctx, {
         plugins: {
             legend: { position: 'top' },
             datalabels: {
-                anchor: 'end',
-                align: 'end',
-                color: '#555',
+                anchor: 'end', align: 'end', color: '#555',
                 font: { size: 9, weight: 'bold' },
                 formatter: (value) => value > 0 ? value : '',
             },
@@ -560,14 +513,8 @@ let myChart = new Chart(ctx, {
             }
         },
         scales: {
-            y: {
-                beginAtZero: true,
-                grid: { color: 'rgba(0,0,0,0.05)' },
-                ticks: { stepSize: 50 }
-            },
-            x: {
-                grid: { display: false }
-            }
+            y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { stepSize: 50 } },
+            x: { grid: { display: false } }
         }
     }
 });

@@ -69,6 +69,7 @@ class DashboardController extends Controller
         }
 
         // ── Sholat hari ini ──
+        $totalDhuha  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DHUHA')->where('ruang', '!=', 'Izin Mens')->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
@@ -77,7 +78,7 @@ class DashboardController extends Controller
         $recentMasuk = DB::table('datapresensi')
             ->where('tanggal', $tanggal)
             ->orderBy('updated_at', 'desc')
-            ->limit(8)
+            ->limit(20)
             ->get()
             ->map(fn($p) => [
                 'nama'   => $p->nama,
@@ -94,7 +95,7 @@ class DashboardController extends Controller
             ->leftJoin('datasiswa as ds', 'ds.nis', '=', 'pe.nis')
             ->where('pe.tanggal', $tanggal)
             ->orderBy('pe.timestamp', 'desc')
-            ->limit(8)
+            ->limit(20)
             ->select(
                 'ds.nama',
                 'ds.kelas as info',
@@ -116,7 +117,7 @@ class DashboardController extends Controller
 
         $recentAll = $recentMasuk->concat($recentSholat)
             ->sortByDesc('time')
-            ->take(10)
+            ->take(15)
             ->values();
 
         // ── Chart data sholat 14 hari ──
@@ -164,6 +165,7 @@ class DashboardController extends Controller
             'setting',
             'statusMasuk',
             'statusSholat',
+            'totalDhuha',
             'totalDzuhur',
             'totalAshar',
             'totalIzin',
