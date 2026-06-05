@@ -9,26 +9,24 @@ class DeviceViewController extends Controller
 {
     public function index()
     {
-        [$devices, $regDevices, $onlineCount, $offlineCount] = $this->getData();
-        return view('device.index', compact('devices', 'regDevices', 'onlineCount', 'offlineCount'));
+        [$devices, $regDevices, $onlineCount, $offlineCount, $bufferDaily] = $this->getData();
+        return view('device.index', compact('devices', 'regDevices', 'onlineCount', 'offlineCount', 'bufferDaily'));
     }
 
     public function cards()
     {
-        [$devices, $regDevices] = $this->getData();
-        $onlineCount  = $devices->where('online', 1)->count();
-        $offlineCount = $devices->where('online', 0)->count();
+        [$devices, $regDevices, $onlineCount, $offlineCount, $bufferDaily] = $this->getData();
 
         if (request()->wantsJson() || request()->ajax()) {
             return response()->json([
-                'html'    => view('device._cards', compact('devices', 'regDevices'))->render(),
+                'html'    => view('device._cards', compact('devices', 'regDevices', 'bufferDaily'))->render(),
                 'online'  => $onlineCount,
                 'offline' => $offlineCount,
                 'total'   => $onlineCount + $offlineCount,
             ]);
         }
 
-        return view('device._cards', compact('devices', 'regDevices'));
+        return view('device._cards', compact('devices', 'regDevices', 'bufferDaily'));
     }
 
     public function destroy(Request $request, string $id)
@@ -261,7 +259,15 @@ class DeviceViewController extends Controller
         $regDevices   = DB::table('reg_device')->get()->keyBy('no_device');
         $onlineCount  = $devices->where('online', 1)->count();
         $offlineCount = $devices->where('online', 0)->count();
-        return [$devices, $regDevices, $onlineCount, $offlineCount];
+
+        // Buffer harian: SUM(buffer_uploaded) per device hari ini
+        $bufferDaily = DB::table('device_metrics')
+            ->whereDate('recorded_at', now()->toDateString())
+            ->selectRaw('device_id, SUM(buffer_uploaded) as total_uploaded')
+            ->groupBy('device_id')
+            ->pluck('total_uploaded', 'device_id');
+
+        return [$devices, $regDevices, $onlineCount, $offlineCount, $bufferDaily];
     }
 
     public function listDir(Request $request, string $id)
@@ -309,7 +315,9 @@ class DeviceViewController extends Controller
         if ($allFiles && count($allFiles) > 5) {
             usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
             $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
-            foreach ($toDelete as $old) { @unlink($old); }
+            foreach ($toDelete as $old) {
+                @unlink($old);
+            }
         }
 
         return response()->json([
@@ -369,7 +377,9 @@ class DeviceViewController extends Controller
         if ($allFiles && count($allFiles) > 5) {
             usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
             $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
-            foreach ($toDelete as $old) { @unlink($old); }
+            foreach ($toDelete as $old) {
+                @unlink($old);
+            }
         }
 
         return response()->json([

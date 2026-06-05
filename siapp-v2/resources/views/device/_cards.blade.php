@@ -24,6 +24,10 @@
 
     $latEmoji = $latency < 30 ? '🟢' : ($latency < 60 ? '🟢' : ($latency < 100 ? '🟡' : ($latency < 200 ? '🟠' : '🔴')));
 
+    $bufferNow   = isset($status['count']) ? (int)$status['count'] : null;
+    $bufferTotal = (int)($bufferDaily[$device->device_id] ?? 0) + ($bufferNow ?? 0);
+    // bufferTotal = sudah diupload hari ini + yang masih di device sekarang
+
     $hasData    = !empty($setting) || !empty($command);
     $canControl = $hasData && $isOnline;
     $dis        = $canControl ? '' : 'disabled';
@@ -178,7 +182,38 @@
             <button class="dc-btn btn-reboot"
                 onclick="handleCmd(this,'{{ $device->device_id }}','reboot')">🔁 Reboot</button>
         </div>
+</div>
+</div>
+
+{{-- Compact Card --}}
+@php
+    $bufNow   = $bufferNow;
+    $bufTotal = $bufferTotal;
+    $bufLabel = $bufNow === null ? '-' : $bufNow . '/' . $bufTotal;
+    $bufClass = $bufNow === null ? '' : ($bufNow === 0 ? 'buf-ok' : ($bufNow <= 50 ? 'buf-warn' : 'buf-danger'));
+    $updatedAt = $device->updated_at ? date('H:i', strtotime($device->updated_at)) : '--:--';
+@endphp
+<div class="device-card-compact {{ $isOnline ? 'is-online' : 'is-offline' }}"
+    data-device-id="{{ $device->device_id }}"
+    onclick="window.location='{{ route('device.detail', $device->device_id) }}'">
+
+    {{-- Baris 1: ID + Dot --}}
+    <div class="dcc-row1">
+        <span class="dcc-id" title="{{ $device->device_id }}">{{ $device->device_id }}</span>
+        <div class="dcc-dot {{ $isOnline ? 'online' : 'offline' }}"></div>
     </div>
 
+    {{-- RSSI Bar --}}
+    <div class="dcc-rssi-wrap">
+        <div class="dcc-rssi-fill" data-pct="{{ $rssiPct }}"
+            style="width:{{ $rssiPct }}%;"></div>
+    </div>
+
+    {{-- Baris 2: RAM + Buffer + Time --}}
+    <div class="dcc-row2">
+        <span class="dcc-badge">💾 {{ $ram }}%</span>
+        <span class="dcc-badge {{ $bufClass }}">🗂️ {{ $bufLabel }}</span>
+        <span class="dcc-time">{{ $updatedAt }}</span>
+    </div>
 </div>
 @endforeach

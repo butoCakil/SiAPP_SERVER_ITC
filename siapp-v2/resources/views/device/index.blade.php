@@ -17,6 +17,92 @@
     gap: 18px;
 }
 
+/* Compact view */
+.device-grid.compact-view {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+.device-grid.compact-view .device-card {
+    display: none;
+}
+.device-grid.compact-view .device-card-compact {
+    display: flex !important;
+}
+.device-card-compact {
+    display: none;
+    flex-direction: column;
+    background: #fff;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 8px 10px;
+    gap: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.device-card-compact:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+.device-card-compact.is-online  { border-color: #06de72; }
+.device-card-compact.is-offline { border-color: #ff3b3b; }
+
+/* Baris 1: No Device + Dot */
+.dcc-row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+.dcc-id {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dcc-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.dcc-dot.online  { background: #06de72; box-shadow: 0 0 5px #06de72; }
+.dcc-dot.offline { background: #ff3b3b; box-shadow: 0 0 5px #ff3b3b; }
+
+/* RSSI bar tipis */
+.dcc-rssi-wrap {
+    height: 6px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.dcc-rssi-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s;
+}
+
+/* Baris 2: RAM, Buffer, Timestamp */
+.dcc-row2 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #555;
+    flex-wrap: wrap;
+}
+.dcc-badge {
+    background: #f0f0f0;
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #333;
+}
+.dcc-badge.buf-ok     { background: #e8f5e9; color: #2e7d32; }
+.dcc-badge.buf-warn   { background: #fff8e1; color: #f57f17; }
+.dcc-badge.buf-danger { background: #ffebee; color: #c62828; }
+.dcc-time { font-size: 9px; color: #999; margin-left: auto; }
+
 .device-card {
     background: #fff;
     border: 3px solid #555;
@@ -285,7 +371,9 @@
 </div>
 
 {{-- Summary --}}
-<div class="summary-bar">
+<div class="summary-bar" style="justify-content: space-between;">
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+    </div>
     <div class="summary-badge">
         <div class="dot-green"></div>
         Online: <strong id="cnt-online">{{ $onlineCount }}</strong>
@@ -314,11 +402,14 @@
     <button class="btn-global g-sync"   onclick="sendAll('sync')">🔄 Sync All</button>
     <button class="btn-global g-upload" onclick="sendAll('upload')">📤 Upload All</button>
     <button class="btn-global g-reboot" onclick="confirmAll('reboot')">🔁 Reboot All</button>
+    <button class="btn-global" id="btn-toggle-view"
+        style="background:linear-gradient(135deg,#455a64,#263238);"
+        onclick="toggleView()">⚡ Compact</button>
 </div>
 
 {{-- Device Grid --}}
 <div class="device-grid" id="device-grid">
-    @include('device._cards', ['devices' => $devices, 'regDevices' => $regDevices])
+    @include('device._cards', ['devices' => $devices, 'regDevices' => $regDevices, 'bufferDaily' => $bufferDaily])
 </div>
 
 @endsection
@@ -326,6 +417,27 @@
 @push('scripts')
 <script>
 const DEVICE_KEY = '{{ env("DEVICE_TOKEN", "") }}';
+
+// ── Toggle compact view ──
+let isCompact = false;
+function toggleView() {
+    isCompact = !isCompact;
+    const grid = document.getElementById('device-grid');
+    const btn  = document.getElementById('btn-toggle-view');
+    if (isCompact) {
+        grid.classList.add('compact-view');
+        btn.textContent = '🗂️ Normal';
+        // Init RSSI fill color untuk compact cards
+        document.querySelectorAll('.dcc-rssi-fill').forEach(el => {
+            el.style.width = (el.dataset.pct || 0) + '%';
+            el.style.backgroundColor = getColor(parseFloat(el.dataset.pct) || 0);
+        });
+    } else {
+        grid.classList.remove('compact-view');
+        btn.textContent = '⚡ Compact';
+        updateBars();
+    }
+}
 
 // ── Color interpolation untuk RSSI bar ──
 function getColor(pct) {

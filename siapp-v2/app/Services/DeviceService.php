@@ -129,13 +129,28 @@ class DeviceService
 
         // ── Rekam metrik untuk sparkline ──
         if ($online == 1) {
+            $bufferNow = (int) ($data['count'] ?? 0);
+
+            // Ambil buffer terakhir hari ini untuk deteksi penurunan
+            $prevMetric = DB::table('device_metrics')
+                ->where('device_id', $deviceId)
+                ->whereDate('recorded_at', now()->toDateString())
+                ->orderByDesc('id')
+                ->value('buffer');
+
+            // Jika buffer turun dari sebelumnya = data sebesar nilai sebelumnya sudah diupload
+            $bufferUploaded = ($prevMetric !== null && $bufferNow < $prevMetric)
+                ? (int) $prevMetric
+                : 0;
+
             DB::table('device_metrics')->insert([
-                'device_id'   => $deviceId,
-                'ram'         => (int) ($data['ram']     ?? 0),
-                'rssi'        => (int) ($data['rssi']    ?? -100),
-                'ping'        => (int) ($data['latency'] ?? 0),
-                'buffer'      => (int) ($data['count']   ?? 0),
-                'recorded_at' => now(),
+                'device_id'       => $deviceId,
+                'ram'             => (int) ($data['ram']     ?? 0),
+                'rssi'            => (int) ($data['rssi']    ?? -100),
+                'ping'            => (int) ($data['latency'] ?? 0),
+                'buffer'          => $bufferNow,
+                'buffer_uploaded' => $bufferUploaded,
+                'recorded_at'     => now(),
             ]);
 
             // Hapus data lebih dari 24 jam
