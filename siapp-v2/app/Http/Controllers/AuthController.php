@@ -41,7 +41,8 @@ class AuthController extends Controller
             'admin_email' => $admin->email,
         ]);
 
-        return redirect()->route('dashboard');
+        $intended = session()->pull('intended_url', route('dashboard'));
+        return redirect($intended);
     }
 
     public function logout(Request $request)
