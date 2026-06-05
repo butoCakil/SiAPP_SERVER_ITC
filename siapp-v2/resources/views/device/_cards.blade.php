@@ -189,7 +189,7 @@
 @php
     $bufNow   = $bufferNow;
     $bufTotal = $bufferTotal;
-    $bufLabel = $bufNow === null ? '-' : $bufNow . '/' . $bufTotal;
+    $bufLabel = $bufNow === null ? null : $bufNow . '/' . $bufTotal;
     $bufClass = $bufNow === null ? '' : ($bufNow === 0 ? 'buf-ok' : ($bufNow <= 50 ? 'buf-warn' : 'buf-danger'));
     $updatedAt = $device->updated_at ? date('H:i', strtotime($device->updated_at)) : '--:--';
 @endphp
@@ -202,18 +202,32 @@
         <span class="dcc-id" title="{{ $device->device_id }}">{{ $device->device_id }}</span>
         <div class="dcc-dot {{ $isOnline ? 'online' : 'offline' }}"></div>
     </div>
-
-    {{-- RSSI Bar --}}
-    <div class="dcc-rssi-wrap">
-        <div class="dcc-rssi-fill" data-pct="{{ $rssiPct }}"
-            style="width:{{ $rssiPct }}%;"></div>
+    {{-- Baris 2: icon wifi + persen + bar --}}
+    <div class="dcc-rssi-row">
+        <span class="dcc-badge">🛜 {{ $rssiPct }}%</span>
+        <div class="dcc-rssi-wrap" style="flex:1;">
+            <div class="dcc-rssi-fill" data-pct="{{ $rssiPct }}"
+                style="width:{{ $rssiPct }}%;"></div>
+        </div>
     </div>
-
-    {{-- Baris 2: RAM + Buffer + Time --}}
+    {{-- Baris 3: RAM + Buffer + Time --}}
     <div class="dcc-row2">
         <span class="dcc-badge">💾 {{ $ram }}%</span>
+        @if($bufLabel !== null)
         <span class="dcc-badge {{ $bufClass }}">🗂️ {{ $bufLabel }}</span>
+        @endif
         <span class="dcc-time">{{ $updatedAt }}</span>
     </div>
+    {{-- Baris 4: SSID + FW Version --}}
+    <div class="dcc-row3">
+        <span class="dcc-ssid">{{ $ssid }}</span>
+        @if($device->fw_version)
+            <span class="badge badge-warning" style="font-size:8px; padding:1px 4px;">{{ $device->fw_version }}</span>
+        @endif
+    </div>
+    {{-- Baris 5: Info Device --}}
+    @if($info && $info !== '-')
+    <div style="font-size:9px; color:#666; margin-top:2px;">{{ $info }}</div>
+    @endif
 </div>
 @endforeach

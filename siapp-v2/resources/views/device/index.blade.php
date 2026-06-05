@@ -34,8 +34,8 @@
     background: #fff;
     border: 2px solid #555;
     border-radius: 10px;
-    padding: 8px 10px;
-    gap: 4px;
+    padding: 6px 10px;
+    gap: 2px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     position: relative;
     cursor: pointer;
@@ -102,6 +102,26 @@
 .dcc-badge.buf-warn   { background: #fff8e1; color: #f57f17; }
 .dcc-badge.buf-danger { background: #ffebee; color: #c62828; }
 .dcc-time { font-size: 9px; color: #999; margin-left: auto; }
+
+.dcc-rssi-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.dcc-row3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+.dcc-ssid {
+    font-size: 9px;
+    color: #888;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
+}
 
 .device-card {
     background: #fff;
