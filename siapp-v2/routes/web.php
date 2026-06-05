@@ -302,6 +302,21 @@ Route::get('/api-internal/device-metrics/{id}', function (string $id) {
     return response()->json($metrics);
 })->middleware('auth.admin');
 
+Route::get('/api-internal/device-poll-status', function () {
+    $devices = DB::table('devices')->where('hidden', 0)->get(['device_id', 'online', 'last_command', 'last_setting']);
+    $result  = $devices->map(function ($d) {
+        $cmd = $d->last_command ? json_decode($d->last_command, true) : null;
+        $set = $d->last_setting ? json_decode($d->last_setting, true) : null;
+        return [
+            'device_id' => $d->device_id,
+            'online'    => (int) $d->online,
+            'cmd_ts'    => $cmd['timestamp'] ?? null,
+            'set_ts'    => $set['timestamp'] ?? null,
+        ];
+    });
+    return response()->json($result);
+})->middleware('auth.admin');
+
 Route::post('/device/{id}/koneksi', [DeviceViewController::class, 'kirimKoneksi'])
     ->middleware('auth.admin')
     ->name('device.koneksi');

@@ -361,6 +361,31 @@
     animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* CMD Modal */
+#cmd-modal-backdrop { display: none; }
+#cmd-modal-backdrop.show { display: flex !important; }
+
+.cmd-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    font-size: 13px;
+}
+.cmd-row.state-pending  { border-color: #ffe082; background: #fffde7; }
+.cmd-row.state-sending  { border-color: #90caf9; background: #e3f2fd; }
+.cmd-row.state-ok       { border-color: #a5d6a7; background: #e8f5e9; }
+.cmd-row.state-fail     { border-color: #ef9a9a; background: #ffebee; }
+.cmd-row.state-skip     { border-color: #ddd;    background: #f5f5f5; opacity:0.6; }
+
+.cmd-row-id   { font-weight:700; font-family:'Fira Code',monospace; min-width:110px; }
+.cmd-row-info { font-size:11px; color:#666; flex:1; }
+.cmd-row-icon { font-size:16px; min-width:22px; text-align:center; }
+.cmd-row-status { font-size:11px; font-weight:600; min-width:90px; text-align:right; }
 </style>
 @endpush
 
@@ -410,6 +435,43 @@
 {{-- Device Grid --}}
 <div class="device-grid" id="device-grid">
     @include('device._cards', ['devices' => $devices, 'regDevices' => $regDevices, 'bufferDaily' => $bufferDaily])
+</div>
+
+{{-- Modal Progress Command --}}
+<div id="cmd-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1050; align-items:center; justify-content:center;">
+    <div id="cmd-modal" style="background:#fff; border-radius:16px; width:min(560px,95vw); max-height:80vh; display:flex; flex-direction:column; box-shadow:0 8px 40px rgba(0,0,0,0.25); overflow:hidden;">
+        {{-- Header --}}
+        <div style="padding:14px 20px; background:#1e1e2e; color:#fff; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+                <span style="font-size:16px; font-weight:700;" id="cmd-modal-title">⚙️ Mengirim Perintah</span>
+                <div style="font-size:11px; opacity:0.7; margin-top:2px;" id="cmd-modal-subtitle">Menunggu feedback device...</div>
+            </div>
+            <button onclick="closeCmdModal()" style="background:transparent; border:none; color:#fff; font-size:18px; cursor:pointer; opacity:0.7;">✕</button>
+        </div>
+        {{-- Progress bar --}}
+        <div style="height:4px; background:#333;">
+            <div id="cmd-modal-bar" style="height:100%; background:#06de72; width:0%; transition:width 0.4s;"></div>
+        </div>
+        {{-- Summary --}}
+        <div style="padding:8px 20px; background:#f8f9fa; border-bottom:1px solid #eee; display:flex; gap:16px; font-size:12px;">
+            <span>✅ Berhasil: <strong id="cmd-cnt-ok">0</strong></span>
+            <span>⏳ Pending: <strong id="cmd-cnt-pending">0</strong></span>
+            <span>❌ Gagal: <strong id="cmd-cnt-fail">0</strong></span>
+            <span>⏭️ Skip: <strong id="cmd-cnt-skip">0</strong></span>
+            <span style="margin-left:auto; color:#888;">Total: <strong id="cmd-cnt-total">0</strong></span>
+        </div>
+        {{-- Device list --}}
+        <div id="cmd-modal-list" style="overflow-y:auto; flex:1; padding:10px 16px; display:flex; flex-direction:column; gap:6px;">
+        </div>
+        {{-- Footer --}}
+        <div style="padding:10px 20px; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:11px; color:#888;" id="cmd-modal-footer-status">Memproses...</span>
+            <button onclick="closeCmdModal()" id="cmd-modal-close-btn"
+                style="background:#1e1e2e; color:#fff; border:none; border-radius:20px; padding:6px 20px; font-size:13px; cursor:pointer;">
+                Tutup
+            </button>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -528,19 +590,197 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
     setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 2500);
 }
 
-// ── Kirim ke semua device ──
+// ── CMD Modal ──
+const CMD_LABELS = {
+    setSetting : '⚙️ Set Setting',
+    sync       : '🔄 Sync',
+    upload     : '📤 Upload',
+    reboot     : '🔁 Reboot',
+    koneksi    : '🔌 Koneksi',
+    ota        : '🛠️ OTA',
+};
+const CMD_FEEDBACK_KEY = {
+    setSetting : 'set_ts',
+    sync       : 'cmd_ts',
+    upload     : 'cmd_ts',
+    reboot     : 'cmd_ts',
+    koneksi    : 'cmd_ts',
+    ota        : 'cmd_ts',
+};
+const CMD_TIMEOUT_MS = 30000;
+const CMD_POLL_MS    = 2000;
+
+let cmdModalActive = false;
+let cmdModalTimer  = null;
+
+function closeCmdModal() {
+    cmdModalActive = false;
+    if (cmdModalTimer) clearInterval(cmdModalTimer);
+    document.getElementById('cmd-modal-backdrop').classList.remove('show');
+}
+
+function openCmdModal(cmdKey, deviceStates) {
+    cmdModalActive = true;
+    const label = CMD_LABELS[cmdKey] ?? cmdKey;
+
+    document.getElementById('cmd-modal-title').textContent    = label + ' — Progress';
+    document.getElementById('cmd-modal-subtitle').textContent = 'Mengirim perintah ke semua device...';
+    document.getElementById('cmd-modal-bar').style.width      = '0%';
+    document.getElementById('cmd-cnt-ok').textContent         = '0';
+    document.getElementById('cmd-cnt-pending').textContent    = deviceStates.filter(d => !d.skip).length;
+    document.getElementById('cmd-cnt-fail').textContent       = '0';
+    document.getElementById('cmd-cnt-skip').textContent       = deviceStates.filter(d => d.skip).length;
+    document.getElementById('cmd-cnt-total').textContent      = deviceStates.length;
+    document.getElementById('cmd-modal-footer-status').textContent = 'Memproses...';
+
+    // Render rows
+    const list = document.getElementById('cmd-modal-list');
+    list.innerHTML = '';
+    deviceStates.forEach(d => {
+        const row = document.createElement('div');
+        row.className = 'cmd-row ' + (d.skip ? 'state-skip' : 'state-sending');
+        row.id = 'cmd-row-' + d.device_id;
+        row.innerHTML = `
+            <span class="cmd-row-icon">${d.skip ? '⏭️' : '📡'}</span>
+            <span class="cmd-row-id">${d.device_id}</span>
+            <span class="cmd-row-info">${d.info ?? ''}</span>
+            <span class="cmd-row-status" id="cmd-status-${d.device_id}">
+                ${d.skip ? 'Skip (offline)' : 'Mengirim...'}
+            </span>
+        `;
+        list.appendChild(row);
+    });
+
+    document.getElementById('cmd-modal-backdrop').classList.add('show');
+}
+
+function updateCmdRow(deviceId, state, statusText) {
+    const row = document.getElementById('cmd-row-' + deviceId);
+    if (!row) return;
+    row.className = 'cmd-row state-' + state;
+    const icon = { ok:'✅', fail:'❌', pending:'⏳', sending:'📡', skip:'⏭️' }[state] ?? '❓';
+    row.querySelector('.cmd-row-icon').textContent  = icon;
+    row.querySelector('#cmd-status-' + deviceId).textContent = statusText;
+}
+
+function updateCmdSummary(states) {
+    const ok      = states.filter(d => d.state === 'ok').length;
+    const fail    = states.filter(d => d.state === 'fail').length;
+    const skip    = states.filter(d => d.state === 'skip').length;
+    const pending = states.filter(d => d.state === 'sending' || d.state === 'pending').length;
+    const total   = states.length;
+    const done    = ok + fail + skip;
+
+    document.getElementById('cmd-cnt-ok').textContent      = ok;
+    document.getElementById('cmd-cnt-fail').textContent    = fail;
+    document.getElementById('cmd-cnt-skip').textContent    = skip;
+    document.getElementById('cmd-cnt-pending').textContent = pending;
+    document.getElementById('cmd-modal-bar').style.width   = Math.round((done / total) * 100) + '%';
+
+    if (pending === 0) {
+        document.getElementById('cmd-modal-footer-status').textContent =
+            `Selesai — ${ok} berhasil, ${fail} gagal, ${skip} skip`;
+        document.getElementById('cmd-modal-subtitle').textContent = 'Semua device telah diproses.';
+    }
+}
+
 async function sendAll(cmdKey) {
-    document.getElementById('loading-overlay').style.display = 'flex';
-    const cards = document.querySelectorAll('[data-device-id]');
-    const promises = Array.from(cards).map(el => sendCmd(el.dataset.deviceId, cmdKey));
-    const results = await Promise.all(promises);
-    document.getElementById('loading-overlay').style.display = 'none';
-    const ok = results.filter(Boolean).length;
-    alert(`✅ Berhasil: ${ok} / ${results.length} device`);
+    // Ambil snapshot timestamp sebelum kirim
+    let pollData = {};
+    try {
+        const res  = await fetch('/api-internal/device-poll-status');
+        const data = await res.json();
+        data.forEach(d => { pollData[d.device_id] = d; });
+    } catch(e) {
+        alert('Gagal ambil status device: ' + e.message);
+        return;
+    }
+
+    const fbKey = CMD_FEEDBACK_KEY[cmdKey] ?? 'cmd_ts';
+
+    // Kumpulkan device unik
+    const seen = new Set();
+    const deviceStates = [];
+    Array.from(document.querySelectorAll('[data-device-id]')).forEach(el => {
+        const id = el.dataset.deviceId;
+        if (seen.has(id)) return;
+        seen.add(id);
+        const poll   = pollData[id] ?? {};
+        const isOnline = (poll.online ?? 0) == 1;
+        const infoEl = document.querySelector(`[data-device-id="${id}"] .dc-info`);
+        deviceStates.push({
+            device_id : id,
+            online    : isOnline,
+            skip      : !isOnline,
+            state     : isOnline ? 'sending' : 'skip',
+            ts_before : poll[fbKey] ?? null,
+            fb_key    : fbKey,
+            info      : infoEl ? infoEl.textContent.trim() : '',
+            deadline  : Date.now() + CMD_TIMEOUT_MS,
+        });
+    });
+
+    openCmdModal(cmdKey, deviceStates);
+
+    // Kirim command paralel ke semua yang online
+    const sendPromises = deviceStates
+        .filter(d => !d.skip)
+        .map(d => sendCmd(d.device_id, cmdKey));
+    await Promise.all(sendPromises);
+
+    // Update state ke pending setelah terkirim
+    deviceStates.filter(d => !d.skip).forEach(d => {
+        d.state = 'pending';
+        updateCmdRow(d.device_id, 'pending', '⏳ Menunggu feedback...');
+    });
+    updateCmdSummary(deviceStates);
+
+    // Polling feedback
+    cmdModalTimer = setInterval(async () => {
+        if (!cmdModalActive) { clearInterval(cmdModalTimer); return; }
+
+        const stillWaiting = deviceStates.filter(d => d.state === 'pending');
+        if (stillWaiting.length === 0) {
+            clearInterval(cmdModalTimer);
+            updateCmdSummary(deviceStates);
+            return;
+        }
+
+        let pollNow = {};
+        try {
+            const res  = await fetch('/api-internal/device-poll-status');
+            const data = await res.json();
+            data.forEach(d => { pollNow[d.device_id] = d; });
+        } catch(e) { return; }
+
+        const now = Date.now();
+        stillWaiting.forEach(d => {
+            const current = pollNow[d.device_id];
+            if (!current) return;
+
+            const tsNow = current[d.fb_key] ?? null;
+            if (tsNow && tsNow !== d.ts_before) {
+                // Timestamp berubah = feedback diterima
+                d.state = 'ok';
+                updateCmdRow(d.device_id, 'ok', '✅ Berhasil');
+            } else if (now > d.deadline) {
+                d.state = 'fail';
+                updateCmdRow(d.device_id, 'fail', '❌ Timeout');
+            }
+        });
+
+        updateCmdSummary(deviceStates);
+
+        if (deviceStates.filter(d => d.state === 'pending').length === 0) {
+            clearInterval(cmdModalTimer);
+        }
+    }, CMD_POLL_MS);
 }
 
 async function confirmAll(cmdKey) {
-    if (!confirm(`Yakin ingin ${cmdKey} semua device?`)) return;
+    if (cmdKey === 'reboot') {
+        if (!confirm(`Yakin ingin reboot semua device?`)) return;
+    }
     await sendAll(cmdKey);
 }
 
@@ -556,6 +796,13 @@ async function refreshGrid() {
         });
         const data = await res.json();
         document.getElementById('device-grid').innerHTML = data.html;
+        if (isCompact) {
+            document.getElementById('device-grid').classList.add('compact-view');
+            document.querySelectorAll('.dcc-rssi-fill').forEach(el => {
+                el.style.width = (el.dataset.pct || 0) + '%';
+                el.style.backgroundColor = getColor(parseFloat(el.dataset.pct) || 0);
+            });
+        }
         document.getElementById('cnt-online').textContent = data.online;
         document.getElementById('cnt-offline').textContent = data.offline;
         document.getElementById('cnt-total').textContent = data.total;
