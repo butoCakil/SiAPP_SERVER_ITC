@@ -138,7 +138,7 @@
             <div class="s-icon">⚠️</div>
             <div>
                 <div class="s-val">{{ $totalTidakKeduanya }}</div>
-                <div class="s-lbl">Belum Lengkap</div>
+                <div class="s-lbl">Belum</div>
             </div>
         </div>
     </div>
