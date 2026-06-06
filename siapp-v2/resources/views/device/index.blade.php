@@ -661,7 +661,9 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
         const tsNow = current[d.fb_key] ?? null;
         if (tsNow && tsNow !== d.ts_before) {
             d.state = 'ok';
-            updateCmdRow(d.device_id, 'ok', '✅ Berhasil');
+            const detail = current.cmd_detail ?? current.set_detail ?? null;
+            const detailMsg = detail ? '✅ ' + detail : '✅ Berhasil';
+            updateCmdRow(d.device_id, 'ok', detailMsg);
             clearInterval(cmdModalTimer);
         } else if (now > d.deadline) {
             d.state = 'fail';
@@ -846,7 +848,9 @@ async function sendAll(cmdKey) {
             if (tsNow && tsNow !== d.ts_before) {
                 // Timestamp berubah = feedback diterima
                 d.state = 'ok';
-                updateCmdRow(d.device_id, 'ok', '✅ Berhasil');
+                const detail = current.cmd_detail ?? current.set_detail ?? null;
+                const detailMsg = detail ? '✅ ' + detail : '✅ Berhasil';
+                updateCmdRow(d.device_id, 'ok', detailMsg);
             } else if (now > d.deadline) {
                 d.state = 'fail';
                 updateCmdRow(d.device_id, 'fail', '❌ Timeout');

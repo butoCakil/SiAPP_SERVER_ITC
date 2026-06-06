@@ -308,10 +308,12 @@ Route::get('/api-internal/device-poll-status', function () {
         $cmd = $d->last_command ? json_decode($d->last_command, true) : null;
         $set = $d->last_setting ? json_decode($d->last_setting, true) : null;
         return [
-            'device_id' => $d->device_id,
-            'online'    => (int) $d->online,
-            'cmd_ts'    => $cmd['timestamp'] ?? null,
-            'set_ts'    => $set['timestamp'] ?? null,
+            'device_id'  => $d->device_id,
+            'online'     => (int) $d->online,
+            'cmd_ts'     => $cmd['timestamp'] ?? null,
+            'set_ts'     => $set['timestamp'] ?? null,
+            'cmd_detail' => $cmd['detail']    ?? null,
+            'set_detail' => $set['detail']    ?? null,
         ];
     });
     return response()->json($result);
