@@ -45,7 +45,6 @@
 .device-card-compact.is-online  { border-color: #06de72; }
 .device-card-compact.is-offline { border-color: #ff3b3b; }
 
-/* Baris 1: No Device + Dot */
 .dcc-row1 {
     display: flex;
     align-items: center;
@@ -68,7 +67,6 @@
 .dcc-dot.online  { background: #06de72; box-shadow: 0 0 5px #06de72; }
 .dcc-dot.offline { background: #ff3b3b; box-shadow: 0 0 5px #ff3b3b; }
 
-/* RSSI bar tipis */
 .dcc-rssi-wrap {
     height: 6px;
     background: #eee;
@@ -81,7 +79,6 @@
     transition: width 0.4s;
 }
 
-/* Baris 2: RAM, Buffer, Timestamp */
 .dcc-row2 {
     display: flex;
     align-items: center;
@@ -132,25 +129,20 @@
     transition: transform 0.22s ease, box-shadow 0.22s ease;
     position: relative;
 }
-
 .device-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
 }
-
 .device-card.is-online  { border-color: #06de72; }
 .device-card.is-offline { border-color: #ff3b3b; }
 
-/* Header */
 .dc-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 8px;
 }
-
 .dc-title { flex: 1; }
-
 .dc-id {
     font-size: 1.1em;
     font-weight: 700;
@@ -159,7 +151,6 @@
     align-items: center;
     gap: 6px;
 }
-
 .dc-fw {
     background: #ffd500;
     border-radius: 8px;
@@ -168,7 +159,6 @@
     font-weight: 600;
     box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
 }
-
 .dc-info {
     background: #00d0ff;
     border-radius: 8px;
@@ -179,11 +169,9 @@
     display: inline-block;
     box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
 }
-
 .dc-since-online  { font-size: 10px; background: #51f561; color: #000; padding: 1px 8px; border-radius: 8px; margin-top: 3px; display:inline-block; }
 .dc-since-offline { font-size: 10px; background: #ee3030; color: #fff; padding: 1px 8px; border-radius: 8px; margin-top: 3px; display:inline-block; }
 
-/* Status dot */
 .dc-dot {
     width: 26px; height: 26px;
     border-radius: 50%;
@@ -198,12 +186,7 @@
 }
 .dc-status-label { font-size: 10px; text-align: center; margin-top: 3px; font-family: monospace; }
 
-/* Bars */
-.bar-label {
-    font-size: 11px;
-    color: #444;
-    margin: 7px 0 2px;
-}
+.bar-label { font-size: 11px; color: #444; margin: 7px 0 2px; }
 .dc-buf-unknown { color: #888; font-size:11px; }
 .dc-buf-empty   { display:inline-block; background:#e8f5e9; color:#2e7d32; font-weight:700; font-size:11px; padding:1px 8px; border-radius:20px; }
 .dc-buf-warn    { display:inline-block; background:#fff3e0; color:#e65100; font-weight:700; font-size:11px; padding:1px 8px; border-radius:20px; }
@@ -224,22 +207,18 @@
     background: #e0e0e0;
     transition: width 0.5s ease;
 }
-
 .rssi-bar { width: 100%; height: 9px; border-radius: 8px; background: #e0e0e0; overflow: hidden; position: relative; }
 .rssi-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 8px; transition: width 0.5s ease, background-color 0.5s ease; }
 
-/* Detail info */
 .dc-detail { font-size: 11px; color: #555; margin-top: 6px; background:#f5f7fa; border-radius:8px; padding:5px 8px; }
 .dc-detail div { margin-top: 3px; }
 
-/* Buttons */
 .dc-actions-top {
     display: flex;
     gap: 5px;
     margin-top: 8px;
     align-items: center;
 }
-
 .dc-section-title {
     font-size: 11px;
     font-weight: 700;
@@ -249,7 +228,6 @@
     align-items: center;
     gap: 6px;
 }
-
 .btn-xs-round {
     width: 28px; height: 28px;
     border-radius: 50%;
@@ -263,7 +241,6 @@
 .btn-xs-round:hover { transform: scale(1.15); filter: brightness(1.1); }
 .btn-xs-round:active { transform: scale(0.95); }
 .btn-xs-round:disabled { background: #bbb !important; cursor: not-allowed; opacity: 0.6; }
-
 .bxr-set    { background: linear-gradient(135deg,#00aaff,#007bff); }
 .bxr-upload { background: linear-gradient(135deg,#00c853,#00964b); }
 .bxr-sync   { background: linear-gradient(135deg,#b200ff,#7b1fa2); }
@@ -273,12 +250,7 @@
 .bxr-toggle { background: none; border: none; color: #007bff; font-size: 13px; cursor: pointer; transition: transform 0.3s; }
 .bxr-toggle.rotated { transform: rotate(180deg); }
 
-.dc-btn-group {
-    display: flex;
-    gap: 7px;
-    margin-top: 8px;
-}
-
+.dc-btn-group { display: flex; gap: 7px; margin-top: 8px; }
 .dc-btn {
     flex: 1;
     padding: 5px 4px;
@@ -312,19 +284,16 @@
     margin-top: 6px;
     color: #444;
 }
-
 .dc-viewlog { font-size: 11px; margin-top: 6px; }
 .dc-viewlog a { color: #555; text-decoration: none; }
 .dc-viewlog a:hover { color: #007bff; }
 
-/* Global buttons */
 .global-actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 18px;
 }
-
 .btn-global {
     padding: 7px 18px;
     border: none;
@@ -342,7 +311,6 @@
 .btn-global.g-upload { background: linear-gradient(135deg,#00c853,#00964b); }
 .btn-global.g-reboot { background: linear-gradient(135deg,#ff4b2b,#ff0000); }
 
-/* Summary bar */
 .summary-bar {
     display: flex;
     gap: 12px;
@@ -364,7 +332,6 @@
 .dot-green { width:10px;height:10px;border-radius:50%;background:#06de72;box-shadow:0 0 6px #06de72; }
 .dot-red   { width:10px;height:10px;border-radius:50%;background:#ff3b3b;box-shadow:0 0 6px #ff3b3b; }
 
-/* Loading overlay */
 .loading-overlay {
     position: fixed; top:0;left:0;width:100%;height:100%;
     background: rgba(255,255,255,0.6);
@@ -402,9 +369,9 @@
 .cmd-row.state-fail     { border-color: #ef9a9a; background: #ffebee; }
 .cmd-row.state-skip     { border-color: #ddd;    background: #f5f5f5; opacity:0.6; }
 
-.cmd-row-id   { font-weight:700; font-family:'Fira Code',monospace; min-width:110px; }
-.cmd-row-info { font-size:11px; color:#666; flex:1; }
-.cmd-row-icon { font-size:16px; min-width:22px; text-align:center; }
+.cmd-row-id     { font-weight:700; font-family:'Fira Code',monospace; min-width:110px; }
+.cmd-row-info   { font-size:11px; color:#666; flex:1; }
+.cmd-row-icon   { font-size:16px; min-width:22px; text-align:center; }
 .cmd-row-status { font-size:11px; font-weight:600; min-width:90px; text-align:right; }
 </style>
 @endpush
@@ -417,8 +384,7 @@
 
 {{-- Summary --}}
 <div class="summary-bar" style="justify-content: space-between;">
-    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;"></div>
     <div class="summary-badge">
         <div class="dot-green"></div>
         Online: <strong id="cnt-online">{{ $onlineCount }}</strong>
@@ -460,7 +426,6 @@
 {{-- Modal Progress Command --}}
 <div id="cmd-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1050; align-items:center; justify-content:center;">
     <div id="cmd-modal" style="background:#fff; border-radius:16px; width:min(560px,95vw); max-height:80vh; display:flex; flex-direction:column; box-shadow:0 8px 40px rgba(0,0,0,0.25); overflow:hidden;">
-        {{-- Header --}}
         <div style="padding:14px 20px; background:#1e1e2e; color:#fff; display:flex; align-items:center; justify-content:space-between;">
             <div>
                 <span style="font-size:16px; font-weight:700;" id="cmd-modal-title">⚙️ Mengirim Perintah</span>
@@ -468,11 +433,9 @@
             </div>
             <button onclick="closeCmdModal()" style="background:transparent; border:none; color:#fff; font-size:18px; cursor:pointer; opacity:0.7;">✕</button>
         </div>
-        {{-- Progress bar --}}
         <div style="height:4px; background:#333;">
             <div id="cmd-modal-bar" style="height:100%; background:#06de72; width:0%; transition:width 0.4s;"></div>
         </div>
-        {{-- Summary --}}
         <div style="padding:8px 20px; background:#f8f9fa; border-bottom:1px solid #eee; display:flex; gap:16px; font-size:12px;">
             <span>✅ Berhasil: <strong id="cmd-cnt-ok">0</strong></span>
             <span>⏳ Pending: <strong id="cmd-cnt-pending">0</strong></span>
@@ -480,10 +443,7 @@
             <span>⏭️ Skip: <strong id="cmd-cnt-skip">0</strong></span>
             <span style="margin-left:auto; color:#888;">Total: <strong id="cmd-cnt-total">0</strong></span>
         </div>
-        {{-- Device list --}}
-        <div id="cmd-modal-list" style="overflow-y:auto; flex:1; padding:10px 16px; display:flex; flex-direction:column; gap:6px;">
-        </div>
-        {{-- Footer --}}
+        <div id="cmd-modal-list" style="overflow-y:auto; flex:1; padding:10px 16px; display:flex; flex-direction:column; gap:6px;"></div>
         <div style="padding:10px 20px; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:11px; color:#888;" id="cmd-modal-footer-status">Memproses...</span>
             <button onclick="closeCmdModal()" id="cmd-modal-close-btn"
@@ -500,6 +460,30 @@
 <script>
 const DEVICE_KEY = '{{ env("DEVICE_TOKEN", "") }}';
 
+// ── CMD Modal constants ──
+const CMD_LABELS = {
+    setSetting   : '⚙️ Set Setting',
+    sync         : '🔄 Sync',
+    upload       : '📤 Upload',
+    reboot       : '🔁 Reboot',
+    koneksi      : '🔌 Koneksi',
+    ota          : '🛠️ OTA',
+    toggleSerial : '🔍 Toggle Serial',
+};
+const CMD_FEEDBACK_KEY = {
+    setSetting : 'set_ts',
+    sync       : 'cmd_ts',
+    upload     : 'cmd_ts',
+    reboot     : 'cmd_ts',
+    koneksi    : 'cmd_ts',
+    ota        : 'cmd_ts',
+};
+const CMD_TIMEOUT_MS = 30000;
+const CMD_POLL_MS    = 2000;
+
+let cmdModalActive = false;
+let cmdModalTimer  = null;
+
 // ── Toggle compact view ──
 let isCompact = false;
 function toggleView() {
@@ -509,7 +493,6 @@ function toggleView() {
     if (isCompact) {
         grid.classList.add('compact-view');
         btn.textContent = '🗂️ Normal';
-        // Init RSSI fill color untuk compact cards
         document.querySelectorAll('.dcc-rssi-fill').forEach(el => {
             el.style.width = (el.dataset.pct || 0) + '%';
             el.style.backgroundColor = getColor(parseFloat(el.dataset.pct) || 0);
@@ -521,7 +504,6 @@ function toggleView() {
     }
 }
 
-// ── Color interpolation untuk RSSI bar ──
 function getColor(pct) {
     const stops = [
         [0,   [255,0,0]],
@@ -559,13 +541,10 @@ function updateLastRefresh() {
 
 async function editLabel(deviceId, currentLabel) {
     const newLabel = prompt('Edit label device ' + deviceId + ':', currentLabel);
-    if (newLabel === null) return; // cancelled
+    if (newLabel === null) return;
     const res = await fetch('/device/' + deviceId + '/label', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
         body: JSON.stringify({ label: newLabel })
     });
     const json = await res.json();
@@ -576,7 +555,6 @@ async function editLabel(deviceId, currentLabel) {
     }
 }
 
-// ── Toggle detail collapse ──
 function toggleDetail(id) {
     const el = document.getElementById('dc-collapse-'+id);
     const arrow = document.getElementById('dc-arrow-'+id);
@@ -600,16 +578,53 @@ async function sendCmd(deviceId, cmdKey, value=1) {
     } catch { return false; }
 }
 
-// ── Wrapper dengan feedback tombol ──
+// ── Helper: proses hasil polling per device ──
+function processPollingResult(d, current, onOk, onTimeout, now) {
+    const tsNow    = current[d.fb_key] ?? null;
+    const isReboot = d.cmd_key === 'reboot';
+
+    if (isReboot) {
+        if (!d.reboot_confirmed_at) {
+            // Fase 1: tunggu konfirmasi diterima device
+            if (tsNow && tsNow !== d.ts_before) {
+                d.reboot_confirmed_at = Date.now();
+                updateCmdRow(d.device_id, 'pending', '⏳ Restart menunggu online...');
+            }
+        } else {
+            // Fase 2: tunggu last_seen lebih baru dari reboot_confirmed_at
+            const confirmedTs = Math.floor(d.reboot_confirmed_at / 1000);
+            const lastSeenTs  = current.last_seen
+                ? Math.floor(new Date(current.last_seen).getTime() / 1000)
+                : 0;
+            if (current.online == 1 && lastSeenTs > confirmedTs) {
+                onOk('✅ Online kembali');
+                return;
+            }
+        }
+    } else {
+        const feedbackOk = tsNow && tsNow !== d.ts_before;
+        if (feedbackOk) {
+            const detailMsg = (current.cmd_detail ?? current.set_detail)
+                ? '✅ ' + (current.cmd_detail ?? current.set_detail)
+                : '✅ Berhasil';
+            onOk(detailMsg);
+            return;
+        }
+    }
+
+    if (now > d.deadline) {
+        onTimeout();
+    }
+}
+
+// ── Wrapper dengan modal per-device ──
 async function handleCmd(btn, deviceId, cmdKey, value=1) {
-    // Ambil snapshot timestamp sebelum kirim
     let pollData = {};
     try {
         const res  = await fetch('/api-internal/device-poll-status');
         const data = await res.json();
         data.forEach(d => { pollData[d.device_id] = d; });
     } catch(e) {
-        // Fallback ke behavior lama jika poll gagal
         const orig = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '⏳';
@@ -624,28 +639,27 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
     const infoEl = document.querySelector(`[data-device-id="${deviceId}"] .dc-info`);
 
     const deviceStates = [{
-        device_id    : deviceId,
-        online       : 1,
-        skip         : false,
-        state        : 'sending',
-        ts_before    : poll[fbKey] ?? null,
-        online_since : poll.last_seen ?? null,
-        fb_key       : fbKey,
-        cmd_key      : cmdKey,
-        info         : infoEl ? infoEl.textContent.trim() : '',
-        deadline     : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
-        sent_at      : Date.now(),
+        device_id           : deviceId,
+        online              : 1,
+        skip                : false,
+        state               : 'sending',
+        ts_before           : poll[fbKey] ?? null,
+        online_since        : poll.last_seen ?? null,
+        fb_key              : fbKey,
+        cmd_key             : cmdKey,
+        info                : infoEl ? infoEl.textContent.trim() : '',
+        deadline            : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
+        sent_at             : Date.now(),
+        reboot_confirmed_at : null,
     }];
 
     openCmdModal(cmdKey, deviceStates);
-
     await sendCmd(deviceId, cmdKey, value);
 
     deviceStates[0].state = 'pending';
     updateCmdRow(deviceId, 'pending', '⏳ Menunggu feedback...');
     updateCmdSummary(deviceStates);
 
-    // Polling feedback
     cmdModalTimer = setInterval(async () => {
         if (!cmdModalActive) { clearInterval(cmdModalTimer); return; }
 
@@ -661,56 +675,27 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
         const current = pollNow[d.device_id];
         if (!current) return;
 
-        const tsNow = current[d.fb_key] ?? null;
-        const isReboot = d.cmd_key === 'reboot';
-        const rebootDelay = isReboot && (Date.now() - d.sent_at) < 10000;
-        const rebootOk = isReboot && !rebootDelay && current.online == 1
-                      && current.last_seen !== d.online_since;
-        const feedbackOk = !isReboot && tsNow && tsNow !== d.ts_before;
-
-        if (rebootOk || feedbackOk) {
-            d.state = 'ok';
-            const detailMsg = rebootOk
-                ? '✅ Online kembali'
-                : (current.cmd_detail ?? current.set_detail)
-                    ? '✅ ' + (current.cmd_detail ?? current.set_detail)
-                    : '✅ Berhasil';
-            updateCmdRow(d.device_id, 'ok', detailMsg);
-            clearInterval(cmdModalTimer);
-        } else if (now > d.deadline) {
-            d.state = 'fail';
-            updateCmdRow(d.device_id, 'fail', '❌ Timeout');
-            clearInterval(cmdModalTimer);
-        }
+        processPollingResult(d, current,
+            (msg) => {
+                d.state = 'ok';
+                updateCmdRow(d.device_id, 'ok', msg);
+                clearInterval(cmdModalTimer);
+                updateCmdSummary(deviceStates);
+            },
+            () => {
+                d.state = 'fail';
+                updateCmdRow(d.device_id, 'fail', '❌ Timeout');
+                clearInterval(cmdModalTimer);
+                updateCmdSummary(deviceStates);
+            },
+            now
+        );
 
         updateCmdSummary(deviceStates);
     }, CMD_POLL_MS);
 }
 
-// ── CMD Modal ──
-const CMD_LABELS = {
-    setSetting : '⚙️ Set Setting',
-    sync       : '🔄 Sync',
-    upload     : '📤 Upload',
-    reboot     : '🔁 Reboot',
-    koneksi    : '🔌 Koneksi',
-    ota        : '🛠️ OTA',
-    toggleSerial : '🔍 Toggle Serial',
-};
-const CMD_FEEDBACK_KEY = {
-    setSetting : 'set_ts',
-    sync       : 'cmd_ts',
-    upload     : 'cmd_ts',
-    reboot     : 'cmd_ts',
-    koneksi    : 'cmd_ts',
-    ota        : 'cmd_ts',
-};
-const CMD_TIMEOUT_MS = 30000;
-const CMD_POLL_MS    = 2000;
-
-let cmdModalActive = false;
-let cmdModalTimer  = null;
-
+// ── CMD Modal functions ──
 function closeCmdModal() {
     cmdModalActive = false;
     if (cmdModalTimer) clearInterval(cmdModalTimer);
@@ -731,7 +716,6 @@ function openCmdModal(cmdKey, deviceStates) {
     document.getElementById('cmd-cnt-total').textContent      = deviceStates.length;
     document.getElementById('cmd-modal-footer-status').textContent = 'Memproses...';
 
-    // Render rows
     const list = document.getElementById('cmd-modal-list');
     list.innerHTML = '';
     deviceStates.forEach(d => {
@@ -757,7 +741,7 @@ function updateCmdRow(deviceId, state, statusText) {
     if (!row) return;
     row.className = 'cmd-row state-' + state;
     const icon = { ok:'✅', fail:'❌', pending:'⏳', sending:'📡', skip:'⏭️' }[state] ?? '❓';
-    row.querySelector('.cmd-row-icon').textContent  = icon;
+    row.querySelector('.cmd-row-icon').textContent = icon;
     row.querySelector('#cmd-status-' + deviceId).textContent = statusText;
 }
 
@@ -783,7 +767,6 @@ function updateCmdSummary(states) {
 }
 
 async function sendAll(cmdKey) {
-    // Ambil snapshot timestamp sebelum kirim
     let pollData = {};
     try {
         const res  = await fetch('/api-internal/device-poll-status');
@@ -796,47 +779,44 @@ async function sendAll(cmdKey) {
 
     const fbKey = CMD_FEEDBACK_KEY[cmdKey] ?? 'cmd_ts';
 
-    // Kumpulkan device unik
     const seen = new Set();
     const deviceStates = [];
     Array.from(document.querySelectorAll('[data-device-id]')).forEach(el => {
         const id = el.dataset.deviceId;
         if (seen.has(id)) return;
         seen.add(id);
-        const poll   = pollData[id] ?? {};
+        const poll     = pollData[id] ?? {};
         const isOnline = (poll.online ?? 0) == 1;
-        const infoEl = document.querySelector(`[data-device-id="${id}"] .dc-info`);
+        const infoEl   = document.querySelector(`[data-device-id="${id}"] .dc-info`);
         deviceStates.push({
-            device_id     : id,
-            online        : isOnline,
-            skip          : !isOnline,
-            state         : isOnline ? 'sending' : 'skip',
-            ts_before     : poll[fbKey] ?? null,
-            online_since  : poll.last_seen ?? null,
-            fb_key        : fbKey,
-            cmd_key       : cmdKey,
-            info          : infoEl ? infoEl.textContent.trim() : '',
-            deadline      : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
-            sent_at      : Date.now(),
+            device_id           : id,
+            online              : isOnline,
+            skip                : !isOnline,
+            state               : isOnline ? 'sending' : 'skip',
+            ts_before           : poll[fbKey] ?? null,
+            online_since        : poll.last_seen ?? null,
+            fb_key              : fbKey,
+            cmd_key             : cmdKey,
+            info                : infoEl ? infoEl.textContent.trim() : '',
+            deadline            : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
+            sent_at             : Date.now(),
+            reboot_confirmed_at : null,
         });
     });
 
     openCmdModal(cmdKey, deviceStates);
 
-    // Kirim command paralel ke semua yang online
     const sendPromises = deviceStates
         .filter(d => !d.skip)
         .map(d => sendCmd(d.device_id, cmdKey));
     await Promise.all(sendPromises);
 
-    // Update state ke pending setelah terkirim
     deviceStates.filter(d => !d.skip).forEach(d => {
         d.state = 'pending';
         updateCmdRow(d.device_id, 'pending', '⏳ Menunggu feedback...');
     });
     updateCmdSummary(deviceStates);
 
-    // Polling feedback
     cmdModalTimer = setInterval(async () => {
         if (!cmdModalActive) { clearInterval(cmdModalTimer); return; }
 
@@ -859,25 +839,17 @@ async function sendAll(cmdKey) {
             const current = pollNow[d.device_id];
             if (!current) return;
 
-            const tsNow = current[d.fb_key] ?? null;
-            const isReboot = d.cmd_key === 'reboot';
-            const rebootDelay = isReboot && (Date.now() - d.sent_at) < 10000;
-            const rebootOk = isReboot && !rebootDelay && current.online == 1
-                      && current.last_seen !== d.online_since;
-            const feedbackOk = !isReboot && tsNow && tsNow !== d.ts_before;
-
-            if (rebootOk || feedbackOk) {
-                d.state = 'ok';
-                const detailMsg = rebootOk
-                    ? '✅ Online kembali'
-                    : (current.cmd_detail ?? current.set_detail)
-                        ? '✅ ' + (current.cmd_detail ?? current.set_detail)
-                        : '✅ Berhasil';
-                updateCmdRow(d.device_id, 'ok', detailMsg);
-            } else if (now > d.deadline) {
-                d.state = 'fail';
-                updateCmdRow(d.device_id, 'fail', '❌ Timeout');
-            }
+            processPollingResult(d, current,
+                (msg) => {
+                    d.state = 'ok';
+                    updateCmdRow(d.device_id, 'ok', msg);
+                },
+                () => {
+                    d.state = 'fail';
+                    updateCmdRow(d.device_id, 'fail', '❌ Timeout');
+                },
+                now
+            );
         });
 
         updateCmdSummary(deviceStates);
@@ -914,9 +886,9 @@ async function refreshGrid() {
                 el.style.backgroundColor = getColor(parseFloat(el.dataset.pct) || 0);
             });
         }
-        document.getElementById('cnt-online').textContent = data.online;
+        document.getElementById('cnt-online').textContent  = data.online;
         document.getElementById('cnt-offline').textContent = data.offline;
-        document.getElementById('cnt-total').textContent = data.total;
+        document.getElementById('cnt-total').textContent   = data.total;
         updateBars();
         updateLastRefresh();
         loadAllSparklines();
@@ -974,41 +946,18 @@ async function loadSparkline(deviceId) {
         const canvas = document.getElementById('spark-' + deviceId);
         if (!canvas) return;
 
+        // Destroy chart lama jika ada
+        const existing = Chart.getChart(canvas);
+        if (existing) existing.destroy();
+
         new Chart(canvas, {
             type: 'line',
             data: {
                 labels,
                 datasets: [
-                    {
-                        label: 'RAM%',
-                        data: ram,
-                        borderColor: '#2196f3',
-                        backgroundColor: 'rgba(33,150,243,0.08)',
-                        borderWidth: 1.5,
-                        pointRadius: 0,
-                        tension: 0.3,
-                        fill: true,
-                    },
-                    {
-                        label: 'RSSI%',
-                        data: rssi,
-                        borderColor: '#ff9800',
-                        backgroundColor: 'rgba(255,152,0,0.08)',
-                        borderWidth: 1.5,
-                        pointRadius: 0,
-                        tension: 0.3,
-                        fill: false,
-                    },
-                    {
-                        label: 'Ping%',
-                        data: ping,
-                        borderColor: '#4caf50',
-                        backgroundColor: 'rgba(76,175,80,0.08)',
-                        borderWidth: 1.5,
-                        pointRadius: 0,
-                        tension: 0.3,
-                        fill: false,
-                    },
+                    { label: 'RAM%',  data: ram,  borderColor: '#2196f3', backgroundColor: 'rgba(33,150,243,0.08)',  borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: true },
+                    { label: 'RSSI%', data: rssi, borderColor: '#ff9800', backgroundColor: 'rgba(255,152,0,0.08)',   borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false },
+                    { label: 'Ping%', data: ping, borderColor: '#4caf50', backgroundColor: 'rgba(76,175,80,0.08)',   borderWidth: 1.5, pointRadius: 0, tension: 0.3, fill: false },
                 ]
             },
             options: {
@@ -1016,27 +965,13 @@ async function loadSparkline(deviceId) {
                 maintainAspectRatio: false,
                 animation: false,
                 plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        titleFont: { size: 10 },
-                        bodyFont: { size: 10 },
-                    },
+                    legend: { display: false },
+                    tooltip: { mode: 'index', intersect: false, titleFont: { size: 10 }, bodyFont: { size: 10 } },
                     datalabels: { display: false }
                 },
                 scales: {
-                    x: {
-                        ticks: { font: { size: 8 }, maxTicksLimit: 6 },
-                        grid: { display: false }
-                    },
-                    y: {
-                        min: 0, max: 100,
-                        ticks: { font: { size: 8 }, maxTicksLimit: 4 },
-                        grid: { color: 'rgba(0,0,0,0.05)' }
-                    }
+                    x: { ticks: { font: { size: 8 }, maxTicksLimit: 6 }, grid: { display: false } },
+                    y: { min: 0, max: 100, ticks: { font: { size: 8 }, maxTicksLimit: 4 }, grid: { color: 'rgba(0,0,0,0.05)' } }
                 }
             }
         });
@@ -1051,10 +986,8 @@ function loadAllSparklines() {
     });
 }
 
-// Load semua sparkline saat halaman load
 document.addEventListener('DOMContentLoaded', () => {
     loadAllSparklines();
 });
-
 </script>
 @endpush
