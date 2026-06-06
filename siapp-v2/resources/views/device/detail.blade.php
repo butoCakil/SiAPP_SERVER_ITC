@@ -491,14 +491,67 @@ function switchTab(name, btn) {
 }
 
 // ── Kirim perintah ──
+const DETAIL_DEVICE_KEY = '{{ DB::table("api")->where("jenis","device_token")->where("status","aktif")->value("kode_api") }}';
+const DETAIL_DEVICE_ID  = '{{ $id }}';
+
 async function kirimPerintah(cmd) {
-    const res = await fetch('/api/device/perintah', {
+    let pollData = {};
+    try {
+        const res  = await fetch('/api-internal/device-poll-status');
+        const data = await res.json();
+        data.forEach(d => { pollData[d.device_id] = d; });
+    } catch(e) {}
+
+    const fbKey  = CMD_FEEDBACK_KEY[cmd] ?? 'cmd_ts';
+    const poll   = pollData[DETAIL_DEVICE_ID] ?? {};
+
+    const deviceStates = [{
+        device_id           : DETAIL_DEVICE_ID,
+        online              : 1,
+        skip                : false,
+        state               : 'sending',
+        ts_before           : poll[fbKey] ?? null,
+        online_since        : poll.last_seen ?? null,
+        fb_key              : fbKey,
+        cmd_key             : cmd,
+        info                : '{{ addslashes($device->info ? (json_decode($device->info,true)["label"] ?? $id) : $id) }}',
+        deadline            : Date.now() + (cmd === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
+        sent_at             : Date.now(),
+        reboot_confirmed_at : null,
+    }];
+
+    openCmdModal(cmd, deviceStates);
+
+    // Kirim perintah
+    await fetch('/api/device/perintah', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Device-Key': '{{ DB::table("api")->where("jenis","device_token")->where("status","aktif")->value("kode_api") }}' },
-        body: JSON.stringify({ device_id: '{{ $id }}', [cmd]: 1 })
+        headers: { 'Content-Type': 'application/json', 'X-Device-Key': DETAIL_DEVICE_KEY },
+        body: JSON.stringify({ device_id: DETAIL_DEVICE_ID, [cmd]: 1 })
     });
-    const data = await res.json();
-    alert(data.message ?? 'Perintah terkirim');
+
+    deviceStates[0].state = 'pending';
+    updateCmdRow(DETAIL_DEVICE_ID, 'pending', '⏳ Menunggu feedback...');
+    updateCmdSummary(deviceStates);
+
+    cmdModalTimer = setInterval(async () => {
+        if (!cmdModalActive) { clearInterval(cmdModalTimer); return; }
+        let pollNow = {};
+        try {
+            const res  = await fetch('/api-internal/device-poll-status');
+            const data = await res.json();
+            data.forEach(d => { pollNow[d.device_id] = d; });
+        } catch(e) { return; }
+        const now     = Date.now();
+        const d       = deviceStates[0];
+        const current = pollNow[d.device_id];
+        if (!current) return;
+        processPollingResult(d, current,
+            (msg) => { d.state='ok'; updateCmdRow(d.device_id,'ok',msg); clearInterval(cmdModalTimer); updateCmdSummary(deviceStates); },
+            ()    => { d.state='fail'; updateCmdRow(d.device_id,'fail','❌ Timeout'); clearInterval(cmdModalTimer); updateCmdSummary(deviceStates); },
+            now
+        );
+        updateCmdSummary(deviceStates);
+    }, CMD_POLL_MS);
 }
 
 // ── Inline log loader ──
