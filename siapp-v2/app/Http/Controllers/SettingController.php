@@ -155,6 +155,7 @@ class SettingController extends Controller
             'timid_ijin_url'     => $request->input('timid_ijin_url', ''),
             'timid_api_key'      => $request->input('timid_api_key', ''),
             'push_interval'      => (int) $request->input('push_interval', 5),
+            'upload_interval'    => max(15, (int) $request->input('upload_interval', 300)),
             'wa_number'          => $request->input('wa_number', ''),
             'wa_numbers'         => json_encode(array_filter($request->input('wa_numbers', []))),
             'wa_device_id'       => $request->input('wa_device_id', ''),

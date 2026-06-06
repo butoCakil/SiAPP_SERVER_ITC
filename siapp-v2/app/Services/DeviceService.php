@@ -53,6 +53,7 @@ class DeviceService
                 'up2'          => $setting->upload2      ?? '13:00:00',
                 'rs1'          => $setting->restart1     ?? '05:00:00',
                 'rs2'          => $setting->restart2     ?? '17:00:00',
+                'uploadInterval' => (int) ($setting->upload_interval ?? 300),
             ],
         ], JSON_UNESCAPED_UNICODE);
 

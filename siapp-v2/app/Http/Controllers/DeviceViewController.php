@@ -455,6 +455,15 @@ class DeviceViewController extends Controller
         ]);
     }
 
+    public function setUploadInterval(Request $request, string $id)
+    {
+        $interval = (int) $request->input("interval", 300);
+        if ($interval < 15) $interval = 15;
+        $service = new \App\Services\DeviceService();
+        $result  = $service->kirimCommand($id, ["uploadInterval" => $interval]);
+        return response()->json($result);
+    }
+
     public function updateLabel(Request $request, string $id)
     {
         $label = $request->input('label', '');

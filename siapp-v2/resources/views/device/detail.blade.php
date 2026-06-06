@@ -256,7 +256,24 @@
         </div>
     </div>
 
-    {{-- Koneksi Device --}}
+    {{-- Background Upload Interval --}}
+    <div class="card mb-3">
+        <div class="card-header py-2"><strong><i class="fas fa-clock mr-1"></i>Interval Background Upload</strong></div>
+        <div class="card-body">
+            <div class="d-flex align-items-center" style="gap:8px;">
+                <select id="uploadIntervalSelect" class="form-control form-control-sm" style="width:auto;">
+                    @foreach([15 => '15 detik', 30 => '30 detik', 60 => '1 menit', 120 => '2 menit', 300 => '5 menit', 600 => '10 menit'] as $val => $label)
+                        <option value="{{ $val }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-sm btn-secondary" onclick="setUploadInterval()" {{ !$device->online ? 'disabled' : '' }}>
+                    <i class="fas fa-paper-plane mr-1"></i>Kirim ke Device
+                </button>
+                <small class="text-muted">Interval upload background dari RAM device ke server</small>
+            </div>
+        </div>
+    </div>
+    {{-- Koneksi Device --
     <div class="card mb-3">
         <div class="card-header py-2"><strong><i class="fas fa-network-wired mr-1"></i>Koneksi & Jadwal Device</strong></div>
         <div class="card-body">
@@ -844,6 +861,20 @@ async function otaSend() {
         document.getElementById('ota-status').innerHTML = '<span class="text-success"><i class="fas fa-bolt mr-1"></i>Perintah OTA terkirim. Tunggu device restart...</span>';
     } else {
         document.getElementById('ota-status').innerHTML = '<span class="text-danger">Gagal: ' + (json.message ?? 'error') + '</span>';
+    }
+}
+async function setUploadInterval() {
+    const interval = parseInt(document.getElementById('uploadIntervalSelect').value);
+    const res = await fetch('{{ route("device.upload.interval", $id) }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ interval: interval })
+    });
+    const json = await res.json();
+    if (json.status === 'ok') {
+        alert('Interval berhasil dikirim ke device.');
+    } else {
+        alert('Gagal: ' + (json.message ?? 'error'));
     }
 }
 </script>

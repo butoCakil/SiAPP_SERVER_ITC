@@ -301,6 +301,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                <label style="font-size:12px;"><i class="fas fa-clock mr-1"></i>Interval Background Upload</label>
+                                <select name="upload_interval" class="form-control form-control-sm">
+                                    @foreach([15,30,60,120,300,600] as $iv)
+                                        <option value="{{ $iv }}" {{ ($setting->upload_interval ?? 300) == $iv ? 'selected' : '' }}>
+                                            @if($iv < 60){{ $iv }} detik@elseif($iv < 3600){{ $iv/60 }} menit@endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <small class="text-muted">Interval kirim data realtime dari RAM device ke server</small>
+                            </div>
+                        </div>
+                    </div>
                     <small class="text-muted mt-2 d-block">
                         <i class="fas fa-info-circle mr-1"></i>Jadwal ini dikirim ke semua device via MQTT saat tombol "Kirim Setting" ditekan di halaman Device.
                     </small>
