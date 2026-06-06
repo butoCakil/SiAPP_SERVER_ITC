@@ -624,14 +624,17 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
     const infoEl = document.querySelector(`[data-device-id="${deviceId}"] .dc-info`);
 
     const deviceStates = [{
-        device_id : deviceId,
-        online    : 1,
-        skip      : false,
-        state     : 'sending',
-        ts_before : poll[fbKey] ?? null,
-        fb_key    : fbKey,
-        info      : infoEl ? infoEl.textContent.trim() : '',
-        deadline  : Date.now() + CMD_TIMEOUT_MS,
+        device_id    : deviceId,
+        online       : 1,
+        skip         : false,
+        state        : 'sending',
+        ts_before    : poll[fbKey] ?? null,
+        online_since : poll.last_seen ?? null,
+        fb_key       : fbKey,
+        cmd_key      : cmdKey,
+        info         : infoEl ? infoEl.textContent.trim() : '',
+        deadline     : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
+        sent_at      : Date.now(),
     }];
 
     openCmdModal(cmdKey, deviceStates);
@@ -659,10 +662,19 @@ async function handleCmd(btn, deviceId, cmdKey, value=1) {
         if (!current) return;
 
         const tsNow = current[d.fb_key] ?? null;
-        if (tsNow && tsNow !== d.ts_before) {
+        const isReboot = d.cmd_key === 'reboot';
+        const rebootDelay = isReboot && (Date.now() - d.sent_at) < 10000;
+        const rebootOk = isReboot && !rebootDelay && current.online == 1
+                      && current.last_seen !== d.online_since;
+        const feedbackOk = !isReboot && tsNow && tsNow !== d.ts_before;
+
+        if (rebootOk || feedbackOk) {
             d.state = 'ok';
-            const detail = current.cmd_detail ?? current.set_detail ?? null;
-            const detailMsg = detail ? '✅ ' + detail : '✅ Berhasil';
+            const detailMsg = rebootOk
+                ? '✅ Online kembali'
+                : (current.cmd_detail ?? current.set_detail)
+                    ? '✅ ' + (current.cmd_detail ?? current.set_detail)
+                    : '✅ Berhasil';
             updateCmdRow(d.device_id, 'ok', detailMsg);
             clearInterval(cmdModalTimer);
         } else if (now > d.deadline) {
@@ -795,14 +807,17 @@ async function sendAll(cmdKey) {
         const isOnline = (poll.online ?? 0) == 1;
         const infoEl = document.querySelector(`[data-device-id="${id}"] .dc-info`);
         deviceStates.push({
-            device_id : id,
-            online    : isOnline,
-            skip      : !isOnline,
-            state     : isOnline ? 'sending' : 'skip',
-            ts_before : poll[fbKey] ?? null,
-            fb_key    : fbKey,
-            info      : infoEl ? infoEl.textContent.trim() : '',
-            deadline  : Date.now() + CMD_TIMEOUT_MS,
+            device_id     : id,
+            online        : isOnline,
+            skip          : !isOnline,
+            state         : isOnline ? 'sending' : 'skip',
+            ts_before     : poll[fbKey] ?? null,
+            online_since  : poll.last_seen ?? null,
+            fb_key        : fbKey,
+            cmd_key       : cmdKey,
+            info          : infoEl ? infoEl.textContent.trim() : '',
+            deadline      : Date.now() + (cmdKey === 'reboot' ? 90000 : CMD_TIMEOUT_MS),
+            sent_at      : Date.now(),
         });
     });
 
@@ -845,11 +860,19 @@ async function sendAll(cmdKey) {
             if (!current) return;
 
             const tsNow = current[d.fb_key] ?? null;
-            if (tsNow && tsNow !== d.ts_before) {
-                // Timestamp berubah = feedback diterima
+            const isReboot = d.cmd_key === 'reboot';
+            const rebootDelay = isReboot && (Date.now() - d.sent_at) < 10000;
+            const rebootOk = isReboot && !rebootDelay && current.online == 1
+                      && current.last_seen !== d.online_since;
+            const feedbackOk = !isReboot && tsNow && tsNow !== d.ts_before;
+
+            if (rebootOk || feedbackOk) {
                 d.state = 'ok';
-                const detail = current.cmd_detail ?? current.set_detail ?? null;
-                const detailMsg = detail ? '✅ ' + detail : '✅ Berhasil';
+                const detailMsg = rebootOk
+                    ? '✅ Online kembali'
+                    : (current.cmd_detail ?? current.set_detail)
+                        ? '✅ ' + (current.cmd_detail ?? current.set_detail)
+                        : '✅ Berhasil';
                 updateCmdRow(d.device_id, 'ok', detailMsg);
             } else if (now > d.deadline) {
                 d.state = 'fail';
@@ -906,6 +929,7 @@ async function refreshGrid() {
 }
 
 setInterval(() => {
+    if (cmdModalActive) { countdown = 60; if (cdEl) cdEl.textContent = countdown; return; }
     countdown--;
     if (cdEl) cdEl.textContent = countdown;
     if (countdown <= 0) refreshGrid();

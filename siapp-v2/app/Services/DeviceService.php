@@ -236,6 +236,12 @@ class DeviceService
         if (!empty($version)) {
             $updateData['fw_version'] = $version;
         }
+        
+        // Force update online_since saat reboot diterima
+        $status = $data['status'] ?? null;
+        if ($status === 'command_applied' && str_contains($data['detail'] ?? '', 'Reboot')) {
+            $updateData['online_since'] = now();
+        }
 
         DB::table('devices')
             ->where('device_id', $deviceId)

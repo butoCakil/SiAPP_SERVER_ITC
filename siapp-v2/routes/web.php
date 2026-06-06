@@ -303,17 +303,19 @@ Route::get('/api-internal/device-metrics/{id}', function (string $id) {
 })->middleware('auth.admin');
 
 Route::get('/api-internal/device-poll-status', function () {
-    $devices = DB::table('devices')->where('hidden', 0)->get(['device_id', 'online', 'last_command', 'last_setting']);
+    $devices = DB::table('devices')->where('hidden', 0)->get(['device_id', 'online', 'online_since', 'last_seen', 'last_command', 'last_setting']);
     $result  = $devices->map(function ($d) {
         $cmd = $d->last_command ? json_decode($d->last_command, true) : null;
         $set = $d->last_setting ? json_decode($d->last_setting, true) : null;
         return [
-            'device_id'  => $d->device_id,
-            'online'     => (int) $d->online,
-            'cmd_ts'     => $cmd['timestamp'] ?? null,
-            'set_ts'     => $set['timestamp'] ?? null,
-            'cmd_detail' => $cmd['detail']    ?? null,
-            'set_detail' => $set['detail']    ?? null,
+            'device_id'   => $d->device_id,
+            'online'      => (int) $d->online,
+            'online_since' => $d->online_since,
+            'last_seen'    => $d->last_seen,
+            'cmd_ts'      => $cmd['timestamp'] ?? null,
+            'set_ts'      => $set['timestamp'] ?? null,
+            'cmd_detail'  => $cmd['detail']    ?? null,
+            'set_detail'  => $set['detail']    ?? null,
         ];
     });
     return response()->json($result);
