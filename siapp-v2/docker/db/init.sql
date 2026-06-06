@@ -842,6 +842,7 @@ CREATE TABLE `statusnya` (
   `timid_ijin_url` text DEFAULT NULL,
   `timid_api_key` varchar(255) DEFAULT '',
   `push_interval` int(3) DEFAULT 5,
+  `upload_interval` smallint(5) unsigned NOT NULL DEFAULT 300 COMMENT 'Interval background upload device (detik), min 15',
   `auto_mode` tinyint(1) NOT NULL DEFAULT 1,
   `waktumasuk` time NOT NULL,
   `waktupulang` time NOT NULL,
