@@ -342,6 +342,7 @@ CREATE TABLE `devices` (
   `last_koneksi` text DEFAULT NULL,
   `last_dirlist` text DEFAULT NULL,
   `last_status` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`last_status`)),
+  `last_bg_upload` text DEFAULT NULL COMMENT 'Info background upload terakhir dari device',
   `info` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),

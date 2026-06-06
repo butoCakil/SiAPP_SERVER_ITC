@@ -225,6 +225,7 @@ class DeviceService
         $column = match ($mode) {
             1       => 'last_command',
             2       => 'last_setting',
+            3       => 'last_bg_upload',
             default => 'last_status',
         };
 
