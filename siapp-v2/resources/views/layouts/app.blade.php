@@ -415,7 +415,8 @@
             const feedbackOk = tsNow && tsNow !== d.ts_before;
             if (feedbackOk) {
                 const _detail = (d.fb_key === 'set_ts') ? current.set_detail : current.cmd_detail;
-                const detailMsg = _detail ? '✅ ' + _detail : '✅ Berhasil';
+                const _detailStr = _detail ? (typeof _detail === 'object' ? current.set_detail?.status ?? 'settings_applied' : _detail) : null;
+                const detailMsg = _detailStr ? '✅ ' + _detailStr : '✅ Berhasil';
                 onOk(detailMsg);
                 return;
             }
