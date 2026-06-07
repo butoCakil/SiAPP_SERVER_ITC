@@ -286,7 +286,7 @@
             </div>
         </div>
     </div>
-    {{-- Koneksi Device --
+    {{-- Koneksi Device --}}
     <div class="card mb-3">
         <div class="card-header py-2"><strong><i class="fas fa-network-wired mr-1"></i>Koneksi & Jadwal Device</strong></div>
         <div class="card-body">
@@ -403,6 +403,58 @@
             </form>
         </div>
     </div>
+
+{{-- ── OTA Firmware ── --}}
+<div class="card mt-3">
+    <div class="card-header py-2" style="background:#fff3cd;">
+        <strong><i class="fas fa-microchip mr-1"></i>OTA Firmware Update</strong>
+        <span class="badge badge-secondary ml-2" style="font-size:11px;">
+            Versi saat ini: <strong>{{ $device->fw_version ?? '-' }}</strong>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="ctrl-section">
+            <h6>Upload File Firmware (.bin)</h6>
+            <div class="input-group mb-2">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ota-file" accept=".bin">
+                    <label class="custom-file-label" for="ota-file">Pilih file .bin...</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-warning" id="ota-upload-btn" onclick="otaUpload()">
+                        <i class="fas fa-upload mr-1"></i>Upload
+                    </button>
+                </div>
+            </div>
+            <small class="text-muted">Maksimal 4MB. File akan disimpan di server.</small>
+        </div>
+        @if(!empty($firmwareList))
+        <div class="ctrl-section">
+            <h6>Atau Pilih Firmware yang Sudah Ada</h6>
+            <div class="input-group">
+                <select class="form-control form-control-sm" id="ota-existing" onchange="pilihFirmwareAda(this)">
+                    <option value="">— Pilih firmware —</option>
+                    @foreach($firmwareList as $fw)
+                    <option value="{{ $fw['filename'] }}" data-url="{{ $fw['url'] }}">
+                        {{ $fw['filename'] }} ({{ $fw['size'] }}, {{ $fw['time'] }})
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        @endif
+        <div class="ctrl-section" id="ota-send-section" style="display:none;">
+            <h6>Kirim OTA ke Device</h6>
+            <div class="alert alert-info py-2 mb-2" id="ota-url-info" style="font-size:12px;word-break:break-all;"></div>
+            <button class="btn btn-danger" id="ota-send-btn" onclick="otaSend()">
+                <i class="fas fa-bolt mr-1"></i>Kirim OTA ke Device
+            </button>
+            <small class="d-block mt-1 text-muted">Device akan download dan flash firmware secara otomatis.</small>
+        </div>
+        <div id="ota-status" class="mt-2"></div>
+    </div>
+</div>
+
 </div>
 
 {{-- Tab: Log --}}
@@ -456,57 +508,6 @@
     </div>
 </div>
 
-
-{{-- ── OTA Firmware ── --}}
-<div class="card mt-3">
-    <div class="card-header py-2" style="background:#fff3cd;">
-        <strong><i class="fas fa-microchip mr-1"></i>OTA Firmware Update</strong>
-        <span class="badge badge-secondary ml-2" style="font-size:11px;">
-            Versi saat ini: <strong>{{ $device->fw_version ?? '-' }}</strong>
-        </span>
-    </div>
-    <div class="card-body">
-        <div class="ctrl-section">
-            <h6>Upload File Firmware (.bin)</h6>
-            <div class="input-group mb-2">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="ota-file" accept=".bin">
-                    <label class="custom-file-label" for="ota-file">Pilih file .bin...</label>
-                </div>
-                <div class="input-group-append">
-                    <button class="btn btn-warning" id="ota-upload-btn" onclick="otaUpload()">
-                        <i class="fas fa-upload mr-1"></i>Upload
-                    </button>
-                </div>
-            </div>
-            <small class="text-muted">Maksimal 4MB. File akan disimpan di server.</small>
-        </div>
-        @if(!empty($firmwareList))
-        <div class="ctrl-section">
-            <h6>Atau Pilih Firmware yang Sudah Ada</h6>
-            <div class="input-group">
-                <select class="form-control form-control-sm" id="ota-existing" onchange="pilihFirmwareAda(this)">
-                    <option value="">— Pilih firmware —</option>
-                    @foreach($firmwareList as $fw)
-                    <option value="{{ $fw['filename'] }}" data-url="{{ $fw['url'] }}">
-                        {{ $fw['filename'] }} ({{ $fw['size'] }}, {{ $fw['time'] }})
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endif
-        <div class="ctrl-section" id="ota-send-section" style="display:none;">
-            <h6>Kirim OTA ke Device</h6>
-            <div class="alert alert-info py-2 mb-2" id="ota-url-info" style="font-size:12px;word-break:break-all;"></div>
-            <button class="btn btn-danger" id="ota-send-btn" onclick="otaSend()">
-                <i class="fas fa-bolt mr-1"></i>Kirim OTA ke Device
-            </button>
-            <small class="d-block mt-1 text-muted">Device akan download dan flash firmware secara otomatis.</small>
-        </div>
-        <div id="ota-status" class="mt-2"></div>
-    </div>
-</div>
 
 @endsection
 

@@ -308,7 +308,9 @@
                                 <select name="upload_interval" class="form-control form-control-sm">
                                     @foreach([15,30,60,120,300,600] as $iv)
                                         <option value="{{ $iv }}" {{ ($setting->upload_interval ?? 300) == $iv ? 'selected' : '' }}>
-                                            @if($iv < 60){{ $iv }} detik@elseif($iv < 3600){{ $iv/60 }} menit@endif
+                                            @if($iv < 60){{ $iv }} detik
+                                            @elseif($iv < 3600){{ $iv/60 }} menit
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
