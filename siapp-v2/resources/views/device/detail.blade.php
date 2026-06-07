@@ -184,6 +184,19 @@
                 </div>
             </div>
 
+            <div class="card mt-2">
+                <div class="card-header py-2"><strong>⚡ Background Upload Terakhir</strong></div>
+                <div class="card-body">
+                    @if(!empty($bgUpload))
+                        <div class="info-row"><span class="info-label">Status</span><span class="badge badge-success">{{ $bgUpload["status"] ?? "-" }}</span></div>
+                        <div class="info-row"><span class="info-label">Jumlah Data</span><span>{{ $bgUpload["detail"] ?? "-" }}</span></div>
+                        <div class="info-row"><span class="info-label">Waktu</span><span>{{ $bgUpload["timestamp"] ?? "-" }}</span></div>
+                        <div class="info-row"><span class="info-label">Firmware</span><span>{{ $bgUpload["version"] ?? "-" }}</span></div>
+                    @else
+                        <p class="text-muted">Belum ada background upload.</p>
+                    @endif
+                </div>
+            </div>
             @php $koneksi = json_decode($device->last_koneksi, true) ?? []; @endphp
             @if(!empty($koneksi))
             <div class="card mt-2">

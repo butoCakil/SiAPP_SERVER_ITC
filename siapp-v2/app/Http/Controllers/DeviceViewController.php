@@ -98,7 +98,8 @@ class DeviceViewController extends Controller
 
         $status   = json_decode($device->last_status,  true) ?? [];
         $setting  = json_decode($device->last_setting, true) ?? [];
-        $command  = json_decode($device->last_command, true) ?? [];
+        $command  = json_decode($device->last_command,   true) ?? [];
+        $bgUpload = json_decode($device->last_bg_upload, true) ?? [];
 
         // Daftar tanggal log
         $uploadDir = '/opt/lampp/htdocs/data/uploads/';
@@ -134,6 +135,7 @@ class DeviceViewController extends Controller
             'status',
             'setting',
             'command',
+            'bgUpload',
             'logDates',
             'firmwareList',
             'id'
