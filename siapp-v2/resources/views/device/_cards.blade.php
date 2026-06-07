@@ -191,7 +191,7 @@
     $bufTotal = $bufferTotal;
     $bufLabel = $bufNow === null ? null : $bufNow . '/' . $bufTotal;
     $bufClass = $bufNow === null ? '' : ($bufNow === 0 ? 'buf-ok' : ($bufNow <= 50 ? 'buf-warn' : 'buf-danger'));
-    $updatedAt = $device->updated_at ? date('H:i', strtotime($device->updated_at)) : '--:--';
+    $updatedAt = $device->updated_at ? date('d/m H:i:s', strtotime($device->updated_at)) : '--:--';
 @endphp
 <div class="device-card-compact {{ $isOnline ? 'is-online' : 'is-offline' }}"
     data-device-id="{{ $device->device_id }}"
@@ -200,8 +200,29 @@
     {{-- Baris 1: ID + Dot --}}
     <div class="dcc-row1">
         <span class="dcc-id" title="{{ $device->device_id }}">{{ $device->device_id }}</span>
+        <span class="dcc-time">
+            @if($sinceRaw)
+                @php
+                    $diff = time() - strtotime($sinceRaw);
+                    if ($diff < 60) {
+                        echo $diff . 's';
+                    } elseif ($diff < 3600) {
+                        echo floor($diff / 60) . 'm ' . ($diff % 60) . 's';
+                    } elseif ($diff < 86400) {
+                        echo floor($diff / 3600) . 'h ' . floor(($diff % 3600) / 60) . 'm';
+                    } elseif ($diff < 604800) {
+                        echo floor($diff / 86400) . 'd ' . floor(($diff % 86400) / 3600) . 'h';
+                    } elseif ($diff < 2419200) {
+                        echo floor($diff / 604800) . 'w ' . floor(($diff % 604800) / 86400) . 'd';
+                    } else {
+                        echo floor($diff / 2419200) . 'mo ' . floor(($diff % 2419200) / 604800) . 'w';
+                    }
+                @endphp
+            @endif
+        </span>
         <div class="dcc-dot {{ $isOnline ? 'online' : 'offline' }}"></div>
     </div>
+    <hr style="margin:2px 0;">
     {{-- Baris 2: icon wifi + persen + bar --}}
     <div class="dcc-rssi-row">
         <span class="dcc-badge">🛜 {{ $rssiPct }}%</span>
@@ -218,6 +239,7 @@
         @endif
         <span class="dcc-time">{{ $updatedAt }}</span>
     </div>
+    <hr style="margin:2px 0;">
     {{-- Baris 4: SSID + FW Version --}}
     <div class="dcc-row3">
         <span class="dcc-ssid">{{ $ssid }}</span>
@@ -227,6 +249,7 @@
     </div>
     {{-- Baris 5: Info Device --}}
     @if($info && $info !== '-')
+    <hr style="margin:2px 0;">
     <div style="font-size:9px; color:#666; margin-top:2px;">{{ $info }}</div>
     @endif
 </div>

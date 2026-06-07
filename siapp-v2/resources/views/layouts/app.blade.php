@@ -414,9 +414,8 @@
         } else {
             const feedbackOk = tsNow && tsNow !== d.ts_before;
             if (feedbackOk) {
-                const detailMsg = (current.cmd_detail ?? current.set_detail)
-                    ? '✅ ' + (current.cmd_detail ?? current.set_detail)
-                    : '✅ Berhasil';
+                const _detail = (d.fb_key === 'set_ts') ? current.set_detail : current.cmd_detail;
+                const detailMsg = _detail ? '✅ ' + _detail : '✅ Berhasil';
                 onOk(detailMsg);
                 return;
             }
