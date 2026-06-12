@@ -284,7 +284,8 @@ class UploadController extends Controller
         $inserted = 0;
         $skipped = 0;
         $errors = [];
-        $RUANG = 'Masjid 3';
+        $regDevice = DB::table('reg_device')->where('no_device', $meta_nodevice)->first();
+        $RUANG = $regDevice->kode ?? 'Masjid 3';
 
         foreach ($data['data'] as $item) {
             if (!is_array($item)) continue;
