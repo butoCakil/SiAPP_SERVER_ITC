@@ -14,6 +14,12 @@ if ! docker compose version &> /dev/null; then
   echo "ERROR: Docker Compose belum tersedia."
   exit 1
 fi
+
+# Fungsi cek port terpakai (portable: Linux & Git Bash Windows)
+port_in_use() {
+  (exec 3<>/dev/tcp/127.0.0.1/$1) 2>/dev/null && { exec 3>&- 3<&-; return 0; } || return 1
+}
+
 echo "[1/5] Membuat file konfigurasi..."
 if [ -f ".env.docker" ]; then
   echo "      File .env.docker sudah ada, dilewati."
@@ -55,20 +61,23 @@ fi
 echo "[5/5] Menjalankan SiAPP..."
 APP_PORT=$(grep "^APP_PORT=" .env.docker | cut -d= -f2); APP_PORT=${APP_PORT:-8080}
 MQTT_PORT=$(grep "^MQTT_PORT=" .env.docker | cut -d= -f2); MQTT_PORT=${MQTT_PORT:-1883}
-if ss -tlnp | grep -q ":${APP_PORT} "; then
+
+if port_in_use "$APP_PORT"; then
   echo ""
   echo "  PERINGATAN: Port ${APP_PORT} sudah dipakai oleh proses lain."
   echo "  Ubah APP_PORT di .env.docker ke port lain, misalnya: APP_PORT=9080"
   echo "  Kemudian jalankan: docker compose up -d"
   exit 1
 fi
-if ss -tlnp | grep -q ":${MQTT_PORT} "; then
+
+if port_in_use "$MQTT_PORT"; then
   echo ""
   echo "  PERINGATAN: Port ${MQTT_PORT} sudah dipakai oleh proses lain."
   echo "  Ubah MQTT_PORT di .env.docker ke port lain, misalnya: MQTT_PORT=1884"
   echo "  Kemudian jalankan: docker compose up -d"
   exit 1
 fi
+
 docker compose up -d
 
 echo "      Menunggu database siap..."
