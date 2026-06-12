@@ -285,7 +285,15 @@ class UploadController extends Controller
         $skipped = 0;
         $errors = [];
         $regDevice = DB::table('reg_device')->where('no_device', $meta_nodevice)->first();
-        $RUANG = $regDevice->kode ?? 'Masjid 3';
+        if ($regDevice) {
+            $RUANG = $regDevice->kode;
+        } elseif (preg_match('/^IM\d+/i', $meta_nodevice)) {
+            $RUANG = 'Izin Mens';
+        } elseif (preg_match('/^M0*(\d+)/i', $meta_nodevice, $m)) {
+            $RUANG = 'Masjid ' . (int)$m[1];
+        } else {
+            $RUANG = 'Masjid 3';
+        }
 
         foreach ($data['data'] as $item) {
             if (!is_array($item)) continue;
