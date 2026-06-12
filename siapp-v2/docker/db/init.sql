@@ -935,3 +935,32 @@ LOCK TABLES `api` WRITE;
 INSERT INTO `api` (`id`, `kode_api`, `info_api`, `jenis`, `masaberlaku`, `status`) VALUES (2,'bf84b03e04fca268e50fc7698e8d673e','restAPIdb','sim_token','2027-12-31','aktif'),(3,'1234567890987654321','Token Sekolah - Device ESP32','device_token','2027-12-31','aktif');
 /*!40000 ALTER TABLE `api` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- Tandai semua migration sebagai sudah dijalankan
+-- (skema tabel sudah lengkap dari dump di atas)
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`migration`, `batch`) VALUES
+('0001_01_01_000000_create_users_table', 1),
+('0001_01_01_000001_create_cache_table', 1),
+('0001_01_01_000002_create_jobs_table', 1),
+('2026_05_24_060055_create_password_resets_table', 1),
+('2026_06_06_231249_add_upload_interval_to_statusnya', 1),
+('2026_06_07_064713_add_last_bg_upload_to_devices', 1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- Konfigurasi default sistem (wajib ada 1 baris)
+LOCK TABLES `statusnya` WRITE;
+/*!40000 ALTER TABLE `statusnya` DISABLE KEYS */;
+INSERT INTO `statusnya` (`mode`, `wa`, `wta`, `wtp`, `wp`, `waktumasuk`, `waktupulang`, `info`) VALUES
+(0, '07:00:00', '07:30:00', '14:00:00', '15:00:00', '07:00:00', '15:00:00', 'Konfigurasi default - silakan ubah di menu Setting');
+/*!40000 ALTER TABLE `statusnya` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- =============================================
+-- CATATAN: Password default akun 'Pengembang'
+-- Password di-hash dengan MD5 (lihat App\Models\Admin::verifyPassword).
+-- Untuk reset password setelah instalasi, jalankan:
+--   UPDATE admin SET password = MD5('password_baru_anda') WHERE username='Pengembang';
+-- =============================================
