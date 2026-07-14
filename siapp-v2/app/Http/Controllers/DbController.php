@@ -4,43 +4,61 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as FakerFactory;
 
 class DbController extends Controller
 {
     // ── GET /api/db/fake ──
     public function fake()
     {
-        $data = DB::table('datasiswa')
-            ->where('status', 'aktif')
-            ->select('nokartu', 'nis')
-            ->get();
+        $data = $this->buatDummySiswa(30)->map(fn($s) => [
+            'nokartu' => $s['nokartu'],
+            'nis'     => $s['nis'],
+        ]);
 
         return response()->json([
             'metadata' => [
                 'jumlah_data' => $data->count(),
                 'timestamp'   => now()->toIso8601String(),
-                'versi'       => 'v1.0',
+                'versi'       => 'v1.0-dummy',
             ],
             'data' => $data,
         ]);
     }
 
-    // ── GET /api/db/fake-mid ──
     public function fakeMid()
     {
-        $data = DB::table('datasiswa')
-            ->where('status', 'aktif')
-            ->select('nokartu', 'nis', 'nama', 'kelas')
-            ->get();
+        $data = $this->buatDummySiswa(100);
 
         return response()->json([
             'metadata' => [
                 'jumlah_data' => $data->count(),
                 'timestamp'   => now()->toIso8601String(),
-                'versi'       => 'v1.0',
+                'versi'       => 'v1.0-dummy',
             ],
             'data' => $data,
         ]);
+    }
+
+    // ── Generator data dummy untuk uji firmware/hardware baru ──
+    // Seed tetap (12345) supaya hasilnya konsisten setiap dipanggil,
+    // memudahkan pengujian yang butuh data yang bisa direproduksi.
+    private function buatDummySiswa(int $jumlah)
+    {
+        $faker = FakerFactory::create('id_ID');
+        $faker->seed(12345);
+
+        $jurusan = ['AT', 'DKV', 'TE'];
+        $tingkat = ['X', 'XI', 'XII'];
+
+        return collect(range(1, $jumlah))->map(function ($i) use ($faker, $jurusan, $tingkat) {
+            return [
+                'nokartu' => $faker->regexify('[0-9A-F]{8}'),
+                'nis'     => (string) (90000 + $i),
+                'nama'    => strtoupper($faker->name()),
+                'kelas'   => $faker->randomElement($tingkat) . ' TEST-' . $faker->randomElement($jurusan) . ' ' . $faker->numberBetween(1, 3),
+            ];
+        });
     }
 
     // ── GET /api/db/query?db=datasiswa&akses=mid ──
