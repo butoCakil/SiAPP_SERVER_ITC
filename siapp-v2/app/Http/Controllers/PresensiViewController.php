@@ -58,7 +58,7 @@ class PresensiViewController extends Controller
 
     public function create()
     {
-        $siswaList = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama')->get();
+        $siswaList = DB::table('datasiswa')->where('status', 'aktif')->orderBy('kelas')->orderBy('nama')->get();
         return view('presensi.create', compact('siswaList'));
     }
 
@@ -149,10 +149,10 @@ class PresensiViewController extends Controller
         $bulanBerikut = date('Y-m', strtotime($bulan . '-01 +1 month'));
         $bulanBerikut = $bulanBerikut > date('Y-m') ? null : $bulanBerikut;
 
-        $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
+        $queryS = DB::table('datasiswa')->where('status', 'aktif')->orderBy('kelas')->orderBy('nama');
         if ($filterKelas) $queryS->where('kelas', $filterKelas);
         $siswaList = $queryS->get();
-        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $kelasList = DB::table('datasiswa')->where('status', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
 
         // ── Bulk query ──
         $nokartuList = $siswaList->pluck('nokartu')->toArray();
@@ -396,10 +396,10 @@ class PresensiViewController extends Controller
         $tglMulai    = $periodeList[0] . '-01';
         $tglAkhir    = $periodeList[5] . '-31';
 
-        $queryS = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama');
+        $queryS = DB::table('datasiswa')->where('status', 'aktif')->orderBy('kelas')->orderBy('nama');
         if ($filterKelas) $queryS->where('kelas', $filterKelas);
         $siswaList = $queryS->get();
-        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $kelasList = DB::table('datasiswa')->where('status', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
 
         // ── Bulk query semua data semester sekaligus ──
         $nokartuList = $siswaList->pluck('nokartu')->toArray();
@@ -720,7 +720,7 @@ class PresensiViewController extends Controller
             $asharOk  = $s['ashar']  && !$s['ashar_izin'];
             return !$dzuhurOk || !$asharOk; // belum keduanya murni
         })->count();
-        $kelasList          = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $kelasList          = DB::table('datasiswa')->where('status', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
 
         return view('presensi.event', compact(
             'siswaList',
@@ -831,7 +831,7 @@ class PresensiViewController extends Controller
         if ($filterStatus === 'sudah') $query->whereNotNull('di.jam_kembali');
 
         $ijinList  = $query->get();
-        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $kelasList = DB::table('datasiswa')->where('status', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
         $totalBelumKembali = DB::table('daftarijin')->where('tanggalijin', $tanggal)->whereNull('jam_kembali')->count();
         $totalSudahKembali = DB::table('daftarijin')->where('tanggalijin', $tanggal)->whereNotNull('jam_kembali')->count();
 

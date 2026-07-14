@@ -67,6 +67,14 @@
                     value="{{ $siswa->kelas }}" required>
             </div>
             <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="aktif"  {{ $siswa->status==='aktif'  ? 'selected':'' }}>Aktif</option>
+                    <option value="lulus"  {{ $siswa->status==='lulus'  ? 'selected':'' }}>Lulus</option>
+                    <option value="keluar" {{ $siswa->status==='keluar' ? 'selected':'' }}>Keluar</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label>Keterangan</label>
                 <input type="text" name="keterangan" class="form-control"
                     value="{{ $siswa->keterangan }}">

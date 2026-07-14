@@ -16,6 +16,7 @@ class PresensiService
         '407'  => 'ERROR!--DEVICE TIDAK SESUAI',
         '505'  => 'ERROR!--DATABASE SERVER',
         'IDTT' => 'Kartu ID ini--belum terdaftar',
+        'ALUM' => '--Sudah tidak aktif (Lulus/Keluar)',
         'HLTM' => '--Hari ini Libur',
         'TBPS' => '--Tidak bisa melakukan presensi sekarang.',
         'BMPM' => '--Berhasil Presensi',
@@ -97,6 +98,10 @@ class PresensiService
 
         if (!$siswa) {
             return $this->buatRespon('IDTT', $idchip, $nodevice, $nokartu);
+        }
+
+        if (($siswa->status ?? 'aktif') !== 'aktif') {
+            return $this->buatResponNama('ALUM', $siswa->nama, $idchip, $nodevice, $nokartu);
         }
 
         $nama        = $siswa->nama;

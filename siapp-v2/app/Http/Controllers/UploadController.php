@@ -123,6 +123,12 @@ class UploadController extends Controller
                 continue;
             }
 
+            if (($siswa->status ?? 'aktif') !== 'aktif') {
+                $errors[] = "$meta_timestamp: Siswa tidak aktif (status={$siswa->status}): $nokartu / {$siswa->nama}";
+                $skipped++;
+                continue;
+            }
+
             $nama  = $siswa->nama  ?? '0';
             $info  = $siswa->kelas ?? '0';
             $kode  = $siswa->kode  ?? '0';

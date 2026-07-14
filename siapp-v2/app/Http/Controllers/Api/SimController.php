@@ -251,6 +251,7 @@ class SimController extends Controller
         $kelas = $request->input('kelas', '');
 
         $query = DB::table('datasiswa')
+            ->where('status', 'aktif')
             ->select('nis', 'nama', 'nick', 'kelas', 'tingkat', 'jur', 'kelompok', 'foto', 'keterangan');
 
         if ($kelas) $query->where('kelas', $kelas);

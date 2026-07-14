@@ -258,6 +258,9 @@
         @endforeach
     </select>
     <span class="count-badge" id="count-badge">{{ $siswa->count() }} siswa</span>
+    <a href="{{ route('siswa.arsip') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="fas fa-archive mr-1"></i>Arsip
+    </a>
     <a href="{{ route('siswa.create') }}" class="btn btn-sm btn-success">
         <i class="fas fa-user-plus mr-1"></i>Tambah Siswa
     </a>

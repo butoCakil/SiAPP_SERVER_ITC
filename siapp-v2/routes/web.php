@@ -178,6 +178,14 @@ Route::get('/siswa/create', [SiswaViewController::class, 'create'])
     ->middleware('auth.admin')
     ->name('siswa.create');
 
+Route::get('/siswa/arsip', [SiswaViewController::class, 'arsip'])
+    ->middleware('auth.admin')
+    ->name('siswa.arsip');
+
+Route::post('/siswa/{id}/pulihkan', [SiswaViewController::class, 'pulihkan'])
+    ->middleware('auth.admin')
+    ->name('siswa.pulihkan');
+
 Route::post('/siswa', [SiswaViewController::class, 'store'])
     ->middleware('auth.admin')
     ->name('siswa.store');

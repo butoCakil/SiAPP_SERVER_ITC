@@ -9,9 +9,34 @@ class SiswaViewController extends Controller
 {
     public function index(Request $request)
     {
-        $siswa     = DB::table('datasiswa')->orderBy('kelas')->orderBy('nama')->get();
-        $kelasList = DB::table('datasiswa')->distinct()->orderBy('kelas')->pluck('kelas');
+        $siswa     = DB::table('datasiswa')->where('status', 'aktif')->orderBy('kelas')->orderBy('nama')->get();
+        $kelasList = DB::table('datasiswa')->where('status', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
         return view('siswa.index', compact('siswa', 'kelasList'));
+    }
+
+    public function arsip(Request $request)
+    {
+        $filterStatus = $request->input('status', '');
+        $filterKelas  = $request->input('kelas', '');
+
+        $query = DB::table('datasiswa')->where('status', '!=', 'aktif');
+        if ($filterStatus) $query->where('status', $filterStatus);
+        if ($filterKelas)  $query->where('kelas', $filterKelas);
+
+        $siswa     = $query->orderBy('kelas')->orderBy('nama')->get();
+        $kelasList = DB::table('datasiswa')->where('status', '!=', 'aktif')->distinct()->orderBy('kelas')->pluck('kelas');
+
+        return view('siswa.arsip', compact('siswa', 'kelasList', 'filterStatus', 'filterKelas'));
+    }
+
+    public function pulihkan(int $id)
+    {
+        DB::table('datasiswa')->where('id', $id)->update([
+            'status'     => 'aktif',
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('siswa.arsip')->with('success', 'Siswa dipulihkan ke status aktif.');
     }
 
     public function create()
@@ -34,6 +59,7 @@ class SiswaViewController extends Controller
             'nama'       => strtoupper($request->nama),
             'nick'       => $request->nick ?? strtolower($request->nis),
             'kelas'      => $request->kelas,
+            'status'     => 'aktif',
             'tingkat'    => $request->tingkat,
             'jur'        => $request->jur ?? '',
             'kode'       => $request->kode ?? '',
@@ -60,6 +86,7 @@ class SiswaViewController extends Controller
             'nokartu'    => strtoupper($request->nokartu ?? ''),
             'nama'       => strtoupper($request->nama),
             'kelas'      => $request->kelas,
+            'status'     => $request->status ?? 'aktif',
             'tingkat'    => $request->tingkat,
             'jur'        => $request->jur ?? '',
             'kode'       => $request->kode ?? '',
