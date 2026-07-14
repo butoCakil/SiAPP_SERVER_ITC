@@ -11,6 +11,7 @@ class DbController extends Controller
     public function fake()
     {
         $data = DB::table('datasiswa')
+            ->where('status', 'aktif')
             ->select('nokartu', 'nis')
             ->get();
 
@@ -28,6 +29,7 @@ class DbController extends Controller
     public function fakeMid()
     {
         $data = DB::table('datasiswa')
+            ->where('status', 'aktif')
             ->select('nokartu', 'nis', 'nama', 'kelas')
             ->get();
 
@@ -56,11 +58,11 @@ class DbController extends Controller
         switch ($db_tbl) {
             case 'datasiswa':
                 if ($akses === 'lite')
-                    $query = DB::table('datasiswa')->select('nokartu', 'nis');
+                    $query = DB::table('datasiswa')->where('status', 'aktif')->select('nokartu', 'nis');
                 elseif ($akses === 'mid')
-                    $query = DB::table('datasiswa')->select('nokartu', 'nis', 'nama', 'kelas');
+                    $query = DB::table('datasiswa')->where('status', 'aktif')->select('nokartu', 'nis', 'nama', 'kelas');
                 else
-                    $query = DB::table('datasiswa')->select('nis', 'nama', 'kelas', 'poin', 'tingkat', 'email');
+                    $query = DB::table('datasiswa')->where('status', 'aktif')->select('nis', 'nama', 'kelas', 'poin', 'tingkat', 'email');
                 break;
 
             case 'datagtk':

@@ -127,6 +127,7 @@ class DashboardController extends Controller
             ->leftJoin('presensiEvent as pe', function ($join) use ($tanggal) {
                 $join->on('pe.nis', '=', 'ds.nis')->where('pe.tanggal', $tanggal);
             })
+            ->where('ds.status', 'aktif')
             ->whereIn('ds.tingkat', $tingkatAktif)
             ->selectRaw('ds.kelas,
                 COUNT(DISTINCT ds.id) as total,

@@ -33,12 +33,10 @@ Route::middleware('sim.token')->prefix('sim')->group(function () {
     Route::get('/ijin',       [App\Http\Controllers\Api\SimController::class, 'ijin']);
 });
 
-// DB API (device sync)
-Route::prefix('db')->group(function () {
+// DB API (device sync / dummy data testing hardware baru)
+Route::middleware(['db.token'])->prefix('db')->group(function () {
     Route::get('/fake',     [\App\Http\Controllers\DbController::class, 'fake']);
     Route::get('/fake-mid', [\App\Http\Controllers\DbController::class, 'fakeMid']);
-});
-Route::middleware(['db.token'])->prefix('db')->group(function () {
     Route::get('/query',    [\App\Http\Controllers\DbController::class, 'query']);
 });
 

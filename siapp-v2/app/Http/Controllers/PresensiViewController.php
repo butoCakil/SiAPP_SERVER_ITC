@@ -744,6 +744,7 @@ class PresensiViewController extends Controller
         }
 
         $siswa = DB::table('datasiswa')
+            ->where('status', 'aktif')
             ->where(function ($w) use ($q) {
                 $w->where('nis', 'like', "%{$q}%")
                     ->orWhere('nama', 'like', "%{$q}%");
@@ -766,6 +767,9 @@ class PresensiViewController extends Controller
 
         $siswa = DB::table('datasiswa')->where('nis', $request->nis)->first();
         if (!$siswa) return back()->with('error', 'Siswa tidak ditemukan.');
+        if (($siswa->status ?? 'aktif') !== 'aktif') {
+            return back()->with('error', 'Siswa sudah tidak aktif (lulus/keluar), tidak bisa ditambahkan presensi.');
+        }
 
         $ada = DB::table('presensiEvent')
             ->where('nis', $request->nis)
@@ -856,6 +860,9 @@ class PresensiViewController extends Controller
 
         $siswa = DB::table('datasiswa')->where('nis', $request->nis)->first();
         if (!$siswa) return back()->with('error', 'Siswa tidak ditemukan.');
+        if (($siswa->status ?? 'aktif') !== 'aktif') {
+            return back()->with('error', 'Siswa sudah tidak aktif (lulus/keluar), tidak bisa ditambahkan izin.');
+        }
 
         DB::table('daftarijin')->insert([
             'nokartu'    => $siswa->nokartu,

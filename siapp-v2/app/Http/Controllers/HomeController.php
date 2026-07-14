@@ -62,7 +62,7 @@ class HomeController extends Controller
 
         // ── Stat hari ini ──
         $totalHadir     = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
-        $totalTerlambat = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T','TLT'])->count();
+        $totalTerlambat = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T', 'TLT'])->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
@@ -167,7 +167,7 @@ class HomeController extends Controller
 
         // ── Stat ──
         $totalHadir      = DB::table('datapresensi')->where('tanggal', $tanggal)->count();
-        $totalTerlambat  = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T','TLT'])->count();
+        $totalTerlambat  = DB::table('datapresensi')->where('tanggal', $tanggal)->whereIn('ketmasuk', ['T', 'TLT'])->count();
         $totalDzuhur = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'DZUHUR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalAshar  = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('keterangan', 'ASHAR')->where('ruang', '!=', 'Izin Mens')->count();
         $totalIzin   = DB::table('presensiEvent')->where('tanggal', $tanggal)->where('ruang', 'Izin Mens')->count();
@@ -232,6 +232,7 @@ class HomeController extends Controller
                 $join->on('dp.nomorinduk', '=', 'ds.nis')
                     ->where('dp.tanggal', $tanggal);
             })
+            ->where('ds.status', 'aktif')
             ->whereIn('ds.tingkat', $tingkatAktif)
             ->selectRaw("
                 ds.kelas,
@@ -252,6 +253,7 @@ class HomeController extends Controller
                 $join->on('pe.nis', '=', 'ds.nis')
                     ->where('pe.tanggal', $tanggal);
             })
+            ->where('ds.status', 'aktif')
             ->whereIn('ds.tingkat', $tingkatAktif)
             ->selectRaw("
                 ds.kelas,
