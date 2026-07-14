@@ -11,6 +11,13 @@
 .device-row:last-child { border-bottom:none; }
 .badge-online { background:#00c853; color:#fff; }
 .badge-offline { background:#f44336; color:#fff; }
+.badge-versi { background:#6c757d; color:#fff; font-size:11px; }
+.fw-actions { display:flex; gap:6px; }
+.fw-actions button { border:none; background:none; padding:2px 6px; font-size:13px; }
+.fw-actions button:hover { color:#f0ad4e; }
+.fw-actions .btn-hapus-icon:hover { color:#dc3545; }
+.fw-edit-panel, .fw-delete-panel { display:none; margin-top:8px; padding-top:8px; border-top:1px dashed #ddd; }
+.fw-desc { font-size:12px; color:#555; margin-top:2px; }
 </style>
 @endpush
 
@@ -37,26 +44,98 @@
                         </button>
                     </div>
                 </div>
-                <small class="text-muted">Maksimal 2MB.</small>
+                <div class="form-row">
+                    <div class="col-4">
+                        <input type="text" class="form-control form-control-sm" id="ota-upload-versi" placeholder="Versi (mis. 1.5.7)" maxlength="50">
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="ota-upload-deskripsi" placeholder="Deskripsi singkat (opsional)" maxlength="1000">
+                    </div>
+                </div>
+                <small class="text-muted d-block mt-1">Maksimal 2MB.</small>
                 <div id="upload-status" class="mt-2"></div>
             </div>
         </div>
 
         {{-- Daftar Firmware --}}
         <div class="card">
-            <div class="card-header py-2">
-                <strong><i class="fas fa-archive mr-1"></i>Firmware Tersedia</strong>
-                <small class="text-muted ml-2">Klik untuk memilih</small>
+            <div class="card-header py-2 d-flex justify-content-between align-items-center">
+                <div>
+                    <strong><i class="fas fa-archive mr-1"></i>Firmware Tersedia</strong>
+                    <small class="text-muted ml-2">Klik untuk memilih</small>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="auto-cleanup-toggle"
+                        {{ $autoCleanup ? 'checked' : '' }} onchange="toggleAutoCleanup(this)">
+                    <label class="custom-control-label" for="auto-cleanup-toggle" style="font-size:12px;">
+                        Auto-hapus lama (keep 5)
+                    </label>
+                </div>
             </div>
             <div class="card-body p-2" id="firmware-list">
                 @forelse($firmwareList as $fw)
-                <div class="firmware-card" onclick="pilihFirmware('{{ $fw['filename'] }}', '{{ $fw['url'] }}', this)">
-                    <div class="d-flex justify-content-between align-items-center">
+                <div class="firmware-card" id="fw-card-{{ $loop->index }}" onclick="pilihFirmware('{{ $fw['filename'] }}', '{{ $fw['url'] }}', this)">
+                    <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <strong style="font-size:13px;">{{ $fw['filename'] }}</strong><br>
+                            <strong style="font-size:13px;">{{ $fw['filename'] }}</strong>
+                            @if($fw['versi'])
+                                <span class="badge badge-versi ml-1">v{{ $fw['versi'] }}</span>
+                            @endif
+                            <br>
                             <small class="text-muted">{{ $fw['size'] }} &bull; {{ $fw['time'] }}</small>
+                            @if($fw['deskripsi'])
+                                <div class="fw-desc">{{ $fw['deskripsi'] }}</div>
+                            @endif
                         </div>
-                        <i class="fas fa-check-circle text-warning" style="display:none;" id="check-{{ $loop->index }}"></i>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle text-warning mr-2" style="display:none;" id="check-{{ $loop->index }}"></i>
+                            <div class="fw-actions" onclick="event.stopPropagation();">
+                                <button type="button" title="Edit" onclick="toggleEditPanel({{ $loop->index }})">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button type="button" class="btn-hapus-icon" title="Hapus" onclick="toggleDeletePanel({{ $loop->index }})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Panel Edit --}}
+                    <div class="fw-edit-panel" id="fw-edit-{{ $loop->index }}" onclick="event.stopPropagation();">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <input type="text" class="form-control form-control-sm" id="edit-versi-{{ $loop->index }}"
+                                    placeholder="Versi" maxlength="50" value="{{ $fw['versi'] }}">
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control form-control-sm" id="edit-deskripsi-{{ $loop->index }}"
+                                    placeholder="Deskripsi" maxlength="1000" value="{{ $fw['deskripsi'] }}">
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-primary"
+                                onclick="saveFirmwareMeta('{{ $fw['filename'] }}', {{ $loop->index }})">Simpan</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                onclick="toggleEditPanel({{ $loop->index }})">Batal</button>
+                        </div>
+                    </div>
+
+                    {{-- Panel Hapus --}}
+                    <div class="fw-delete-panel" id="fw-delete-{{ $loop->index }}" onclick="event.stopPropagation();">
+                        <small class="text-danger d-block mb-1">
+                            Ketik ulang nama file <strong>{{ $fw['filename'] }}</strong> untuk konfirmasi hapus:
+                        </small>
+                        <input type="text" class="form-control form-control-sm" id="delete-confirm-{{ $loop->index }}"
+                            placeholder="{{ $fw['filename'] }}" autocomplete="off"
+                            oninput="checkDeleteConfirm({{ $loop->index }}, '{{ $fw['filename'] }}')">
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn-delete-confirm-{{ $loop->index }}"
+                                disabled onclick="deleteFirmwareConfirmed('{{ $fw['filename'] }}', {{ $loop->index }})">
+                                <i class="fas fa-trash mr-1"></i>Hapus Permanen
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                onclick="toggleDeletePanel({{ $loop->index }})">Batal</button>
+                        </div>
                     </div>
                 </div>
                 @empty
@@ -146,10 +225,11 @@ let selectedUrl      = null;
 function pilihFirmware(filename, url, el) {
     document.querySelectorAll('.firmware-card').forEach(c => {
         c.classList.remove('selected');
-        c.querySelector('i').style.display = 'none';
+        const check = c.querySelector('i.fa-check-circle');
+        if (check) check.style.display = 'none';
     });
     el.classList.add('selected');
-    el.querySelector('i').style.display = 'inline';
+    el.querySelector('i.fa-check-circle').style.display = 'inline';
 
     selectedFilename = filename;
     selectedUrl      = url;
@@ -168,12 +248,13 @@ async function otaUpload() {
 
     const formData = new FormData();
     formData.append('firmware', fileInput.files[0]);
+    formData.append('versi', document.getElementById('ota-upload-versi').value);
+    formData.append('deskripsi', document.getElementById('ota-upload-deskripsi').value);
     formData.append('_token', '{{ csrf_token() }}');
 
     document.getElementById('upload-status').innerHTML =
         '<span class="text-muted"><i class="fas fa-spinner fa-spin mr-1"></i>Mengupload...</span>';
 
-    // Ambil device_id pertama untuk endpoint upload (tidak spesifik device)
     const res = await fetch('{{ route("device.ota.bulk.upload") }}', {
         method: 'POST', body: formData
     });
@@ -182,11 +263,83 @@ async function otaUpload() {
     if (json.status === 'ok') {
         document.getElementById('upload-status').innerHTML =
             '<span class="text-success"><i class="fas fa-check mr-1"></i>Upload berhasil!</span>';
-        // Reload halaman untuk refresh daftar firmware
         setTimeout(() => location.reload(), 1000);
     } else {
         document.getElementById('upload-status').innerHTML =
             '<span class="text-danger">Upload gagal.</span>';
+    }
+}
+
+// Edit metadata firmware
+function toggleEditPanel(idx) {
+    document.getElementById('fw-delete-' + idx).style.display = 'none';
+    const panel = document.getElementById('fw-edit-' + idx);
+    panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+}
+
+async function saveFirmwareMeta(filename, idx) {
+    const versi     = document.getElementById('edit-versi-' + idx).value;
+    const deskripsi = document.getElementById('edit-deskripsi-' + idx).value;
+
+    const res = await fetch('{{ route("device.ota.bulk.meta") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ filename: filename, versi: versi, deskripsi: deskripsi })
+    });
+    const json = await res.json();
+
+    if (json.status === 'ok') {
+        location.reload();
+    } else {
+        alert('Gagal menyimpan: ' + (json.message ?? 'error'));
+    }
+}
+
+// Hapus firmware (dengan konfirmasi ketik nama file)
+function toggleDeletePanel(idx) {
+    document.getElementById('fw-edit-' + idx).style.display = 'none';
+    const panel = document.getElementById('fw-delete-' + idx);
+    const willShow = panel.style.display !== 'block';
+    panel.style.display = willShow ? 'block' : 'none';
+    if (!willShow) {
+        document.getElementById('delete-confirm-' + idx).value = '';
+        document.getElementById('btn-delete-confirm-' + idx).disabled = true;
+    }
+}
+
+function checkDeleteConfirm(idx, filename) {
+    const val = document.getElementById('delete-confirm-' + idx).value;
+    document.getElementById('btn-delete-confirm-' + idx).disabled = (val !== filename);
+}
+
+async function deleteFirmwareConfirmed(filename, idx) {
+    const confirmVal = document.getElementById('delete-confirm-' + idx).value;
+
+    const res = await fetch('{{ route("device.ota.bulk.delete") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ filename: filename, confirm_filename: confirmVal })
+    });
+    const json = await res.json();
+
+    if (json.status === 'ok') {
+        location.reload();
+    } else {
+        alert('Gagal menghapus: ' + (json.message ?? 'error'));
+    }
+}
+
+// Toggle auto-cleanup
+async function toggleAutoCleanup(checkbox) {
+    const res = await fetch('{{ route("device.ota.bulk.autocleanup") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ enabled: checkbox.checked })
+    });
+    const json = await res.json();
+    if (json.status !== 'ok') {
+        alert('Gagal mengubah setting auto-cleanup.');
+        checkbox.checked = !checkbox.checked;
     }
 }
 
@@ -235,7 +388,6 @@ async function kirimOtaBulk() {
     document.getElementById('btn-kirim').disabled = false;
     document.getElementById('btn-kirim').innerHTML = '<i class="fas fa-bolt mr-1"></i>Kirim OTA ke <span id="btn-count">' + deviceIds.length + '</span> Device';
 
-    // Tampilkan hasil
     let html = '';
     if (json.sent && json.sent.length) {
         html += '<p class="text-success mb-1"><i class="fas fa-check mr-1"></i><strong>Berhasil dikirim (' + json.sent.length + '):</strong> ' + json.sent.join(', ') + '</p>';

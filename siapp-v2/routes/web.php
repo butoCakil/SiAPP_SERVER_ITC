@@ -349,6 +349,12 @@ Route::get('/device-ota', [DeviceViewController::class, 'otaBulkIndex'])
     ->middleware('auth.admin')->name('device.ota.bulk');
 Route::post('/device-ota/send', [DeviceViewController::class, 'otaBulkSend'])
     ->middleware('auth.admin')->name('device.ota.bulk.send');
+Route::post('/device-ota/meta', [DeviceViewController::class, 'updateFirmwareMeta'])
+    ->middleware('auth.admin')->name('device.ota.bulk.meta');
+Route::post('/device-ota/delete', [DeviceViewController::class, 'deleteFirmware'])
+    ->middleware('auth.admin')->name('device.ota.bulk.delete');
+Route::post('/device-ota/auto-cleanup', [DeviceViewController::class, 'updateAutoCleanup'])
+    ->middleware('auth.admin')->name('device.ota.bulk.autocleanup');
 Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
     ->middleware('auth.admin')->name('device.dirlist');
 

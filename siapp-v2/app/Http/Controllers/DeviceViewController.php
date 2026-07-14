@@ -112,21 +112,8 @@ class DeviceViewController extends Controller
         }
         rsort($logDates);
 
-        // Daftar firmware tersedia
-        $firmwareDir  = storage_path('app/private/firmware/');
-        $firmwareList = [];
-        if (is_dir($firmwareDir)) {
-            foreach (glob($firmwareDir . '*.bin') as $file) {
-                $name = basename($file);
-                $firmwareList[] = [
-                    'filename' => $name,
-                    'url'      => route('firmware.download', $name),
-                    'size'     => round(filesize($file) / 1024, 1) . ' KB',
-                    'time'     => date('Y-m-d H:i', filemtime($file)),
-                ];
-            }
-            usort($firmwareList, fn($a, $b) => $b['time'] <=> $a['time']);
-        }
+        // Daftar firmware tersedia (termasuk versi & deskripsi)
+        $firmwareList = $this->getFirmwareList();
 
         return view('device.detail', compact(
             'device',
@@ -305,22 +292,17 @@ class DeviceViewController extends Controller
     public function uploadOta(Request $request, string $id)
     {
         $request->validate([
-            'firmware' => 'required|file|max:4096',
+            'firmware'  => 'required|file|max:4096',
+            'versi'     => 'nullable|string|max:50',
+            'deskripsi' => 'nullable|string|max:1000',
         ]);
 
         $file     = $request->file('firmware');
         $filename = $id . '_' . now()->format('Ymd_His') . '.bin';
         $file->storeAs('firmware', $filename);
 
-        // Hapus firmware lama, keep 5 terbaru
-        $allFiles = glob(storage_path('app/private/firmware/*.bin'));
-        if ($allFiles && count($allFiles) > 5) {
-            usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
-            $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
-            foreach ($toDelete as $old) {
-                @unlink($old);
-            }
-        }
+        $this->simpanFirmwareMeta($filename, $request->input('versi'), $request->input('deskripsi'));
+        $this->cleanupOldFirmware();
 
         return response()->json([
             'status'   => 'ok',
@@ -362,27 +344,20 @@ class DeviceViewController extends Controller
         ]);
     }
 
-
-
     public function uploadOtaBulk(Request $request)
     {
         $request->validate([
-            'firmware' => 'required|file|max:4096',
+            'firmware'  => 'required|file|max:4096',
+            'versi'     => 'nullable|string|max:50',
+            'deskripsi' => 'nullable|string|max:1000',
         ]);
 
         $file     = $request->file('firmware');
         $filename = now()->format('Ymd_His') . '_' . $file->getClientOriginalName();
         $file->storeAs('firmware', $filename);
 
-        // Hapus firmware lama, keep 5 terbaru
-        $allFiles = glob(storage_path('app/private/firmware/*.bin'));
-        if ($allFiles && count($allFiles) > 5) {
-            usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
-            $toDelete = array_slice($allFiles, 0, count($allFiles) - 5);
-            foreach ($toDelete as $old) {
-                @unlink($old);
-            }
-        }
+        $this->simpanFirmwareMeta($filename, $request->input('versi'), $request->input('deskripsi'));
+        $this->cleanupOldFirmware();
 
         return response()->json([
             'status'   => 'ok',
@@ -399,22 +374,10 @@ class DeviceViewController extends Controller
             ->orderByRaw('online DESC, device_id ASC')
             ->get(['device_id', 'online', 'fw_version']);
 
-        $firmwareDir = storage_path('app/private/firmware/');
-        $firmwareList = [];
-        if (is_dir($firmwareDir)) {
-            foreach (glob($firmwareDir . '*.bin') as $file) {
-                $name = basename($file);
-                $firmwareList[] = [
-                    'filename' => $name,
-                    'url'      => route('firmware.download', $name),
-                    'size'     => round(filesize($file) / 1024, 1) . ' KB',
-                    'time'     => date('Y-m-d H:i', filemtime($file)),
-                ];
-            }
-            usort($firmwareList, fn($a, $b) => $b['time'] <=> $a['time']);
-        }
+        $firmwareList = $this->getFirmwareList();
+        $autoCleanup  = (bool) DB::table('statusnya')->value('firmware_auto_cleanup');
 
-        return view('device.ota_bulk', compact('devices', 'firmwareList'));
+        return view('device.ota_bulk', compact('devices', 'firmwareList', 'autoCleanup'));
     }
 
     public function otaBulkSend(Request $request)
@@ -457,6 +420,71 @@ class DeviceViewController extends Controller
         ]);
     }
 
+    /**
+     * Update deskripsi & versi firmware yang sudah ada.
+     * Menggunakan pola exists()/update()/insert() eksplisit
+     * (bukan updateOrInsert) sesuai konvensi project ini.
+     */
+    public function updateFirmwareMeta(Request $request)
+    {
+        $request->validate([
+            'filename'  => 'required|string',
+            'versi'     => 'nullable|string|max:50',
+            'deskripsi' => 'nullable|string|max:1000',
+        ]);
+
+        $filename = basename($request->input('filename'));
+        $path     = storage_path('app/private/firmware/' . $filename);
+
+        if (!file_exists($path)) {
+            return response()->json(['status' => 'error', 'message' => 'File firmware tidak ditemukan.']);
+        }
+
+        $this->simpanFirmwareMeta($filename, $request->input('versi'), $request->input('deskripsi'));
+
+        return response()->json(['status' => 'ok']);
+    }
+
+    /**
+     * Hapus firmware. Wajib mengetik ulang nama file persis
+     * sebagai konfirmasi (divalidasi di server, bukan cuma di client).
+     */
+    public function deleteFirmware(Request $request)
+    {
+        $request->validate([
+            'filename'         => 'required|string',
+            'confirm_filename' => 'required|string',
+        ]);
+
+        $filename = basename($request->input('filename'));
+        $confirm  = $request->input('confirm_filename');
+
+        if ($confirm !== $filename) {
+            return response()->json(['status' => 'error', 'message' => 'Konfirmasi nama file tidak cocok.']);
+        }
+
+        $path = storage_path('app/private/firmware/' . $filename);
+        if (!file_exists($path)) {
+            return response()->json(['status' => 'error', 'message' => 'File firmware tidak ditemukan.']);
+        }
+
+        @unlink($path);
+        DB::table('firmware_meta')->where('filename', $filename)->delete();
+
+        return response()->json(['status' => 'ok']);
+    }
+
+    /**
+     * Toggle auto-cleanup firmware lama (keep 5 terbaru).
+     * Disimpan di tabel statusnya (singleton config).
+     */
+    public function updateAutoCleanup(Request $request)
+    {
+        $enabled = $request->boolean('enabled');
+        DB::table('statusnya')->update(['firmware_auto_cleanup' => $enabled ? 1 : 0]);
+        return response()->json(['status' => 'ok', 'enabled' => $enabled]);
+    }
+
     public function setUploadInterval(Request $request, string $id)
     {
         $interval = (int) $request->input("interval", 300);
@@ -483,5 +511,88 @@ class DeviceViewController extends Controller
         }
 
         return response()->json(['status' => 'ok']);
+    }
+
+    /**
+     * Ambil daftar firmware dari filesystem, join dengan metadata
+     * (versi/deskripsi) dari tabel firmware_meta.
+     */
+    private function getFirmwareList(): array
+    {
+        $firmwareDir  = storage_path('app/private/firmware/');
+        $firmwareList = [];
+
+        if (is_dir($firmwareDir)) {
+            $metaByFilename = DB::table('firmware_meta')->get()->keyBy('filename');
+
+            foreach (glob($firmwareDir . '*.bin') as $file) {
+                $name = basename($file);
+                $meta = $metaByFilename->get($name);
+
+                $firmwareList[] = [
+                    'filename'  => $name,
+                    'url'       => route('firmware.download', $name),
+                    'size'      => round(filesize($file) / 1024, 1) . ' KB',
+                    'time'      => date('Y-m-d H:i', filemtime($file)),
+                    'versi'     => $meta->versi ?? null,
+                    'deskripsi' => $meta->deskripsi ?? null,
+                ];
+            }
+            usort($firmwareList, fn($a, $b) => $b['time'] <=> $a['time']);
+        }
+
+        return $firmwareList;
+    }
+
+    /**
+     * Simpan/update metadata firmware (versi & deskripsi).
+     * Pola exists()/update()/insert() eksplisit, bukan updateOrInsert().
+     */
+    private function simpanFirmwareMeta(string $filename, ?string $versi, ?string $deskripsi): void
+    {
+        if ($versi === null && $deskripsi === null) {
+            return; // tidak ada data untuk disimpan
+        }
+
+        $exists = DB::table('firmware_meta')->where('filename', $filename)->exists();
+
+        if ($exists) {
+            DB::table('firmware_meta')->where('filename', $filename)->update([
+                'versi'      => $versi,
+                'deskripsi'  => $deskripsi,
+                'updated_at' => now(),
+            ]);
+        } else {
+            DB::table('firmware_meta')->insert([
+                'filename'   => $filename,
+                'versi'      => $versi,
+                'deskripsi'  => $deskripsi,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+    }
+
+    /**
+     * Hapus firmware lama (keep 5 terbaru), kecuali auto-cleanup dinonaktifkan
+     * di tabel statusnya. Metadata terkait ikut dihapus.
+     */
+    private function cleanupOldFirmware(int $keep = 5): void
+    {
+        $autoCleanup = DB::table('statusnya')->value('firmware_auto_cleanup');
+        if ((int) $autoCleanup === 0) {
+            return;
+        }
+
+        $allFiles = glob(storage_path('app/private/firmware/*.bin'));
+        if ($allFiles && count($allFiles) > $keep) {
+            usort($allFiles, fn($a, $b) => filemtime($a) - filemtime($b));
+            $toDelete = array_slice($allFiles, 0, count($allFiles) - $keep);
+            foreach ($toDelete as $old) {
+                $name = basename($old);
+                @unlink($old);
+                DB::table('firmware_meta')->where('filename', $name)->delete();
+            }
+        }
     }
 }
