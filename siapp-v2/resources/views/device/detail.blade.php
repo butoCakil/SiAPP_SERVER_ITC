@@ -426,6 +426,14 @@
                     </button>
                 </div>
             </div>
+            <div class="form-row mb-2">
+                <div class="col-4">
+                    <input type="text" class="form-control form-control-sm" id="ota-upload-versi" placeholder="Versi (mis. 1.5.7)" maxlength="50">
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control form-control-sm" id="ota-upload-deskripsi" placeholder="Deskripsi singkat (opsional)" maxlength="1000">
+                </div>
+            </div>
             <small class="text-muted">Maksimal 4MB. File akan disimpan di server.</small>
         </div>
         @if(!empty($firmwareList))
@@ -435,8 +443,9 @@
                 <select class="form-control form-control-sm" id="ota-existing" onchange="pilihFirmwareAda(this)">
                     <option value="">— Pilih firmware —</option>
                     @foreach($firmwareList as $fw)
-                    <option value="{{ $fw['filename'] }}" data-url="{{ $fw['url'] }}">
-                        {{ $fw['filename'] }} ({{ $fw['size'] }}, {{ $fw['time'] }})
+                    <option value="{{ $fw['filename'] }}" data-url="{{ $fw['url'] }}"
+                        data-versi="{{ $fw['versi'] }}" data-deskripsi="{{ $fw['deskripsi'] }}">
+                        {{ $fw['filename'] }} ({{ $fw['size'] }}, {{ $fw['time'] }}){{ $fw['versi'] ? ' — v' . $fw['versi'] : '' }}
                     </option>
                     @endforeach
                 </select>
@@ -805,14 +814,24 @@ document.getElementById('ota-file').addEventListener('change', function() {
 });
 
 function pilihFirmwareAda(select) {
-    const filename = select.value;
-    const url      = select.options[select.selectedIndex]?.dataset?.url;
+    const filename  = select.value;
+    const opt       = select.options[select.selectedIndex];
+    const url       = opt?.dataset?.url;
+    const versi     = opt?.dataset?.versi;
+    const deskripsi = opt?.dataset?.deskripsi;
     if (!filename) return;
     otaFilename = filename;
-    document.getElementById('ota-url-info').textContent = 'URL: ' + url;
+
+    let infoHtml = 'URL: ' + url;
+    if (versi) infoHtml += '<br><strong>Versi: ' + versi + '</strong>';
+    if (deskripsi) infoHtml += '<br><span style="opacity:0.85;">' + deskripsi + '</span>';
+    document.getElementById('ota-url-info').innerHTML = infoHtml;
+
     document.getElementById('ota-send-section').style.display = 'block';
-    document.getElementById('ota-status').innerHTML =
-        '<span class="text-info"><i class="fas fa-check mr-1"></i>Firmware dipilih: ' + filename + '</span>';
+
+    let statusHtml = '<span class="text-info"><i class="fas fa-check mr-1"></i>Firmware dipilih: ' + filename + '</span>';
+    if (versi) statusHtml += ' <span class="badge badge-secondary">v' + versi + '</span>';
+    document.getElementById('ota-status').innerHTML = statusHtml;
 }
 
 async function otaUpload() {
@@ -832,6 +851,8 @@ async function otaUpload() {
 
     const formData = new FormData();
     formData.append('firmware', file);
+    formData.append('versi', document.getElementById('ota-upload-versi').value);
+    formData.append('deskripsi', document.getElementById('ota-upload-deskripsi').value);
     formData.append('_token', '{{ csrf_token() }}');
 
     const res = await fetch('{{ route("device.ota", $id) }}', {
