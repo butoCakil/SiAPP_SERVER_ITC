@@ -59,6 +59,7 @@
         <div style="text-align:center;">
             <div class="dc-dot {{ $isOnline ? 'online' : 'offline' }}"></div>
             <div class="dc-status-label">{{ $isOnline ? 'Online' : 'Offline' }}</div>
+            <span class="ping-status-badge" style="font-size:11px;" title=""></span>
         </div>
         <button title="Hapus"
             style="position:absolute;top:2px;right:4px;width:14px;height:14px;border-radius:0;border:none;background:transparent;color:#bbb;font-size:11px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:10;transition:color 0.2s;"
@@ -200,6 +201,7 @@
     {{-- Baris 1: ID + Dot --}}
     <div class="dcc-row1">
         <span class="dcc-id" title="{{ $device->device_id }}">{{ $device->device_id }}</span>
+        <span class="ping-status-badge" style="font-size:11px;" title=""></span>
         <span class="dcc-time">
             @if($sinceRaw)
                 @php

@@ -331,7 +331,7 @@ class DeviceViewController extends Controller
             return response()->json(['status' => 'error', 'message' => 'filename wajib diisi']);
         }
 
-        $url     = route('firmware.download', $filename);
+        $url     = rtrim(config('app.firmware_lan_base_url'), '/') . '/firmware/' . rawurlencode($filename);
         $service = new \App\Services\DeviceService();
         $service->kirimCommand($id, ['ota' => $url]);
 
@@ -402,7 +402,7 @@ class DeviceViewController extends Controller
             return response()->json(['status' => 'error', 'message' => 'filename dan device_ids wajib diisi']);
         }
 
-        $url     = route('firmware.download', $filename);
+        $url     = rtrim(config('app.firmware_lan_base_url'), '/') . '/firmware/' . rawurlencode($filename);
         $service = new \App\Services\DeviceService();
         $sent    = [];
         $failed  = [];
@@ -431,6 +431,25 @@ class DeviceViewController extends Controller
             'failed' => $failed,
             'url'    => $url,
         ]);
+    }
+
+    public function pingAll(Request $request)
+    {
+        $devices = DB::table('devices')->where('hidden', 0)->pluck('device_id');
+        $service = new \App\Services\DeviceService();
+        $sent    = [];
+        $failed  = [];
+
+        foreach ($devices as $deviceId) {
+            try {
+                $service->kirimCommand($deviceId, ['ping' => true]);
+                $sent[] = $deviceId;
+            } catch (\Exception $e) {
+                $failed[] = $deviceId;
+            }
+        }
+
+        return response()->json(['status' => 'ok', 'sent' => $sent, 'failed' => $failed]);
     }
 
     /**

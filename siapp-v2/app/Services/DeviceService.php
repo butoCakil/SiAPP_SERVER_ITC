@@ -226,6 +226,7 @@ class DeviceService
             1       => 'last_command',
             2       => 'last_setting',
             3       => 'last_bg_upload',
+            4       => 'last_ping',
             default => 'last_status',
         };
 
@@ -238,7 +239,7 @@ class DeviceService
         if (!empty($version)) {
             $updateData['fw_version'] = $version;
         }
-        
+
         // Force update online_since saat reboot diterima
         $status = $data['status'] ?? null;
         if ($status === 'command_applied' && str_contains($data['detail'] ?? '', 'Reboot')) {

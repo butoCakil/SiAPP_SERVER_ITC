@@ -143,6 +143,7 @@
 .btn-global.g-sync   { background:linear-gradient(135deg,#b200ff,#7b1fa2); }
 .btn-global.g-upload { background:linear-gradient(135deg,#00c853,#00964b); }
 .btn-global.g-reboot { background:linear-gradient(135deg,#ff4b2b,#ff0000); }
+.btn-global.g-ping   { background:linear-gradient(135deg,#00bcd4,#00838f); }
 
 .summary-bar { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; align-items:center; }
 .summary-badge { display:flex; align-items:center; gap:6px; background:#fff; border-radius:20px; padding:5px 14px; font-size:13px; font-weight:600; box-shadow:0 2px 8px rgba(0,0,0,0.12); }
@@ -152,6 +153,47 @@
 .loading-overlay { position:fixed; top:0;left:0;width:100%;height:100%; background:rgba(255,255,255,0.6); display:none; justify-content:center; align-items:center; z-index:9999; backdrop-filter:blur(3px); }
 .spinner { border:4px solid rgba(0,0,0,0.1); border-left-color:#333; border-radius:50%; width:40px; height:40px; animation:spin 0.8s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
+
+@media (max-width: 800px) {
+    .global-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .global-actions .btn-global {
+        width: 100%;
+        text-align: center;
+        padding: 9px 10px;
+        font-size: 12.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .global-actions .btn-global:last-child {
+        grid-column: span 2;
+    }
+
+    .summary-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        justify-content: unset;
+    }
+    .summary-bar > div:not(.summary-badge) {
+        display: none !important;
+    }
+    .summary-badge {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .summary-badge:last-child {
+        grid-column: span 2;
+    }
+}
 </style>
 @endpush
 
@@ -176,13 +218,18 @@
     <a href="{{ route('device.registrasi') }}" class="btn-global" style="background:linear-gradient(135deg,#607d8b,#37474f); color:#fff; text-decoration:none; padding:7px 18px; border-radius:20px; font-weight:600; font-size:13px;">
         <i class="fas fa-list mr-1"></i>Kelola Registrasi
     </a>
+    <button class="btn-global" id="btn-toggle-view"
+        style="background:linear-gradient(135deg,#455a64,#263238);"
+        onclick="toggleView()">⚡ Compact
+    </button>
     <button class="btn-global g-set"    onclick="sendAll('setSetting')">⚙️ Set All</button>
     <button class="btn-global g-sync"   onclick="sendAll('sync')">🔄 Sync All</button>
     <button class="btn-global g-upload" onclick="sendAll('upload')">📤 Upload All</button>
     <button class="btn-global g-reboot" onclick="confirmAll('reboot')">🔁 Reboot All</button>
-    <button class="btn-global" id="btn-toggle-view"
-        style="background:linear-gradient(135deg,#455a64,#263238);"
-        onclick="toggleView()">⚡ Compact</button>
+
+    <button class="btn-global g-ping" id="cek-status-btn" onclick="cekStatusSemua()">
+        📡 Cek Status Real-time
+    </button>
 </div>
 
 {{-- Device Grid --}}
@@ -515,5 +562,76 @@ function loadAllSparklines() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { loadAllSparklines(); });
+
+async function cekStatusSemua() {
+    const btn = document.getElementById('cek-status-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Mengecek...';
+    }
+
+    document.querySelectorAll('.ping-status-badge').forEach(b => {
+        b.textContent = '';
+        b.dataset.done = '';
+    });
+
+    let baseline = {};
+    try {
+        const res0 = await fetch('/api-internal/device-poll-status');
+        const data0 = await res0.json();
+        data0.forEach(d => { baseline[d.device_id] = d.ping_ts; });
+    } catch (e) {}
+
+    try {
+        await fetch('{{ route("device.ping.all") }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+        });
+    } catch (e) {}
+
+    document.querySelectorAll('[data-device-id]').forEach(card => {
+        const badge = card.querySelector('.ping-status-badge');
+        if (badge) { badge.textContent = '🔄'; badge.title = 'Mengecek...'; }
+    });
+
+    let elapsed = 0;
+    const interval = setInterval(async () => {
+        elapsed += 1000;
+        let data;
+        try {
+            const res = await fetch('/api-internal/device-poll-status');
+            data = await res.json();
+        } catch (e) { return; }
+
+        data.forEach(d => {
+            const cards = document.querySelectorAll('[data-device-id="' + d.device_id + '"]');
+            cards.forEach(card => {
+                const badge = card.querySelector('.ping-status-badge');
+                if (!badge || badge.dataset.done === '1') return;
+
+                if (d.ping_ts && d.ping_ts !== baseline[d.device_id]) {
+                    badge.textContent = '✅';
+                    badge.title = 'Terverifikasi online (pong diterima)';
+                    badge.dataset.done = '1';
+                }
+            });
+        });
+
+        if (elapsed >= 5000) {
+            clearInterval(interval);
+            document.querySelectorAll('[data-device-id]').forEach(card => {
+                const badge = card.querySelector('.ping-status-badge');
+                if (badge && badge.dataset.done !== '1') {
+                    badge.textContent = '❌';
+                    badge.title = 'Tidak merespons dalam 5 detik';
+                }
+            });
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-satellite-dish mr-1"></i>Cek Status Real-time';
+            }
+        }
+    }, 1000);
+}
 </script>
 @endpush

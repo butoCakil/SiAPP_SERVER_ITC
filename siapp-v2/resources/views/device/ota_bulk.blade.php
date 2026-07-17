@@ -162,6 +162,9 @@
             <div class="card-header py-2">
                 <strong><i class="fas fa-mobile-alt mr-1"></i>Pilih Device</strong>
                 <div class="float-right">
+                    <button class="btn btn-xs btn-outline-info mr-1" id="cek-status-btn" onclick="cekStatusSemua()">
+                        <i class="fas fa-satellite-dish mr-1"></i>Cek Status Real-time
+                    </button>
                     <button class="btn btn-xs btn-outline-success mr-1" onclick="pilihSemuaOnline()">
                         <i class="fas fa-check-double mr-1"></i>Pilih Semua Online
                     </button>
@@ -172,7 +175,7 @@
             </div>
             <div class="card-body p-0">
                 @foreach($devices as $device)
-                <div class="device-row d-flex align-items-center">
+                <div class="device-row d-flex align-items-center" data-device-id="{{ $device->device_id }}">
                     <input type="checkbox"
                         class="device-check mr-3"
                         value="{{ $device->device_id }}"
@@ -184,6 +187,7 @@
                         <span class="badge {{ $device->online ? 'badge-online' : 'badge-offline' }} ml-2">
                             {{ $device->online ? 'Online' : 'Offline' }}
                         </span>
+                        <span class="ping-status-badge ml-1" style="font-size:12px;" title=""></span>
                         <span class="text-muted ml-2" style="font-size:12px;">
                             fw: {{ $device->fw_version ?? '-' }}
                         </span>
@@ -476,6 +480,76 @@ function pollOtaBulkStatus(deviceIds) {
             clearInterval(otaBulkPolling);
         }
     }, 2000);
+}
+
+async function cekStatusSemua() {
+    const btn = document.getElementById('cek-status-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Mengecek...';
+    }
+
+    document.querySelectorAll('.ping-status-badge').forEach(b => {
+        b.textContent = '';
+        b.dataset.done = '';
+    });
+
+    let baseline = {};
+    try {
+        const res0 = await fetch('/api-internal/device-poll-status');
+        const data0 = await res0.json();
+        data0.forEach(d => { baseline[d.device_id] = d.ping_ts; });
+    } catch (e) {}
+
+    try {
+        await fetch('{{ route("device.ping.all") }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+        });
+    } catch (e) {}
+
+    document.querySelectorAll('[data-device-id]').forEach(card => {
+        const badge = card.querySelector('.ping-status-badge');
+        if (badge) { badge.textContent = '🔄'; badge.title = 'Mengecek...'; }
+    });
+
+    let elapsed = 0;
+    const interval = setInterval(async () => {
+        elapsed += 1000;
+        let data;
+        try {
+            const res = await fetch('/api-internal/device-poll-status');
+            data = await res.json();
+        } catch (e) { return; }
+
+        data.forEach(d => {
+            const card = document.querySelector('[data-device-id="' + d.device_id + '"]');
+            if (!card) return;
+            const badge = card.querySelector('.ping-status-badge');
+            if (!badge || badge.dataset.done === '1') return;
+
+            if (d.ping_ts && d.ping_ts !== baseline[d.device_id]) {
+                badge.textContent = '✅';
+                badge.title = 'Terverifikasi online (pong diterima)';
+                badge.dataset.done = '1';
+            }
+        });
+
+        if (elapsed >= 5000) {
+            clearInterval(interval);
+            document.querySelectorAll('[data-device-id]').forEach(card => {
+                const badge = card.querySelector('.ping-status-badge');
+                if (badge && badge.dataset.done !== '1') {
+                    badge.textContent = '❌';
+                    badge.title = 'Tidak merespons dalam 5 detik';
+                }
+            });
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-satellite-dish mr-1"></i>Cek Status Real-time';
+            }
+        }
+    }, 1000);
 }
 </script>
 @endpush

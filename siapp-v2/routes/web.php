@@ -311,10 +311,11 @@ Route::get('/api-internal/device-metrics/{id}', function (string $id) {
 })->middleware('auth.admin');
 
 Route::get('/api-internal/device-poll-status', function () {
-    $devices = DB::table('devices')->where('hidden', 0)->get(['device_id', 'online', 'online_since', 'last_seen', 'last_command', 'last_setting']);
+    $devices = DB::table('devices')->where('hidden', 0)->get(['device_id', 'online', 'online_since', 'last_seen', 'last_command', 'last_setting', 'last_ping']);
     $result  = $devices->map(function ($d) {
-        $cmd = $d->last_command ? json_decode($d->last_command, true) : null;
-        $set = $d->last_setting ? json_decode($d->last_setting, true) : null;
+        $cmd  = $d->last_command ? json_decode($d->last_command, true) : null;
+        $set  = $d->last_setting ? json_decode($d->last_setting, true) : null;
+        $ping = $d->last_ping    ? json_decode($d->last_ping, true)    : null;
         return [
             'device_id'   => $d->device_id,
             'online'      => (int) $d->online,
@@ -325,6 +326,7 @@ Route::get('/api-internal/device-poll-status', function () {
             'set_ts'      => $set['timestamp'] ?? null,
             'cmd_detail'  => $cmd['detail']    ?? null,
             'set_detail'  => $set['detail']    ?? null,
+            'ping_ts'     => $ping['timestamp'] ?? null,
         ];
     });
     return response()->json($result);
@@ -358,6 +360,8 @@ Route::post('/device-ota/auto-cleanup', [DeviceViewController::class, 'updateAut
     ->middleware('auth.admin')->name('device.ota.bulk.autocleanup');
 Route::get('/api-internal/device-dirlist/{id}', [DeviceViewController::class, 'getDirList'])
     ->middleware('auth.admin')->name('device.dirlist');
+Route::post('/api-internal/device-ping-all', [DeviceViewController::class, 'pingAll'])
+    ->middleware('auth.admin')->name('device.ping.all');
 
 Route::post('/device/{id}/upload-interval', [DeviceViewController::class, 'setUploadInterval'])
     ->middleware('auth.admin')->name('device.upload.interval');
