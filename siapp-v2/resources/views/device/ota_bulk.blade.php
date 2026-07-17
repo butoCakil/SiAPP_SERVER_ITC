@@ -389,16 +389,93 @@ async function kirimOtaBulk() {
     document.getElementById('btn-kirim').innerHTML = '<i class="fas fa-bolt mr-1"></i>Kirim OTA ke <span id="btn-count">' + deviceIds.length + '</span> Device';
 
     let html = '';
-    if (json.sent && json.sent.length) {
-        html += '<p class="text-success mb-1"><i class="fas fa-check mr-1"></i><strong>Berhasil dikirim (' + json.sent.length + '):</strong> ' + json.sent.join(', ') + '</p>';
-    }
     if (json.failed && json.failed.length) {
-        html += '<p class="text-danger mb-1"><i class="fas fa-times mr-1"></i><strong>Gagal (' + json.failed.length + '):</strong> ' + json.failed.join(', ') + '</p>';
+        html += '<p class="text-danger mb-1"><i class="fas fa-times mr-1"></i><strong>Gagal dikirim (' + json.failed.length + '):</strong> ' + json.failed.join(', ') + '</p>';
     }
-    html += '<small class="text-muted">URL: ' + json.url + '</small>';
+    if (json.sent && json.sent.length) {
+        html += '<p class="text-muted mb-2"><small>URL: ' + json.url + '</small></p>';
+        html += '<div id="ota-bulk-rows">' + json.sent.map(id => otaBulkRowTemplate(id)).join('') + '</div>';
+    }
 
     document.getElementById('hasil-body').innerHTML = html;
     document.getElementById('hasil-card').style.display = 'block';
+
+    if (json.sent && json.sent.length) {
+        pollOtaBulkStatus(json.sent);
+    }
+}
+
+function otaBulkRowTemplate(deviceId) {
+    return '<div class="ota-bulk-row mb-2" data-device-id="' + deviceId + '">' +
+        '<div class="d-flex justify-content-between" style="font-size:13px;">' +
+        '<strong>' + deviceId + '</strong>' +
+        '<span class="ota-bulk-status text-muted">Menunggu...</span>' +
+        '</div>' +
+        '<div class="progress" style="height:16px;">' +
+        '<div class="ota-bulk-bar progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width:0%">0%</div>' +
+        '</div>' +
+        '</div>';
+}
+
+let otaBulkPolling = null;
+
+function pollOtaBulkStatus(deviceIds) {
+    if (otaBulkPolling) clearInterval(otaBulkPolling);
+    const pending = new Set(deviceIds);
+    let attempts = 0;
+    const maxAttempts = 150;
+
+    otaBulkPolling = setInterval(async () => {
+        attempts++;
+        let data;
+        try {
+            const res = await fetch('/api-internal/device-poll-status');
+            data = await res.json();
+        } catch (e) { return; }
+
+        data.forEach(dev => {
+            if (!pending.has(dev.device_id) || !dev.cmd_status) return;
+
+            const row = document.querySelector('.ota-bulk-row[data-device-id="' + dev.device_id + '"]');
+            if (!row) return;
+            const bar    = row.querySelector('.ota-bulk-bar');
+            const status = row.querySelector('.ota-bulk-status');
+            if (!bar || !status) return;
+            const st = dev.cmd_status;
+
+            if (st === 'ota_progress') {
+                const pct = dev.cmd_detail && dev.cmd_detail.percent ? dev.cmd_detail.percent : 0;
+                bar.style.width = pct + '%';
+                bar.textContent = pct + '%';
+                status.textContent = 'Mengunduh...';
+            } else if (st === 'ota_ok') {
+                bar.classList.remove('bg-warning');
+                bar.classList.add('bg-success');
+                bar.style.width = '100%';
+                bar.textContent = '100%';
+                status.textContent = 'Berhasil';
+                status.classList.remove('text-muted');
+                status.classList.add('text-success');
+                pending.delete(dev.device_id);
+            } else if (st === 'ota_failed') {
+                bar.classList.remove('bg-warning');
+                bar.classList.add('bg-danger');
+                status.textContent = 'Gagal';
+                status.classList.remove('text-muted');
+                status.classList.add('text-danger');
+                pending.delete(dev.device_id);
+            } else if (st === 'ota_no_update') {
+                status.textContent = 'Tidak ada update';
+                pending.delete(dev.device_id);
+            } else if (st === 'ota_start') {
+                status.textContent = 'Memulai OTA...';
+            }
+        });
+
+        if (pending.size === 0 || attempts >= maxAttempts) {
+            clearInterval(otaBulkPolling);
+        }
+    }, 2000);
 }
 </script>
 @endpush

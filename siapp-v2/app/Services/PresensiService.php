@@ -109,7 +109,7 @@ class PresensiService
         $kode        = $siswa->kode;
         $keterangan  = $siswa->keterangan ?? '';
         // ── Routing berdasarkan kode device (MASJID/EVENT mengikuti rule sendiri, tidak terpengaruh mode presensi gerbang) ──
-        if ($kodeDevice === 'MASJID') {
+        if (str_starts_with($kodeDevice, 'Masjid')) {
             return $this->prosesMasjid($nokartu, $noReg, $nama, $idchip, $nodevice, $jam, $tanggal, $kodeDevice, $setting);
         }
         if ($kodeDevice === 'EVENT') {

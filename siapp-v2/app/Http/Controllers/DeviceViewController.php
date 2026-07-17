@@ -176,6 +176,13 @@ class DeviceViewController extends Controller
         if ($request->filled('upload_index')) $koneksi['upload_index'] = (int) $request->upload_index;
         if ($request->filled('db_index'))     $koneksi['db_index']     = (int) $request->db_index;
         if ($request->filled('mode_device')) $koneksi['mode_device'] = (int) $request->mode_device;
+        if ($request->filled('kode_nomor')) {
+            $nomor = (int) $request->kode_nomor;
+            if ($nomor < 0 || $nomor > 999) {
+                return redirect()->route('device.detail', $id)->with('error', 'Nomor device harus 0-999.');
+            }
+            $koneksi['kode_nomor'] = $nomor;
+        }
 
         if (empty($koneksi)) {
             return redirect()->route('device.detail', $id)->with('error', 'Tidak ada perubahan.');
@@ -183,6 +190,12 @@ class DeviceViewController extends Controller
 
         $service = new \App\Services\DeviceService();
         $result  = $service->kirimKoneksi($id, $koneksi);
+
+        // Nomor device berubah -> ID lama akan jadi entry hantu (device akan
+        // publish status dengan device_id baru). Sembunyikan baris lama.
+        if (isset($koneksi['kode_nomor'])) {
+            DB::table('devices')->where('device_id', $id)->update(['hidden' => 1]);
+        }
 
         // Simpan last_koneksi ke DB
         $wifiPresets = [

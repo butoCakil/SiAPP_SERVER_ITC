@@ -142,11 +142,12 @@
                     @php
                         $otaStatus = $command['status'] ?? '-';
                         $otaBadge = match($otaStatus) {
-                            'ota_ok'     => 'badge-success',
-                            'ota_failed' => 'badge-danger',
-                            'ota_start'  => 'badge-warning',
-                            'ota_sent'   => 'badge-info',
-                            default      => 'badge-secondary',
+                            'ota_ok'       => 'badge-success',
+                            'ota_failed'   => 'badge-danger',
+                            'ota_progress' => 'badge-warning',
+                            'ota_start'    => 'badge-warning',
+                            'ota_sent'     => 'badge-info',
+                            default        => 'badge-secondary',
                         };
                     @endphp
                         <div class="info-row">
@@ -397,6 +398,30 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card mt-2">
+                    <div class="card-header py-2" style="background:#f8d7da;">
+                        <strong><i class="fas fa-id-badge mr-1"></i>Ubah Nomor Device</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-0">
+                            <label>
+                                Nomor Device
+                                @if($lk['kode_nomor'] ?? null)
+                                    <span class="text-muted ml-1" style="font-size:10px;">(terakhir diubah ke: {{ $lk['kode_nomor'] }})</span>
+                                @endif
+                            </label>
+                            <input type="number" name="kode_nomor" class="form-control form-control-sm"
+                                   min="0" max="999" placeholder="Kosongkan jika tidak diubah"
+                                   onchange="if(this.value !== '' && !confirm('Yakin ubah nomor device ke ' + this.value + '? Device akan restart identitas dan hilang sementara dari dashboard.')) this.value='';">
+                            <small class="text-muted d-block mt-1">
+                                <i class="fas fa-exclamation-triangle text-warning mr-1"></i>
+                                Device akan online kembali dengan ID baru; entri lama otomatis disembunyikan.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary" {{ !$device->online ? 'disabled' : '' }}>
                     <i class="fas fa-paper-plane mr-1"></i>Kirim ke Device
                 </button>
@@ -461,6 +486,13 @@
             <small class="d-block mt-1 text-muted">Device akan download dan flash firmware secara otomatis.</small>
         </div>
         <div id="ota-status" class="mt-2"></div>
+        <div id="ota-progress-wrap" class="mt-2" style="display:none;">
+            <div class="progress" style="height:22px;">
+                <div id="ota-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                     role="progressbar" style="width:0%">0%</div>
+            </div>
+            <small id="ota-progress-detail" class="text-muted"></small>
+        </div>
     </div>
 </div>
 
@@ -878,7 +910,8 @@ async function otaSend() {
     if (!confirm('Kirim OTA ke device {{ $id }}? Device akan restart dan flash firmware baru.')) return;
 
     document.getElementById('ota-send-btn').disabled = true;
-    document.getElementById('ota-status').innerHTML = '<span class="text-muted"><i class="fas fa-spinner fa-spin mr-1"></i>Mengirim perintah OTA...</span>';
+    document.getElementById('ota-status').textContent = 'Mengirim perintah OTA...';
+    document.getElementById('ota-status').className = 'text-muted';
 
     const res = await fetch('{{ route("device.ota.send", $id) }}', {
         method: 'POST',
@@ -893,11 +926,100 @@ async function otaSend() {
     document.getElementById('ota-send-btn').disabled = false;
 
     if (json.status === 'ok') {
-        document.getElementById('ota-status').innerHTML = '<span class="text-success"><i class="fas fa-bolt mr-1"></i>Perintah OTA terkirim. Tunggu device restart...</span>';
+        document.getElementById('ota-status').textContent = 'Perintah OTA terkirim, menunggu device mulai unduh...';
+        document.getElementById('ota-status').className = 'text-success';
+        pollOtaStatus();
     } else {
-        document.getElementById('ota-status').innerHTML = '<span class="text-danger">Gagal: ' + (json.message ?? 'error') + '</span>';
+        document.getElementById('ota-status').textContent = 'Gagal: ' + (json.message || 'error');
+        document.getElementById('ota-status').className = 'text-danger';
     }
 }
+
+let otaPolling = null;
+
+function pollOtaStatus() {
+    if (otaPolling) clearInterval(otaPolling);
+
+    const wrap   = document.getElementById('ota-progress-wrap');
+    const bar    = document.getElementById('ota-progress-bar');
+    const detail = document.getElementById('ota-progress-detail');
+    const status = document.getElementById('ota-status');
+
+    wrap.style.display = 'block';
+    bar.classList.remove('bg-danger', 'bg-success');
+    bar.classList.add('bg-warning');
+    bar.style.width = '0%';
+    bar.textContent = '0%';
+    detail.textContent = '';
+
+    let attempts = 0;
+    const maxAttempts = 150; // sekitar 5 menit @ 2 detik
+
+    otaPolling = setInterval(async () => {
+        attempts++;
+        let data;
+        try {
+            const res = await fetch('/api-internal/device-poll-status');
+            data = await res.json();
+        } catch (e) {
+            return;
+        }
+
+        const dev = data.find(d => d.device_id === '{{ $id }}');
+        if (!dev || !dev.cmd_status) {
+            if (attempts >= maxAttempts) {
+                clearInterval(otaPolling);
+                status.textContent = 'Timeout menunggu status device.';
+                status.className = 'text-danger';
+            }
+            return;
+        }
+
+        const st = dev.cmd_status;
+
+        if (st === 'ota_progress') {
+            const pct = dev.cmd_detail && dev.cmd_detail.percent ? dev.cmd_detail.percent : 0;
+            bar.style.width = pct + '%';
+            bar.textContent = pct + '%';
+            const cur   = dev.cmd_detail && dev.cmd_detail.cur   ? dev.cmd_detail.cur   : 0;
+            const total = dev.cmd_detail && dev.cmd_detail.total ? dev.cmd_detail.total : 0;
+            detail.textContent = (cur && total) ? ((cur/1024).toFixed(0) + ' KB / ' + (total/1024).toFixed(0) + ' KB') : '';
+            status.textContent = 'Mengunduh & flashing...';
+            status.className = 'text-muted';
+        }
+        else if (st === 'ota_start') {
+            status.textContent = 'Device mulai OTA...';
+            status.className = 'text-muted';
+        }
+        else if (st === 'ota_ok') {
+            clearInterval(otaPolling);
+            bar.classList.remove('bg-warning');
+            bar.classList.add('bg-success');
+            bar.style.width = '100%';
+            bar.textContent = '100%';
+            status.textContent = 'OTA berhasil! Device restart ke firmware baru. Refresh halaman untuk lihat versi terbaru.';
+            status.className = 'text-success';
+        }
+        else if (st === 'ota_failed') {
+            clearInterval(otaPolling);
+            bar.classList.remove('bg-warning');
+            bar.classList.add('bg-danger');
+            const msg = typeof dev.cmd_detail === 'string' ? dev.cmd_detail : JSON.stringify(dev.cmd_detail);
+            status.textContent = 'OTA gagal: ' + msg;
+            status.className = 'text-danger';
+        }
+        else if (st === 'ota_no_update') {
+            clearInterval(otaPolling);
+            status.textContent = 'Tidak ada update (firmware sama).';
+            status.className = 'text-info';
+        }
+
+        if (attempts >= maxAttempts) {
+            clearInterval(otaPolling);
+        }
+    }, 2000);
+}
+
 async function setUploadInterval() {
     const interval = parseInt(document.getElementById('uploadIntervalSelect').value);
     const res = await fetch('{{ route("device.upload.interval", $id) }}', {

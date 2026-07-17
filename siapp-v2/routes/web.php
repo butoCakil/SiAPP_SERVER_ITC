@@ -321,6 +321,7 @@ Route::get('/api-internal/device-poll-status', function () {
             'online_since' => $d->online_since,
             'last_seen'    => $d->last_seen,
             'cmd_ts'      => $cmd['timestamp'] ?? null,
+            'cmd_status'  => $cmd['status']    ?? null,
             'set_ts'      => $set['timestamp'] ?? null,
             'cmd_detail'  => $cmd['detail']    ?? null,
             'set_detail'  => $set['detail']    ?? null,
