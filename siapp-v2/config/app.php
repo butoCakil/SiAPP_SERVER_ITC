@@ -53,7 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
+    'firmware_lan_base_url' => env('FIRMWARE_LAN_BASE_URL', 'http://172.16.80.123:8080'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
