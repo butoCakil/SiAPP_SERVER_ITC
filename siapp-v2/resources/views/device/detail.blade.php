@@ -179,6 +179,7 @@
                     <div class="info-row"><span class="info-label">Status</span><span>{{ $status['status'] ?? '-' }}</span></div>
                     <div class="info-row"><span class="info-label">SSID</span><span>{{ $status['ssid'] ?? '-' }}</span></div>
                     <div class="info-row"><span class="info-label">Serial</span><span>{{ isset($status['serial']) ? ($status['serial'] ? 'ON' : 'OFF') : '-' }}</span></div>
+                    <div class="info-row"><span class="info-label">Transport</span><span class="badge {{ ($status['transport'] ?? 0) == 1 ? 'badge-info' : 'badge-secondary' }}">{{ ($status['transport'] ?? 0) == 1 ? 'MQTT' : 'HTTP' }}</span></div>
                     <div class="info-row"><span class="info-label">Firmware</span><span>{{ $status['version'] ?? $device->fw_version ?? '-' }}</span></div>
                     <div class="info-row"><span class="info-label">Last Seen</span><span>{{ $device->last_seen ?? '-' }}</span></div>
                     <div class="info-row"><span class="info-label">Online Since</span><span>{{ $device->online_since ?? '-' }}</span></div>
@@ -266,6 +267,14 @@
                     @endif
                 </button>
                 <button class="btn btn-danger" onclick="kirimPerintah('reboot')">🔁 Reboot</button>
+            </div>
+            <div class="d-flex align-items-center mt-2" style="gap:8px;">
+                <label style="font-size:12px; margin:0;">Transport Upload:</label>
+                <select id="uploadTransportSelect" class="form-control form-control-sm" style="width:auto;">
+                    <option value="0" {{ ($status['transport'] ?? 0) == 0 ? 'selected' : '' }}>HTTP</option>
+                    <option value="1" {{ ($status['transport'] ?? 0) == 1 ? 'selected' : '' }}>MQTT</option>
+                </select>
+                <button class="btn btn-sm btn-secondary" onclick="setUploadTransport()" {{ !$device->online ? 'disabled' : '' }}>Kirim</button>
             </div>
         </div>
     </div>
@@ -1030,6 +1039,21 @@ async function setUploadInterval() {
     const json = await res.json();
     if (json.status === 'ok') {
         alert('Interval berhasil dikirim ke device.');
+    } else {
+        alert('Gagal: ' + (json.message ?? 'error'));
+    }
+}
+
+async function setUploadTransport() {
+    const transport = parseInt(document.getElementById('uploadTransportSelect').value);
+    const res = await fetch('{{ route("device.upload.transport", $id) }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ transport: transport })
+    });
+    const json = await res.json();
+    if (json.status === 'ok') {
+        alert('Transport berhasil dikirim ke device.');
     } else {
         alert('Gagal: ' + (json.message ?? 'error'));
     }

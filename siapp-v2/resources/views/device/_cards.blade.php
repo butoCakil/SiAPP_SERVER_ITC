@@ -106,7 +106,10 @@
     {{-- Detail Info --}}
     <div class="dc-detail">
         <div>📡 {{ $ssid }}</div>
-        <div>⏳ Ping: {{ $latency }} mS {{ $latEmoji }}</div>
+        <div>
+            ⏳ Ping: {{ $latency }} mS {{ $latEmoji }}
+            <span class="badge badge-{{ ($status['transport'] ?? 0) == 1 ? 'info' : 'secondary' }}" style="font-size:8px; padding:1px 4px;">{{ ($status['transport'] ?? 0) == 1 ? 'MQTT' : 'HTTP' }}</span>
+        </div>
         <div>🕒 {{ $device->updated_at }}</div>
     </div>
 

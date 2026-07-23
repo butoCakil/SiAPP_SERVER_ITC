@@ -366,6 +366,9 @@ Route::post('/api-internal/device-ping-all', [DeviceViewController::class, 'ping
 Route::post('/device/{id}/upload-interval', [DeviceViewController::class, 'setUploadInterval'])
     ->middleware('auth.admin')->name('device.upload.interval');
 
+Route::post('/device/{id}/upload-transport', [DeviceViewController::class, 'setUploadTransport'])
+    ->middleware('auth.admin')->name('device.upload.transport');
+
 Route::post('/device/{id}/label', [DeviceViewController::class, 'updateLabel'])
     ->middleware('auth.admin')
     ->name('device.label');

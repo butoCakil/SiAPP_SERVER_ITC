@@ -94,14 +94,15 @@ class DeviceService
         }
 
         $lastStatus = json_encode([
-            'status'  => $data['status']  ?? 'unknown',
-            'ram'     => $data['ram']     ?? null,
-            'ssid'    => $data['ssid']    ?? null,
-            'rssi'    => $data['rssi']    ?? null,
-            'latency' => $data['latency'] ?? null,
-            'count'   => $data['count']   ?? null,
-            'serial'  => $data['serial']  ?? null,
-            'version' => $data['version'] ?? null,
+            'status'    => $data['status']    ?? 'unknown',
+            'ram'       => $data['ram']       ?? null,
+            'ssid'      => $data['ssid']      ?? null,
+            'rssi'      => $data['rssi']      ?? null,
+            'latency'   => $data['latency']   ?? null,
+            'count'     => $data['count']     ?? null,
+            'serial'    => $data['serial']    ?? null,
+            'version'   => $data['version']   ?? null,
+            'transport' => $data['transport'] ?? null,
         ], JSON_UNESCAPED_UNICODE);
 
         $upsert = [

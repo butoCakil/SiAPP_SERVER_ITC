@@ -289,6 +289,17 @@ class DeviceViewController extends Controller
         return response()->json(['status' => 'ok', 'data' => json_decode($device->last_dirlist, true)]);
     }
 
+    public function setUploadTransport(Request $request, string $id)
+    {
+        $transport = (int) $request->input('transport', 0);
+        if (!in_array($transport, [0, 1], true)) {
+            return response()->json(['status' => 'error', 'message' => 'Nilai transport harus 0 (HTTP) atau 1 (MQTT)']);
+        }
+        $service = new \App\Services\DeviceService();
+        $result = $service->kirimCommand($id, ['uploadTransport' => $transport]);
+        return response()->json($result);
+    }
+
     public function uploadFileSd(Request $request, string $id)
     {
         $path = $request->input('path');
